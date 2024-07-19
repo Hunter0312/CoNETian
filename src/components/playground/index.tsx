@@ -74,16 +74,16 @@ const Playground: React.FC = () => {
                 <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
                   <div className='flex justify-center items-center' style={{ gap: "5px" }}>
                     <img src={loading} style={{ width: "30px" }} />
-                    <p style={{ fontSize: "2rem" }}>fetching wallet data</p>
+                    <p style={{ fontSize: "2rem" }}>Fetching Wallet Data</p>
                   </div>
                 </div> :
                 mining ?
                   <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
-                    <p style={{ fontSize: "2rem", margin: 0 }}>CNTP: {rate.toFixed(7)}</p>
-                    <p style={{ fontSize: "2rem", margin: 0, marginBottom: "10px" }}>Online: {online}</p>
+                    <p style={{ fontSize: "1.5rem", margin: 0 }}>Mining Rate: {rate.toFixed(7)}</p>
+                    <p style={{ fontSize: "1.5rem", margin: 0, marginBottom: "10px" }}>Online Miners: {online}</p>
                   </div> :
                   <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
-                    <p style={{ fontSize: "2rem" }}>Initiate mining...</p>
+                    <p style={{ fontSize: "2rem" }}>Initiating Mining...</p>
                   </div>
             }
           </>

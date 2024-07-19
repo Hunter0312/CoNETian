@@ -44,7 +44,7 @@ const Wallet: React.FC = () => {
           publicKey === '' ?
             <div className='flex justify-center items-center' style={{gap: "5px", marginTop: "10rem"}}>
               <img src={loading} style={{width: "30px"}} />
-              <p style={{fontSize: "2rem"}}>fetching wallet data</p>
+              <p style={{fontSize: "2rem"}}> Wallet Data</p>
             </div> :
             <>
               <div style={{ marginBottom: "4rem" }}>

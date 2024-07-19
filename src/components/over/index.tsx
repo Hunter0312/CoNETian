@@ -42,7 +42,7 @@ const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
       <div className='flex flex-col'>
         <button onClick={setRestart} style={{ color: "white", padding: 0, backgroundColor: "transparent", border: 0, fontFamily: "FlappyBird", fontSize: "2.5rem", marginBottom: "2rem" }}>Restart</button>
         <button onClick={() => setPath('/')} style={{ color: "white", padding: 0, backgroundColor: "transparent", border: 0, fontFamily: "FlappyBird", fontSize: "2.5rem", marginBottom: "6rem" }}>
-          MAIN MENU
+          Main Menu
         </button>
       </div>
 

@@ -1,6 +1,9 @@
 .App {
   text-align: center;
   height: 100vh;
+  background-image: url('/src/assets/bgx3.png');
+  object-fit: cover;
+  background-position: center;
 }
 
 .App-logo {
@@ -36,4 +39,37 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.flex {
+  display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+p {
+  font-family: 'FlappyBird'!important;
+}
+
+button {
+  cursor: pointer;
 }

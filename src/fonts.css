@@ -1,0 +1,7 @@
+/* fonts.css */
+
+@font-face {
+    font-family: 'FlappyBird';
+    src: url('./RPGSystem.ttf') format('truetype');
+    /* Ajusta la ruta del archivo según sea necesario */
+}

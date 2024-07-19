@@ -14,9 +14,9 @@ const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState(0);
   const gravity = 0.6;
-  const bird = { x: 50, y: 50, width: 50, height: 50, dy: 0 };
+  const bird = { x: 100, y: 300, width: 50, height: 50, dy: 0 };
   const pipes: { x: number, y: number, width: number, height: number, isTop: boolean, passed: boolean }[] = [];
-  const ground = { x1: 0, x2: window.innerWidth, y: window.innerHeight - 50, width: window.innerWidth, height: 50, speed: gameSpeed }; // Adjust speed as needed
+  const ground = { x1: 0, x2: window.innerWidth, y: window.innerHeight - 100, width: window.innerWidth, height: 100, speed: gameSpeed }; // Adjust speed as needed
   let frame = 0;
   let flyBird = 0;
 
@@ -51,7 +51,7 @@ const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
       const pipeWidth = 60;
       const pipeHeight = Math.random() * (canvas.height - 400) + 50; // Adjust pipe placement as needed
       pipes.push({ x: canvas.width, y: 0, width: pipeWidth, height: pipeHeight, isTop: true, passed: false });
-      pipes.push({ x: canvas.width, y: pipeHeight + 250, width: pipeWidth, height: canvas.height - pipeHeight - 300, isTop: false, passed: false });
+      pipes.push({ x: canvas.width, y: pipeHeight + 200, width: pipeWidth, height: canvas.height - pipeHeight - 300, isTop: false, passed: false });
     };
 
     function drawImageProp(ctx: any, img: any, x: number, y: number, w: number, h: number, offsetX: number, offsetY: number) {

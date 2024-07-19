@@ -14,7 +14,7 @@ const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState(0);
   const gravity = 0.6;
-  const bird = { x: 100, y: 300, width: 50, height: 50, dy: 0 };
+  const bird = { x: 30, y: 30, width: 50, height: 50, dy: 0 };
   const pipes: { x: number, y: number, width: number, height: number, isTop: boolean, passed: boolean }[] = [];
   const ground = { x1: 0, x2: window.innerWidth, y: window.innerHeight - 100, width: window.innerWidth, height: 100, speed: gameSpeed }; // Adjust speed as needed
   let frame = 0;

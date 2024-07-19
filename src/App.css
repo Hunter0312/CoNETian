@@ -4,6 +4,7 @@
   background-image: url('/src/assets/bgx3.png');
   object-fit: cover;
   background-position: center;
+  min-height: 600px;
 }
 
 .App-logo {

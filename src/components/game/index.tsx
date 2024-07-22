@@ -47,6 +47,14 @@ const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
     const birdFlyImg = new Image();
     birdFlyImg.src = birdFly;
 
+    const birdCanvas = document.createElement('canvas');
+    birdCanvas.width = bird.width;
+    birdCanvas.height = bird.height;
+    const birdContext = birdCanvas.getContext('2d')!;
+    birdImage.onload = () => {
+      birdContext.drawImage(birdImage, 0, 0, bird.width, bird.height);
+    };
+
     const addPipe = () => {
       const pipeWidth = 60;
       const pipeHeight = Math.random() * (canvas.height - 400) + 50; // Adjust pipe placement as needed
@@ -124,10 +132,21 @@ const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
     };
 
     const drawBird = () => {
+      const centerX = bird.x + bird.width / 2;
+      const centerY = bird.y + bird.height / 2;
+      const radius = bird.width / 2;
+
+      context.save();
+      context.beginPath();
+      context.arc(centerX, centerY, radius, 0, Math.PI * 2);
+      context.closePath();
+      context.clip();
+
       if (flyBird % 2 === 0)
         context.drawImage(birdImage, bird.x, bird.y, bird.width, bird.height);
       else
         context.drawImage(birdFlyImg, bird.x, bird.y, bird.width, bird.height);
+      context.restore();
     };
 
     const drawPipes = () => {
@@ -135,6 +154,34 @@ const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
         const pipeImage = pipe.isTop ? pipeTopImage : pipeBottomImage;
         context.drawImage(pipeImage, pipe.x, pipe.y, pipe.width, pipe.height);
       });
+    };
+
+    const checkPixelCollision = (birdContext: CanvasRenderingContext2D, pipe: { x: number, y: number, width: number, height: number }) => {
+      const birdImageData = birdContext.getImageData(0, 0, bird.width, bird.height);
+      const birdPixels = birdImageData.data;
+
+      for (let y = 0; y < bird.height; y++) {
+        for (let x = 0; x < bird.width; x++) {
+          const birdPixelIndex = (y * bird.width + x) * 4;
+          const birdAlpha = birdPixels[birdPixelIndex + 3];
+
+          if (birdAlpha > 0) {
+            const birdPixelX = bird.x + x;
+            const birdPixelY = bird.y + y;
+
+            if (
+              birdPixelX >= pipe.x &&
+              birdPixelX <= pipe.x + pipe.width &&
+              birdPixelY >= pipe.y &&
+              birdPixelY <= pipe.y + pipe.height
+            ) {
+              return true;
+            }
+          }
+        }
+      }
+
+      return false;
     };
 
     const update = () => {
@@ -158,12 +205,7 @@ const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
           setScore(score => score + 1);
           pipe.passed = true;
         }
-        if (
-          bird.x < pipe.x + pipe.width &&
-          bird.x + bird.width > pipe.x &&
-          bird.y < pipe.y + pipe.height &&
-          bird.y + bird.height > pipe.y
-        ) {
+        if (checkPixelCollision(birdContext, pipe)) {
           setGameOver(true);
         }
       });

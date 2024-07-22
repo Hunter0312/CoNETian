@@ -14,7 +14,7 @@ const StartMessage: React.FC = () => {
     fontSize: "2.5rem"
   }
 
-  const { setPath, publicKey } = useFlappyBirdContext();
+  const { setPath, walletAddress } = useFlappyBirdContext();
   const [bird, setBird] = useState<number>(0);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const StartMessage: React.FC = () => {
       <button style={buttonStyle} onClick={() => setPath('/wallet')}>My Wallet</button>
       <button style={buttonStyle} onClick={() => setPath('/about')}>About</button>
       {
-        !publicKey &&
+        !walletAddress &&
         <div style={{ bottom: "3rem", width: "100%", gap: "5px" }} className='flex justify-center items-center'>
           <img src={loading} style={{ width: "30px" }} />
           <p style={{ color: "white", fontSize: "2rem" }}>Fetching Wallet Data</p>

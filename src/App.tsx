@@ -12,17 +12,17 @@ import { fetchWalletData } from './API/getData';
 
 function App() {
 
-  const { path, setPrivateKey, setPublicKey } = useFlappyBirdContext();
+  const { path, setPrivateKey, setWalletAddress } = useFlappyBirdContext();
 
   useEffect(() => {
     const init = async () => {
       await initializeWorkerService();
       const response = await fetchWalletData();
-      if(response && response.length >= 1) {
-        if(response[0] === 'SUCCESS') {
-          if(response[1][0] !== '')
-            setPublicKey(response[1][0]);
-          if(response[1][1] !== '')
+      if (response && response.length >= 1) {
+        if (response[0] === 'SUCCESS') {
+          if (response[1][0] !== '')
+            setWalletAddress(response[1][0]);
+          if (response[1][1] !== '')
             setPrivateKey(response[1][1]);
         }
       }

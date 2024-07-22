@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
-import { createContext, useContext, useState, ReactNode  } from 'react';
+import { createContext, useContext, useState, ReactNode } from 'react';
 
 type FlappyBirdContextBird = {
   // Define the shape of your context value here
   // For example:
   path: string;
   setPath: (path: string) => void;
-  publicKey: string;
-  setPublicKey: (key: string) => void;
+  walletAddress: string;
+  setWalletAddress: (key: string) => void;
   privateKey: string;
   setPrivateKey: (key: string) => void;
   balance: number;
@@ -30,19 +30,19 @@ type FlappyBirdProps = {
   children: ReactNode;
 };
 
-export function FlappyBirdProvider({ children } : FlappyBirdProps) {
+export function FlappyBirdProvider({ children }: FlappyBirdProps) {
   const [path, setPath] = useState<string>('/');
-  const [publicKey, setPublicKey] = useState<string>('');
+  const [walletAddress, setWalletAddress] = useState<string>('');
   const [privateKey, setPrivateKey] = useState<string>('');
   const [balance, setBalance] = useState<number>(0);
   const [mining, setMining] = useState<boolean>(false);
 
   return (
-    <FlappyBird.Provider value={{ 
-      path, 
+    <FlappyBird.Provider value={{
+      path,
       setPath,
-      publicKey,
-      setPublicKey,
+      walletAddress,
+      setWalletAddress,
       privateKey,
       setPrivateKey,
       balance,

@@ -10,7 +10,7 @@ const Playground: React.FC = () => {
 
   const [gameOver, setGameOver] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
-  const { publicKey, mining, setMining } = useFlappyBirdContext();
+  const { walletAddress, mining, setMining } = useFlappyBirdContext();
   const [online, setOnline] = useState<number>(0);
   const [rate, setRate] = useState<number>(0);
   const [highScore, setHighScore] = useState<number>(0);
@@ -29,8 +29,8 @@ const Playground: React.FC = () => {
       }
 
     }
-    if (publicKey && score === 3 && mining === false)
-      init(publicKey);
+    if (walletAddress && score === 3 && mining === false)
+      init(walletAddress);
   }, [score]);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const Playground: React.FC = () => {
     }
 
     if (gameOver && mining) {
-      init(publicKey);
+      init(walletAddress);
     }
 
     if (gameOver) {
@@ -70,7 +70,7 @@ const Playground: React.FC = () => {
               setScores={(score: number) => setScore(score)} />
             <p style={{ position: "fixed", color: "white", top: "20px", fontSize: "3rem", left: "50%" }}>{score}</p>
             {
-              publicKey === '' ?
+              walletAddress === '' ?
                 <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
                   <div className='flex justify-center items-center' style={{ gap: "5px" }}>
                     <img src={loading} style={{ width: "30px" }} />

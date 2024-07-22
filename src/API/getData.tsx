@@ -24,11 +24,11 @@ export const fetchCNTPBalance = async (walletAddress: string) => {
             if (status === "SUCCESS") {
                 return response;
             } else {
-                console.error("Failed to fetch wallet data");
+                console.error("Failed to fetch CNTP balance");
             }
         }
     } catch (error) {
-        console.error("Error fetching wallet Data", error);
+        console.error("Error fetching CNTP balance", error);
     }
 };
 
@@ -62,10 +62,10 @@ export const fetchstopMining = async (walletAddress: string) => {
             if (status === "SUCCESS") {
                 return status;
             } else {
-                console.error("Failed to fetch wallet data");
+                console.error("Failed to stop mining");
             }
         }
     } catch (error) {
-        console.error("Error fetching wallet Data", error);
+        console.error("Error stopMining", error);
     }
 }

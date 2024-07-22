@@ -9,9 +9,9 @@ import { loading } from '../../shared/assets';
 
 const Wallet: React.FC = () => {
 
-  const { setPath, publicKey, privateKey, setBalance, balance } = useFlappyBirdContext();
+  const { setPath, walletAddress, privateKey, setBalance, balance } = useFlappyBirdContext();
 
-  const [publicK, setPublicK] = useState<boolean>(false);
+  const [walletAddr, setWalletAddr] = useState<boolean>(false);
   const [privateK, setPrivateK] = useState<boolean>(false);
 
   useEffect(() => {
@@ -23,15 +23,15 @@ const Wallet: React.FC = () => {
         }
       }
     }
-    if (publicKey && privateKey) {
-      init(publicKey);
+    if (walletAddress && privateKey) {
+      init(walletAddress);
     }
-  }, [publicKey, privateKey]);
+  }, [walletAddress, privateKey]);
 
   const copyText = (text: string, type: string) => {
     copy(text);
     if (type === "walletAddress") {
-      setPublicK(true);
+      setWalletAddr(true);
     } else if (type === "walletPrivateKey") {
       setPrivateK(true);
     }
@@ -41,18 +41,18 @@ const Wallet: React.FC = () => {
     <div style={{ height: "100%", gap: "20px", color: "white" }} className='flex flex-col justify-between'>
       <div className='flex flex-col justify-between' style={{ paddingTop: "7rem" }}>
         {
-          publicKey === '' ?
-            <div className='flex justify-center items-center' style={{gap: "5px", marginTop: "10rem"}}>
-              <img src={loading} style={{width: "30px"}} />
-              <p style={{fontSize: "2rem"}}>Fetching Wallet Data</p>
+          walletAddress === '' ?
+            <div className='flex justify-center items-center' style={{ gap: "5px", marginTop: "10rem" }}>
+              <img src={loading} style={{ width: "30px" }} />
+              <p style={{ fontSize: "2rem" }}>Fetching Wallet Data</p>
             </div> :
             <>
               <div style={{ marginBottom: "4rem" }}>
-                <p style={{ fontSize: "2rem", margin: 0 }}>Public key</p>
-                <p className='flex items-center justify-center' style={{ fontSize: "2.5rem", margin: 0, gap: "5px", cursor: "pointer" }} onClick={() => copyText(publicKey, "walletAddress")}>
-                  {slice(publicKey)}
+                <p style={{ fontSize: "2rem", margin: 0 }}>Wallet Address</p>
+                <p className='flex items-center justify-center' style={{ fontSize: "2.5rem", margin: 0, gap: "5px", cursor: "pointer" }} onClick={() => copyText(walletAddress, "walletAddress")}>
+                  {slice(walletAddress)}
                   {
-                    publicK === true ?
+                    walletAddr === true ?
                       <FaCheck /> :
                       <IoCopySharp />
                   }

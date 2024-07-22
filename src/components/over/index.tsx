@@ -9,7 +9,7 @@ type Props = {
 
 const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
 
-  const { setPath, balance, setBalance, publicKey, privateKey } = useFlappyBirdContext();
+  const { setPath, balance, setBalance, walletAddress, privateKey } = useFlappyBirdContext();
 
   useEffect(() => {
     const init = async (address: string) => {
@@ -20,10 +20,10 @@ const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
         }
       }
     }
-    if (publicKey && privateKey) {
-      init(publicKey);
+    if (walletAddress && privateKey) {
+      init(walletAddress);
     }
-  }, [publicKey, privateKey]);
+  }, [walletAddress, privateKey]);
 
   return (
     <div className='flex flex-col justify-between items-center' style={{ height: "100%" }}>

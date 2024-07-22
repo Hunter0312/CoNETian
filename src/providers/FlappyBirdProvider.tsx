@@ -3,7 +3,6 @@ import { createContext, useContext, useState, ReactNode } from 'react';
 
 type FlappyBirdContextBird = {
   // Define the shape of your context value here
-  // For example:
   path: string;
   setPath: (path: string) => void;
   walletAddress: string;
@@ -14,6 +13,10 @@ type FlappyBirdContextBird = {
   setBalance: (num: number) => void;
   mining: boolean;
   setMining: (e: boolean) => void;
+  onlineMiners: number;
+  setOnlineMiners: (num: number) => void;
+  miningRate: number;
+  setMiningRate: (num: number) => void;
 };
 
 const FlappyBird = createContext<FlappyBirdContextBird | undefined>(undefined);
@@ -36,6 +39,8 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
   const [privateKey, setPrivateKey] = useState<string>('');
   const [balance, setBalance] = useState<number>(0);
   const [mining, setMining] = useState<boolean>(false);
+  const [onlineMiners, setOnlineMiners] = useState<number>(0);
+  const [miningRate, setMiningRate] = useState<number>(0);
 
   return (
     <FlappyBird.Provider value={{
@@ -49,6 +54,10 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
       setBalance,
       mining,
       setMining,
+      onlineMiners,
+      setOnlineMiners,
+      miningRate,
+      setMiningRate,
     }}>
       {children}
     </FlappyBird.Provider>

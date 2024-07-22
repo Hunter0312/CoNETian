@@ -3,16 +3,12 @@ import React, { useEffect, useState } from 'react';
 import Game from '../game';
 import GameOver from '../over';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
-import { fetchStartMining, fetchstopMining } from '../../API/getData';
 import { loading } from '../../shared/assets';
 
 const Playground: React.FC = () => {
-
   const [gameOver, setGameOver] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
-  const { walletAddress, mining, setMining } = useFlappyBirdContext();
-  const [online, setOnline] = useState<number>(0);
-  const [rate, setRate] = useState<number>(0);
+  const { walletAddress, mining, onlineMiners: online, miningRate: rate } = useFlappyBirdContext();
   const [highScore, setHighScore] = useState<number>(0);
 
   const gameOverHandle = (event: boolean) => {
@@ -20,31 +16,6 @@ const Playground: React.FC = () => {
   }
 
   useEffect(() => {
-    const init = async (walletAddress: string) => {
-      const response = await fetchStartMining(walletAddress);
-      if (response) {
-        setOnline(response?.online);
-        setRate(response?.rate);
-        setMining(true);
-      }
-
-    }
-    if (walletAddress && score === 3 && mining === false)
-      init(walletAddress);
-  }, [score]);
-
-  useEffect(() => {
-    const init = async (walletAddress: string) => {
-      const response = await fetchstopMining(walletAddress);
-      if (response === 'SUCCESS') {
-        setMining(false);
-      }
-    }
-
-    if (gameOver && mining) {
-      init(walletAddress);
-    }
-
     if (gameOver) {
       const hScore = localStorage.getItem('hScore');
       if (hScore) {

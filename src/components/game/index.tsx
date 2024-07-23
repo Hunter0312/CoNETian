@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { levels } from '../../shared/gameParams';
 
 import { birdImg, groundImage, backgroundImage, pipeBottomImg, pipeTopImg, birdFly } from '../../shared/assets';
 
@@ -10,15 +11,17 @@ type Props = {
 
 
 const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
-  const gameSpeed = 4;
+  let gameSpeed = levels.speedLevel1;
+  let gameFrame = levels.frameLevel1;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState(0);
   const gravity = 0.6;
   const bird = { x: 30, y: 30, width: 50, height: 50, dy: 0 };
   const pipes: { x: number, y: number, width: number, height: number, isTop: boolean, passed: boolean }[] = [];
-  const ground = { x1: 0, x2: window.innerWidth, y: window.innerHeight - 100, width: window.innerWidth, height: 100, speed: gameSpeed }; // Adjust speed as needed
+  const ground = { x1: 0, x2: window.innerWidth, y: window.innerHeight - 100, width: window.innerWidth, height: 100, speed: gameSpeed }; 
   let frame = 0;
   let flyBird = 0;
+  let flagScore = 0;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -120,8 +123,8 @@ const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
     };
 
     const moveGround = () => {
-      ground.x1 -= ground.speed;
-      ground.x2 -= ground.speed;
+      ground.x1 -= gameSpeed;
+      ground.x2 -= gameSpeed;
 
       if (ground.x1 + ground.width <= 0) {
         ground.x1 = ground.x2 + ground.width;
@@ -202,6 +205,15 @@ const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
       pipes.forEach(pipe => {
         pipe.x -= gameSpeed;
         if (!pipe.passed && pipe.isTop && pipe.x + pipe.width < bird.x) {
+          flagScore ++;
+          if(flagScore === 10) {
+            gameSpeed = levels.speedLevel2;
+            gameFrame = levels.frameLevel2;
+          }
+          if(flagScore === 30) {
+            gameSpeed = levels.speedLevel3;
+            gameFrame = levels.frameLevel3;
+          }
           setScore(score => score + 1);
           pipe.passed = true;
         }
@@ -213,8 +225,9 @@ const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
       drawBird();
       drawPipes();
       moveGround();
+      if (frame % gameFrame === 0) {
+      console.log(frame);
 
-      if (frame % 100 === 0) {
         addPipe();
       }
 

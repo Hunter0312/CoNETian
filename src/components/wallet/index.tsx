@@ -28,6 +28,19 @@ const Wallet: React.FC = () => {
     }
   }, [walletAddress, privateKey]);
 
+  useEffect(() => {
+    if(walletAddr) {
+      setTimeout(() => {
+        setWalletAddr(false);
+      }, 4000);
+    }
+    if(privateK) {
+      setTimeout(() => {
+        setPrivateK(false);
+      }, 4000);
+    }
+  }, [walletAddr, privateK])
+
   const copyText = (text: string, type: string) => {
     copy(text);
     if (type === "walletAddress") {

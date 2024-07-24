@@ -14,7 +14,7 @@ type Props = {
 
 const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
 
-  const { setGames, games, setLottery } = useFlappyBirdContext();
+  const { setGames, games, setLottery, mining } = useFlappyBirdContext();
 
   let gameSpeed = levels.speedLevel1;
   let gameFrame = levels.frameLevel1;

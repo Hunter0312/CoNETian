@@ -81,7 +81,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
   }
 
   return (
-    <div className='flex flex-col justify-between items-center lottery'
+    <div className='flex flex-col justify-center items-center lottery'
       style={{ height: "100%", width: "100vw", position: "fixed", zIndex: "100", top: 0 }}>
 
       <Wheel
@@ -100,7 +100,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
         // pointerRoullete
         pointerProps={pointerProperties}
       />
-      <button onClick={handleSpinClick}>SPIN</button>
+      <button onClick={handleSpinClick} style={{fontSize: "40px"}}>SPIN</button>
     </div>
   )
 }

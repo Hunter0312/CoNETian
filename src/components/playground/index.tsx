@@ -39,7 +39,7 @@ const Playground: React.FC = () => {
           <GameOver setRestart={() => gameStatusHandle(0)} score={score} hScore={highScore} /> :
           <>
             {
-              gameStatus === 2 && lottery && mining &&
+              gameStatus === 2 &&
                 <Lottery setContinue={() => gameStatusHandle(3)} />
             }
             <Game

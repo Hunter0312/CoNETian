@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Wheel } from 'react-custom-roulette';
 import Win from './win';
+import Lose from './lose';
 
 import { pointer } from '../../shared/assets';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
@@ -76,6 +77,11 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
         init(walletAddress);
         setLottery(false);
+        if (wheelData[newPrizeNumber].option !== "Lose") {
+          setStatus("win");
+        } else {
+          setStatus("lose");
+        }
 
       }, 6000);
     }
@@ -105,7 +111,13 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
             />
             <button onClick={handleSpinClick} style={{ fontSize: "40px" }}>SPIN</button>
           </> :
-          <Win />
+          status === "win" ?
+            <Win
+              setContinue={() => setContinue(3)}
+            /> :
+            <Lose
+              setContinue={() => setContinue(3)}
+            />
       }
     </div>
   )

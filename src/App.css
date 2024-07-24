@@ -7,6 +7,16 @@
   min-height: 600px;
 }
 
+.lottery {
+  background-image: url('/src/assets/bgx3.png');
+  object-fit: cover;
+  background-position: center;
+}
+
+.sc-gsTCUz {
+  transform: rotateZ(45deg);
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

@@ -4,19 +4,20 @@ import Game from '../game';
 import GameOver from '../over';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 import { loading } from '../../shared/assets';
+import Lottery from '../lottery';
 
 const Playground: React.FC = () => {
-  const [gameOver, setGameOver] = useState<boolean>(false);
+  const [gameStatus, setGameStatus] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
   const { walletAddress, mining, onlineMiners: online, miningRate: rate } = useFlappyBirdContext();
   const [highScore, setHighScore] = useState<number>(0);
 
-  const gameOverHandle = (event: boolean) => {
-    setGameOver(event);
+  const gameStatusHandle = (event: number) => {
+    setGameStatus(event);
   }
 
   useEffect(() => {
-    if (gameOver) {
+    if (gameStatus === 1) {
       const hScore = localStorage.getItem('hScore');
       if (hScore) {
         if (parseInt(hScore) < score)
@@ -28,17 +29,23 @@ const Playground: React.FC = () => {
       if (temp)
         setHighScore(parseInt(temp));
     }
-  }, [gameOver])
+  }, [gameStatus])
+
 
   return (
     <>
       {
-        gameOver ?
-          <GameOver setRestart={() => gameOverHandle(false)} score={score} hScore={highScore} /> :
+        gameStatus === 1 ?
+          <GameOver setRestart={() => gameStatusHandle(0)} score={score} hScore={highScore} /> :
           <>
+            {
+              gameStatus === 2 &&
+                <Lottery setContinue={() => gameStatusHandle(3)} />
+            }
             <Game
-              setGameOver={(event: boolean) => gameOverHandle(event)} gameOver={gameOver}
-              setScores={(score: number) => setScore(score)} />
+              setGameStatus={(event: number) => gameStatusHandle(event)} gameStatus={gameStatus}
+              setScores={(score: number) => setScore(score)}
+            />
             <p style={{ position: "fixed", color: "white", top: "20px", fontSize: "3rem", left: "50%" }}>{score}</p>
             {
               walletAddress === '' ?

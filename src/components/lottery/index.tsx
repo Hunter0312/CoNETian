@@ -93,6 +93,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
       {
         status === "default" ?
           <>
+            <p style={{fontSize: "56px", color: "white"}}>Spin the Wheel</p>
             <Wheel
               mustStartSpinning={mustSpin}
               prizeNumber={prizeNumber}
@@ -109,7 +110,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
               // pointerRoullete
               pointerProps={pointerProperties}
             />
-            <button onClick={handleSpinClick} style={{ fontSize: "40px" }}>SPIN</button>
+            <button onClick={handleSpinClick} style={{ fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0 }}>SPIN</button>
           </> :
           status === "win" ?
             <Win

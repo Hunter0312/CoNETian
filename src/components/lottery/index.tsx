@@ -36,7 +36,7 @@ const pointerProperties = {
 
 const Lottery: React.FC<Props> = ({ setContinue }) => {
 
-  const { walletAddress, mining, setOnlineMiners, setMiningRate, setMining } = useFlappyBirdContext();
+  const { walletAddress, mining, setOnlineMiners, setMiningRate, setMining, setLottery } = useFlappyBirdContext();
 
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
@@ -73,6 +73,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
       setTimeout(() => {
         
         init(walletAddress);
+        setLottery(false);
         setContinue(3);
 
       }, 6000);

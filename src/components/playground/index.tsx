@@ -9,7 +9,7 @@ import Lottery from '../lottery';
 const Playground: React.FC = () => {
   const [gameStatus, setGameStatus] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
-  const { walletAddress, mining, onlineMiners: online, miningRate: rate } = useFlappyBirdContext();
+  const { walletAddress, mining, onlineMiners: online, miningRate: rate, lottery } = useFlappyBirdContext();
   const [highScore, setHighScore] = useState<number>(0);
 
   const gameStatusHandle = (event: number) => {
@@ -39,7 +39,7 @@ const Playground: React.FC = () => {
           <GameOver setRestart={() => gameStatusHandle(0)} score={score} hScore={highScore} /> :
           <>
             {
-              gameStatus === 2 &&
+              gameStatus === 2 && lottery && mining &&
                 <Lottery setContinue={() => gameStatusHandle(3)} />
             }
             <Game

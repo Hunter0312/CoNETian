@@ -14,7 +14,7 @@ type Props = {
 
 const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
 
-  const { setGames, games, mining } = useFlappyBirdContext();
+  const { setGames, games, setLottery } = useFlappyBirdContext();
 
   let gameSpeed = levels.speedLevel1;
   let gameFrame = levels.frameLevel1;
@@ -248,7 +248,8 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
               ground: ground,
               frame: frame,
               score: flagScore,
-            })
+            });
+            setLottery(true);
             setGameStatus(2);
           }
           pipe.passed = true;

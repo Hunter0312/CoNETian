@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Wheel } from 'react-custom-roulette';
+import Win from './win';
 
 import { pointer } from '../../shared/assets';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
@@ -40,6 +41,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
+  const [status, setStatus] = useState<string>("default");
 
   useEffect(() => {
     const init = async (walletAddress: string) => {
@@ -71,10 +73,9 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
       setMustSpin(true);
 
       setTimeout(() => {
-        
+
         init(walletAddress);
         setLottery(false);
-        setContinue(3);
 
       }, 6000);
     }
@@ -83,24 +84,29 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
   return (
     <div className='flex flex-col justify-center items-center lottery'
       style={{ height: "100%", width: "100vw", position: "fixed", zIndex: "100", top: 0 }}>
+      {
+        status === "default" ?
+          <>
+            <Wheel
+              mustStartSpinning={mustSpin}
+              prizeNumber={prizeNumber}
+              data={wheelData}
+              spinDuration={0.5}
+              outerBorderColor={localStorage.getItem('mui-mode') === 'light' ? "#D6E3FF" : "#000"}
+              outerBorderWidth={20}
+              radiusLineWidth={0}
+              fontSize={12}
+              onStopSpinning={() => {
+                setMustSpin(false);
+              }}
 
-      <Wheel
-        mustStartSpinning={mustSpin}
-        prizeNumber={prizeNumber}
-        data={wheelData}
-        spinDuration={0.5}
-        outerBorderColor={localStorage.getItem('mui-mode') === 'light' ? "#D6E3FF" : "#000"}
-        outerBorderWidth={20}
-        radiusLineWidth={0}
-        fontSize={12}
-        onStopSpinning={() => {
-          setMustSpin(false);
-        }}
-
-        // pointerRoullete
-        pointerProps={pointerProperties}
-      />
-      <button onClick={handleSpinClick} style={{fontSize: "40px"}}>SPIN</button>
+              // pointerRoullete
+              pointerProps={pointerProperties}
+            />
+            <button onClick={handleSpinClick} style={{ fontSize: "40px" }}>SPIN</button>
+          </> :
+          <Win />
+      }
     </div>
   )
 }

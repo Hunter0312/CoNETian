@@ -17,6 +17,7 @@ const Playground: React.FC = () => {
   }
 
   useEffect(() => {
+
     if (gameStatus === 1) {
       const hScore = localStorage.getItem('hScore');
       if (hScore) {
@@ -29,8 +30,13 @@ const Playground: React.FC = () => {
       if (temp)
         setHighScore(parseInt(temp));
     }
-  }, [gameStatus])
 
+    if (gameStatus === 2) {
+      // if (!mining) {
+      //   setGameStatus(3);
+      // }
+    }
+  }, [gameStatus])
 
   return (
     <>

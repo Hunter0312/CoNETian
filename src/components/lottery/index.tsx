@@ -14,26 +14,26 @@ type Props = {
 
 const wheelData = [
   { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 2 },
   { option: 'Medium', style: { backgroundColor: "#577DFF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 2 },
   { option: 'Low', style: { backgroundColor: "#8DA8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 2 },
   { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 2 },
   { option: 'Medium', style: { backgroundColor: "#577DFF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 2 },
   { option: 'Low', style: { backgroundColor: "#8DA8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 2 },
 ]
 
 const doubleData = [
   { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 4 },
+  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 4 },
   { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 4 },
+  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 4 },
   { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 4 },
+  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 4 },
 ]
 
 const pointerProperties = {
@@ -56,7 +56,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
   useEffect(() => {
     const init = async (walletAddress: string) => {
-      if (walletAddress && mining === true) {
+      if (walletAddress) {
         const response = await fetchstopMining(walletAddress);
         if (response) {
           setMining(false)
@@ -94,14 +94,12 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
       setMustSpin(true);
 
       setTimeout(() => {
-
         setLottery(false);
         if (doubleData[newPrizeNumber].option !== "Lose") {
           setStatus("win");
         } else {
           setStatus("lose");
         }
-
       }, 6000);
     }
   }
@@ -112,7 +110,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
       {
         status === "default" ?
           <>
-            <p style={{ fontSize: "56px", color: "white" }}>Spin the Wheel</p>
+            <p style={{ fontSize: "34px", color: "white" }}>Spin the wheel for a chance to win extra CNTP</p>
             <Wheel
               mustStartSpinning={mustSpin}
               prizeNumber={prizeNumber}
@@ -144,7 +142,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                   setContinue={() => setContinue(3)}
                 /> :
                 <>
-                  <p style={{ fontSize: "56px", color: "white" }}>Spin the Wheel</p>
+                  <p style={{ fontSize: "34px", color: "white" }}>Spin the wheel for a chance to win extra CNTP</p>
                   <Wheel
                     mustStartSpinning={mustSpin}
                     prizeNumber={prizeNumber}

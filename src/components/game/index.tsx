@@ -43,7 +43,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
       flagScore = games.score;
     }
 
-    if(gameStatus === 3) {
+    if (gameStatus === 3) {
       gameSpeed = games.gameSpeed;
       gravity = 0.6;
       bird = games.bird;
@@ -238,8 +238,8 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
           }
           setScore(score => score + 1);
 
-          if (flagScore % 5 === 0 && flagScore !== 0) {
-            setGames ({
+          if (flagScore % 5 === 0 && flagScore >= 15) {
+            setGames({
               gameSpeed: gameSpeed,
               gameFrame: gameFrame,
               gravity: gravity,
@@ -262,13 +262,16 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
       drawBird();
       drawPipes();
       moveGround();
-      if (frame % gameFrame === 0) {
+
+      if(pipes.length === 0)
+        addPipe();
+
+      if (canvas.width - pipes[pipes.length - 1]?.x >= 500) {
         addPipe();
       }
 
       if (frame % 7 === 0)
         flyBird++;
-
 
       if (gameStatus === 0 || gameStatus === 3)
         frame++;

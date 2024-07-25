@@ -1,34 +1,62 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { levels } from '../../shared/gameParams';
+import Lottery from '../lottery';
 
 import { birdImg, groundImage, backgroundImage, pipeBottomImg, pipeTopImg, birdFly } from '../../shared/assets';
+import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 
 type Props = {
-  setGameOver: (e: boolean) => void,
-  gameOver: boolean,
-  setScores: (score: number) => void
+  setGameStatus: (e: number) => void,
+  gameStatus: number,
+  setScores: (score: number) => void,
 }
 
 
-const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
+const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
+
+  const { setGames, games, setLottery, mining } = useFlappyBirdContext();
+
   let gameSpeed = levels.speedLevel1;
   let gameFrame = levels.frameLevel1;
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [score, setScore] = useState(0);
-  const gravity = 0.6;
-  const bird = { x: 30, y: 30, width: 50, height: 50, dy: 0 };
-  const pipes: { x: number, y: number, width: number, height: number, isTop: boolean, passed: boolean }[] = [];
-  const ground = { x1: 0, x2: window.innerWidth, y: window.innerHeight - 100, width: window.innerWidth, height: 100, speed: gameSpeed }; 
+  const [score, setScore] = useState<number>(0);
+
+  let gravity = 0.6;
+  let bird = { x: 30, y: 30, width: 50, height: 50, dy: 0 };
+  let pipes: { x: number, y: number, width: number, height: number, isTop: boolean, passed: boolean }[] = [];
+  let ground = { x1: 0, x2: window.innerWidth, y: window.innerHeight - 100, width: window.innerWidth, height: 100, speed: gameSpeed };
   let frame = 0;
   let flyBird = 0;
   let flagScore = 0;
 
   useEffect(() => {
+
+    if (gameStatus === 2) {
+      gameSpeed = 0;
+      gravity = 0;
+      bird = games.bird;
+      pipes = games.pipes;
+      ground = games.ground;
+      frame = games.frame;
+      bird.dy = 0;
+      flagScore = games.score;
+    }
+
+    if (gameStatus === 3) {
+      gameSpeed = games.gameSpeed;
+      gravity = 0.6;
+      bird = games.bird;
+      pipes = games.pipes;
+      ground = games.ground;
+      frame = games.frame;
+      flagScore = games.score;
+    }
+
     const canvas = canvasRef.current;
     const context = canvas?.getContext('2d');
     if (!canvas || !context) return;
 
-    // Adjust canvas width and height to full device screen
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
@@ -60,7 +88,7 @@ const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
 
     const addPipe = () => {
       const pipeWidth = 60;
-      const pipeHeight = Math.random() * (canvas.height - 400) + 50; // Adjust pipe placement as needed
+      const pipeHeight = Math.random() * (canvas.height - 400) + 50;
       pipes.push({ x: canvas.width, y: 0, width: pipeWidth, height: pipeHeight, isTop: true, passed: false });
       pipes.push({ x: canvas.width, y: pipeHeight + 200, width: pipeWidth, height: canvas.height - pipeHeight - 300, isTop: false, passed: false });
     };
@@ -73,11 +101,9 @@ const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
         h = ctx.canvas.height;
       }
 
-      // default offset is center
       offsetX = typeof offsetX === "number" ? offsetX : 0.5;
       offsetY = typeof offsetY === "number" ? offsetY : 0.5;
 
-      // keep bounds [0.0, 1.0]
       if (offsetX < 0) offsetX = 0;
       if (offsetY < 0) offsetY = 0;
       if (offsetX > 1) offsetX = 1;
@@ -86,30 +112,26 @@ const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
       var iw = img.width,
         ih = img.height,
         r = Math.min(w / iw, h / ih),
-        nw = iw * r,   // new prop. width
-        nh = ih * r,   // new prop. height
+        nw = iw * r,
+        nh = ih * r,
         cx, cy, cw, ch, ar = 1;
 
-      // decide which gap to fill    
       if (nw < w) ar = w / nw;
-      if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;  // updated
+      if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;
       nw *= ar;
       nh *= ar;
 
-      // calc source rectangle
       cw = iw / (nw / w);
       ch = ih / (nh / h);
 
       cx = (iw - cw) * offsetX;
       cy = (ih - ch) * offsetY;
 
-      // make sure source rectangle is valid
       if (cx < 0) cx = 0;
       if (cy < 0) cy = 0;
       if (cw > iw) cw = iw;
       if (ch > ih) ch = ih;
 
-      // fill image in dest. rectangle
       ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
     }
 
@@ -188,7 +210,7 @@ const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
     };
 
     const update = () => {
-      if (gameOver) return;
+      if (gameStatus === 1) return;
 
       context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -198,47 +220,66 @@ const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
       bird.dy += gravity;
       bird.y += bird.dy;
       if (bird.y + bird.height > ground.y || bird.y < 0) {
-        setGameOver(true);
+        setGameStatus(1);
         return;
       }
 
       pipes.forEach(pipe => {
         pipe.x -= gameSpeed;
         if (!pipe.passed && pipe.isTop && pipe.x + pipe.width < bird.x) {
-          flagScore ++;
-          if(flagScore === 10) {
+          flagScore++;
+          if (flagScore === 10) {
             gameSpeed = levels.speedLevel2;
             gameFrame = levels.frameLevel2;
           }
-          if(flagScore === 30) {
+          if (flagScore === 30) {
             gameSpeed = levels.speedLevel3;
             gameFrame = levels.frameLevel3;
           }
           setScore(score => score + 1);
+
+          if (flagScore % 5 === 0 && flagScore >= 15) {
+            setGames({
+              gameSpeed: gameSpeed,
+              gameFrame: gameFrame,
+              gravity: gravity,
+              bird: bird,
+              pipes: pipes,
+              ground: ground,
+              frame: frame,
+              score: flagScore,
+            });
+            setLottery(true);
+            setGameStatus(2);
+          }
           pipe.passed = true;
         }
         if (checkPixelCollision(birdContext, pipe)) {
-          setGameOver(true);
+          setGameStatus(1);
         }
       });
 
       drawBird();
       drawPipes();
       moveGround();
-      if (frame % gameFrame === 0) {
-      console.log(frame);
 
+      if(pipes.length === 0)
+        addPipe();
+
+      if (canvas.width - pipes[pipes.length - 1]?.x >= 500) {
         addPipe();
       }
 
       if (frame % 7 === 0)
         flyBird++;
 
-      frame++;
+      if (gameStatus === 0 || gameStatus === 3)
+        frame++;
+
     };
 
     const handleMouseClick = () => {
-      if (!gameOver) {
+      if (gameStatus === 0 || gameStatus === 3) {
         bird.dy = -10;
       }
     };
@@ -250,7 +291,7 @@ const Game: React.FC<Props> = ({ setGameOver, gameOver, setScores }) => {
       window.removeEventListener('mousedown', handleMouseClick);
       clearInterval(gameInterval);
     };
-  }, [gameOver]);
+  }, [gameStatus]);
 
 
   useEffect(() => {

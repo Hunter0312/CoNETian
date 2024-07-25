@@ -6,6 +6,7 @@ import birdImg from '../assets/pajaroaletaalta.png';
 import birdFly from '../assets/pajaroaletamedia.png';
 import birdFlyImg from '../assets/pajaroaletabaja.png';
 import loading from '../assets/logo_conet_rotation.gif';
+import pointer from '../assets/Polygon 4.png';
 
 export {
     birdImg,
@@ -16,4 +17,5 @@ export {
     birdFly,
     birdFlyImg,
     loading,
+    pointer,
 }

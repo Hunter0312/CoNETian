@@ -7,6 +7,20 @@
   min-height: 600px;
 }
 
+.lottery {
+  background-image: url('/src/assets/bgx3.png');
+  object-fit: cover;
+  background-position: center;
+}
+
+.delay {
+  background-color: #0000008c;
+}
+
+.sc-gsTCUz {
+  transform: rotateZ(45deg);
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -67,7 +81,7 @@
   justify-content: flex-end;
 }
 
-p {
+p, button {
   font-family: 'FlappyBird'!important;
 }
 

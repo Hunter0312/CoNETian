@@ -1,10 +1,21 @@
 import React, { useEffect } from 'react';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 import { fetchCNTPBalance } from '../../API/getData';
+
 type Props = {
   setRestart: () => void,
   score: number,
   hScore: number,
+}
+
+const buttonStyle = {
+  border: "0",
+  backgroundColor: "white",
+  color: "black",
+  fontSize: "2rem",
+  padding: "10px 20px",
+  borderRadius: "15px",
+  width: "240px"
 }
 
 const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
@@ -41,7 +52,7 @@ const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
       </div>
       <div className='flex flex-col'>
         <button onClick={setRestart} style={{ color: "white", padding: 0, backgroundColor: "transparent", border: 0, fontFamily: "FlappyBird", fontSize: "2.5rem", marginBottom: "2rem" }}>Restart</button>
-        <button onClick={() => setPath('/')} style={{ color: "white", padding: 0, backgroundColor: "transparent", border: 0, fontFamily: "FlappyBird", fontSize: "2.5rem", marginBottom: "6rem" }}>
+        <button onClick={() => setPath('/')} style={{ ...buttonStyle, marginBottom: "5rem" }}>
           Main Menu
         </button>
       </div>

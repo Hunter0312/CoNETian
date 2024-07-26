@@ -7,6 +7,16 @@ import { IoCopySharp } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
 import { loading } from '../../shared/assets';
 
+const buttonStyle = {
+  border: "0",
+  backgroundColor: "white",
+  color: "black",
+  fontSize: "2rem",
+  padding: "10px 20px",
+  borderRadius: "15px",
+  width: "240px",
+}
+
 const Wallet: React.FC = () => {
 
   const { setPath, walletAddress, privateKey, setBalance, balance } = useFlappyBirdContext();
@@ -29,12 +39,12 @@ const Wallet: React.FC = () => {
   }, [walletAddress, privateKey]);
 
   useEffect(() => {
-    if(walletAddr) {
+    if (walletAddr) {
       setTimeout(() => {
         setWalletAddr(false);
       }, 4000);
     }
-    if(privateK) {
+    if (privateK) {
       setTimeout(() => {
         setPrivateK(false);
       }, 4000);
@@ -51,7 +61,7 @@ const Wallet: React.FC = () => {
   }
 
   return (
-    <div style={{ height: "100%", gap: "20px", color: "white" }} className='flex flex-col justify-between'>
+    <div style={{ height: "100%", gap: "20px", color: "white" }} className='flex flex-col justify-between items-center'>
       <div className='flex flex-col justify-between' style={{ paddingTop: "7rem" }}>
         {
           walletAddress === '' ?
@@ -90,7 +100,7 @@ const Wallet: React.FC = () => {
         }
 
       </div>
-      <button onClick={() => setPath('/')} style={{ color: "white", padding: 0, backgroundColor: "transparent", border: 0, fontFamily: "FlappyBird", fontSize: "2.5rem", marginBottom: "4rem" }}>
+      <button onClick={() => setPath('/')} style={{ ...buttonStyle, marginBottom: "5rem" }}>
         Main Menu
       </button>
     </div>

@@ -6,12 +6,12 @@ import { loading } from '../../shared/assets';
 const StartMessage: React.FC = () => {
 
   const buttonStyle = {
-    padding: "0",
     border: "0",
-    backgroundColor: "transparent",
-    color: "white",
-    fontFamily: "FlappyBird",
-    fontSize: "2.5rem"
+    backgroundColor: "white",
+    color: "black",
+    fontSize: "2rem",
+    padding: "10px 20px",
+    borderRadius: "15px"
   }
 
   const { setPath, walletAddress } = useFlappyBirdContext();
@@ -31,9 +31,9 @@ const StartMessage: React.FC = () => {
     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100%", gap: "20px" }}>
       <h1 style={{ color: "white", fontFamily: "FlappyBird", fontSize: "3rem" }}>The CoNETian</h1>
       <img src={bird % 3 === 0 ? birdImg : bird % 3 === 1 ? birdFlyImg : birdFly} />
-      <button style={buttonStyle} onClick={() => setPath('/start')}>Start</button>
-      <button style={buttonStyle} onClick={() => setPath('/wallet')}>My Wallet</button>
-      <button style={buttonStyle} onClick={() => setPath('/about')}>About</button>
+      <button style={buttonStyle} className='startButton' onClick={() => setPath('/start')}>Start</button>
+      <button style={buttonStyle} className='startButton' onClick={() => setPath('/wallet')}>My Wallet</button>
+      <button style={buttonStyle} className='startButton' onClick={() => setPath('/about')}>About</button>
       {
         !walletAddress &&
         <div style={{ bottom: "3rem", width: "100%", gap: "5px" }} className='flex justify-center items-center'>

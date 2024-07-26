@@ -3,7 +3,7 @@ import { fetchStartMining } from '../../API/getData';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 
 type Props = {
-  setContinue: (e: number) => void
+  setContinue: (e: number) => void;
 }
 
 const Delay: React.FC<Props> = ({ setContinue }) => {

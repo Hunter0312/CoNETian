@@ -238,7 +238,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
           }
           setScore(score => score + 1);
 
-          if (flagScore % 5 === 0 && flagScore >= 15) {
+          if (flagScore % 1 === 0 && flagScore >= 0) {
             setGames({
               gameSpeed: gameSpeed,
               gameFrame: gameFrame,
@@ -266,7 +266,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
       if(pipes.length === 0)
         addPipe();
 
-      if (canvas.width - pipes[pipes.length - 1]?.x >= 500) {
+      if (canvas.width - pipes[pipes.length - 1]?.x >= 450) {
         addPipe();
       }
 

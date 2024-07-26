@@ -127,7 +127,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
               // pointerRoullete
               pointerProps={pointerProperties}
             />
-            <button onClick={handleSpinClick} style={{ fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px" }}>SPIN</button>
+            <button onClick={handleSpinClick} style={{ fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px", backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}>SPIN</button>
           </> :
           status === "win" ?
             <Win
@@ -159,7 +159,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                     // pointerRoullete
                     pointerProps={pointerProperties}
                   />
-                  <button onClick={handleDoubleSpinClick} style={{ fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px" }}>SPIN</button>
+                  <button onClick={handleDoubleSpinClick} style={{ fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px", backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}>SPIN</button>
                 </>
       }
     </div>

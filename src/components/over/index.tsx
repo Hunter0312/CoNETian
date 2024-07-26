@@ -50,8 +50,8 @@ const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
         <p style={{ color: "white", fontSize: "2.5rem", margin: 0 }}>Highest Score:</p>
         <p style={{ color: "white", fontSize: "3rem", margin: 0 }}>{hScore}</p>
       </div>
-      <div className='flex flex-col'>
-        <button onClick={setRestart} style={{ color: "white", padding: 0, backgroundColor: "transparent", border: 0, fontFamily: "FlappyBird", fontSize: "2.5rem", marginBottom: "2rem" }}>Restart</button>
+      <div className='flex flex-col align-center justify-between' style={{ gap: "16px" }}>
+        <button onClick={setRestart} style={buttonStyle} className='startButton'>Restart</button>
         <button onClick={() => setPath('/')} style={{ ...buttonStyle, marginBottom: "5rem" }}>
           Main Menu
         </button>

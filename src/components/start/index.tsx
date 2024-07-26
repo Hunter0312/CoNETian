@@ -30,7 +30,7 @@ const StartMessage: React.FC = () => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100%", gap: "20px" }}>
-      <h1 style={{ color: "white", fontFamily: "FlappyBird", fontSize: "3rem" }}>The CoNETian</h1>
+      <h1 style={{ color: "white", fontFamily: "FlappyBird", fontSize: "3rem", margin: 0 }}>The CoNETian</h1>
       <img src={bird % 3 === 0 ? birdImg : bird % 3 === 1 ? birdFlyImg : birdFly} />
       <button style={buttonStyle} className='startButton' onClick={() => setPath('/start')}>Start</button>
       <button style={buttonStyle} onClick={() => setPath('/wallet')}>My Wallet</button>

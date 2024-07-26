@@ -11,7 +11,8 @@ const StartMessage: React.FC = () => {
     color: "black",
     fontSize: "2rem",
     padding: "10px 20px",
-    borderRadius: "15px"
+    borderRadius: "15px",
+    width: "160px"
   }
 
   const { setPath, walletAddress } = useFlappyBirdContext();

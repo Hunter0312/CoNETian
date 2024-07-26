@@ -33,8 +33,8 @@ const StartMessage: React.FC = () => {
       <h1 style={{ color: "white", fontFamily: "FlappyBird", fontSize: "3rem" }}>The CoNETian</h1>
       <img src={bird % 3 === 0 ? birdImg : bird % 3 === 1 ? birdFlyImg : birdFly} />
       <button style={buttonStyle} className='startButton' onClick={() => setPath('/start')}>Start</button>
-      <button style={buttonStyle} className='startButton' onClick={() => setPath('/wallet')}>My Wallet</button>
-      <button style={buttonStyle} className='startButton' onClick={() => setPath('/about')}>About</button>
+      <button style={buttonStyle} onClick={() => setPath('/wallet')}>My Wallet</button>
+      <button style={buttonStyle} onClick={() => setPath('/about')}>About</button>
       {
         !walletAddress &&
         <div style={{ bottom: "3rem", width: "100%", gap: "5px" }} className='flex justify-center items-center'>

@@ -88,7 +88,7 @@ p, button {
 button {
   cursor: pointer;
 }
-/* 
+
 .startButton {
-  font-family: cursive !important;
-} */
+  background-image: linear-gradient(to right, #D775FF , #8DA8FF);
+}

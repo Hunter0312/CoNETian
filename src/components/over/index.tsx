@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
-import { fetchCNTPBalance } from '../../API/getData';
+
 type Props = {
   setRestart: () => void,
   score: number,
@@ -9,21 +9,7 @@ type Props = {
 
 const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
 
-  const { setPath, balance, setBalance, walletAddress, privateKey } = useFlappyBirdContext();
-
-  useEffect(() => {
-    const init = async (address: string) => {
-      const response = await fetchCNTPBalance(address);
-      if (response && response.length >= 2) {
-        if (response[0] === 'SUCCESS') {
-          setBalance(response[1][0]);
-        }
-      }
-    }
-    if (walletAddress && privateKey) {
-      init(walletAddress);
-    }
-  }, [walletAddress, privateKey]);
+  const { setPath, balance } = useFlappyBirdContext();
 
   return (
     <div className='flex flex-col justify-between items-center' style={{ height: "100%" }}>

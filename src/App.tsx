@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { initializeWorkerService } from './services/workerService';
 import { fetchStartMining, fetchWalletData } from './API/getData';
 
-type command = "miningStatus";
+type command = "balanceStatus" | "miningStatus";
 
 interface channelWroker {
   cmd: command;
@@ -20,17 +20,37 @@ interface channelWroker {
 const channelWrokerListenName = "toFrontEnd";
 const profileVerChannel = new BroadcastChannel(channelWrokerListenName);
 
+const listeningPool: Map<string, (e: MessageEvent<any>) => void> = new Map();
+
+const listeningManager = (key: string, fun: (e: MessageEvent<any>) => void) => {
+  const listening = listeningPool.get(key);
+  if (listening) {
+    profileVerChannel.removeEventListener("message", listening);
+  }
+  listeningPool.set(key, fun);
+  profileVerChannel.addEventListener("message", fun);
+};
+
 export const listeningMiningHook = (
-  miningHook: React.Dispatch<React.SetStateAction<any[]>>
+  miningHook: React.Dispatch<React.SetStateAction<any[]>>,
 ) => {
-  profileVerChannel.addEventListener("message", (e) =>
-    profileVerChannelListening(e, miningHook)
-  );
+  const fun = (e: MessageEvent<any>) =>
+    profileVerChannelListening(e, miningHook);
+  return listeningManager("listeningMiningHook", fun);
+};
+
+export const listeningBalanceHook = (
+  balanceHook: React.Dispatch<React.SetStateAction<any[]>>,
+) => {
+  const fun = (e: MessageEvent<any>) =>
+    profileVerChannelListening(e, null, balanceHook);
+  return listeningManager("listeningBalanceHook", fun);
 };
 
 const profileVerChannelListening = (
   e: MessageEvent<any>,
-  miningHook: React.Dispatch<React.SetStateAction<any[]>> | null = null
+  miningHook: React.Dispatch<React.SetStateAction<any[]>> | null = null,
+  balanceHook: React.Dispatch<React.SetStateAction<any[]>> | null = null
 ) => {
   let cmd: channelWroker;
   try {
@@ -49,6 +69,13 @@ const profileVerChannelListening = (
       return "";
     }
 
+    case "balanceStatus": {
+      if (balanceHook) {
+        return balanceHook(cmd?.data);
+      }
+      return "";
+    }
+
     default: {
       return console.log(
         `profileVerChannelListening unknow command [${cmd.cmd}] from backend [${cmd.data}]`
@@ -59,7 +86,7 @@ const profileVerChannelListening = (
 
 function App() {
 
-  const { path, setPrivateKey, setWalletAddress, walletAddress, mining, setMining, setOnlineMiners, setMiningRate } = useFlappyBirdContext();
+  const { path, setPrivateKey, setWalletAddress, walletAddress, mining, setMining, setOnlineMiners, setMiningRate, setBalance } = useFlappyBirdContext();
 
   listeningMiningHook((response: any) => {
     try {
@@ -70,6 +97,15 @@ function App() {
       setOnlineMiners(parsedData?.online);
     } catch (error) {
       console.error("Error parsing mining data", error);
+    }
+  });
+
+  listeningBalanceHook((response: any) => {
+    try {
+      const [data] = response;
+      setBalance(parseFloat(data));
+    } catch (error) {
+      console.error("Error parsing balance data", error);
     }
   });
 

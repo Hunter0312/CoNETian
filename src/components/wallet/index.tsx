@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
-import { fetchCNTPBalance } from '../../API/getData';
 import { slice } from '../../shared/functions';
 import copy from "copy-to-clipboard";
 import { IoCopySharp } from "react-icons/io5";
@@ -15,26 +14,12 @@ const Wallet: React.FC = () => {
   const [privateK, setPrivateK] = useState<boolean>(false);
 
   useEffect(() => {
-    const init = async (address: string) => {
-      const response = await fetchCNTPBalance(address);
-      if (response && response.length >= 2) {
-        if (response[0] === 'SUCCESS') {
-          setBalance(response[1][0]);
-        }
-      }
-    }
-    if (walletAddress && privateKey) {
-      init(walletAddress);
-    }
-  }, [walletAddress, privateKey]);
-
-  useEffect(() => {
-    if(walletAddr) {
+    if (walletAddr) {
       setTimeout(() => {
         setWalletAddr(false);
       }, 4000);
     }
-    if(privateK) {
+    if (privateK) {
       setTimeout(() => {
         setPrivateK(false);
       }, 4000);

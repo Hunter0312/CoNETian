@@ -8,7 +8,7 @@ import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 import { fetchstopMining, fetchRouletteResult } from '../../API/getData';
 import Delay from './delay';
 import { useAudioPlayer } from 'react-use-audio-player';
-import { RouletteSpin, ButtonClick } from '../../shared/assets';
+import { RouletteSpin, ButtonClick, loading } from '../../shared/assets';
 
 type Props = {
   setContinue: (e: number) => void,
@@ -59,7 +59,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
   const { load } = useAudioPlayer();
 
-  const { walletAddress, setMining, setLottery, lottery } = useFlappyBirdContext();
+  const { walletAddress, setMining, setLottery, lottery, mining } = useFlappyBirdContext();
 
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
@@ -77,8 +77,9 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
         }
       }
     }
-    init(walletAddress);
-  }, [walletAddress])
+    if(mining)
+      init(walletAddress);
+  }, [mining])
 
   const handleSpinClick = async () => {
 
@@ -178,7 +179,15 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
               // pointerRoullete
               pointerProps={pointerProperties}
             />
-            <button onClick={handleSpinClick} style={lottery === 1 ? { fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px", backgroundColor: "gray" } : { fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px", backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}>SPIN</button>
+            {
+              walletAddress ?
+                <button onClick={handleSpinClick} style={lottery === 1 ? { fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px", backgroundColor: "gray" } : { fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px", backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}>SPIN</button> :
+                <div className='flex justify-center items-center' style={{ gap: "5px" }}>
+                  <img src={loading} style={{ width: "30px" }} />
+                  <p style={{ fontSize: "2rem", color: "white" }}>Fetching Wallet Data</p>
+                </div>
+
+            }
           </> :
           status === "win" ?
             <Win

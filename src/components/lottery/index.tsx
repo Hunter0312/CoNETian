@@ -23,9 +23,9 @@ const rouletteResultMapping: { [key: string]: number } = {
 
 const doubleRouletteResultMapping: { [key: string]: number } = {
   '0': 0,
-  '0.2': 1,
+  '0.5': 1,
   '1': 1,
-  '2': 1,
+  '0.1': 1,
 }
 
 const wheelData = [
@@ -66,11 +66,12 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
   const { load } = useAudioPlayer();
 
-  const { walletAddress, setMining, setLottery, lottery } = useFlappyBirdContext();
+  const { walletAddress, setMining, setLottery, lottery, lotteryBalance, setLotteryBalance } = useFlappyBirdContext();
 
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [status, setStatus] = useState<string>("default");
+  const [double, setDouble] = useState<number>(0);
 
   useEffect(() => {
     // const container = document.getElementsByTagName("button");
@@ -103,9 +104,8 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
       return;
 
     if (!mustSpin && walletAddress) {
-      const rouletteResult = await fetchRouletteResult(walletAddress);
-
       setLottery(1);
+      const rouletteResult = await fetchRouletteResult(walletAddress);
 
       load(RouletteSpin, {
         autoplay: true
@@ -114,44 +114,66 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
       setMustSpin(true);
 
       setTimeout(() => {
-        const mappedResult = rouletteResultMapping[rouletteResult]
+        const mappedResult = rouletteResultMapping[rouletteResult];
         if (wheelData[mappedResult].option !== "Lose") {
+          if(wheelData[mappedResult].option === "Low") {
+            setLotteryBalance(0.1);
+          } else if (wheelData[mappedResult].option === "Medium") {
+            setLotteryBalance(0.5);
+          } else if (wheelData[mappedResult].option === "High") {
+            setLotteryBalance(1);
+          }
           setStatus("win");
         } else {
           setLottery(0);
           setStatus("lose");
         }
+        setMustSpin(true);
       }, 6000);
     }
   }
 
   const handleDoubleSpinClick = async () => {
+    let count = 0;
     if (lottery === 2)
       return;
 
-
-
-    if (!mustSpin && walletAddress) {
-      const rouletteResult = await fetchRouletteResult(walletAddress);
+    if (double === 0 && walletAddress) {
       setLottery(2);
-
+      const rouletteResult = await fetchRouletteResult(walletAddress);
       load(RouletteSpin, {
         autoplay: true
       })
       setPrizeNumber(rouletteResult);
-      setMustSpin(true);
+
+      const init = setInterval(() => {
+        if (count % 2 === 0)
+          setDouble(1);
+        else
+          setDouble(2);
+        count++;
+      }, 100)
 
       setTimeout(() => {
-        const mappedResult = doubleRouletteResultMapping[rouletteResult]
+        const mappedResult = doubleRouletteResultMapping[rouletteResult];
         if (doubleData[mappedResult].option !== "Lose") {
           setStatus("win");
         } else {
           setLottery(3);
           setStatus("lose");
         }
+        setDouble(0);
+        clearInterval(init);
       }, 6000);
+
     }
   }
+
+  const doubleAction = () => {
+    setStatus("double");
+    handleDoubleSpinClick();
+  }
+
 
   return (
     <div className={`flex flex-col justify-center items-center ${status === "delay" ? 'delay' : "lottery"}`}
@@ -180,6 +202,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
           </> :
           status === "win" ?
             <Win
+              doubleAction={() => doubleAction()}
               setContinue={(e: string) => setStatus(e)}
               prizeNumber={prizeNumber}
             /> :
@@ -192,24 +215,34 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                   setContinue={() => setContinue(3)}
                 /> :
                 <>
-                  <p style={{ fontSize: "34px", color: "white" }}>Spin the wheel for a chance to win extra CNTP</p>
-                  <Wheel
-                    mustStartSpinning={mustSpin}
-                    prizeNumber={doubleRouletteResultMapping[prizeNumber]}
-                    data={doubleData}
-                    spinDuration={0.5}
-                    outerBorderColor={localStorage.getItem('mui-mode') === 'light' ? "#D6E3FF" : "#f5eeee"}
-                    outerBorderWidth={20}
-                    radiusLineWidth={0}
-                    fontSize={12}
-                    onStopSpinning={() => {
-                      setMustSpin(false);
-                    }}
-
-                    // pointerRoullete
-                    pointerProps={pointerProperties}
-                  />
-                  <button onClick={handleDoubleSpinClick} style={{ fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px", backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}>SPIN</button>
+                  <div className='flex flex-col justify-between items-center' style={{ width: "100%", height: "100%" }}>
+                    <p style={{ fontSize: "48px", color: "white", margin: 0, marginTop: "130px" }}>Try to Double the CNTP that you earn!</p>
+                    <div className='flex flex-col'>
+                      <p style={{ color: "white", fontSize: "36px", height: "37px" }}></p>
+                      <div className='flex justify-center items-center' style={{ width: "100%", gap: "20px" }}>
+                        <p className='double-lottery'>
+                          Win
+                          {
+                            double === 1 &&
+                              <span>Win</span>
+                          }
+                        </p>
+                        <p style={{ margin: 0, marginRight: "20px" }} className='double-lottery double-lose'>
+                          Lose
+                          {
+                            double === 2 &&
+                              <span>Lose</span>
+                          }
+                        </p>
+                      </div>
+                    </div>
+                    <div style={{ marginBottom: "130px" }} className='flex flex-col'>
+                      <p style={{margin: 0, marginBottom: "10px", height: "2rem"}}></p>
+                      <button style={{ fontSize: "32px", width: "230px", height: "52px", marginBottom: "16px", borderRadius: "16px", border: 0, backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}
+                      >Spin to double</button>
+                      <button style={{ fontSize: "32px", width: "230px", height: "52px", borderRadius: "16px", border: 0, }} onClick={() => { setStatus("delay"); setLottery(0)}}>Keep playing</button>
+                    </div>
+                  </div>
                 </>
       }
     </div>

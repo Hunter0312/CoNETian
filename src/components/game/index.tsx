@@ -256,7 +256,9 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
           }
           setScore(score => score + 1);
 
-          if (flagScore % 5 === 0 && flagScore >= 15) {
+          const chanceToShowRoulette = Math.random() * 10 > 5;
+
+          if (chanceToShowRoulette && flagScore % 5 === 0 && flagScore >= 15) {
             setGames({
               gameSpeed: gameSpeed,
               gameFrame: gameFrame,

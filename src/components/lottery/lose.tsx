@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { RouletteLose } from '../../shared/assets';
+import { RouletteLose, ButtonClick } from '../../shared/assets';
 import { useAudioPlayer } from 'react-use-audio-player';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 
@@ -16,6 +16,19 @@ const Lose: React.FC<Props> = ({ setContinue }) => {
     load(RouletteLose, {
       autoplay: true,
     })
+  }, [])
+
+  useEffect(() => {
+    const container = document.getElementsByTagName("button");
+    const buttonArray = Array.from(container);
+    const init = () => {
+      load(ButtonClick, {
+        autoplay: true,
+      })
+    }
+    buttonArray.map(element => {
+      element.addEventListener("click", init);
+    });
   }, [])
 
   return (

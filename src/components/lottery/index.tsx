@@ -66,18 +66,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
   const [status, setStatus] = useState<string>("default");
   const [double, setDouble] = useState<number>(0);
 
-  useEffect(() => {
-    // const container = document.getElementsByTagName("button");
-    // const buttonArray = Array.from(container);
-    // const init = () => {
-    //   load(ButtonClick, {
-    //     autoplay: true,
-    //   })
-    // }
-    // buttonArray.map(element => {
-    //   element.addEventListener("click", init);
-    // });
-  }, [status])
+
 
   useEffect(() => {
     const init = async (walletAddress: string) => {
@@ -96,8 +85,14 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
     if (lottery === 1)
       return;
 
+    load(ButtonClick, {
+      autoplay: true,
+    });
+
+    setLottery(1);
+
     if (!mustSpin && walletAddress) {
-      setLottery(1);
+
       const rouletteResult = await fetchRouletteResult(walletAddress);
 
       load(RouletteSpin, {
@@ -183,7 +178,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
               // pointerRoullete
               pointerProps={pointerProperties}
             />
-            <button onClick={handleSpinClick} style={{ fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px", backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}>SPIN</button>
+            <button onClick={handleSpinClick} style={lottery === 1 ? { fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px", backgroundColor: "gray" } : { fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px", backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}>SPIN</button>
           </> :
           status === "win" ?
             <Win
@@ -223,9 +218,13 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                     </div>
                     <div style={{ marginBottom: "130px" }} className='flex flex-col'>
                       <p style={{ margin: 0, marginBottom: "10px", height: "2rem" }}></p>
-                      <button style={{ fontSize: "32px", width: "230px", height: "52px", marginBottom: "16px", borderRadius: "16px", border: 0, backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}
+                      <button style={{ fontSize: "32px", width: "230px", height: "52px", marginBottom: "16px", borderRadius: "16px", border: 0, backgroundColor: "gray" }}
                       >Spin to double</button>
-                      <button style={{ fontSize: "32px", width: "230px", height: "52px", borderRadius: "16px", border: 0, }} onClick={() => { setStatus("delay"); setLottery(0) }}>Keep playing</button>
+                      <button style={{ fontSize: "32px", width: "230px", height: "52px", borderRadius: "16px", border: 0, }} onClick={() => {
+                        setStatus("delay"); setLottery(0); load(ButtonClick, {
+                          autoplay: true,
+                        });
+                      }}>Keep playing</button>
                     </div>
                   </div>
                 </>

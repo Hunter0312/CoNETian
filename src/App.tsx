@@ -96,16 +96,20 @@ function App() {
   const { load } = useAudioPlayer();
 
   useEffect(() => {
-    // const container = document.getElementsByTagName("button");
-    // const buttonArray = Array.from(container);
-    // const init = () => {
-    //   load(ButtonClick, {
-    //     autoplay: true,
-    //   })
-    // }
-    // buttonArray.map(element => {
-    //   element.addEventListener("click", init);
-    // });
+    if(gameStatus === 2)
+      return;
+    
+    const container = document.getElementsByTagName("button");
+
+    const buttonArray = Array.from(container);
+    const init = () => {
+      load(ButtonClick, {
+        autoplay: true,
+      })
+    }
+    buttonArray.map(element => {
+      element.addEventListener("click", init);
+    });
   }, [path, gameStatus])
 
   useEffect(() => {

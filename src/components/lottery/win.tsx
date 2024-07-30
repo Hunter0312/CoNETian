@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { RouletteWin } from '../../shared/assets';
+import { RouletteWin, ButtonClick } from '../../shared/assets';
 import { useAudioPlayer } from 'react-use-audio-player';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 
@@ -42,6 +42,19 @@ const Win: React.FC<Props> = ({ setContinue, prizeNumber, doubleAction }) => {
       }, 1000);
   }, [counter])
 
+  useEffect(() => {
+    const container = document.getElementsByTagName("button");
+    const buttonArray = Array.from(container);
+    const init = () => {
+      load(ButtonClick, {
+        autoplay: true,
+      })
+    }
+    buttonArray.map(element => {
+      element.addEventListener("click", init);
+    });
+  }, [])
+
   return (
     <div className='flex flex-col justify-center items-center' style={{ height: "100%" }}>
       {
@@ -63,7 +76,7 @@ const Win: React.FC<Props> = ({ setContinue, prizeNumber, doubleAction }) => {
             </div>
             <div style={{ marginBottom: "130px" }} className='flex flex-col'>
               <p style={{ margin: 0, color: "white", fontSize: "40px", height: "2rem", marginBottom: "10px" }}>{counter !== 0 && counter}</p>
-              <button style={{ fontSize: "32px", width: "230px", height: "52px", marginBottom: "16px", borderRadius: "16px", border: 0, backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}
+              <button style={lottery === 2 ? { fontSize: "32px", width: "230px", height: "52px", marginBottom: "16px", borderRadius: "16px", border: 0, backgroundColor: "gray"} : { fontSize: "32px", width: "230px", height: "52px", marginBottom: "16px", borderRadius: "16px", border: 0, backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}
                 onClick={() => {
                   if (counter > 0) {
                     doubleAction(); setLottery(0);

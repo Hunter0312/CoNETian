@@ -256,8 +256,8 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
           }
           setScore(score => score + 1);
 
-          if (flagScore % 5 === 0 && flagScore >= 15) {
-            if(Math.random() > 0.5) {
+          if (flagScore % 5 === 0 && flagScore >= 5) {
+            if (Math.random() > 0.5) {
               setGames({
                 gameSpeed: gameSpeed,
                 gameFrame: gameFrame,

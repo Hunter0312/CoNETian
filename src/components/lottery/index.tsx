@@ -130,7 +130,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
     if (lottery === 2)
       return;
 
-    
+
 
     if (!mustSpin && walletAddress) {
       const rouletteResult = await fetchRouletteResult(walletAddress);
@@ -163,7 +163,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
             <p style={{ fontSize: "34px", color: "white" }}>Spin the wheel for a chance to win extra CNTP</p>
             <Wheel
               mustStartSpinning={mustSpin}
-              prizeNumber={prizeNumber}
+              prizeNumber={rouletteResultMapping[prizeNumber]}
               data={wheelData}
               spinDuration={0.5}
               outerBorderColor={localStorage.getItem('mui-mode') === 'light' ? "#D6E3FF" : "#f5eeee"}
@@ -182,6 +182,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
           status === "win" ?
             <Win
               setContinue={(e: string) => setStatus(e)}
+              prizeNumber={prizeNumber}
             /> :
             status === "lose" ?
               <Lose
@@ -195,7 +196,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                   <p style={{ fontSize: "34px", color: "white" }}>Spin the wheel for a chance to win extra CNTP</p>
                   <Wheel
                     mustStartSpinning={mustSpin}
-                    prizeNumber={prizeNumber}
+                    prizeNumber={doubleRouletteResultMapping[prizeNumber]}
                     data={doubleData}
                     spinDuration={0.5}
                     outerBorderColor={localStorage.getItem('mui-mode') === 'light' ? "#D6E3FF" : "#f5eeee"}

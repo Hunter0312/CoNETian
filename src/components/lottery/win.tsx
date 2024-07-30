@@ -4,10 +4,11 @@ import { useAudioPlayer } from 'react-use-audio-player';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 
 type Props = {
-  setContinue: (e: string) => void
+  setContinue: (e: string) => void,
+  prizeNumber: number,
 }
 
-const Win: React.FC<Props> = ({ setContinue }) => {
+const Win: React.FC<Props> = ({ setContinue, prizeNumber }) => {
 
   const { load } = useAudioPlayer();
 
@@ -32,7 +33,7 @@ const Win: React.FC<Props> = ({ setContinue }) => {
       {
         lottery == 1 ?
           <>
-            <p style={{ fontSize: "75px", color: "white", margin: "20px" }}>You won {100.029748} CNTP!</p>
+            <p style={{ fontSize: "75px", color: "white", margin: "20px" }}>You won {prizeNumber} CNTP!</p>
             <p style={{ margin: 0, color: "white", fontSize: "40px" }}>{counter !== 0 && counter}</p>
             <button style={{ fontSize: "32px", width: "230px", height: "52px", marginBottom: "16px", borderRadius: "16px", border: 0, backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}
               onClick={() => {

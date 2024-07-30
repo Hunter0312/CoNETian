@@ -22,27 +22,13 @@ const buttonStyle = {
 
 const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
 
-  const { setPath, balance, setBalance, walletAddress, privateKey } = useFlappyBirdContext();
+  const { setPath, balance } = useFlappyBirdContext();
 
   const backAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     playAudio(backAudioRef);
   }, [])
-
-  useEffect(() => {
-    const init = async (address: string) => {
-      const response = await fetchCNTPBalance(address);
-      if (response && response.length >= 2) {
-        if (response[0] === 'SUCCESS') {
-          setBalance(response[1][0]);
-        }
-      }
-    }
-    if (walletAddress && privateKey) {
-      init(walletAddress);
-    }
-  }, [walletAddress, privateKey]);
 
   return (
     <div className='flex flex-col justify-between items-center' style={{ height: "100%" }}>
@@ -64,7 +50,7 @@ const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
           Main Menu
         </button>
       </div>
-        <audio src={BackgroundAudio} ref={backAudioRef} loop />
+      <audio src={BackgroundAudio} ref={backAudioRef} loop />
     </div>
   )
 }

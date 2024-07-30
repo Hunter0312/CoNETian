@@ -26,10 +26,6 @@ const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
 
   const backAudioRef = useRef<HTMLAudioElement | null>(null);
 
-  useEffect(() => {
-    playAudio(backAudioRef);
-  }, [])
-
   return (
     <div className='flex flex-col justify-between items-center' style={{ height: "100%" }}>
       <div className='flex flex-col justify-between'>

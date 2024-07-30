@@ -42,6 +42,9 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
   }, [])
 
   useEffect(() => {
+    if (gameStatus === 1) {
+      stopAudio(backAudioRef);
+    }
 
     if (gameStatus === 2) {
       gameSpeed = 0;
@@ -254,7 +257,6 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
           setScore(score => score + 1);
 
           if (flagScore % 5 === 0 && flagScore >= 15) {
-            stopAudio(backAudioRef);
             setGames({
               gameSpeed: gameSpeed,
               gameFrame: gameFrame,

@@ -21,25 +21,18 @@ const rouletteResultMapping: { [key: string]: number } = {
   '1': 5,
 }
 
-const doubleRouletteResultMapping: { [key: string]: number } = {
-  '0': 0,
-  '0.5': 1,
-  '1': 1,
-  '0.1': 1,
-}
-
 const wheelData = [
-  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'white' }, optionSize: 2 },
   { option: 'Low', style: { backgroundColor: "#8DA8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'white' }, optionSize: 2 },
   { option: 'Medium', style: { backgroundColor: "#577DFF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'white' }, optionSize: 2 },
   { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'white' }, optionSize: 2 },
   { option: 'Low', style: { backgroundColor: "#8DA8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'white' }, optionSize: 2 },
   { option: 'Medium', style: { backgroundColor: "#577DFF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'white' }, optionSize: 2 },
   { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
 ]
 
@@ -116,7 +109,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
       setTimeout(() => {
         const mappedResult = rouletteResultMapping[rouletteResult];
         if (wheelData[mappedResult].option !== "Lose") {
-          if(wheelData[mappedResult].option === "Low") {
+          if (wheelData[mappedResult].option === "Low") {
             setLotteryBalance(0.1);
           } else if (wheelData[mappedResult].option === "Medium") {
             setLotteryBalance(0.5);
@@ -155,7 +148,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
       }, 100)
 
       setTimeout(() => {
-        const mappedResult = doubleRouletteResultMapping[rouletteResult];
+        const mappedResult = rouletteResult === 0 ? 0 : 1;
         if (doubleData[mappedResult].option !== "Lose") {
           setStatus("win");
         } else {
@@ -173,7 +166,6 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
     setStatus("double");
     handleDoubleSpinClick();
   }
-
 
   return (
     <div className={`flex flex-col justify-center items-center ${status === "delay" ? 'delay' : "lottery"}`}
@@ -224,23 +216,23 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                           Win
                           {
                             double === 1 &&
-                              <span>Win</span>
+                            <span>Win</span>
                           }
                         </p>
                         <p style={{ margin: 0, marginRight: "20px" }} className='double-lottery double-lose'>
                           Lose
                           {
                             double === 2 &&
-                              <span>Lose</span>
+                            <span>Lose</span>
                           }
                         </p>
                       </div>
                     </div>
                     <div style={{ marginBottom: "130px" }} className='flex flex-col'>
-                      <p style={{margin: 0, marginBottom: "10px", height: "2rem"}}></p>
+                      <p style={{ margin: 0, marginBottom: "10px", height: "2rem" }}></p>
                       <button style={{ fontSize: "32px", width: "230px", height: "52px", marginBottom: "16px", borderRadius: "16px", border: 0, backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}
                       >Spin to double</button>
-                      <button style={{ fontSize: "32px", width: "230px", height: "52px", borderRadius: "16px", border: 0, }} onClick={() => { setStatus("delay"); setLottery(0)}}>Keep playing</button>
+                      <button style={{ fontSize: "32px", width: "230px", height: "52px", borderRadius: "16px", border: 0, }} onClick={() => { setStatus("delay"); setLottery(0) }}>Keep playing</button>
                     </div>
                   </div>
                 </>

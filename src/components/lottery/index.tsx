@@ -59,7 +59,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
   const { load } = useAudioPlayer();
 
-  const { walletAddress, setMining, setLottery, lottery, lotteryBalance, setLotteryBalance } = useFlappyBirdContext();
+  const { walletAddress, setMining, setLottery, lottery } = useFlappyBirdContext();
 
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
@@ -109,13 +109,6 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
       setTimeout(() => {
         const mappedResult = rouletteResultMapping[rouletteResult];
         if (wheelData[mappedResult].option !== "Lose") {
-          if (wheelData[mappedResult].option === "Low") {
-            setLotteryBalance(0.1);
-          } else if (wheelData[mappedResult].option === "Medium") {
-            setLotteryBalance(0.5);
-          } else if (wheelData[mappedResult].option === "High") {
-            setLotteryBalance(1);
-          }
           setStatus("win");
         } else {
           setLottery(0);
@@ -148,7 +141,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
       }, 100)
 
       setTimeout(() => {
-        const mappedResult = rouletteResult === 0 ? 0 : 1;
+        const mappedResult = rouletteResult > 0 ? 1 : 0;
         if (doubleData[mappedResult].option !== "Lose") {
           setStatus("win");
         } else {

@@ -5,7 +5,7 @@ import Lose from './lose';
 
 import { pointer } from '../../shared/assets';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
-import { fetchstopMining } from '../../API/getData';
+import { fetchstopMining, fetchRouletteResult } from '../../API/getData';
 import Delay from './delay';
 import { useAudioPlayer } from 'react-use-audio-player';
 import { RouletteSpin, ButtonClick } from '../../shared/assets';
@@ -14,28 +14,42 @@ type Props = {
   setContinue: (e: number) => void,
 }
 
+const rouletteResultMapping: { [key: string]: number } = {
+  '0': 0,
+  '0.1': 1,
+  '0.5': 3,
+  '1': 5,
+}
+
+const doubleRouletteResultMapping: { [key: string]: number } = {
+  '0': 0,
+  '0.2': 1,
+  '1': 1,
+  '2': 1,
+}
+
 const wheelData = [
-  { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 2 },
-  { option: 'Medium', style: { backgroundColor: "#577DFF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 2 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
   { option: 'Low', style: { backgroundColor: "#8DA8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 2 },
-  { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 2 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
   { option: 'Medium', style: { backgroundColor: "#577DFF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 2 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
   { option: 'Low', style: { backgroundColor: "#8DA8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 2 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'Medium', style: { backgroundColor: "#577DFF", textColor: 'black' }, optionSize: 1 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
 ]
 
 const doubleData = [
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 4 },
   { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 4 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 4 },
   { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 4 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 4 },
   { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#353434", textColor: 'black' }, optionSize: 4 },
 ]
 
 const pointerProperties = {
@@ -83,25 +97,25 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
     init(walletAddress);
   }, [walletAddress])
 
-  const handleSpinClick = () => {
+  const handleSpinClick = async () => {
 
-    if(lottery === 1)
+    if (lottery === 1)
       return;
 
-    setLottery(1);
+    if (!mustSpin && walletAddress) {
+      const rouletteResult = await fetchRouletteResult(walletAddress);
 
-    load(RouletteSpin, {
-      autoplay: true
-    })
+      setLottery(1);
 
-    if (!mustSpin) {
-      const newPrizeNumber = Math.floor(Math.random() * wheelData.length);
-      setPrizeNumber(newPrizeNumber);
+      load(RouletteSpin, {
+        autoplay: true
+      })
+      setPrizeNumber(rouletteResult);
       setMustSpin(true);
 
       setTimeout(() => {
-
-        if (wheelData[newPrizeNumber].option !== "Lose") {
+        const mappedResult = rouletteResultMapping[rouletteResult]
+        if (wheelData[mappedResult].option !== "Lose") {
           setStatus("win");
         } else {
           setLottery(0);
@@ -112,23 +126,25 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
     }
   }
 
-  const handleDoubleSpinClick = () => {
-    if(lottery === 2)
+  const handleDoubleSpinClick = async () => {
+    if (lottery === 2)
       return;
 
-    setLottery(2);
+    
 
-    load(RouletteSpin, {
-      autoplay: true
-    })
+    if (!mustSpin && walletAddress) {
+      const rouletteResult = await fetchRouletteResult(walletAddress);
+      setLottery(2);
 
-    if (!mustSpin) {
-      const newPrizeNumber = Math.floor(Math.random() * doubleData.length);
-      setPrizeNumber(newPrizeNumber);
+      load(RouletteSpin, {
+        autoplay: true
+      })
+      setPrizeNumber(rouletteResult);
       setMustSpin(true);
 
       setTimeout(() => {
-        if (doubleData[newPrizeNumber].option !== "Lose") {
+        const mappedResult = doubleRouletteResultMapping[rouletteResult]
+        if (doubleData[mappedResult].option !== "Lose") {
           setStatus("win");
         } else {
           setLottery(3);

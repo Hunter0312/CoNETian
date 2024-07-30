@@ -13,7 +13,7 @@ import { BackgroundAudio, ButtonClick } from './shared/assets';
 import { playAudio } from './shared/functions';
 import { useAudioPlayer } from 'react-use-audio-player';
 
-type command = "miningStatus";
+type command = "balanceStatus" | "miningStatus";
 
 interface channelWroker {
   cmd: command;
@@ -23,17 +23,38 @@ interface channelWroker {
 const channelWrokerListenName = "toFrontEnd";
 const profileVerChannel = new BroadcastChannel(channelWrokerListenName);
 
-export const listeningMiningHook = (
-  miningHook: React.Dispatch<React.SetStateAction<any[]>>
-) => {
-  profileVerChannel.addEventListener("message", (e) =>
-    profileVerChannelListening(e, miningHook)
-  );
+const listeningPool: Map<string, (e: MessageEvent<any>) => void> = new Map();
+
+const listeningManager = (key: string, fun: (e: MessageEvent<any>) => void) => {
+  const listening = listeningPool.get(key);
+  if (listening) {
+    profileVerChannel.removeEventListener("message", listening);
+  }
+  listeningPool.set(key, fun);
+  profileVerChannel.addEventListener("message", fun);
 };
+
+export const listeningMiningHook = (
+  miningHook: React.Dispatch<React.SetStateAction<any[]>>,
+) => {
+  const fun = (e: MessageEvent<any>) =>
+    profileVerChannelListening(e, miningHook);
+  return listeningManager("listeningMiningHook", fun);
+};
+
+export const listeningBalanceHook = (
+  balanceHook: React.Dispatch<React.SetStateAction<any[]>>,
+) => {
+  const fun = (e: MessageEvent<any>) =>
+    profileVerChannelListening(e, null, balanceHook);
+  return listeningManager("listeningBalanceHook", fun);
+};
+
 
 const profileVerChannelListening = (
   e: MessageEvent<any>,
-  miningHook: React.Dispatch<React.SetStateAction<any[]>> | null = null
+  miningHook: React.Dispatch<React.SetStateAction<any[]>> | null = null,
+  balanceHook: React.Dispatch<React.SetStateAction<any[]>> | null = null
 ) => {
   let cmd: channelWroker;
   try {
@@ -48,6 +69,13 @@ const profileVerChannelListening = (
     case "miningStatus": {
       if (miningHook) {
         return miningHook(cmd?.data);
+      }
+      return "";
+    }
+
+    case "balanceStatus": {
+      if (balanceHook) {
+        return balanceHook(cmd?.data);
       }
       return "";
     }

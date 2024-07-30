@@ -1,10 +1,10 @@
 import { v4 } from "uuid";
 
 interface WorkerCommand {
-	cmd: any;
-	data?: any;
-	uuid: string;
-	err?: any;
+  cmd: any;
+  data?: any;
+  uuid: string;
+  err?: any;
 }
 
 const channelWrokerListenName = "toMainWroker";
@@ -83,14 +83,14 @@ export const createOrGetWallet: () => Promise<string> = () =>
 export const getWalletCCNTPBalance: (
   walletAddress: string
 ) => Promise<string> = (walletAddress: string) =>
-  new Promise((resolve) => {
-    const cmd: WorkerCommand = {
-      cmd: "getWalletCCNTPBalance",
-      uuid: v4(),
-      data: [walletAddress],
-    };
-    return _postMessage(cmd, true, resolve);
-  });
+    new Promise((resolve) => {
+      const cmd: WorkerCommand = {
+        cmd: "getWalletCCNTPBalance",
+        uuid: v4(),
+        data: [walletAddress],
+      };
+      return _postMessage(cmd, true, resolve);
+    });
 
 export const startMining: (walletAddress: string) => Promise<string> = (
   walletAddress: string
@@ -110,6 +110,18 @@ export const stopMining: (walletAddress: string) => Promise<string> = (
   new Promise((resolve) => {
     const cmd: WorkerCommand = {
       cmd: "stopMining",
+      uuid: v4(),
+      data: [walletAddress],
+    };
+    return _postMessage(cmd, true, resolve);
+  });
+
+export const getRouletteResult: (walletAddress: string) => Promise<string> = (
+  walletAddress: string
+) =>
+  new Promise((resolve) => {
+    const cmd: WorkerCommand = {
+      cmd: "getRouletteResult",
       uuid: v4(),
       data: [walletAddress],
     };

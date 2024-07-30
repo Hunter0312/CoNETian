@@ -5,35 +5,49 @@ import Lose from './lose';
 
 import { pointer } from '../../shared/assets';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
-import { fetchstopMining } from '../../API/getData';
+import { fetchRouletteResult, fetchstopMining } from '../../API/getData';
 import Delay from './delay';
 
 type Props = {
   setContinue: (e: number) => void,
 }
 
+const rouletteResultMapping: { [key: number]: number } = {
+  0: 0,
+  0.1: 1,
+  0.5: 3,
+  1: 5,
+}
+
+const doubleRouletteResultMapping: { [key: number]: number } = {
+  0: 0,
+  0.2: 1,
+  1: 1,
+  2: 1,
+}
+
 const wheelData = [
-  { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
-  { option: 'Medium', style: { backgroundColor: "#577DFF", textColor: 'black' }, optionSize: 1 },
   { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
   { option: 'Low', style: { backgroundColor: "#8DA8FF", textColor: 'black' }, optionSize: 1 },
   { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
-  { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
-  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
   { option: 'Medium', style: { backgroundColor: "#577DFF", textColor: 'black' }, optionSize: 1 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
   { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
   { option: 'Low', style: { backgroundColor: "#8DA8FF", textColor: 'black' }, optionSize: 1 },
   { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'Medium', style: { backgroundColor: "#577DFF", textColor: 'black' }, optionSize: 1 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 2 },
+  { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
 ]
 
 const doubleData = [
-  { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
   { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 4 },
   { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
   { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 4 },
   { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
   { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'black' }, optionSize: 4 },
+  { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
 ]
 
 const pointerProperties = {
@@ -66,42 +80,39 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
     init(walletAddress);
   }, [walletAddress])
 
-  const handleSpinClick = () => {
-
+  const handleSpinClick = async () => {
     if (!mustSpin) {
-      const newPrizeNumber = Math.floor(Math.random() * wheelData.length);
-      setPrizeNumber(newPrizeNumber);
+      const rouletteResult = await fetchRouletteResult(walletAddress);
+      setPrizeNumber(rouletteResult);
       setMustSpin(true);
 
       setTimeout(() => {
-
         setLottery(false);
-        if (wheelData[newPrizeNumber].option !== "Lose") {
+        const mappedResult = rouletteResultMapping[rouletteResult]
+        if (wheelData[mappedResult].option !== "Lose") {
           setStatus("win");
         } else {
           setStatus("lose");
         }
-
       }, 6000);
     }
   }
 
-  const handleDoubleSpinClick = () => {
+  const handleDoubleSpinClick = async () => {
 
     if (!mustSpin) {
-      const newPrizeNumber = Math.floor(Math.random() * doubleData.length);
-      setPrizeNumber(newPrizeNumber);
+      const rouletteResult = await fetchRouletteResult(walletAddress);
+      setPrizeNumber(rouletteResult);
       setMustSpin(true);
 
       setTimeout(() => {
-
         setLottery(false);
-        if (doubleData[newPrizeNumber].option !== "Lose") {
+        const mappedResult = doubleRouletteResultMapping[rouletteResult]
+        if (doubleData[mappedResult].option !== "Lose") {
           setStatus("win");
         } else {
           setStatus("lose");
         }
-
       }, 6000);
     }
   }
@@ -134,6 +145,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
           status === "win" ?
             <Win
               setContinue={(e: string) => setStatus(e)}
+              prizeNumber={prizeNumber}
             /> :
             status === "lose" ?
               <Lose

@@ -1,4 +1,4 @@
-import { createOrGetWallet, getWalletCCNTPBalance, startMining, stopMining } from ".";
+import { createOrGetWallet, getRouletteResult, getWalletCCNTPBalance, startMining, stopMining } from ".";
 
 export const fetchWalletData = async () => {
     try {
@@ -67,5 +67,26 @@ export const fetchstopMining = async (walletAddress: string) => {
         }
     } catch (error) {
         console.error("Error stopMining", error);
+    }
+}
+
+export const fetchRouletteResult = async (walletAddress: string) => {
+    try {
+        const response = await getRouletteResult(walletAddress);
+
+        if (Array.isArray(response) && response.length >= 2) {
+            const [status, data] = response;
+            if (status === "SUCCESS") {
+                try {
+                    return data[0].lottery;
+                } catch (error) {
+                    console.error("Error fetching roulette data", error);
+                }
+            } else {
+                console.error("Failed to fetch roulette data");
+            }
+        }
+    } catch (error) {
+        console.error("Error in fetching roulette data", error);
     }
 }

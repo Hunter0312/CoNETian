@@ -46,7 +46,7 @@ const Playground: React.FC = () => {
           <>
             {
               gameStatus === 2 &&
-                <Lottery setContinue={() => gameStatusHandle(3)} />
+              <Lottery setContinue={() => gameStatusHandle(3)} />
             }
             <Game
               setGameStatus={(event: number) => gameStatusHandle(event)} gameStatus={gameStatus}

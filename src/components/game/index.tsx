@@ -270,20 +270,6 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
               });
               setGameStatus(2);
             }
-          const chanceToShowRoulette = Math.random() * 10 > 5;
-
-          if (chanceToShowRoulette && flagScore % 5 === 0 && flagScore >= 15) {
-            setGames({
-              gameSpeed: gameSpeed,
-              gameFrame: gameFrame,
-              gravity: gravity,
-              bird: bird,
-              pipes: pipes,
-              ground: ground,
-              frame: frame,
-              score: flagScore,
-            });
-            setGameStatus(2);
           }
           pipe.passed = true;
         }

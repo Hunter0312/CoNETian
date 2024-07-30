@@ -90,7 +90,7 @@ const profileVerChannelListening = (
 
 function App() {
 
-  const { path, setPrivateKey, setWalletAddress, walletAddress, mining, setMining, setOnlineMiners, setMiningRate, gameStatus } = useFlappyBirdContext();
+  const { path, setPrivateKey, setWalletAddress, walletAddress, mining, setMining, setOnlineMiners, setMiningRate, setBalance, gameStatus } = useFlappyBirdContext();
 
   const backAudioRef = useRef<HTMLAudioElement | null>(null);
   const { load } = useAudioPlayer();
@@ -121,6 +121,15 @@ function App() {
       setOnlineMiners(parsedData?.online);
     } catch (error) {
       console.error("Error parsing mining data", error);
+    }
+  });
+
+  listeningBalanceHook((response: any) => {
+    try {
+      const [data] = response;
+      setBalance(parseFloat(data));
+    } catch (error) {
+      console.error("Error parsing balance data", error);
     }
   });
 
@@ -168,7 +177,7 @@ function App() {
       }
       {
         path !== '/start' &&
-          <audio src={BackgroundAudio} ref={backAudioRef} loop />
+        <audio src={BackgroundAudio} ref={backAudioRef} loop />
       }
     </div>
   );

@@ -18,25 +18,10 @@ const buttonStyle = {
 }
 
 const Wallet: React.FC = () => {
-
-  const { setPath, walletAddress, privateKey, setBalance, balance } = useFlappyBirdContext();
+  const { setPath, walletAddress, privateKey, balance } = useFlappyBirdContext();
 
   const [walletAddr, setWalletAddr] = useState<boolean>(false);
   const [privateK, setPrivateK] = useState<boolean>(false);
-
-  useEffect(() => {
-    const init = async (address: string) => {
-      const response = await fetchCNTPBalance(address);
-      if (response && response.length >= 2) {
-        if (response[0] === 'SUCCESS') {
-          setBalance(response[1][0]);
-        }
-      }
-    }
-    if (walletAddress && privateKey) {
-      init(walletAddress);
-    }
-  }, [walletAddress, privateKey]);
 
   useEffect(() => {
     if (walletAddr) {

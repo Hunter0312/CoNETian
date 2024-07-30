@@ -15,7 +15,7 @@ const StartMessage: React.FC = () => {
     width: "240px"
   }
 
-  const { setPath, walletAddress } = useFlappyBirdContext();
+  const { setPath, walletAddress, setGameStatus } = useFlappyBirdContext();
   const [bird, setBird] = useState<number>(0);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const StartMessage: React.FC = () => {
       <img src={bird % 3 === 0 ? birdImg : bird % 3 === 1 ? birdFlyImg : birdFly} />
 
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "16px" }}>
-        <button style={buttonStyle} className='startButton' onClick={() => setPath('/start')}>Start</button>
+        <button style={buttonStyle} className='startButton' onClick={() => {setPath('/start'); setGameStatus(0)}}>Start</button>
         <button style={buttonStyle} onClick={() => setPath('/wallet')}>My Wallet</button>
         <button style={buttonStyle} onClick={() => setPath('/about')}>About</button>
       </div>

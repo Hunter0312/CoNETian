@@ -51,6 +51,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -81,8 +82,9 @@
   justify-content: flex-end;
 }
 
-p, button {
-  font-family: 'FlappyBird'!important;
+p,
+button {
+  font-family: 'FlappyBird' !important;
 }
 
 button {
@@ -90,5 +92,47 @@ button {
 }
 
 .startButton {
-  background-image: linear-gradient(to right, #D775FF , #8DA8FF);
+  background-image: linear-gradient(to right, #D775FF, #8DA8FF);
+}
+
+.double-lottery {
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: white;
+  color: transparent;
+  font-size: 80px;
+  margin: 0;
+  margin-left: 20px;
+  font-family: 'system-ui' !important;
+  font-weight: 800;
+  position: relative;
+}
+
+.double-lottery span {
+  z-index: -1;
+  filter: blur(4.5px);
+  -webkit-text-stroke-width: 12px;
+  -webkit-text-stroke-color: #12bbf2;
+  color: transparent;
+  font-size: 80px;
+  margin: 0;
+  font-family: 'system-ui' !important;
+  font-weight: 800;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.double-lose span {
+  z-index: -1;
+  filter: blur(3.5px);
+  -webkit-text-stroke-width: 11px;
+  -webkit-text-stroke-color: #f118c1;
+  color: transparent;
+  font-size: 80px;
+  margin: 0;
+  font-family: 'system-ui' !important;
+  font-weight: 800;
+  position: absolute;
+  top: 0;
+  left: 0;
 }

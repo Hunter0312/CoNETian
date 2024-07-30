@@ -7,6 +7,8 @@ import { pointer } from '../../shared/assets';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 import { fetchstopMining } from '../../API/getData';
 import Delay from './delay';
+import { useAudioPlayer } from 'react-use-audio-player';
+import { RouletteSpin, ButtonClick } from '../../shared/assets';
 
 type Props = {
   setContinue: (e: number) => void,
@@ -48,11 +50,26 @@ const pointerProperties = {
 
 const Lottery: React.FC<Props> = ({ setContinue }) => {
 
-  const { walletAddress, mining, setMining, setLottery } = useFlappyBirdContext();
+  const { load } = useAudioPlayer();
+
+  const { walletAddress, setMining, setLottery, lottery } = useFlappyBirdContext();
 
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [status, setStatus] = useState<string>("default");
+
+  useEffect(() => {
+    // const container = document.getElementsByTagName("button");
+    // const buttonArray = Array.from(container);
+    // const init = () => {
+    //   load(ButtonClick, {
+    //     autoplay: true,
+    //   })
+    // }
+    // buttonArray.map(element => {
+    //   element.addEventListener("click", init);
+    // });
+  }, [status])
 
   useEffect(() => {
     const init = async (walletAddress: string) => {
@@ -68,6 +85,15 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
   const handleSpinClick = () => {
 
+    if(lottery === 1)
+      return;
+
+    setLottery(1);
+
+    load(RouletteSpin, {
+      autoplay: true
+    })
+
     if (!mustSpin) {
       const newPrizeNumber = Math.floor(Math.random() * wheelData.length);
       setPrizeNumber(newPrizeNumber);
@@ -75,10 +101,10 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
       setTimeout(() => {
 
-        setLottery(false);
         if (wheelData[newPrizeNumber].option !== "Lose") {
           setStatus("win");
         } else {
+          setLottery(0);
           setStatus("lose");
         }
 
@@ -87,6 +113,14 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
   }
 
   const handleDoubleSpinClick = () => {
+    if(lottery === 2)
+      return;
+
+    setLottery(2);
+
+    load(RouletteSpin, {
+      autoplay: true
+    })
 
     if (!mustSpin) {
       const newPrizeNumber = Math.floor(Math.random() * doubleData.length);
@@ -94,10 +128,10 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
       setMustSpin(true);
 
       setTimeout(() => {
-        setLottery(false);
         if (doubleData[newPrizeNumber].option !== "Lose") {
           setStatus("win");
         } else {
+          setLottery(3);
           setStatus("lose");
         }
       }, 6000);

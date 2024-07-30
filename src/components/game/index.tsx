@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { levels } from '../../shared/gameParams';
-import Lottery from '../lottery';
+import { Tap, BackgroundAudio, ConetianDeath } from '../../shared/assets';
+import { playAudio, stopAudio } from '../../shared/functions';
+import { useAudioPlayer } from 'react-use-audio-player';
 
 import { birdImg, groundImage, backgroundImage, pipeBottomImg, pipeTopImg, birdFly } from '../../shared/assets';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
@@ -14,7 +16,9 @@ type Props = {
 
 const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
 
-  const { setGames, games, setLottery, mining } = useFlappyBirdContext();
+  const { load } = useAudioPlayer();
+
+  const { setGames, games, } = useFlappyBirdContext();
 
   let gameSpeed = levels.speedLevel1;
   let gameFrame = levels.frameLevel1;
@@ -30,6 +34,13 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
   let flyBird = 0;
   let flagScore = 0;
 
+
+  const backAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    playAudio(backAudioRef);
+  }, [])
+
   useEffect(() => {
 
     if (gameStatus === 2) {
@@ -44,6 +55,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
     }
 
     if (gameStatus === 3) {
+      playAudio(backAudioRef);
       gameSpeed = games.gameSpeed;
       gravity = 0.6;
       bird = games.bird;
@@ -220,6 +232,9 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
       bird.dy += gravity;
       bird.y += bird.dy;
       if (bird.y + bird.height > ground.y || bird.y < 0) {
+        load(ConetianDeath, {
+          autoplay: true,
+        })
         setGameStatus(1);
         return;
       }
@@ -239,6 +254,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
           setScore(score => score + 1);
 
           if (flagScore % 5 === 0 && flagScore >= 15) {
+            stopAudio(backAudioRef);
             setGames({
               gameSpeed: gameSpeed,
               gameFrame: gameFrame,
@@ -249,12 +265,14 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
               frame: frame,
               score: flagScore,
             });
-            setLottery(true);
             setGameStatus(2);
           }
           pipe.passed = true;
         }
         if (checkPixelCollision(birdContext, pipe)) {
+          load(ConetianDeath, {
+            autoplay: true,
+          })
           setGameStatus(1);
         }
       });
@@ -263,10 +281,10 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
       drawPipes();
       moveGround();
 
-      if(pipes.length === 0)
+      if (pipes.length === 0)
         addPipe();
 
-      if (canvas.width - pipes[pipes.length - 1]?.x >= 450) {
+      if (canvas.width - pipes[pipes.length - 1]?.x >= 500) {
         addPipe();
       }
 
@@ -279,7 +297,11 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
     };
 
     const handleMouseClick = () => {
+
       if (gameStatus === 0 || gameStatus === 3) {
+        load(Tap, {
+          autoplay: true,
+        })
         bird.dy = -10;
       }
     };
@@ -301,6 +323,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
   return (
     <div style={{ overflow: 'hidden', height: "100vh" }}>
       <canvas ref={canvasRef} />
+      <audio src={BackgroundAudio} ref={backAudioRef} />
     </div>
   );
 };

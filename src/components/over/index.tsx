@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 import { fetchCNTPBalance } from '../../API/getData';
+import { BackgroundAudio } from '../../shared/assets';
+import { playAudio } from '../../shared/functions';
 
 type Props = {
   setRestart: () => void,
@@ -21,6 +23,12 @@ const buttonStyle = {
 const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
 
   const { setPath, balance, setBalance, walletAddress, privateKey } = useFlappyBirdContext();
+
+  const backAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    playAudio(backAudioRef);
+  }, [])
 
   useEffect(() => {
     const init = async (address: string) => {
@@ -56,7 +64,7 @@ const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
           Main Menu
         </button>
       </div>
-
+        <audio src={BackgroundAudio} ref={backAudioRef} loop />
     </div>
   )
 }

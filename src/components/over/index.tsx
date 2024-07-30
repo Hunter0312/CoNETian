@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
-import { fetchCNTPBalance } from '../../API/getData';
 import { BackgroundAudio } from '../../shared/assets';
-import { playAudio } from '../../shared/functions';
 
 type Props = {
   setRestart: () => void,
@@ -24,7 +22,6 @@ const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
 
   const { setPath, balance } = useFlappyBirdContext();
 
-  const backAudioRef = useRef<HTMLAudioElement | null>(null);
 
   return (
     <div className='flex flex-col justify-between items-center' style={{ height: "100%" }}>
@@ -46,7 +43,6 @@ const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
           Main Menu
         </button>
       </div>
-      <audio src={BackgroundAudio} ref={backAudioRef} loop />
     </div>
   )
 }

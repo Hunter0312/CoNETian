@@ -31,7 +31,7 @@ const Playground: React.FC = () => {
     }
 
     if (gameStatus === 2) {
-      // if (!mining) {
+      // if (!walletAddress) {
       //   setGameStatus(3);
       // }
     }

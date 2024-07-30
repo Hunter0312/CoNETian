@@ -5,8 +5,10 @@ import Lose from './lose';
 
 import { pointer } from '../../shared/assets';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
-import { fetchRouletteResult, fetchstopMining } from '../../API/getData';
+import { fetchstopMining, fetchRouletteResult } from '../../API/getData';
 import Delay from './delay';
+import { useAudioPlayer } from 'react-use-audio-player';
+import { RouletteSpin, ButtonClick } from '../../shared/assets';
 
 type Props = {
   setContinue: (e: number) => void,
@@ -62,15 +64,30 @@ const pointerProperties = {
 
 const Lottery: React.FC<Props> = ({ setContinue }) => {
 
-  const { walletAddress, mining, setMining, setLottery } = useFlappyBirdContext();
+  const { load } = useAudioPlayer();
+
+  const { walletAddress, setMining, setLottery, lottery } = useFlappyBirdContext();
 
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [status, setStatus] = useState<string>("default");
 
   useEffect(() => {
+    // const container = document.getElementsByTagName("button");
+    // const buttonArray = Array.from(container);
+    // const init = () => {
+    //   load(ButtonClick, {
+    //     autoplay: true,
+    //   })
+    // }
+    // buttonArray.map(element => {
+    //   element.addEventListener("click", init);
+    // });
+  }, [status])
+
+  useEffect(() => {
     const init = async (walletAddress: string) => {
-      if (walletAddress && mining === true) {
+      if (walletAddress) {
         const response = await fetchstopMining(walletAddress);
         if (response) {
           setMining(false)
@@ -81,35 +98,56 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
   }, [walletAddress])
 
   const handleSpinClick = async () => {
+
+    if (lottery === 1)
+      return;
+
     if (!mustSpin && walletAddress) {
       const rouletteResult = await fetchRouletteResult(walletAddress);
+
+      setLottery(1);
+
+      load(RouletteSpin, {
+        autoplay: true
+      })
       setPrizeNumber(rouletteResult);
       setMustSpin(true);
 
       setTimeout(() => {
-        setLottery(false);
         const mappedResult = rouletteResultMapping[rouletteResult]
         if (wheelData[mappedResult].option !== "Lose") {
           setStatus("win");
         } else {
+          setLottery(0);
           setStatus("lose");
         }
+
       }, 6000);
     }
   }
 
   const handleDoubleSpinClick = async () => {
+    if (lottery === 2)
+      return;
+
+    
+
     if (!mustSpin && walletAddress) {
       const rouletteResult = await fetchRouletteResult(walletAddress);
+      setLottery(2);
+
+      load(RouletteSpin, {
+        autoplay: true
+      })
       setPrizeNumber(rouletteResult);
       setMustSpin(true);
 
       setTimeout(() => {
-        setLottery(false);
         const mappedResult = doubleRouletteResultMapping[rouletteResult]
         if (doubleData[mappedResult].option !== "Lose") {
           setStatus("win");
         } else {
+          setLottery(3);
           setStatus("lose");
         }
       }, 6000);
@@ -122,10 +160,10 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
       {
         status === "default" ?
           <>
-            <p style={{ fontSize: "56px", color: "white" }}>Spin the Wheel</p>
+            <p style={{ fontSize: "34px", color: "white" }}>Spin the wheel for a chance to win extra CNTP</p>
             <Wheel
               mustStartSpinning={mustSpin}
-              prizeNumber={rouletteResultMapping[prizeNumber]}
+              prizeNumber={prizeNumber}
               data={wheelData}
               spinDuration={0.5}
               outerBorderColor={localStorage.getItem('mui-mode') === 'light' ? "#D6E3FF" : "#f5eeee"}
@@ -139,12 +177,11 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
               // pointerRoullete
               pointerProps={pointerProperties}
             />
-            <button onClick={handleSpinClick} style={{ fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px" }}>SPIN</button>
+            <button onClick={handleSpinClick} style={{ fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px", backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}>SPIN</button>
           </> :
           status === "win" ?
             <Win
               setContinue={(e: string) => setStatus(e)}
-              prizeNumber={prizeNumber}
             /> :
             status === "lose" ?
               <Lose
@@ -155,10 +192,10 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                   setContinue={() => setContinue(3)}
                 /> :
                 <>
-                  <p style={{ fontSize: "56px", color: "white" }}>Spin the Wheel</p>
+                  <p style={{ fontSize: "34px", color: "white" }}>Spin the wheel for a chance to win extra CNTP</p>
                   <Wheel
                     mustStartSpinning={mustSpin}
-                    prizeNumber={doubleRouletteResultMapping[prizeNumber]}
+                    prizeNumber={prizeNumber}
                     data={doubleData}
                     spinDuration={0.5}
                     outerBorderColor={localStorage.getItem('mui-mode') === 'light' ? "#D6E3FF" : "#f5eeee"}
@@ -172,7 +209,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                     // pointerRoullete
                     pointerProps={pointerProperties}
                   />
-                  <button onClick={handleDoubleSpinClick} style={{ fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px" }}>SPIN</button>
+                  <button onClick={handleDoubleSpinClick} style={{ fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px", backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}>SPIN</button>
                 </>
       }
     </div>

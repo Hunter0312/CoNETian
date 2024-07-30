@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
+import { fetchCNTPBalance } from '../../API/getData';
+import { BackgroundAudio } from '../../shared/assets';
+import { playAudio } from '../../shared/functions';
 
 type Props = {
   setRestart: () => void,
@@ -7,9 +10,39 @@ type Props = {
   hScore: number,
 }
 
+const buttonStyle = {
+  border: "0",
+  backgroundColor: "white",
+  color: "black",
+  fontSize: "2rem",
+  padding: "10px 20px",
+  borderRadius: "15px",
+  width: "240px"
+}
+
 const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
 
-  const { setPath, balance } = useFlappyBirdContext();
+  const { setPath, balance, setBalance, walletAddress, privateKey } = useFlappyBirdContext();
+
+  const backAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    playAudio(backAudioRef);
+  }, [])
+
+  useEffect(() => {
+    const init = async (address: string) => {
+      const response = await fetchCNTPBalance(address);
+      if (response && response.length >= 2) {
+        if (response[0] === 'SUCCESS') {
+          setBalance(response[1][0]);
+        }
+      }
+    }
+    if (walletAddress && privateKey) {
+      init(walletAddress);
+    }
+  }, [walletAddress, privateKey]);
 
   return (
     <div className='flex flex-col justify-between items-center' style={{ height: "100%" }}>
@@ -25,13 +58,13 @@ const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
         <p style={{ color: "white", fontSize: "2.5rem", margin: 0 }}>Highest Score:</p>
         <p style={{ color: "white", fontSize: "3rem", margin: 0 }}>{hScore}</p>
       </div>
-      <div className='flex flex-col'>
-        <button onClick={setRestart} style={{ color: "white", padding: 0, backgroundColor: "transparent", border: 0, fontFamily: "FlappyBird", fontSize: "2.5rem", marginBottom: "2rem" }}>Restart</button>
-        <button onClick={() => setPath('/')} style={{ color: "white", padding: 0, backgroundColor: "transparent", border: 0, fontFamily: "FlappyBird", fontSize: "2.5rem", marginBottom: "6rem" }}>
+      <div className='flex flex-col align-center justify-between' style={{ gap: "16px" }}>
+        <button onClick={setRestart} style={buttonStyle} className='startButton'>Restart</button>
+        <button onClick={() => setPath('/')} style={{ ...buttonStyle, marginBottom: "5rem" }}>
           Main Menu
         </button>
       </div>
-
+        <audio src={BackgroundAudio} ref={backAudioRef} loop />
     </div>
   )
 }

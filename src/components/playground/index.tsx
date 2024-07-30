@@ -7,9 +7,8 @@ import { loading } from '../../shared/assets';
 import Lottery from '../lottery';
 
 const Playground: React.FC = () => {
-  const [gameStatus, setGameStatus] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
-  const { walletAddress, mining, onlineMiners: online, miningRate: rate, lottery } = useFlappyBirdContext();
+  const { walletAddress, mining, onlineMiners: online, miningRate: rate, lottery, gameStatus, setGameStatus } = useFlappyBirdContext();
   const [highScore, setHighScore] = useState<number>(0);
 
   const gameStatusHandle = (event: number) => {
@@ -46,7 +45,7 @@ const Playground: React.FC = () => {
           <>
             {
               gameStatus === 2 &&
-              <Lottery setContinue={() => gameStatusHandle(3)} />
+                <Lottery setContinue={() => gameStatusHandle(3)} />
             }
             <Game
               setGameStatus={(event: number) => gameStatusHandle(event)} gameStatus={gameStatus}

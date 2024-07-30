@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
+import { fetchCNTPBalance } from '../../API/getData';
 import { slice } from '../../shared/functions';
 import copy from "copy-to-clipboard";
 import { IoCopySharp } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
 import { loading } from '../../shared/assets';
+
+const buttonStyle = {
+  border: "0",
+  backgroundColor: "white",
+  color: "black",
+  fontSize: "2rem",
+  padding: "10px 20px",
+  borderRadius: "15px",
+  width: "240px",
+}
 
 const Wallet: React.FC = () => {
 
@@ -12,6 +23,20 @@ const Wallet: React.FC = () => {
 
   const [walletAddr, setWalletAddr] = useState<boolean>(false);
   const [privateK, setPrivateK] = useState<boolean>(false);
+
+  useEffect(() => {
+    const init = async (address: string) => {
+      const response = await fetchCNTPBalance(address);
+      if (response && response.length >= 2) {
+        if (response[0] === 'SUCCESS') {
+          setBalance(response[1][0]);
+        }
+      }
+    }
+    if (walletAddress && privateKey) {
+      init(walletAddress);
+    }
+  }, [walletAddress, privateKey]);
 
   useEffect(() => {
     if (walletAddr) {
@@ -36,7 +61,7 @@ const Wallet: React.FC = () => {
   }
 
   return (
-    <div style={{ height: "100%", gap: "20px", color: "white" }} className='flex flex-col justify-between'>
+    <div style={{ height: "100%", gap: "20px", color: "white" }} className='flex flex-col justify-between items-center'>
       <div className='flex flex-col justify-between' style={{ paddingTop: "7rem" }}>
         {
           walletAddress === '' ?
@@ -75,7 +100,7 @@ const Wallet: React.FC = () => {
         }
 
       </div>
-      <button onClick={() => setPath('/')} style={{ color: "white", padding: 0, backgroundColor: "transparent", border: 0, fontFamily: "FlappyBird", fontSize: "2.5rem", marginBottom: "4rem" }}>
+      <button onClick={() => setPath('/')} style={{ ...buttonStyle, marginBottom: "5rem" }}>
         Main Menu
       </button>
     </div>

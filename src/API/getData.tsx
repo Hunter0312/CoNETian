@@ -1,4 +1,4 @@
-import { createOrGetWallet, getRouletteResult, getWalletCCNTPBalance, startMining, stopMining } from ".";
+import { createOrGetWallet, getWalletCCNTPBalance, startMining, stopMining, getRouletteResult } from ".";
 
 export const fetchWalletData = async () => {
     try {
@@ -69,6 +69,7 @@ export const fetchstopMining = async (walletAddress: string) => {
         console.error("Error stopMining", error);
     }
 }
+
 
 export const fetchRouletteResult = async (walletAddress: string) => {
     if (walletAddress) {

@@ -6,9 +6,12 @@ import StartMessage from './components/start';
 import Wallet from './components/wallet';
 import About from './components/about';
 import { useFlappyBirdContext } from './providers/FlappyBirdProvider';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { initializeWorkerService } from './services/workerService';
 import { fetchStartMining, fetchWalletData } from './API/getData';
+import { BackgroundAudio, ButtonClick } from './shared/assets';
+import { playAudio } from './shared/functions';
+import { useAudioPlayer } from 'react-use-audio-player';
 
 type command = "balanceStatus" | "miningStatus";
 
@@ -46,6 +49,7 @@ export const listeningBalanceHook = (
     profileVerChannelListening(e, null, balanceHook);
   return listeningManager("listeningBalanceHook", fun);
 };
+
 
 const profileVerChannelListening = (
   e: MessageEvent<any>,
@@ -86,7 +90,27 @@ const profileVerChannelListening = (
 
 function App() {
 
-  const { path, setPrivateKey, setWalletAddress, walletAddress, mining, setMining, setOnlineMiners, setMiningRate, setBalance } = useFlappyBirdContext();
+  const { path, setPrivateKey, setWalletAddress, walletAddress, mining, setMining, setOnlineMiners, setMiningRate, gameStatus } = useFlappyBirdContext();
+
+  const backAudioRef = useRef<HTMLAudioElement | null>(null);
+  const { load } = useAudioPlayer();
+
+  useEffect(() => {
+    // const container = document.getElementsByTagName("button");
+    // const buttonArray = Array.from(container);
+    // const init = () => {
+    //   load(ButtonClick, {
+    //     autoplay: true,
+    //   })
+    // }
+    // buttonArray.map(element => {
+    //   element.addEventListener("click", init);
+    // });
+  }, [path, gameStatus])
+
+  useEffect(() => {
+    playAudio(backAudioRef);
+  }, [path])
 
   listeningMiningHook((response: any) => {
     try {
@@ -97,15 +121,6 @@ function App() {
       setOnlineMiners(parsedData?.online);
     } catch (error) {
       console.error("Error parsing mining data", error);
-    }
-  });
-
-  listeningBalanceHook((response: any) => {
-    try {
-      const [data] = response;
-      setBalance(parseFloat(data));
-    } catch (error) {
-      console.error("Error parsing balance data", error);
     }
   });
 
@@ -150,6 +165,10 @@ function App() {
         path === '/start' && <Playground /> ||
         path === '/wallet' && <Wallet /> ||
         path === '/about' && <About />
+      }
+      {
+        path !== '/start' &&
+          <audio src={BackgroundAudio} ref={backAudioRef} loop />
       }
     </div>
   );

@@ -12,18 +12,18 @@ type Props = {
   setContinue: (e: number) => void,
 }
 
-const rouletteResultMapping: { [key: number]: number } = {
-  0: 0,
-  0.1: 1,
-  0.5: 3,
-  1: 5,
+const rouletteResultMapping: { [key: string]: number } = {
+  '0': 0,
+  '0.1': 1,
+  '0.5': 3,
+  '1': 5,
 }
 
-const doubleRouletteResultMapping: { [key: number]: number } = {
-  0: 0,
-  0.2: 1,
-  1: 1,
-  2: 1,
+const doubleRouletteResultMapping: { [key: string]: number } = {
+  '0': 0,
+  '0.2': 1,
+  '1': 1,
+  '2': 1,
 }
 
 const wheelData = [
@@ -81,7 +81,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
   }, [walletAddress])
 
   const handleSpinClick = async () => {
-    if (!mustSpin) {
+    if (!mustSpin && walletAddress) {
       const rouletteResult = await fetchRouletteResult(walletAddress);
       setPrizeNumber(rouletteResult);
       setMustSpin(true);
@@ -99,8 +99,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
   }
 
   const handleDoubleSpinClick = async () => {
-
-    if (!mustSpin) {
+    if (!mustSpin && walletAddress) {
       const rouletteResult = await fetchRouletteResult(walletAddress);
       setPrizeNumber(rouletteResult);
       setMustSpin(true);
@@ -126,7 +125,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
             <p style={{ fontSize: "56px", color: "white" }}>Spin the Wheel</p>
             <Wheel
               mustStartSpinning={mustSpin}
-              prizeNumber={prizeNumber}
+              prizeNumber={rouletteResultMapping[prizeNumber]}
               data={wheelData}
               spinDuration={0.5}
               outerBorderColor={localStorage.getItem('mui-mode') === 'light' ? "#D6E3FF" : "#f5eeee"}
@@ -159,7 +158,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                   <p style={{ fontSize: "56px", color: "white" }}>Spin the Wheel</p>
                   <Wheel
                     mustStartSpinning={mustSpin}
-                    prizeNumber={prizeNumber}
+                    prizeNumber={doubleRouletteResultMapping[prizeNumber]}
                     data={doubleData}
                     spinDuration={0.5}
                     outerBorderColor={localStorage.getItem('mui-mode') === 'light' ? "#D6E3FF" : "#f5eeee"}

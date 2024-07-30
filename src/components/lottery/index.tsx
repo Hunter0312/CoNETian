@@ -121,7 +121,6 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
           setLottery(0);
           setStatus("lose");
         }
-
       }, 6000);
     }
   }

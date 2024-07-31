@@ -77,8 +77,8 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
         }
       }
     }
-    if(mining)
-      init(walletAddress);
+    // if(mining)
+    //   init(walletAddress);
   }, [mining])
 
   const handleSpinClick = async () => {

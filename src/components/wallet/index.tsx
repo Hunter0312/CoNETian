@@ -7,6 +7,7 @@ import { IoCopySharp } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
 import { loading } from '../../shared/assets';
 import { ConfirmToast } from 'react-confirm-toast';
+import './index.css';
 
 const buttonStyle = {
   border: "0",
@@ -16,6 +17,12 @@ const buttonStyle = {
   padding: "10px 20px",
   borderRadius: "15px",
   width: "240px",
+}
+
+const modalButtonStyle = {
+  width: '100px',
+  borderRadius: '8px',
+  fontWeight: 'normal',
 }
 
 const importButtonStyle = {
@@ -140,13 +147,17 @@ const Wallet: React.FC = () => {
       </button>
 
       <ConfirmToast
-        toastText="If you import a wallet, you will lose your current wallet. Are you sure you want to continue?"
+        toastText={"If you import a new wallet, you will lose your current one. Are you sure you want to continue?"}
         buttonNoText='No'
         buttonYesText='Yes'
+        showCloseIcon={false}
         asModal={true}
         customFunction={handleImportWallet}
         setShowConfirmToast={setShowPrivateKeyConfirmModal}
         showConfirmToast={showPrivateKeyConfirmModal}
+        buttonYesAttributes={{ style: { ...modalButtonStyle, backgroundImage: "linear-gradient(to right, #D775FF, #8DA8FF)" } }}
+        buttonNoAttributes={{ style: { ...modalButtonStyle, border: '1px solid black' } }}
+        className='confirm-toast-style'
       />
     </div>
   )

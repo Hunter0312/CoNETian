@@ -1,0 +1,7 @@
+.confirm-toast-style {
+  max-width: 300px;
+  --confirm-toast-btn-yes-color: black;
+  --confirm-toast-btn-no-color: black;
+  --confirm-toast-btn-no-focus: none;
+  --confirm-toast-btn-yes-focus: none;
+}

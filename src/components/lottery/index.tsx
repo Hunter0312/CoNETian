@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Wheel } from 'react-custom-roulette';
 import Win from './win';
 import Lose from './lose';
 
 import { pointer } from '../../shared/assets';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
-import { fetchstopMining, fetchRouletteResult } from '../../API/getData';
+import { fetchRouletteResult } from '../../API/getData';
 import Delay from './delay';
 import { useAudioPlayer } from 'react-use-audio-player';
 import { RouletteSpin, ButtonClick, loading } from '../../shared/assets';
@@ -67,19 +67,6 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
   const [double, setDouble] = useState<number>(0);
 
 
-
-  useEffect(() => {
-    const init = async (walletAddress: string) => {
-      if (walletAddress) {
-        const response = await fetchstopMining(walletAddress);
-        if (response) {
-          setMining(false)
-        }
-      }
-    }
-    // if(mining)
-    //   init(walletAddress);
-  }, [mining])
 
   const handleSpinClick = async () => {
 

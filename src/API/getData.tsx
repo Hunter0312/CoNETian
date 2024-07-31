@@ -1,4 +1,4 @@
-import { createOrGetWallet, getWalletCCNTPBalance, startMining, stopMining, getRouletteResult } from ".";
+import { createOrGetWallet, getWalletCCNTPBalance, importWallet, startMining, stopMining, getRouletteResult } from ".";
 
 export const fetchWalletData = async () => {
     try {
@@ -31,6 +31,24 @@ export const fetchCNTPBalance = async (walletAddress: string) => {
         console.error("Error fetching CNTP balance", error);
     }
 };
+
+export const fetchImportWallet = async (walletPrivateKey: string) => {
+    try {
+        const response = await importWallet(walletPrivateKey);
+        if (Array.isArray(response) && response.length >= 2) {
+            const [status] = response;
+            if (status === "SUCCESS") {
+                return response[1][0][0];
+            } else {
+                console.error("Failed to import wallet");
+                return { error: true, message: "Failed to import wallet" };
+            }
+        }
+    } catch (error) {
+        console.error("Error importing wallet", error);
+        return { error: true, message: "Error importing wallet" };
+    }
+}
 
 export const fetchStartMining = async (walletAddress: string) => {
     try {

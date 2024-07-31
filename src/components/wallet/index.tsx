@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
-import { fetchImportWallet, fetchStartMining, fetchstopMining } from '../../API/getData';
+import { fetchImportWallet, fetchstopMining } from '../../API/getData';
 import { slice } from '../../shared/functions';
 import copy from "copy-to-clipboard";
 import { IoCopySharp } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
 import { loading } from '../../shared/assets';
 import { ConfirmToast } from 'react-confirm-toast';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import './index.css';
 
 const buttonStyle = {
@@ -51,7 +53,7 @@ const Wallet: React.FC = () => {
   const [walletAddr, setWalletAddr] = useState<boolean>(false);
   const [importWalletPrivateKey, setImportWalletPrivateKey] = useState<string>('');
   const [privateK, setPrivateK] = useState<boolean>(false);
-  const [showPrivateKeyConfirmModal, setShowPrivateKeyConfirmModal] = useState<boolean>(false);
+  const [showImportWalletConfirmModal, setShowImportWalletConfirmModal] = useState<boolean>(false);
 
   useEffect(() => {
     if (walletAddr) {
@@ -75,16 +77,33 @@ const Wallet: React.FC = () => {
     }
   }
 
-  const handleImportWallet = async () => {
-    await fetchstopMining(walletAddress);
-
+  const handleImportWalletButton = () => {
     if (importWalletPrivateKey) {
-      const result = await fetchImportWallet(importWalletPrivateKey);
-      if (result && !result?.error) {
-        setBalance(result?.tokens?.cCNTP.balance);
-        setWalletAddress(result?.keyID);
-        setPrivateKey(result?.privateKeyArmor);
+      setShowImportWalletConfirmModal(true)
+    } else {
+      toast.error("Please enter a private key");
+    }
+  }
+
+  const handleImportWalletConfirm = async () => {
+    if (importWalletPrivateKey) {
+      const stopMiningResult = await fetchstopMining(walletAddress);
+
+      if (stopMiningResult && !stopMiningResult?.error) {
+        const importResult = await fetchImportWallet(importWalletPrivateKey);
+        if (importResult && !importResult?.error) {
+          setBalance(importResult?.tokens?.cCNTP.balance);
+          setWalletAddress(importResult?.keyID);
+          setPrivateKey(importResult?.privateKeyArmor);
+          toast.success("Import Successful!");
+        } else {
+          toast.error(importResult?.message);
+        }
+      } else {
+        toast.error("Failed to stop mining to import wallet");
       }
+    } else {
+      toast.error("Please enter a private key");
     }
   }
 
@@ -133,7 +152,7 @@ const Wallet: React.FC = () => {
 
                 <div style={{ display: "flex", flexDirection: "row", gap: "1rem", justifyContent: "center", alignItems: "center" }}>
                   <input style={importInputStyle} type="text" placeholder="Enter Private Key" onChange={(e) => setImportWalletPrivateKey(e.target.value)} />
-                  <button onClick={() => setShowPrivateKeyConfirmModal(true)} style={importButtonStyle}>
+                  <button onClick={handleImportWalletButton} style={importButtonStyle}>
                     Import
                   </button>
                 </div>
@@ -152,9 +171,9 @@ const Wallet: React.FC = () => {
         buttonYesText='Yes'
         showCloseIcon={false}
         asModal={true}
-        customFunction={handleImportWallet}
-        setShowConfirmToast={setShowPrivateKeyConfirmModal}
-        showConfirmToast={showPrivateKeyConfirmModal}
+        customFunction={handleImportWalletConfirm}
+        setShowConfirmToast={setShowImportWalletConfirmModal}
+        showConfirmToast={showImportWalletConfirmModal}
         buttonYesAttributes={{ style: { ...modalButtonStyle, backgroundImage: "linear-gradient(to right, #D775FF, #8DA8FF)" } }}
         buttonNoAttributes={{ style: { ...modalButtonStyle, border: '1px solid black' } }}
         className='confirm-toast-style'

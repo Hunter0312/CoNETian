@@ -1,6 +1,7 @@
 import { fetchStartMining } from '../API/getData';
 import PropTypes from 'prop-types';
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 type FlappyBirdContextBird = {
   path: string;
@@ -65,8 +66,20 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
   })
 
   useEffect(() => {
-    if (walletAddress)
-      fetchStartMining(walletAddress)
+    const init = async (walletAddress: string) => {
+      if (walletAddress) {
+        const result = await fetchStartMining(walletAddress);
+        if (result && !result?.error) {
+          setOnlineMiners(result?.online);
+          setMiningRate(result?.rate);
+          setMining(true);
+        } else {
+          toast.error(result?.message, { autoClose: false });
+        }
+      }
+    }
+
+    init(walletAddress);
   }, [walletAddress])
 
   return (

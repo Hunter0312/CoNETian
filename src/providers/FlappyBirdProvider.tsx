@@ -1,8 +1,8 @@
+import { fetchStartMining } from '../API/getData';
 import PropTypes from 'prop-types';
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 type FlappyBirdContextBird = {
-  // Define the shape of your context value here
   path: string;
   setPath: (path: string) => void;
   walletAddress: string;
@@ -63,6 +63,11 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
     frame: 0,
     score: 0,
   })
+
+  useEffect(() => {
+    if (walletAddress)
+      fetchStartMining(walletAddress)
+  }, [walletAddress])
 
   return (
     <FlappyBird.Provider value={{

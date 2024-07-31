@@ -80,7 +80,6 @@ const Wallet: React.FC = () => {
   const handleImportWallet = () => {
     fetchstopMining(walletAddress);
     importWallet(importWalletPrivateKey);
-    fetchStartMining(walletAddress);
   }
 
   return (

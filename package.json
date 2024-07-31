@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "copy-to-clipboard": "^3.3.3",
     "react": "^18.2.0",
+    "react-confirm-toast": "^2.0.2",
     "react-custom-roulette": "^1.4.1",
     "react-dom": "^18.2.0",
     "react-icons": "^5.2.1",

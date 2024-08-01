@@ -43,7 +43,7 @@ const StartMessage: React.FC = () => {
       </div>
 
 
-      <button className={ audio ? 'audioMute' : 'audioButton'} onClick={() => setAudio(audio ? false : true)}>
+      <button className={audio ? 'audioButton' : 'audioMute'} onClick={() => setAudio(audio ? false : true)}>
         <img src={audioImage} style={{ width: "20px" }} />
       </button>
 

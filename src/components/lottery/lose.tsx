@@ -10,15 +10,19 @@ type Props = {
 const Lose: React.FC<Props> = ({ setContinue }) => {
 
   const { load } = useAudioPlayer();
-  const { lottery } = useFlappyBirdContext();
+  const { lottery, audio } = useFlappyBirdContext();
 
   useEffect(() => {
-    load(RouletteLose, {
-      autoplay: true,
-    })
-  }, [])
+    if (audio)
+      load(RouletteLose, {
+        autoplay: true,
+      })
+  }, [audio])
 
   useEffect(() => {
+    if (!audio)
+      return;
+
     const container = document.getElementsByTagName("button");
     const buttonArray = Array.from(container);
     const init = () => {
@@ -29,7 +33,7 @@ const Lose: React.FC<Props> = ({ setContinue }) => {
     buttonArray.map(element => {
       element.addEventListener("click", init);
     });
-  }, [])
+  }, [audio])
 
   return (
     <div className='flex flex-col justify-center items-center' style={{ height: "100%" }}>
@@ -46,7 +50,7 @@ const Lose: React.FC<Props> = ({ setContinue }) => {
               <div className='flex flex-col'>
                 <p style={{ color: "white", fontSize: "36px" }}>Sorry, you didn't get any extra CNTP</p>
                 <div className='flex justify-center items-center' style={{ width: "100%", gap: "10px" }}>
-                  <p className='double-lottery' style={{opacity: 0.5}}>Win</p>
+                  <p className='double-lottery' style={{ opacity: 0.5 }}>Win</p>
                   <p style={{ margin: 0, marginRight: "20px" }} className='double-lottery double-lose'>
                     Lose
                     <span>Lose</span>

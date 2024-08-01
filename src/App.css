@@ -136,3 +136,27 @@ button {
   top: 0;
   left: 0;
 }
+
+.audioButton, .audioMute {
+  top: 20px;
+  left: 20px;
+  position: fixed;
+  display: flex;
+  padding: 12px;
+  margin: 0;
+  border: 0;
+  background: white;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 50%;
+}
+
+.audioMute::after {
+  content: '';
+  position: absolute;
+  width: 29px;
+  height: 3px;
+  background-color: black;
+  transform: rotate(-45deg);
+}

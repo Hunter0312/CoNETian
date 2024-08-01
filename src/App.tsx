@@ -8,10 +8,11 @@ import About from './components/about';
 import { useFlappyBirdContext } from './providers/FlappyBirdProvider';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { initializeWorkerService } from './services/workerService';
-import { fetchStartMining, fetchWalletData } from './API/getData';
+import { fetchWalletData } from './API/getData';
 import { BackgroundAudio, ButtonClick } from './shared/assets';
-import { playAudio } from './shared/functions';
+import { playAudio, stopAudio } from './shared/functions';
 import { useAudioPlayer } from 'react-use-audio-player';
+import { toast, ToastContainer } from 'react-toastify';
 
 type command = "balanceStatus" | "miningStatus";
 
@@ -90,15 +91,15 @@ const profileVerChannelListening = (
 
 function App() {
 
-  const { path, setPrivateKey, setWalletAddress, walletAddress, mining, setMining, setOnlineMiners, setMiningRate, setBalance, gameStatus } = useFlappyBirdContext();
+  const { path, setPrivateKey, setWalletAddress, audio, mining, setMining, setOnlineMiners, setMiningRate, setBalance, gameStatus } = useFlappyBirdContext();
 
   const backAudioRef = useRef<HTMLAudioElement | null>(null);
   const { load } = useAudioPlayer();
 
   useEffect(() => {
-    if(gameStatus === 2)
+    if (gameStatus === 2 || !audio)
       return;
-    
+
     const container = document.getElementsByTagName("button");
 
     const buttonArray = Array.from(container);
@@ -113,8 +114,9 @@ function App() {
   }, [path, gameStatus])
 
   useEffect(() => {
-    playAudio(backAudioRef);
-  }, [path])
+    if (audio)
+      playAudio(backAudioRef);
+  }, [path, audio])
 
   listeningMiningHook((response: any) => {
     try {
@@ -141,35 +143,22 @@ function App() {
     const init = async () => {
       await initializeWorkerService();
 
-      const response = await fetchWalletData();
+      const result = await fetchWalletData();
 
-      if (response && response.length >= 1) {
-        if (response[0] === 'SUCCESS') {
-          if (response[1][0] !== '')
-            setWalletAddress(response[1][0]);
-          if (response[1][1] !== '')
-            setPrivateKey(response[1][1]);
+      if (result && result.length >= 1) {
+        if (result[0] === 'SUCCESS') {
+          if (result[1][0] !== '')
+            setWalletAddress(result[1][0]);
+          if (result[1][1] !== '')
+            setPrivateKey(result[1][1]);
         }
+      } else {
+        toast.error(result?.message);
       }
     }
 
     init();
   }, [])
-
-  useEffect(() => {
-    const init = async (walletAddress: string) => {
-      if (walletAddress && mining === false) {
-        const response = await fetchStartMining(walletAddress);
-        if (response) {
-          setOnlineMiners(response?.online);
-          setMiningRate(response?.rate);
-          setMining(true);
-        }
-      }
-    }
-
-    init(walletAddress);
-  }, [walletAddress])
 
   return (
     <div className="App">
@@ -180,9 +169,11 @@ function App() {
         path === '/about' && <About />
       }
       {
-        path !== '/start' &&
+        path !== '/start' && audio &&
         <audio src={BackgroundAudio} ref={backAudioRef} loop />
       }
+      
+      <ToastContainer autoClose={5000} position='bottom-center' />
     </div>
   );
 }

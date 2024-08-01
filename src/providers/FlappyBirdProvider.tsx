@@ -1,8 +1,9 @@
+import { fetchStartMining } from '../API/getData';
 import PropTypes from 'prop-types';
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 type FlappyBirdContextBird = {
-  // Define the shape of your context value here
   path: string;
   setPath: (path: string) => void;
   walletAddress: string;
@@ -25,6 +26,8 @@ type FlappyBirdContextBird = {
   setGameStatus: (e: number) => void,
   lotteryBalance: number,
   setLotteryBalance: (e: number) => void,
+  audio: boolean,
+  setAudio: (e: boolean) => void,
 };
 
 const FlappyBird = createContext<FlappyBirdContextBird | undefined>(undefined);
@@ -52,6 +55,7 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
   const [lottery, setLottery] = useState<number>(0);
   const [gameStatus, setGameStatus] = useState<number>(0);
   const [lotteryBalance, setLotteryBalance] = useState<number>(0);
+  const [audio, setAudio] = useState<boolean>(false);
 
   const [games, setGames] = useState<object>({
     gameSpeed: 0,
@@ -63,6 +67,23 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
     frame: 0,
     score: 0,
   })
+
+  useEffect(() => {
+    const init = async (walletAddress: string) => {
+      if (walletAddress) {
+        const result = await fetchStartMining(walletAddress);
+        if (result && !result?.error) {
+          setOnlineMiners(result?.online);
+          setMiningRate(result?.rate);
+          setMining(true);
+        } else {
+          toast.error(result?.message, { autoClose: false });
+        }
+      }
+    }
+
+    init(walletAddress);
+  }, [walletAddress])
 
   return (
     <FlappyBird.Provider value={{
@@ -88,6 +109,8 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
       setGameStatus,
       lotteryBalance,
       setLotteryBalance,
+      audio,
+      setAudio,
     }}>
       {children}
     </FlappyBird.Provider>

@@ -59,7 +59,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
   const { load } = useAudioPlayer();
 
-  const { walletAddress, setMining, setLottery, lottery, mining } = useFlappyBirdContext();
+  const { walletAddress, audio, setLottery, lottery, mining } = useFlappyBirdContext();
 
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
@@ -73,19 +73,20 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
     if (lottery === 1)
       return;
 
-    load(ButtonClick, {
-      autoplay: true,
-    });
+    if (audio)
+      load(ButtonClick, {
+        autoplay: true,
+      });
 
     setLottery(1);
 
     if (!mustSpin && walletAddress) {
 
       const rouletteResult = await fetchRouletteResult(walletAddress);
-
-      load(RouletteSpin, {
-        autoplay: true
-      })
+      if (audio)
+        load(RouletteSpin, {
+          autoplay: true
+        })
       setPrizeNumber(rouletteResult);
       setMustSpin(true);
 
@@ -110,9 +111,10 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
     if (double === 0 && walletAddress) {
       setLottery(2);
       const rouletteResult = await fetchRouletteResult(walletAddress);
-      load(RouletteSpin, {
-        autoplay: true
-      })
+      if (audio)
+        load(RouletteSpin, {
+          autoplay: true
+        })
       setPrizeNumber(rouletteResult);
 
       const init = setInterval(() => {
@@ -217,9 +219,11 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                       <button style={{ fontSize: "32px", width: "230px", height: "52px", marginBottom: "16px", borderRadius: "16px", border: 0, backgroundColor: "gray" }}
                       >Spin to double</button>
                       <button style={{ fontSize: "32px", width: "230px", height: "52px", borderRadius: "16px", border: 0, }} onClick={() => {
-                        setStatus("delay"); setLottery(0); load(ButtonClick, {
-                          autoplay: true,
-                        });
+                        setStatus("delay"); setLottery(0); if (audio) {
+                          load(ButtonClick, {
+                            autoplay: true,
+                          });
+                        }
                       }}>Keep playing</button>
                     </div>
                   </div>

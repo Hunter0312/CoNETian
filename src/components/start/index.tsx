@@ -17,7 +17,7 @@ const StartMessage: React.FC = () => {
   }
 
 
-  const { setPath, walletAddress, setGameStatus, miningError, miningRate, onlineMiners, mining, audio, setAduio } = useFlappyBirdContext();
+  const { setPath, walletAddress, setGameStatus, miningError, miningRate, onlineMiners, mining, audio, setAudio } = useFlappyBirdContext();
 
   const [bird, setBird] = useState<number>(0);
 
@@ -54,7 +54,7 @@ const StartMessage: React.FC = () => {
             <p style={{ color: "white", fontSize: "2rem" }}>Fetching Wallet Data</p>
           </div> :
           mining ?
-            <div style={{ bottom: "3rem", width: "100%", gap: "5px" }} className='flex justify-center items-center'>
+            <div style={{ bottom: "3rem", width: "100%", gap: "5px" }} className='flex flex-col justify-center items-center'>
               <p style={{ fontSize: "1.5rem", margin: 0 }}>Mining Rate: {miningRate.toFixed(7)}</p>
               <p style={{ fontSize: "1.5rem", margin: 0, marginBottom: "10px" }}>Online Miners: {onlineMiners}</p>
             </div> : (miningError ? <div style={{ bottom: "3rem", width: "100%", gap: "5px" }} className='flex justify-center items-center'>

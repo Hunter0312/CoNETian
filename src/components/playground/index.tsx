@@ -8,7 +8,7 @@ import Lottery from '../lottery';
 
 const Playground: React.FC = () => {
   const [score, setScore] = useState<number>(0);
-  const { walletAddress, mining, onlineMiners: online, miningRate: rate, lottery, gameStatus, setGameStatus } = useFlappyBirdContext();
+  const { walletAddress, mining, onlineMiners, miningRate, gameStatus, setGameStatus, miningError } = useFlappyBirdContext();
   const [highScore, setHighScore] = useState<number>(0);
 
   const gameStatusHandle = (event: number) => {
@@ -29,12 +29,6 @@ const Playground: React.FC = () => {
       if (temp)
         setHighScore(parseInt(temp));
     }
-
-    if (gameStatus === 2) {
-      // if (!walletAddress) {
-      //   setGameStatus(3);
-      // }
-    }
   }, [gameStatus])
 
   return (
@@ -45,7 +39,7 @@ const Playground: React.FC = () => {
           <>
             {
               gameStatus === 2 &&
-                <Lottery setContinue={() => gameStatusHandle(3)} />
+              <Lottery setContinue={() => gameStatusHandle(3)} />
             }
             <Game
               setGameStatus={(event: number) => gameStatusHandle(event)} gameStatus={gameStatus}
@@ -62,12 +56,14 @@ const Playground: React.FC = () => {
                 </div> :
                 mining ?
                   <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
-                    <p style={{ fontSize: "1.5rem", margin: 0 }}>Mining Rate: {rate.toFixed(7)}</p>
-                    <p style={{ fontSize: "1.5rem", margin: 0, marginBottom: "10px" }}>Online Miners: {online}</p>
+                    <p style={{ fontSize: "1.5rem", margin: 0 }}>Mining Rate: {miningRate.toFixed(7)}</p>
+                    <p style={{ fontSize: "1.5rem", margin: 0, marginBottom: "10px" }}>Online Miners: {onlineMiners}</p>
+                  </div> : (miningError ? <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
+                    <p style={{ fontSize: "2rem" }}>Mining Error</p>
                   </div> :
-                  <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
-                    <p style={{ fontSize: "2rem" }}>Initiating Mining...</p>
-                  </div>
+                    <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
+                      <p style={{ fontSize: "2rem" }}>Initiating Mining...</p>
+                    </div>)
             }
           </>
       }

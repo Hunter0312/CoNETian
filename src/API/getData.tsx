@@ -75,7 +75,7 @@ export const fetchStartMining = async (walletAddress: string): Promise<any> => {
         console.error("Error to start mining", error);
     }
 
-    return { error: true, message: `Failed to start mining. Please check if another wallet is mining in your network.` };
+    return { error: true, message: `Failed to start mining. Please check if someone else is mining in your network.` };
 }
 
 export const fetchstopMining = async (walletAddress: string): Promise<any> => {

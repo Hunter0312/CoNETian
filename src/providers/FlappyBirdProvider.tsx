@@ -14,6 +14,8 @@ type FlappyBirdContextBird = {
   setBalance: (num: number) => void;
   mining: boolean;
   setMining: (e: boolean) => void;
+  miningError: boolean;
+  setMiningError: (e: boolean) => void;
   onlineMiners: number;
   setOnlineMiners: (num: number) => void;
   miningRate: number;
@@ -53,6 +55,7 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
   const [lottery, setLottery] = useState<number>(0);
   const [gameStatus, setGameStatus] = useState<number>(0);
   const [lotteryBalance, setLotteryBalance] = useState<number>(0);
+  const [miningError, setMiningError] = useState<boolean>(false);
 
   const [games, setGames] = useState<object>({
     gameSpeed: 0,
@@ -73,8 +76,11 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
           setOnlineMiners(result?.online);
           setMiningRate(result?.rate);
           setMining(true);
+          setMiningError(false);
         } else {
           toast.error(result?.message, { autoClose: false });
+          setMiningError(true);
+          setTimeout(() => init(walletAddress), 15000);
         }
       }
     }
@@ -94,6 +100,8 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
       setBalance,
       mining,
       setMining,
+      miningError,
+      setMiningError,
       onlineMiners,
       setOnlineMiners,
       miningRate,

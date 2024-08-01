@@ -80,7 +80,7 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
           setMining(true);
           setMiningError(false);
         } else {
-          toast.error(result?.message, { autoClose: false });
+          toast.error(result?.message, { autoClose: 5000 });
           setMiningError(true);
           setTimeout(() => init(walletAddress), 15000);
         }

@@ -6,6 +6,7 @@ const SelectDifficulty: React.FC = () => {
   const { gameDifficulty, setGameDifficulty, setPath } = useFlappyBirdContext();
 
   const buttonStyle = {
+    cursor: "pointer",
     border: "0",
     marginTop: "-40px",
     backgroundColor: "white",

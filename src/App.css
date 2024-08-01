@@ -1,14 +1,14 @@
 .App {
   text-align: center;
   height: 100vh;
-  background-image: url('/src/assets/bgx3.png');
+  background-image: url("/src/assets/bgx3.png");
   object-fit: cover;
   background-position: center;
   min-height: 600px;
 }
 
 .lottery {
-  background-image: url('/src/assets/bgx3.png');
+  background-image: url("/src/assets/bgx3.png");
   object-fit: cover;
   background-position: center;
 }
@@ -57,7 +57,6 @@
   }
 }
 
-
 .flex {
   display: flex;
 }
@@ -84,7 +83,7 @@
 
 p,
 button {
-  font-family: 'FlappyBird' !important;
+  font-family: "FlappyBird" !important;
 }
 
 button {
@@ -92,7 +91,7 @@ button {
 }
 
 .startButton {
-  background-image: linear-gradient(to right, #D775FF, #8DA8FF);
+  background-image: linear-gradient(to right, #d775ff, #8da8ff);
 }
 
 .double-lottery {
@@ -102,7 +101,7 @@ button {
   font-size: 80px;
   margin: 0;
   margin-left: 20px;
-  font-family: 'system-ui' !important;
+  font-family: "system-ui" !important;
   font-weight: 800;
   position: relative;
 }
@@ -115,7 +114,7 @@ button {
   color: transparent;
   font-size: 80px;
   margin: 0;
-  font-family: 'system-ui' !important;
+  font-family: "system-ui" !important;
   font-weight: 800;
   position: absolute;
   top: 0;
@@ -130,17 +129,15 @@ button {
   color: transparent;
   font-size: 80px;
   margin: 0;
-  font-family: 'system-ui' !important;
+  font-family: "system-ui" !important;
   font-weight: 800;
   position: absolute;
   top: 0;
   left: 0;
 }
 
-.audioButton, .audioMute {
-  top: 20px;
-  left: 20px;
-  position: fixed;
+.audioButton,
+.audioMute {
   display: flex;
   padding: 12px;
   margin: 0;
@@ -153,10 +150,46 @@ button {
 }
 
 .audioMute::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 29px;
   height: 3px;
   background-color: black;
   transform: rotate(-45deg);
+}
+
+.floating-top-container {
+  position: fixed;
+  top: 20px;
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  border: 0;
+  align-items: center;
+  flex-direction: row;
+}
+
+.info-message {
+  display: flex;
+  margin: 0;
+  border: 0;
+  align-items: end;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+  font-size: 1rem;
+}
+
+.info-message p {
+  margin: 0;
+}
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0.3;
+  }
 }

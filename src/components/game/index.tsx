@@ -23,6 +23,11 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
   let gameSpeed = gameDifficulty === 2 || gameDifficulty === 1 ? levels.speedLevel1 : levels.speedLevel3;
   let gameFrame = gameDifficulty === 2 || gameDifficulty === 1 ? levels.frameLevel1 : levels.frameLevel3;
 
+
+  
+  let gameSpeed = gameDifficulty === 2 || gameDifficulty === 1 ? levels.speedLevel1 : levels.speedLevel3;
+  let gameFrame = gameDifficulty === 2 || gameDifficulty === 1 ? levels.frameLevel1 : levels.frameLevel3;
+  
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState<number>(0);
 
@@ -259,7 +264,8 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
           }
           setScore(score => score + 1);
 
-          if (flagScore % 5 === 0 && flagScore >= 15 && walletAddress) {
+
+          if (flagScore % 7 === 0 && flagScore >= 7) {
             if (Math.random() > 0.5) {
               setGames({
                 gameSpeed: gameSpeed,
@@ -334,7 +340,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
       <canvas ref={canvasRef} />
       {
         audio &&
-        <audio src={BackgroundAudio} ref={backAudioRef} loop/>
+        <audio src={BackgroundAudio} ref={backAudioRef} loop />
       }
     </div>
   );

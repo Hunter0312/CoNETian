@@ -46,6 +46,7 @@ const Playground: React.FC = () => {
               setScores={(score: number) => setScore(score)}
             />
             <p style={{ position: "fixed", color: "white", top: "20px", fontSize: "3rem", left: "50%" }}>{score}</p>
+
             {
               walletAddress === '' ?
                 <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
@@ -58,8 +59,8 @@ const Playground: React.FC = () => {
                   <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
                     <p style={{ fontSize: "1.5rem", margin: 0 }}>Mining Rate: {miningRate.toFixed(7)}</p>
                     <p style={{ fontSize: "1.5rem", margin: 0, marginBottom: "10px" }}>Online Miners: {onlineMiners}</p>
-                  </div> : (miningError ? <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
-                    <p style={{ fontSize: "2rem" }}>Mining Error</p>
+                  </div> : (miningError ? <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end blink_me'>
+                    <p style={{ fontSize: "2rem" }}>Failed to start mining</p>
                   </div> :
                     <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
                       <p style={{ fontSize: "2rem" }}>Initiating Mining...</p>

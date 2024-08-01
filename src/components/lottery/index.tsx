@@ -9,6 +9,7 @@ import { fetchRouletteResult } from '../../API/getData';
 import Delay from './delay';
 import { useAudioPlayer } from 'react-use-audio-player';
 import { RouletteSpin, ButtonClick, loading } from '../../shared/assets';
+import { toast } from 'react-toastify';
 
 type Props = {
   setContinue: (e: number) => void,
@@ -83,23 +84,31 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
     if (!mustSpin && walletAddress) {
 
       const rouletteResult = await fetchRouletteResult(walletAddress);
-      if (audio)
-        load(RouletteSpin, {
-          autoplay: true
-        })
-      setPrizeNumber(rouletteResult);
-      setMustSpin(true);
 
-      setTimeout(() => {
-        const mappedResult = rouletteResultMapping[rouletteResult];
-        if (wheelData[mappedResult].option !== "Lose") {
-          setStatus("win");
-        } else {
-          setLottery(0);
-          setStatus("lose");
-        }
+      if (rouletteResult && !rouletteResult?.error) {
+        if (audio)
+          load(RouletteSpin, {
+            autoplay: true
+          })
+        setPrizeNumber(rouletteResult);
         setMustSpin(true);
-      }, 6000);
+
+        setTimeout(() => {
+          const mappedResult = rouletteResultMapping[rouletteResult];
+          if (wheelData[mappedResult].option !== "Lose") {
+            setStatus("win");
+          } else {
+            setLottery(0);
+            setStatus("lose");
+          }
+          setMustSpin(true);
+        }, 6000);
+      } else {
+        toast.error(rouletteResult?.message, { autoClose: 5000 });
+        setLottery(0);
+        setMustSpin(true);
+        setStatus('delay');
+      }
     }
   }
 

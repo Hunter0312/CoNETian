@@ -43,30 +43,34 @@ const StartMessage: React.FC = () => {
         <button style={buttonStyle} onClick={() => setPath('/about')}>About</button>
       </div>
 
+      <div className='floating-top-container'>
+        <button className={audio ? 'audioButton' : 'audioMute'} onClick={() => setAudio(audio ? false : true)}>
+          <img src={audioImage} style={{ width: "20px" }} />
+        </button>
 
-      <button className={audio ? 'audioButton' : 'audioMute'} onClick={() => setAudio(audio ? false : true)}>
-        <img src={audioImage} style={{ width: "20px" }} />
-      </button>
-
-      {
-        walletAddress === '' ?
-          <div style={{ bottom: "3rem", width: "100%", gap: "5px", color: "white" }} className='flex justify-center items-center'>
-            <img src={loading} style={{ width: "30px" }} />
-            <p style={{ fontSize: "2rem" }}>Fetching Wallet Data</p>
-          </div> :
-          mining ?
-            <div style={{ bottom: "3rem", width: "100%", gap: "5px", color: "white" }} className='flex flex-col justify-center items-center'>
-              <p style={{ fontSize: "1.5rem", margin: 0 }}>Mining Rate: {miningRate.toFixed(7)}</p>
-              <p style={{ fontSize: "1.5rem", margin: 0, marginBottom: "10px" }}>Online Miners: {onlineMiners}</p>
-            </div> : (miningError ? <div style={{ bottom: "3rem", width: "100%", gap: "5px", color: "white" }} className='flex justify-center items-center'>
-              <p style={{ color: "white", fontSize: "2rem" }}>Mining Error</p>
+        {
+          walletAddress === '' ?
+            <div className='info-message'>
+              <div style={{ display: 'flex', flexDirection: "row", gap: "10px" }}>
+                <img src={loading} style={{ width: "15px" }} />
+                <p>Fetching Wallet Data</p>
+              </div>
             </div> :
-              <div style={{ bottom: "3rem", width: "100%", gap: "5px", color: "white" }} className='flex justify-center items-center'>
-                <img src={loading} style={{ width: "30px" }} />
-                <p style={{ color: "white", fontSize: "2rem" }}>Initiating Mining</p>
-              </div>)
-      }
-
+            mining ?
+              <div className='info-message'>
+                <p>Mining Rate: {miningRate.toFixed(7)}</p>
+                <p>Online Miners: {onlineMiners}</p>
+              </div> : (!miningError ? <div className='info-message'>
+                <div style={{ display: 'flex', flexDirection: "row", gap: "10px" }}>
+                  <img src={loading} style={{ width: "15px" }} />
+                  <p>Initiating Mining</p>
+                </div>
+              </div> : <div className={'info-message blink_me'} >
+                <p>Failed to start mining</p>
+              </div>
+              )
+        }
+      </div>
     </div >
   )
 }

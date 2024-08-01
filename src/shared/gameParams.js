@@ -1,10 +1,10 @@
 const speedLevel1 = 4;
-const speedLevel2 = 7;
-const speedLevel3 = 10;
+const speedLevel2 = 6;
+const speedLevel3 = 8;
 
 const frameLevel1 = 120;
-const frameLevel2 = 90;
-const frameLevel3 = 60;
+const frameLevel2 = 100;
+const frameLevel3 = 90;
 
 export const levels = {
     speedLevel1,

@@ -1,12 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
-import {
-  birdImg,
-  groundImage,
-  backgroundImage,
-  pipeBottomImg,
-  pipeTopImg,
-  birdFly,
-} from "../../shared/assets";
+import React from "react";
+
 import { useFlappyBirdContext } from "../../providers/FlappyBirdProvider";
 
 const SelectDifficulty: React.FC = () => {

@@ -18,11 +18,12 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
 
   const { load } = useAudioPlayer();
 
-  const { setGames, games, audio } = useFlappyBirdContext();
+  const { setGames, games, audio, gameDifficulty } = useFlappyBirdContext();
 
-  let gameSpeed = levels.speedLevel1;
-  let gameFrame = levels.frameLevel1;
-
+  
+  let gameSpeed = gameDifficulty === 2 || gameDifficulty === 1 ? levels.speedLevel1 : levels.speedLevel3;
+  let gameFrame = gameDifficulty === 2 || gameDifficulty === 1 ? levels.frameLevel1 : levels.frameLevel3;
+  
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState<number>(0);
 
@@ -224,7 +225,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
 
       return false;
     };
-
+    
     const update = () => {
       if (gameStatus === 1) return;
 
@@ -248,11 +249,12 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
         pipe.x -= gameSpeed;
         if (!pipe.passed && pipe.isTop && pipe.x + pipe.width < bird.x) {
           flagScore++;
-          if (flagScore === 10) {
+          if (flagScore === 10 && gameDifficulty === 2 ) {
+            console.log('entrei')
             gameSpeed = levels.speedLevel2;
             gameFrame = levels.frameLevel2;
           }
-          if (flagScore === 30) {
+          if (flagScore === 30 && gameDifficulty === 2 ) {
             gameSpeed = levels.speedLevel3;
             gameFrame = levels.frameLevel3;
           }

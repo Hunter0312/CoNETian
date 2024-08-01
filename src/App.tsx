@@ -172,8 +172,8 @@ function App() {
         path !== '/start' && audio &&
         <audio src={BackgroundAudio} ref={backAudioRef} loop />
       }
-      
-      <ToastContainer autoClose={5000} position='bottom-center' />
+
+      <ToastContainer autoClose={false} position='bottom-center' toastStyle={{ fontFamily: "FlappyBird", fontSize: "1.2rem" }} />
     </div>
   );
 }

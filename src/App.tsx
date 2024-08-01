@@ -13,6 +13,7 @@ import { BackgroundAudio, ButtonClick } from './shared/assets';
 import { playAudio, stopAudio } from './shared/functions';
 import { useAudioPlayer } from 'react-use-audio-player';
 import { toast, ToastContainer } from 'react-toastify';
+import SelectDifficulty from './components/difficulty';
 
 type command = "balanceStatus" | "miningStatus";
 
@@ -165,6 +166,7 @@ function App() {
       {
         path === '/' && <StartMessage /> ||
         path === '/start' && <Playground /> ||
+        path === '/difficulty' && <SelectDifficulty /> ||
         path === '/wallet' && <Wallet /> ||
         path === '/about' && <About />
       }

@@ -49,19 +49,18 @@ const StartMessage: React.FC = () => {
 
       {
         walletAddress === '' ?
-          <div style={{ bottom: "3rem", width: "100%", gap: "5px" }} className='flex justify-center items-center'>
+          <div style={{ bottom: "3rem", width: "100%", gap: "5px", color: "white" }} className='flex justify-center items-center'>
             <img src={loading} style={{ width: "30px" }} />
-            <p style={{ color: "white", fontSize: "2rem" }}>Fetching Wallet Data</p>
+            <p style={{ fontSize: "2rem" }}>Fetching Wallet Data</p>
           </div> :
           mining ?
-            <div style={{ bottom: "3rem", width: "100%", gap: "5px" }} className='flex flex-col justify-center items-center'>
+            <div style={{ bottom: "3rem", width: "100%", gap: "5px", color: "white" }} className='flex flex-col justify-center items-center'>
               <p style={{ fontSize: "1.5rem", margin: 0 }}>Mining Rate: {miningRate.toFixed(7)}</p>
               <p style={{ fontSize: "1.5rem", margin: 0, marginBottom: "10px" }}>Online Miners: {onlineMiners}</p>
-            </div> : (miningError ? <div style={{ bottom: "3rem", width: "100%", gap: "5px" }} className='flex justify-center items-center'>
-              <img src={loading} style={{ width: "30px" }} />
+            </div> : (miningError ? <div style={{ bottom: "3rem", width: "100%", gap: "5px", color: "white" }} className='flex justify-center items-center'>
               <p style={{ color: "white", fontSize: "2rem" }}>Mining Error</p>
             </div> :
-              <div style={{ bottom: "3rem", width: "100%", gap: "5px" }} className='flex justify-center items-center'>
+              <div style={{ bottom: "3rem", width: "100%", gap: "5px", color: "white" }} className='flex justify-center items-center'>
                 <img src={loading} style={{ width: "30px" }} />
                 <p style={{ color: "white", fontSize: "2rem" }}>Initiating Mining</p>
               </div>)

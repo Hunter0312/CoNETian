@@ -16,7 +16,9 @@ const StartMessage: React.FC = () => {
     width: "240px"
   }
 
-  const { setPath, walletAddress, setGameStatus, audio, setAudio } = useFlappyBirdContext();
+
+  const { setPath, walletAddress, setGameStatus, miningError, miningRate, onlineMiners, mining, audio, setAduio } = useFlappyBirdContext();
+
   const [bird, setBird] = useState<number>(0);
 
   useEffect(() => {
@@ -40,17 +42,31 @@ const StartMessage: React.FC = () => {
         <button style={buttonStyle} onClick={() => setPath('/about')}>About</button>
       </div>
 
-      {
-        !walletAddress &&
-        <div style={{ bottom: "3rem", width: "100%", gap: "5px" }} className='flex justify-center items-center'>
-          <img src={loading} style={{ width: "30px" }} />
-          <p style={{ color: "white", fontSize: "2rem" }}>Fetching Wallet Data</p>
-        </div>
-      }
 
       <button className={ audio ? 'audioMute' : 'audioButton'} onClick={() => setAudio(audio ? false : true)}>
         <img src={audioImage} style={{ width: "20px" }} />
       </button>
+
+      {
+        walletAddress === '' ?
+          <div style={{ bottom: "3rem", width: "100%", gap: "5px" }} className='flex justify-center items-center'>
+            <img src={loading} style={{ width: "30px" }} />
+            <p style={{ color: "white", fontSize: "2rem" }}>Fetching Wallet Data</p>
+          </div> :
+          mining ?
+            <div style={{ bottom: "3rem", width: "100%", gap: "5px" }} className='flex justify-center items-center'>
+              <p style={{ fontSize: "1.5rem", margin: 0 }}>Mining Rate: {miningRate.toFixed(7)}</p>
+              <p style={{ fontSize: "1.5rem", margin: 0, marginBottom: "10px" }}>Online Miners: {onlineMiners}</p>
+            </div> : (miningError ? <div style={{ bottom: "3rem", width: "100%", gap: "5px" }} className='flex justify-center items-center'>
+              <img src={loading} style={{ width: "30px" }} />
+              <p style={{ color: "white", fontSize: "2rem" }}>Mining Error</p>
+            </div> :
+              <div style={{ bottom: "3rem", width: "100%", gap: "5px" }} className='flex justify-center items-center'>
+                <img src={loading} style={{ width: "30px" }} />
+                <p style={{ color: "white", fontSize: "2rem" }}>Initiating Mining</p>
+              </div>)
+      }
+
     </div >
   )
 }

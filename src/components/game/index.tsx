@@ -18,7 +18,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
 
   const { load } = useAudioPlayer();
 
-  const { setGames, games, } = useFlappyBirdContext();
+  const { setGames, games, audio } = useFlappyBirdContext();
 
   let gameSpeed = levels.speedLevel1;
   let gameFrame = levels.frameLevel1;
@@ -38,8 +38,9 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
   const backAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    playAudio(backAudioRef);
-  }, [])
+    if (audio)
+      playAudio(backAudioRef);
+  }, [audio])
 
   useEffect(() => {
     if (gameStatus === 1) {
@@ -235,9 +236,10 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
       bird.dy += gravity;
       bird.y += bird.dy;
       if (bird.y + bird.height > ground.y || bird.y < 0) {
-        load(ConetianDeath, {
-          autoplay: true,
-        })
+        if (audio)
+          load(ConetianDeath, {
+            autoplay: true,
+          })
         setGameStatus(1);
         return;
       }
@@ -256,7 +258,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
           }
           setScore(score => score + 1);
 
-          if (flagScore % 5 === 0 && flagScore >= 5) {
+          if (flagScore % 1 === 0 && flagScore >= 0) {
             if (Math.random() > 0.5) {
               setGames({
                 gameSpeed: gameSpeed,
@@ -274,9 +276,10 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
           pipe.passed = true;
         }
         if (checkPixelCollision(birdContext, pipe)) {
-          load(ConetianDeath, {
-            autoplay: true,
-          })
+          if (audio)
+            load(ConetianDeath, {
+              autoplay: true,
+            })
           setGameStatus(1);
         }
       });
@@ -303,9 +306,10 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
     const handleMouseClick = () => {
 
       if (gameStatus === 0 || gameStatus === 3) {
-        load(Tap, {
-          autoplay: true,
-        })
+        if (audio)
+          load(Tap, {
+            autoplay: true,
+          })
         bird.dy = -10;
       }
     };
@@ -327,7 +331,10 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
   return (
     <div style={{ overflow: 'hidden', height: "100vh" }}>
       <canvas ref={canvasRef} />
-      <audio src={BackgroundAudio} ref={backAudioRef} />
+      {
+        audio &&
+        <audio src={BackgroundAudio} ref={backAudioRef} loop/>
+      }
     </div>
   );
 };

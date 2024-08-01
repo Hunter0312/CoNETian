@@ -159,7 +159,6 @@ const Wallet: React.FC = () => {
               </div>
             </>
         }
-
       </div>
       <button onClick={() => setPath('/')} style={{ ...buttonStyle, marginBottom: "5rem" }}>
         Main Menu

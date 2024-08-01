@@ -10,7 +10,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { initializeWorkerService } from './services/workerService';
 import { fetchWalletData } from './API/getData';
 import { BackgroundAudio, ButtonClick } from './shared/assets';
-import { playAudio } from './shared/functions';
+import { playAudio, stopAudio } from './shared/functions';
 import { useAudioPlayer } from 'react-use-audio-player';
 import { toast, ToastContainer } from 'react-toastify';
 
@@ -91,13 +91,13 @@ const profileVerChannelListening = (
 
 function App() {
 
-  const { path, setPrivateKey, setWalletAddress, walletAddress, mining, setMining, setOnlineMiners, setMiningRate, setBalance, gameStatus } = useFlappyBirdContext();
+  const { path, setPrivateKey, setWalletAddress, audio, mining, setMining, setOnlineMiners, setMiningRate, setBalance, gameStatus } = useFlappyBirdContext();
 
   const backAudioRef = useRef<HTMLAudioElement | null>(null);
   const { load } = useAudioPlayer();
 
   useEffect(() => {
-    if (gameStatus === 2)
+    if (gameStatus === 2 || !audio)
       return;
 
     const container = document.getElementsByTagName("button");
@@ -114,8 +114,9 @@ function App() {
   }, [path, gameStatus])
 
   useEffect(() => {
-    playAudio(backAudioRef);
-  }, [path])
+    if (audio)
+      playAudio(backAudioRef);
+  }, [path, audio])
 
   listeningMiningHook((response: any) => {
     try {
@@ -168,10 +169,10 @@ function App() {
         path === '/about' && <About />
       }
       {
-        path !== '/start' &&
+        path !== '/start' && audio &&
         <audio src={BackgroundAudio} ref={backAudioRef} loop />
       }
-
+      
       <ToastContainer autoClose={5000} position='bottom-center' />
     </div>
   );

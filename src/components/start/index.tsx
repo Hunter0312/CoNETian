@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 import { birdImg, birdFly, birdFlyImg } from '../../shared/assets';
 import { loading } from '../../shared/assets';
+import { audioImage } from '../../shared/assets';
 
 const StartMessage: React.FC = () => {
 
@@ -15,7 +16,9 @@ const StartMessage: React.FC = () => {
     width: "240px"
   }
 
-  const { setPath, walletAddress, setGameStatus, miningError, miningRate, onlineMiners, mining } = useFlappyBirdContext();
+
+  const { setPath, walletAddress, setGameStatus, miningError, miningRate, onlineMiners, mining, audio, setAduio } = useFlappyBirdContext();
+
   const [bird, setBird] = useState<number>(0);
 
   useEffect(() => {
@@ -29,7 +32,7 @@ const StartMessage: React.FC = () => {
   }, [])
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100%", gap: "80px" }}>
+    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100%", gap: "80px", position: "relative" }}>
       <h1 style={{ color: "white", fontFamily: "FlappyBird", fontSize: "3rem", margin: 0 }}>The CoNETian</h1>
       <img src={bird % 3 === 0 ? birdImg : bird % 3 === 1 ? birdFlyImg : birdFly} />
 
@@ -39,13 +42,11 @@ const StartMessage: React.FC = () => {
         <button style={buttonStyle} onClick={() => setPath('/about')}>About</button>
       </div>
 
-      {
-        !walletAddress &&
-        <div style={{ bottom: "3rem", width: "100%", gap: "5px" }} className='flex justify-center items-center'>
-          <img src={loading} style={{ width: "30px" }} />
-          <p style={{ color: "white", fontSize: "2rem" }}>Fetching Wallet Data</p>
-        </div>
-      }
+
+      <button className={ audio ? 'audioMute' : 'audioButton'} onClick={() => setAudio(audio ? false : true)}>
+        <img src={audioImage} style={{ width: "20px" }} />
+      </button>
+
       {
         walletAddress === '' ?
           <div style={{ bottom: "3rem", width: "100%", gap: "5px" }} className='flex justify-center items-center'>
@@ -65,6 +66,7 @@ const StartMessage: React.FC = () => {
                 <p style={{ color: "white", fontSize: "2rem" }}>Initiating Mining</p>
               </div>)
       }
+
     </div >
   )
 }

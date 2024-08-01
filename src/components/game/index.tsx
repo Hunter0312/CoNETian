@@ -18,7 +18,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
 
   const { load } = useAudioPlayer();
 
-  const { setGames, games, audio } = useFlappyBirdContext();
+  const { setGames, games, audio, walletAddress } = useFlappyBirdContext();
 
   let gameSpeed = levels.speedLevel1;
   let gameFrame = levels.frameLevel1;
@@ -258,7 +258,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
           }
           setScore(score => score + 1);
 
-          if (flagScore % 5 === 0 && flagScore >= 15) {
+          if (flagScore % 5 === 0 && flagScore >= 15 && walletAddress) {
             if (Math.random() > 0.5) {
               setGames({
                 gameSpeed: gameSpeed,

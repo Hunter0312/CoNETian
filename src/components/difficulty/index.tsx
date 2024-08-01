@@ -10,9 +10,10 @@ import {
 import { useFlappyBirdContext } from "../../providers/FlappyBirdProvider";
 
 const SelectDifficulty: React.FC = () => {
-  const { gameDifficulty, setGameDifficulty, setPath } = useFlappyBirdContext();
+  const { setGameDifficulty, setPath } = useFlappyBirdContext();
 
   const buttonStyle = {
+    cursor: "pointer",
     border: "0",
     marginTop: "-40px",
     backgroundColor: "white",

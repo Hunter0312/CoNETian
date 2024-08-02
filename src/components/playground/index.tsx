@@ -20,7 +20,7 @@ const Playground: React.FC = () => {
   useEffect(() => {
 
     if (gameStatus === 1) {
-      // setRoulette(false);
+      setRoulette(false);
       const hScore = localStorage.getItem('hScore');
       if (hScore) {
         if (parseInt(hScore) < score)

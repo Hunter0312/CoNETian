@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Game from '../game';
 import GameOver from '../over';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
-import { loading } from '../../shared/assets';
+import { loading, rouletteImg } from '../../shared/assets';
 import Lottery from '../lottery';
 
 const Playground: React.FC = () => {
   const [score, setScore] = useState<number>(0);
   const { walletAddress, mining, onlineMiners, miningRate, gameStatus, setGameStatus, miningError } = useFlappyBirdContext();
   const [highScore, setHighScore] = useState<number>(0);
+  const [roulette, setRoulette] = useState<boolean>(false);
+  const [stateRoulette, setStateRoulette] = useState<boolean>(false);
+
+  const clearRouletteBtnTimeout = useRef<NodeJS.Timeout>();
 
   const gameStatusHandle = (event: number) => {
     setGameStatus(event);
@@ -18,6 +22,7 @@ const Playground: React.FC = () => {
   useEffect(() => {
 
     if (gameStatus === 1) {
+      setRoulette(false);
       const hScore = localStorage.getItem('hScore');
       if (hScore) {
         if (parseInt(hScore) < score)
@@ -30,6 +35,16 @@ const Playground: React.FC = () => {
         setHighScore(parseInt(temp));
     }
   }, [gameStatus])
+
+  useEffect(() => {
+    if (roulette) {
+      clearRouletteBtnTimeout.current && clearTimeout(clearRouletteBtnTimeout.current);
+
+      clearRouletteBtnTimeout.current = setTimeout(() => {
+        setRoulette(false);
+      }, 10000)
+    }
+  }, [roulette])
 
   return (
     <>
@@ -44,6 +59,7 @@ const Playground: React.FC = () => {
             <Game
               setGameStatus={(event: number) => gameStatusHandle(event)} gameStatus={gameStatus}
               setScores={(score: number) => setScore(score)}
+              setRoulette={(event: boolean) => setRoulette(true)}
             />
             <p style={{ position: "fixed", color: "white", top: "20px", fontSize: "3rem", left: "50%" }}>{score}</p>
 
@@ -67,6 +83,15 @@ const Playground: React.FC = () => {
                     </div>)
             }
           </>
+      }
+      {
+        roulette &&
+        <button style={{ position: "fixed", bottom: "100px", right: "0", backgroundColor: "transparent", border: "0" }}
+          onClick={() => { setGameStatus(2); setRoulette(false) }}>
+          <video id="banner-video" autoPlay loop>
+            <source src={rouletteImg} type="video/webm" />
+          </video>
+        </button>
       }
     </>
   )

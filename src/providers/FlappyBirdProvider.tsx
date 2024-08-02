@@ -31,7 +31,9 @@ type FlappyBirdContextBird = {
   audio: boolean,
   setAudio: (e: boolean) => void,
   setGameDifficulty: (num: number) => void,
-  gameDifficulty: number
+  gameDifficulty: number,
+  setHasReferrer: (e: boolean) => void,
+  hasReferrer: boolean
 };
 
 const FlappyBird = createContext<FlappyBirdContextBird | undefined>(undefined);
@@ -62,6 +64,7 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
   const [lotteryBalance, setLotteryBalance] = useState<number>(0);
   const [audio, setAudio] = useState<boolean>(false);
   const [miningError, setMiningError] = useState<boolean>(false);
+  const [hasReferrer, setHasReferrer] = useState<boolean>(false);
   const [games, setGames] = useState<object>({
     gameSpeed: 0,
     gameFrame: 100,
@@ -125,7 +128,9 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
       audio,
       setAudio,
       setGameDifficulty, 
-      gameDifficulty
+      gameDifficulty,
+      setHasReferrer,
+      hasReferrer
     }}>
       {children}
     </FlappyBird.Provider>

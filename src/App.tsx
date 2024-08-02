@@ -92,7 +92,7 @@ const profileVerChannelListening = (
 
 function App() {
 
-  const { path, setPrivateKey, setWalletAddress, audio, mining, setMining, setOnlineMiners, setMiningRate, setBalance, gameStatus } = useFlappyBirdContext();
+  const { path, setPrivateKey, setWalletAddress, audio, mining, setMining, setOnlineMiners, setMiningRate, setBalance, gameStatus, setHasReferrer } = useFlappyBirdContext();
 
   const backAudioRef = useRef<HTMLAudioElement | null>(null);
   const { load } = useAudioPlayer();
@@ -145,13 +145,14 @@ function App() {
       await initializeWorkerService();
 
       const result = await fetchWalletData();
-
       if (result && result.length >= 1) {
         if (result[0] === 'SUCCESS') {
           if (result[1][0] !== '')
             setWalletAddress(result[1][0]);
           if (result[1][1] !== '')
             setPrivateKey(result[1][1]);
+          if(result[1][2])
+            setHasReferrer(result[1][2])
         }
       } else {
         toast.error(result?.message);

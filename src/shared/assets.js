@@ -8,6 +8,7 @@ import birdFlyImg from '../assets/pajaroaletabaja.png';
 import loading from '../assets/logo_conet_rotation.gif';
 import pointer from '../assets/Polygon 4.png';
 import audioImage from '../assets/audio.png';
+import rouletteImg from '../assets/sticker.webm';
 
 import BackgroundAudio from '../assets/GameSounds/BackgroundSound/16-Bit Action.wav';
 import Tap from '../assets/GameSounds/Tap/Pressured Pneumatics Hit.mp3';
@@ -34,5 +35,6 @@ export {
     RouletteWin,
     RouletteLose,
     ConetianDeath,
-    ButtonClick
+    ButtonClick,
+    rouletteImg
 }

@@ -86,9 +86,9 @@ const Playground: React.FC = () => {
       }
       {
         roulette &&
-        <button style={{ position: "fixed", top: "10px", left: "20px", backgroundColor: "transparent", border: "0" }}
+        <button style={{ position: "fixed", top: "10px", right: "20px", backgroundColor: "transparent", border: "0" }}
           onClick={() => { setGameStatus(2); setRoulette(false) }}>
-          <video id="banner-video" autoPlay>
+          <video id="banner-video" autoPlay loop>
             <source src={rouletteImg} type="video/webm" />
           </video>
         </button>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Game from '../game';
 import GameOver from '../over';
@@ -12,6 +12,8 @@ const Playground: React.FC = () => {
   const [highScore, setHighScore] = useState<number>(0);
   const [roulette, setRoulette] = useState<boolean>(false);
   const [stateRoulette, setStateRoulette] = useState<boolean>(false);
+
+  const clearRouletteBtnTimeout = useRef<NodeJS.Timeout>();
 
   const gameStatusHandle = (event: number) => {
     setGameStatus(event);
@@ -36,13 +38,11 @@ const Playground: React.FC = () => {
 
   useEffect(() => {
     if (roulette) {
-      if (!walletAddress) {
-        setRoulette(false);
-      }
+      clearRouletteBtnTimeout.current && clearTimeout(clearRouletteBtnTimeout.current);
 
-      setTimeout(() => {
+      clearRouletteBtnTimeout.current = setTimeout(() => {
         setRoulette(false);
-      }, 3000)
+      }, 10000)
     }
   }, [roulette])
 
@@ -86,7 +86,7 @@ const Playground: React.FC = () => {
       }
       {
         roulette &&
-        <button style={{ position: "fixed", top: "10px", right: "20px", backgroundColor: "transparent", border: "0" }}
+        <button style={{ position: "fixed", bottom: "100px", right: "0", backgroundColor: "transparent", border: "0" }}
           onClick={() => { setGameStatus(2); setRoulette(false) }}>
           <video id="banner-video" autoPlay loop>
             <source src={rouletteImg} type="video/webm" />

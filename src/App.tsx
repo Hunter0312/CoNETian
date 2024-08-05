@@ -5,6 +5,7 @@ import Playground from './components/playground';
 import StartMessage from './components/start';
 import Wallet from './components/wallet';
 import About from './components/about';
+import Leaderboard from './components/leaderboard';
 import { useFlappyBirdContext } from './providers/FlappyBirdProvider';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { initializeWorkerService } from './services/workerService';
@@ -168,7 +169,8 @@ function App() {
         path === '/start' && <Playground /> ||
         path === '/difficulty' && <SelectDifficulty /> ||
         path === '/wallet' && <Wallet /> ||
-        path === '/about' && <About />
+        path === '/about' && <About /> ||
+        path === '/leaderboard' && <Leaderboard />
       }
       {
         path !== '/start' && audio &&

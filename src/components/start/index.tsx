@@ -40,6 +40,7 @@ const StartMessage: React.FC = () => {
         <button style={buttonStyle} className='startButton' onClick={() => { setPath('/start'); setGameStatus(0) }}>Start</button>
         <button style={buttonStyle} onClick={() => setPath('/difficulty')}>Change Difficulty</button>
         <button style={buttonStyle} onClick={() => setPath('/wallet')}>My Wallet</button>
+        <button style={buttonStyle} onClick={() => setPath('/leaderboard')}>Leaderboard</button>
         <button style={buttonStyle} onClick={() => setPath('/about')}>About</button>
       </div>
 

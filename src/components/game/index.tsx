@@ -29,7 +29,6 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
   const backAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const innerH = window.innerHeight >= 600 ? window.innerHeight : 600;
-  console.log(innerH)
 
   let gravity = 0.6;
   let bird = { x: 30, y: 70, width: 50, height: 50, dy: 0 };

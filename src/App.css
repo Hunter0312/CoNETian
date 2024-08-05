@@ -136,6 +136,10 @@ button {
   left: 0;
 }
 
+.leaderboard {
+  text-shadow: 0 0 4px #000000, 0 0 4px #000000;
+}
+
 .audioButton,
 .audioMute {
   display: flex;
@@ -209,7 +213,7 @@ button {
   border: 1px solid white;
 }
 
-.leaderBtnHeader p{
+.leaderBtnHeader p {
   margin-bottom: 0;
 }
 

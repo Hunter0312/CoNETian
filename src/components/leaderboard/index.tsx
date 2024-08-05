@@ -97,7 +97,7 @@ const CntpData = [
     user: "0x7dda1662Eec5f8d20523CC56Bed5DA2130F32591",
     points: 200,
   }
-]
+];
 
 const Leaderboard: React.FC = () => {
   const { setPath } = useFlappyBirdContext();
@@ -105,10 +105,10 @@ const Leaderboard: React.FC = () => {
 
   return (
     <div className='flex flex-col justify-between items-center' style={{ height: "100%" }}>
-      <div className='flex flex-col' style={{ height: "80vh", width: "80vw", maxWidth: "362px" }}>
+      <div className='flex flex-col' style={{ width: "80vw", maxWidth: "362px" }}>
         <p style={{ textAlign: "left", color: "white", fontSize: "40px", marginBottom: 0 }}>Leaderboard</p>
         <div style={{ flexGrow: 1, backgroundColor: "white", borderRadius: "8px", padding: "20px 0" }}>
-          <div className='flex flex-col justify-center items-center' style={{ height: "100%" }}>
+          <div className='flex flex-col items-center' style={{ height: "100%" }}>
             <div className='flex justify-center items-center' style={{ gap: "5px" }}>
               <button className={!show ? 'leaderBtn leaderBtnActive' : 'leaderBtn'} onClick={() => setShow(false)}>Points</button>
               <button className={show ? 'leaderBtn leaderBtnActive' : 'leaderBtn'} onClick={() => setShow(true)}>CNTP</button>
@@ -122,8 +122,8 @@ const Leaderboard: React.FC = () => {
                 <p style={{ width: "70px", textAlign: "left" }}>{!show ? "Points" : "CNTP"}</p>
               </div>
             </div>
-            <div style={{ flexGrow: 1, width: "100%" }}>
-              <div className='flex flex-col justify-between items-center' style={{ margin: "0 20px", height: "100%" }}>
+            <div style={{ width: "100%", maxHeight: "45vh", overflow: "auto" }}>
+              <div style={{ margin: "0 20px", height: "100%" }}>
                 {
                   !show ?
                     PointsData.map((data, index) => {

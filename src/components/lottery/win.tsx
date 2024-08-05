@@ -44,7 +44,7 @@ const Win: React.FC<Props> = ({ setContinue, prizeNumber, doubleAction }) => {
   }, [counter])
 
   useEffect(() => {
-    if(!audio)
+    if (!audio)
       return;
 
     const container = document.getElementsByTagName("button");

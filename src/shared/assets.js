@@ -1,13 +1,14 @@
-import pipeTopImg from '../assets/toppipe.png'; 
-import pipeBottomImg from '../assets/botpipe.png'; 
-import backgroundImage from '../assets/bgx3.png'; 
-import groundImage from '../assets/basex5.jpg'; 
-import birdImg from '../assets/pajaroaletaalta.png';       
+import pipeTopImg from '../assets/toppipe.png';
+import pipeBottomImg from '../assets/botpipe.png';
+import backgroundImage from '../assets/bgx3.png';
+import groundImage from '../assets/basex5.jpg';
+import birdImg from '../assets/pajaroaletaalta.png';
 import birdFly from '../assets/pajaroaletamedia.png';
 import birdFlyImg from '../assets/pajaroaletabaja.png';
 import loading from '../assets/logo_conet_rotation.gif';
 import pointer from '../assets/Polygon 4.png';
 import audioImage from '../assets/audio.png';
+import StarImg from '../assets/star.png';
 import rouletteImg from '../assets/sticker.webm';
 
 import BackgroundAudio from '../assets/GameSounds/BackgroundSound/16-Bit Action.wav';
@@ -29,6 +30,7 @@ export {
     loading,
     pointer,
     audioImage,
+    StarImg,
     BackgroundAudio,
     Tap,
     RouletteSpin,

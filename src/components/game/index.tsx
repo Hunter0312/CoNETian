@@ -15,17 +15,19 @@ type Props = {
 }
 
 
-const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulette}) => {
+const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulette }) => {
 
   const { load } = useAudioPlayer();
 
-  const { setGames, games, audio, gameDifficulty, walletAddress } = useFlappyBirdContext();
+  const { setGames, games, audio, gameDifficulty } = useFlappyBirdContext();
 
   let gameSpeed = gameDifficulty === 2 || gameDifficulty === 1 ? levels.speedLevel1 : levels.speedLevel3;
   let gameFrame = gameDifficulty === 2 || gameDifficulty === 1 ? levels.frameLevel1 : levels.frameLevel3;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState<number>(0);
+  const backAudioRef = useRef<HTMLAudioElement | null>(null);
+
 
   let gravity = 0.6;
   let bird = { x: 30, y: 70, width: 50, height: 50, dy: 0 };
@@ -34,9 +36,6 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
   let frame = 0;
   let flyBird = 0;
   let flagScore = 0;
-
-
-  const backAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     if (audio)

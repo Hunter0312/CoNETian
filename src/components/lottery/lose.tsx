@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { RouletteLose, ButtonClick } from '../../shared/assets';
+import { RouletteLose, ButtonClick, doubleLose } from '../../shared/assets';
 import { useAudioPlayer } from 'react-use-audio-player';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 
@@ -50,11 +50,7 @@ const Lose: React.FC<Props> = ({ setContinue }) => {
               <div className='flex flex-col'>
                 <p style={{ color: "white", fontSize: "36px" }}>Sorry, you didn't get any extra CNTP</p>
                 <div className='flex justify-center items-center' style={{ width: "100%", gap: "10px" }}>
-                  <p className='double-lottery' style={{ opacity: 0.5 }}>Win</p>
-                  <p style={{ margin: 0, marginRight: "20px" }} className='double-lottery double-lose'>
-                    Lose
-                    <span>Lose</span>
-                  </p>
+                  <img src={doubleLose} style={{ width: "350px" }}></img>
                 </div>
               </div>
               <div style={{ marginBottom: "130px" }} className='flex flex-col'>

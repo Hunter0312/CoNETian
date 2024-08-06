@@ -166,13 +166,13 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Win
+      <Win
         doubleAction={() => { }}
         setContinue={(e: string) => { }}
         prizeNumber={20}
-      /> */}
+      />
 
-      <Lottery setContinue={() => { }} />
+      {/* <Lottery setContinue={() => { }} /> */}
 
       {/* 
 

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { RouletteWin, ButtonClick } from '../../shared/assets';
+import { RouletteWin, ButtonClick, doubleLose, doubleNeutral, doubleWin } from '../../shared/assets';
 import { useAudioPlayer } from 'react-use-audio-player';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
+
 
 type Props = {
   setContinue: (e: string) => void,
@@ -37,10 +38,10 @@ const Win: React.FC<Props> = ({ setContinue, prizeNumber, doubleAction }) => {
       setLottery(0);
     }
 
-    // if (counter > 0)
-    //   setTimeout(() => {
-    //     setCounter(e => e - 1);
-    //   }, 1000);
+    if (counter > 0)
+      setTimeout(() => {
+        setCounter(e => e - 1);
+      }, 1000);
   }, [counter])
 
   useEffect(() => {
@@ -68,14 +69,11 @@ const Win: React.FC<Props> = ({ setContinue, prizeNumber, doubleAction }) => {
             <div className='flex flex-col'>
               <p style={{ color: "white", fontSize: "36px" }}>You won {prizeNumber} CNTP!</p>
               <div className='flex justify-center items-center' style={{ width: "100%", gap: "20px" }}>
-                <p className='double-lottery'>
-                  Win
-                  {
-                    lottery !== 1 &&
-                    <span>Win</span>
-                  }
-                </p>
-                <p style={lottery === 1 ? firstWin : win} className='double-lottery'>Lose</p>
+                {
+                  lottery === 1 ?
+                    <img src={doubleNeutral} style={{width: "350px"}}/> :
+                    <img src={doubleWin} style={{width: "350px"}} />
+                }
               </div>
             </div>
             <div style={{ marginBottom: "130px" }} className='flex flex-col'>

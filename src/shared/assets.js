@@ -10,6 +10,9 @@ import pointer from '../assets/Polygon 4.png';
 import audioImage from '../assets/audio.png';
 import StarImg from '../assets/star.png';
 import rouletteImg from '../assets/sticker.webm';
+import doubleLose from "../assets/double-lose.png";
+import doubleWin from "../assets/double-win.png";
+import doubleNeutral from "../assets/double-neutral.png";
 
 import BackgroundAudio from '../assets/GameSounds/BackgroundSound/16-Bit Action.wav';
 import Tap from '../assets/GameSounds/Tap/Pressured Pneumatics Hit.mp3';
@@ -31,6 +34,9 @@ export {
     pointer,
     audioImage,
     StarImg,
+    doubleLose,
+    doubleWin,
+    doubleNeutral,
     BackgroundAudio,
     Tap,
     RouletteSpin,
@@ -38,5 +44,5 @@ export {
     RouletteLose,
     ConetianDeath,
     ButtonClick,
-    rouletteImg
+    rouletteImg,
 }

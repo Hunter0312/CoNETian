@@ -8,7 +8,7 @@ import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 import { fetchRouletteResult } from '../../API/getData';
 import Delay from './delay';
 import { useAudioPlayer } from 'react-use-audio-player';
-import { RouletteSpin, ButtonClick, loading } from '../../shared/assets';
+import { RouletteSpin, ButtonClick, loading, doubleWin, doubleLose } from '../../shared/assets';
 import { toast } from 'react-toastify';
 
 type Props = {
@@ -81,9 +81,9 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
     if (!mustSpin && walletAddress) {
 
-      const rouletteResult = 1;
+      const rouletteResult = await fetchRouletteResult(walletAddress);
       //rouletteResult && !rouletteResult?.error
-      if (rouletteResult) {
+      if (rouletteResult && !rouletteResult?.error) {
         if (audio)
           load(RouletteSpin, {
             autoplay: true
@@ -102,7 +102,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
           setMustSpin(true);
         }, 6000);
       } else {
-        // toast.error(rouletteResult?.message, { autoClose: 5000 });
+        toast.error(rouletteResult?.message, { autoClose: 5000 });
         setLottery(0);
         setMustSpin(true);
         setStatus('delay');
@@ -112,25 +112,36 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
   const handleDoubleSpinClick = async () => {
     let count = 0;
+    let doublePointsTimeout: NodeJS.Timeout;
+    let timeSpin = 100;
     if (lottery === 2)
       return;
 
     if (double === 0 && walletAddress) {
       setLottery(2);
-      const rouletteResult = 1;
+      const rouletteResult = await fetchRouletteResult(walletAddress);
       if (audio)
         load(RouletteSpin, {
           autoplay: true
         })
       setPrizeNumber(rouletteResult);
 
-      const init = setInterval(() => {
+      const alternateWinLose = () => {
         if (count % 2 === 0)
+          // double === 1 means the user won
           setDouble(1);
         else
+          // double === 2 means the user lost
           setDouble(2);
         count++;
-      }, 100)
+
+        if (count >= 20)
+          timeSpin += 100;
+
+        doublePointsTimeout = setTimeout(alternateWinLose, timeSpin);
+      };
+
+      alternateWinLose();
 
       setTimeout(() => {
         const mappedResult = rouletteResult > 0 ? 1 : 0;
@@ -141,7 +152,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
           setStatus("lose");
         }
         setDouble(0);
-        clearInterval(init);
+        clearInterval(doublePointsTimeout);
       }, 6000);
 
     }
@@ -205,20 +216,11 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                     <div className='flex flex-col'>
                       <p style={{ color: "white", fontSize: "36px", height: "37px" }}></p>
                       <div className='flex justify-center items-center' style={{ width: "100%", gap: "20px" }}>
-                        <p className='double-lottery'>
-                          Win
                           {
-                            double === 1 &&
-                            <span>Win</span>
+                            double === 1 ?
+                            <img src={doubleWin} style={{ width: "350px" }} /> :
+                            <img src={doubleLose} style={{ width: "350px" }} />
                           }
-                        </p>
-                        <p style={{ margin: 0, marginRight: "20px" }} className='double-lottery double-lose'>
-                          Lose
-                          {
-                            double === 2 &&
-                            <span>Lose</span>
-                          }
-                        </p>
                       </div>
                     </div>
                     <div style={{ marginBottom: "130px" }} className='flex flex-col'>

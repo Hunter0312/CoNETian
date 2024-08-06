@@ -3,7 +3,7 @@ import { Wheel } from 'react-custom-roulette';
 import Win from './win';
 import Lose from './lose';
 
-import { pointer } from '../../shared/assets';
+import { doubleLose, doubleNeutral, doubleWin, pointer } from '../../shared/assets';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 import { fetchRouletteResult } from '../../API/getData';
 import Delay from './delay';
@@ -64,10 +64,8 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
-  const [status, setStatus] = useState<string>("default");
+  const [status, setStatus] = useState<string>("asds");
   const [double, setDouble] = useState<number>(0);
-
-
 
   const handleSpinClick = async () => {
 
@@ -234,24 +232,19 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                 /> :
                 <>
                   <div className='flex flex-col justify-between items-center' style={{ width: "100%", height: "100%" }}>
-                    <p style={{ fontSize: "48px", color: "white", margin: 0, marginTop: "130px" }}>Try to Double the CNTP that you earn!</p>
+                    <p style={{ fontSize: "48px", color: "white", margin: 0, marginTop: "130px" }}>Try to Double the CNTP that you earned!</p>
                     <div className='flex flex-col'>
                       <p style={{ color: "white", fontSize: "36px", height: "37px" }}></p>
-                      <div className='flex justify-center items-center' style={{ width: "100%", gap: "20px" }}>
-                        <p className='double-lottery'>
-                          Win
-                          {
-                            double === 1 &&
-                            <span>Win</span>
-                          }
-                        </p>
-                        <p style={{ margin: 0, marginRight: "20px" }} className='double-lottery double-lose'>
-                          Lose
-                          {
-                            double === 2 &&
-                            <span>Lose</span>
-                          }
-                        </p>
+                      <div className='flex justify-center items-center' style={{ width: "100%" }}>
+                        {double === 0 &&
+                          <img src={doubleNeutral} style={{ width: "350px" }}></img>
+                        }
+                        {double === 1 &&
+                          <img src={doubleWin} style={{ width: "350px" }}></img>
+                        }
+                        {double === 2 &&
+                          <img src={doubleLose} style={{ width: "350px" }}></img>
+                        }
                       </div>
                     </div>
                     <div style={{ marginBottom: "130px" }} className='flex flex-col'>

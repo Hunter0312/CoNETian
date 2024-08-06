@@ -14,6 +14,9 @@ import { playAudio, stopAudio } from './shared/functions';
 import { useAudioPlayer } from 'react-use-audio-player';
 import { toast, ToastContainer } from 'react-toastify';
 import SelectDifficulty from './components/difficulty';
+import Win from './components/lottery/win';
+import Lottery from './components/lottery';
+import Lose from './components/lottery/lose';
 
 type command = "balanceStatus" | "miningStatus";
 
@@ -163,6 +166,16 @@ function App() {
 
   return (
     <div className="App">
+      {/* <Win
+        doubleAction={() => { }}
+        setContinue={(e: string) => { }}
+        prizeNumber={20}
+      /> */}
+
+      <Lottery setContinue={() => { }} />
+
+      {/* 
+
       {
         path === '/' && <StartMessage /> ||
         path === '/start' && <Playground /> ||
@@ -175,7 +188,7 @@ function App() {
         <audio src={BackgroundAudio} ref={backAudioRef} loop />
       }
 
-      <ToastContainer autoClose={false} position='bottom-center' toastStyle={{ fontFamily: "FlappyBird", fontSize: "1.2rem" }} />
+      <ToastContainer autoClose={false} position='bottom-center' toastStyle={{ fontFamily: "FlappyBird", fontSize: "1.2rem" }} /> */}
     </div>
   );
 }

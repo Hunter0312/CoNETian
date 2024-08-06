@@ -259,7 +259,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
           }
           setScore(score => score + 1);
 
-          if (flagScore % 1 === 0 && flagScore >= 1) {
+          if (flagScore % 7 === 0 && flagScore >= 7) {
             if (Math.random() > 0.5) {
               setRoulette(true);
             }

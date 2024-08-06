@@ -12,6 +12,7 @@ import rouletteImg from "../assets/sticker.webm";
 import doubleLose from "../assets/double-lose.png";
 import doubleWin from "../assets/double-win.png";
 import doubleNeutral from "../assets/double-neutral.png";
+import StarImg from '../assets/star.png';
 
 import BackgroundAudio from "../assets/GameSounds/BackgroundSound/16-Bit Action.wav";
 import Tap from "../assets/GameSounds/Tap/Pressured Pneumatics Hit.mp3";
@@ -32,6 +33,7 @@ export {
   loading,
   pointer,
   audioImage,
+  StarImg,
   BackgroundAudio,
   Tap,
   RouletteSpin,

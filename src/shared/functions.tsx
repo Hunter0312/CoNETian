@@ -9,7 +9,16 @@ export const slice = (text: string) => {
     }
 }
 
-export const playAudio = (audioElementRef : RefObject<HTMLAudioElement>) => {
+export const LeaderSlice = (text: string) => {
+    if (text) {
+        let str = text.slice(0, 8);
+        str += "...";
+        str += text.slice(text.length - 6, text.length);
+        return str;
+    }
+}
+
+export const playAudio = (audioElementRef: RefObject<HTMLAudioElement>) => {
     if (audioElementRef && audioElementRef.current) {
         audioElementRef.current.play().catch((error) => {
             console.error("Error playing sound:", error);
@@ -17,7 +26,7 @@ export const playAudio = (audioElementRef : RefObject<HTMLAudioElement>) => {
     }
 };
 
-export const stopAudio = (audioElementRef : RefObject<HTMLAudioElement>) => {
+export const stopAudio = (audioElementRef: RefObject<HTMLAudioElement>) => {
     if (audioElementRef && audioElementRef.current) {
         audioElementRef.current.pause();
     }

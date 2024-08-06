@@ -74,7 +74,8 @@ const StartMessage: React.FC = () => {
         </div>
       </div>
 
-      <div style={{ display: "flex", justifyContent: "flex-end", flexDirection: "row", padding: "10px" }}>
+      {/* UNCOMENT THIS WHEN LEADERBOARD IS READY */}
+      {/* <div style={{ display: "flex", justifyContent: "flex-end", flexDirection: "row", padding: "10px" }}>
         <button className='leaderboard' style={{
           color: "white",
           fontSize: "32px",
@@ -85,7 +86,7 @@ const StartMessage: React.FC = () => {
           onClick={() => setPath('/leaderboard')}>
           {"Leaderboard >"}
         </button>
-      </div>
+      </div> */}
     </div >
   )
 }

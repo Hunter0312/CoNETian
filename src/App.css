@@ -7,6 +7,14 @@
   min-height: 600px;
 }
 
+.AppGame {
+  text-align: center;
+  height: 100vh;
+  background-image: url("/src/assets/bgx3.png");
+  object-fit: cover;
+  background-position: center;
+}
+
 .lottery {
   background-image: url("/src/assets/bgx3.png");
   object-fit: cover;

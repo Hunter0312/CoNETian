@@ -156,7 +156,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
   return (
     <div className={`flex flex-col justify-center items-center ${status === "delay" ? 'delay' : "lottery"}`}
-      style={{ height: "100%", width: "100vw", position: "fixed", zIndex: "100", top: 0 }}>
+      style={{ height: "100%", width: "100vw", position: "absolute", zIndex: "100", top: 0, minHeight: "600px", overflow: "hidden" }}>
       {
         status === "default" ?
           <>

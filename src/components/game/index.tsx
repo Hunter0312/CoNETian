@@ -28,12 +28,11 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
   const [score, setScore] = useState<number>(0);
   const backAudioRef = useRef<HTMLAudioElement | null>(null);
 
-  const innerH = window.innerHeight >= 600 ? window.innerHeight : 600;
 
   let gravity = 0.6;
   let bird = { x: 30, y: 70, width: 50, height: 50, dy: 0 };
   let pipes: { x: number, y: number, width: number, height: number, isTop: boolean, passed: boolean }[] = [];
-  let ground = { x1: 0, x2: window.innerWidth, y: innerH - 100, width: window.innerWidth, height: 100, speed: gameSpeed };
+  let ground = { x1: 0, x2: window.innerWidth, y: window.innerHeight - 100, width: window.innerWidth, height: 100, speed: gameSpeed };
   let frame = 0;
   let flyBird = 0;
   let flagScore = 0;
@@ -75,7 +74,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
     if (!canvas || !context) return;
 
     canvas.width = window.innerWidth;
-    canvas.height = innerH;
+    canvas.height = window.innerHeight;
 
     const birdImage = new Image();
     birdImage.src = birdImg;
@@ -260,7 +259,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
           }
           setScore(score => score + 1);
 
-          if (flagScore % 7 === 0 && flagScore >= 7) {
+          if (flagScore % 1 === 0 && flagScore >= 1) {
             if (Math.random() > 0.5) {
               setRoulette(true);
             }

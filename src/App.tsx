@@ -163,7 +163,7 @@ function App() {
   }, [])
 
   return (
-    <div className="App">
+    <div className={path !== '/start' || gameStatus === 1 ? "App" : "AppGame"}>
       {
         path === '/' && <StartMessage /> ||
         path === '/start' && <Playground /> ||

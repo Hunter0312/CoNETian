@@ -41,7 +41,7 @@ const Lose: React.FC<Props> = ({ setContinue }) => {
         lottery === 0 ?
           <>
             <p style={{ fontSize: "60px", color: "white", margin: 0 }}>You lose</p>
-            <p style={{ color: "white", fontSize: "36px" }}>Sorry, you didn't get any extra CNTP</p>
+            <p style={{ color: "white", fontSize: "36px", margin: '20px' }}>Sorry, you didn't get any extra CNTP</p>
             <button style={{ fontSize: "32px", width: "250px", height: "52px", borderRadius: "16px", border: 0, }} onClick={() => setContinue("delay")}>Return to game</button>
           </> :
           <>

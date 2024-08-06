@@ -231,10 +231,10 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                   setContinue={() => setContinue(3)}
                 /> :
                 <>
-                  <div className='flex flex-col justify-between items-center' style={{ width: "100%", height: "100%" }}>
-                    <p style={{ fontSize: "48px", color: "white", margin: 0, marginTop: "130px" }}>Try to Double the CNTP that you earned!</p>
-                    <div className='flex flex-col'>
-                      <p style={{ color: "white", fontSize: "36px", height: "37px" }}></p>
+                  <div className='flex flex-col items-center' style={{ justifyContent: "space-evenly", width: "100%", height: "100%" }}>
+                    <p style={{ fontSize: "48px", color: "white", margin: '0 20px', marginBlock: 0 }}>Try to Double the CNTP that you earned!</p>
+                    <div className='flex flex-col' style={{ gap: "16px" }}>
+                      <p style={{ color: "white", fontSize: "36px", height: "37px", margin: 0, marginBlock: 0 }}></p>
                       <div className='flex justify-center items-center' style={{ width: "100%" }}>
                         {double === 0 &&
                           <img src={doubleNeutral} style={{ width: "350px" }}></img>
@@ -247,9 +247,9 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                         }
                       </div>
                     </div>
-                    <div style={{ marginBottom: "130px" }} className='flex flex-col'>
-                      <p style={{ margin: 0, marginBottom: "10px", height: "2rem" }}></p>
-                      <button style={{ fontSize: "32px", width: "230px", height: "52px", marginBottom: "16px", borderRadius: "16px", border: 0, backgroundColor: "gray" }}
+                    <div style={{ gap: "16px" }} className='flex flex-col'>
+                      <p style={{ margin: 0, marginBlock: 0, height: "2rem" }}></p>
+                      <button style={{ fontSize: "32px", width: "230px", height: "52px", borderRadius: "16px", border: 0, backgroundColor: "gray" }}
                       >Spin to double</button>
                       <button style={{ fontSize: "32px", width: "230px", height: "52px", borderRadius: "16px", border: 0, }} onClick={() => {
                         setStatus("delay"); setLottery(0); if (audio) {

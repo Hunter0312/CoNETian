@@ -171,9 +171,7 @@ button {
 }
 
 .floating-top-container {
-  position: fixed;
-  top: 20px;
-  width: 90%;
+  padding: 10px;
   display: flex;
   justify-content: space-between;
   border: 0;
@@ -205,7 +203,6 @@ button {
     opacity: 0.3;
   }
 }
-
 
 .leaderBtn {
   width: 132px;

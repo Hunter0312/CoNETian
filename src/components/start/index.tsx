@@ -32,28 +32,7 @@ const StartMessage: React.FC = () => {
   }, [])
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100%", gap: "80px", position: "relative" }}>
-      <h1 style={{ color: "white", fontFamily: "FlappyBird", fontSize: "3rem", margin: 0 }}>The CoNETian</h1>
-      <img src={bird % 3 === 0 ? birdImg : bird % 3 === 1 ? birdFlyImg : birdFly} />
-
-      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "16px" }}>
-        <button style={buttonStyle} className='startButton' onClick={() => { setPath('/start'); setGameStatus(0) }}>Start</button>
-        <button style={buttonStyle} onClick={() => setPath('/difficulty')}>Change Difficulty</button>
-        <button style={buttonStyle} onClick={() => setPath('/wallet')}>My Wallet</button>
-        <button className='leaderboard' style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          color: "white",
-          fontSize: "32px",
-          backgroundColor: "transparent",
-          border: 0,
-          
-        }}
-          onClick={() => setPath('/leaderboard')}>{"Leaderboard >"}</button>
-        <button style={buttonStyle} onClick={() => setPath('/about')}>About</button>
-      </div>
-
+    <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%", position: "relative" }}>
       <div className='floating-top-container'>
         <button className={audio ? 'audioButton' : 'audioMute'} onClick={() => setAudio(audio ? false : true)}>
           <img src={audioImage} style={{ width: "20px" }} />
@@ -82,6 +61,32 @@ const StartMessage: React.FC = () => {
               )
         }
       </div>
+
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100%", gap: "30px" }}>
+        <h1 style={{ color: "white", fontFamily: "FlappyBird", fontSize: "3rem", margin: 0 }}>The CoNETian</h1>
+        <img src={bird % 3 === 0 ? birdImg : bird % 3 === 1 ? birdFlyImg : birdFly} />
+
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "16px" }}>
+          <button style={buttonStyle} className='startButton' onClick={() => { setPath('/start'); setGameStatus(0) }}>Start</button>
+          <button style={buttonStyle} onClick={() => setPath('/difficulty')}>Change Difficulty</button>
+          <button style={buttonStyle} onClick={() => setPath('/wallet')}>My Wallet</button>
+          <button style={buttonStyle} onClick={() => setPath('/about')}>About</button>
+        </div>
+      </div>
+
+      {/* UNCOMENT THIS WHEN LEADERBOARD IS READY */}
+      {/* <div style={{ display: "flex", justifyContent: "flex-end", flexDirection: "row", padding: "10px" }}>
+        <button className='leaderboard' style={{
+          color: "white",
+          fontSize: "32px",
+          backgroundColor: "transparent",
+          border: 0,
+
+        }}
+          onClick={() => setPath('/leaderboard')}>
+          {"Leaderboard >"}
+        </button>
+      </div> */}
     </div >
   )
 }

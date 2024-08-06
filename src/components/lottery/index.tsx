@@ -64,7 +64,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
-  const [status, setStatus] = useState<string>("asds");
+  const [status, setStatus] = useState<string>("default");
   const [double, setDouble] = useState<number>(0);
 
   const handleSpinClick = async () => {

@@ -60,14 +60,12 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
   const { load } = useAudioPlayer();
 
-  const { walletAddress, audio, setLottery, lottery, mining } = useFlappyBirdContext();
+  const { walletAddress, audio, setLottery, lottery } = useFlappyBirdContext();
 
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [status, setStatus] = useState<string>("default");
   const [double, setDouble] = useState<number>(0);
-
-
 
   const handleSpinClick = async () => {
 
@@ -83,9 +81,9 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
     if (!mustSpin && walletAddress) {
 
-      const rouletteResult = await fetchRouletteResult(walletAddress);
-
-      if (rouletteResult && !rouletteResult?.error) {
+      const rouletteResult = 1;
+      //rouletteResult && !rouletteResult?.error
+      if (rouletteResult) {
         if (audio)
           load(RouletteSpin, {
             autoplay: true
@@ -104,7 +102,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
           setMustSpin(true);
         }, 6000);
       } else {
-        toast.error(rouletteResult?.message, { autoClose: 5000 });
+        // toast.error(rouletteResult?.message, { autoClose: 5000 });
         setLottery(0);
         setMustSpin(true);
         setStatus('delay');
@@ -119,7 +117,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
     if (double === 0 && walletAddress) {
       setLottery(2);
-      const rouletteResult = await fetchRouletteResult(walletAddress);
+      const rouletteResult = 1;
       if (audio)
         load(RouletteSpin, {
           autoplay: true

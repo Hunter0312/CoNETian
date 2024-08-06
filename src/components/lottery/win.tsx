@@ -37,10 +37,10 @@ const Win: React.FC<Props> = ({ setContinue, prizeNumber, doubleAction }) => {
       setLottery(0);
     }
 
-    if (counter > 0)
-      setTimeout(() => {
-        setCounter(e => e - 1);
-      }, 1000);
+    // if (counter > 0)
+    //   setTimeout(() => {
+    //     setCounter(e => e - 1);
+    //   }, 1000);
   }, [counter])
 
   useEffect(() => {

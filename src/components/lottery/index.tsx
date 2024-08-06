@@ -114,6 +114,9 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
   const handleDoubleSpinClick = async () => {
     let count = 0;
+    let timerSpeedDown = 100;
+    let doublePointsTimeout: NodeJS.Timeout;
+
     if (lottery === 2)
       return;
 
@@ -126,26 +129,54 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
         })
       setPrizeNumber(rouletteResult);
 
-      const init = setInterval(() => {
+      const alternateWinLose = () => {
         if (count % 2 === 0)
+          // double === 1 means the user won
           setDouble(1);
         else
+          // double === 2 means the user lost
           setDouble(2);
         count++;
-      }, 100)
+
+        if (count >= 20)
+          timerSpeedDown += 100;
+
+        doublePointsTimeout = setTimeout(alternateWinLose, timerSpeedDown);
+      };
+
+      alternateWinLose();
 
       setTimeout(() => {
+        clearTimeout(doublePointsTimeout);
+
         const mappedResult = rouletteResult > 0 ? 1 : 0;
+
         if (doubleData[mappedResult].option !== "Lose") {
-          setStatus("win");
+          // double === 2 means the user lost, so we show the "lose" text first so the user thinks he lost, then we show the win page.
+          setDouble(2);
+
+          // wait 500ms to show the win text and build expectation on the user
+          setTimeout(() => {
+            setStatus("win")
+
+            // double === 0 for the text to stop flashing
+            setDouble(0);
+          }, 500);
         } else {
           setLottery(3);
-          setStatus("lose");
-        }
-        setDouble(0);
-        clearInterval(init);
-      }, 6000);
 
+          // double === 1 means the user won, so we show the "win" text first so the user thinks he won, then we show the lose page.
+          setDouble(1);
+
+          // wait 500ms to show the lose text and build expectation on the user
+          setTimeout(() => {
+            setStatus("lose")
+
+            // double === 0 for the text to stop flashing
+            setDouble(0);
+          }, 500);
+        }
+      }, 6000);
     }
   }
 

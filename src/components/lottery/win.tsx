@@ -60,7 +60,7 @@ const Win: React.FC<Props> = ({ setContinue, prizeNumber, doubleAction }) => {
       </div>
 
       <div className='flex justify-center items-center' style={{ width: "100%" }}>
-        <img src={doubleWin} style={{ width: "350px" }}></img>
+        <img src={doubleWin} style={{ width: "90%" }}></img>
       </div>
 
       <div className='flex flex-col' style={{ gap: '16px' }}>

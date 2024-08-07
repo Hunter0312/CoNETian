@@ -82,7 +82,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
     if (!mustSpin && walletAddress) {
 
       const rouletteResult = await fetchRouletteResult(walletAddress);
-
+      //!rouletteResult?.error
       if (rouletteResult && !rouletteResult?.error) {
         if (audio)
           load(RouletteSpin, {
@@ -184,7 +184,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
   }
 
   return (
-    <div className={`flex flex-col justify-center items-center ${status === "delay" ? 'delay' : "lottery"}`}
+    <div id="roulette" className={`flex flex-col justify-center items-center ${status === "delay" ? 'delay' : "lottery"}`}
       style={{ height: "100%", width: "100vw", position: "absolute", zIndex: "100", top: 0, minHeight: "600px", overflow: "hidden" }}>
       {
         status === "default" ?
@@ -237,13 +237,13 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                       <p style={{ color: "white", fontSize: "36px", height: "37px", margin: 0, marginBlock: 0 }}></p>
                       <div className='flex justify-center items-center' style={{ width: "100%" }}>
                         {double === 0 &&
-                          <img src={doubleNeutral} style={{ width: "350px" }}></img>
+                          <img src={doubleNeutral} style={{ width: "90%" }}></img>
                         }
                         {double === 1 &&
-                          <img src={doubleWin} style={{ width: "350px" }}></img>
+                          <img src={doubleWin} style={{ width: "90%" }}></img>
                         }
                         {double === 2 &&
-                          <img src={doubleLose} style={{ width: "350px" }}></img>
+                          <img src={doubleLose} style={{ width: "90%" }}></img>
                         }
                       </div>
                     </div>

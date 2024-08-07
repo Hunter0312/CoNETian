@@ -124,7 +124,7 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
       setLotteryBalance,
       audio,
       setAudio,
-      setGameDifficulty, 
+      setGameDifficulty,
       gameDifficulty
     }}>
       {children}

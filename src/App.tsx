@@ -5,6 +5,7 @@ import Playground from './components/playground';
 import StartMessage from './components/start';
 import Wallet from './components/wallet';
 import About from './components/about';
+import Leaderboard from './components/leaderboard';
 import { useFlappyBirdContext } from './providers/FlappyBirdProvider';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { initializeWorkerService } from './services/workerService';
@@ -165,30 +166,21 @@ function App() {
   }, [])
 
   return (
-    <div className="App">
-      <Win
-        doubleAction={() => { }}
-        setContinue={(e: string) => { }}
-        prizeNumber={20}
-      />
-
-      {/* <Lottery setContinue={() => { }} /> */}
-
-      {/* 
-
+    <div className={path !== '/start' || gameStatus === 1 ? "App" : "AppGame"}>
       {
         path === '/' && <StartMessage /> ||
         path === '/start' && <Playground /> ||
         path === '/difficulty' && <SelectDifficulty /> ||
         path === '/wallet' && <Wallet /> ||
-        path === '/about' && <About />
+        path === '/about' && <About /> ||
+        path === '/leaderboard' && <Leaderboard />
       }
       {
         path !== '/start' && audio &&
         <audio src={BackgroundAudio} ref={backAudioRef} loop />
       }
 
-      <ToastContainer autoClose={false} position='bottom-center' toastStyle={{ fontFamily: "FlappyBird", fontSize: "1.2rem" }} /> */}
+      <ToastContainer autoClose={false} position='bottom-center' toastStyle={{ fontFamily: "FlappyBird", fontSize: "1.2rem" }} />
     </div>
   );
 }

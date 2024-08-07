@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
-import { birdImg, birdFly, birdFlyImg } from '../../shared/assets';
+import { useConetianHighFire, useConetianLowFire, useConetianMediumFire } from '../../hooks/useConetianHooks';
 import { loading } from '../../shared/assets';
 import { audioImage } from '../../shared/assets';
 
@@ -16,10 +16,13 @@ const StartMessage: React.FC = () => {
     width: "240px"
   }
 
-
   const { setPath, walletAddress, setGameStatus, miningError, miningRate, onlineMiners, mining, audio, setAudio } = useFlappyBirdContext();
 
   const [bird, setBird] = useState<number>(0);
+
+  const conetianHighFireImage = useConetianHighFire();
+  const conetianMediumFireImage = useConetianMediumFire();
+  const conetianLowFireImage = useConetianLowFire();
 
   useEffect(() => {
     const init = setInterval(() => {
@@ -64,7 +67,7 @@ const StartMessage: React.FC = () => {
 
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100%", gap: "30px" }}>
         <h1 style={{ color: "white", fontFamily: "FlappyBird", fontSize: "3rem", margin: 0 }}>The CoNETian</h1>
-        <img src={bird % 3 === 0 ? birdImg : bird % 3 === 1 ? birdFlyImg : birdFly} />
+        <img src={bird % 3 === 0 ? conetianHighFireImage : bird % 3 === 1 ? conetianLowFireImage : conetianMediumFireImage} width={120} />
 
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "16px" }}>
           <button style={buttonStyle} className='startButton' onClick={() => { setPath('/start'); setGameStatus(0) }}>Start</button>

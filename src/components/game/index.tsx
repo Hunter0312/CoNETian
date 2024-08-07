@@ -4,7 +4,8 @@ import { Tap, BackgroundAudio, ConetianDeath } from '../../shared/assets';
 import { playAudio, stopAudio } from '../../shared/functions';
 import { useAudioPlayer } from 'react-use-audio-player';
 
-import { birdImg, groundImage, backgroundImage, pipeBottomImg, pipeTopImg, birdFly } from '../../shared/assets';
+import { useConetianHighFire, useConetianMediumFire } from '../../hooks/useConetianHooks';
+import { groundImage, backgroundImage, pipeBottomImg, pipeTopImg, } from '../../shared/assets';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 
 type Props = {
@@ -14,7 +15,6 @@ type Props = {
   setRoulette: (event: boolean) => void,
 }
 
-
 const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulette }) => {
 
   const { load } = useAudioPlayer();
@@ -23,6 +23,9 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
 
   let gameSpeed = gameDifficulty === 2 || gameDifficulty === 1 ? levels.speedLevel1 : levels.speedLevel3;
   let gameFrame = gameDifficulty === 2 || gameDifficulty === 1 ? levels.frameLevel1 : levels.frameLevel3;
+
+  const conetianHighFireImage = useConetianHighFire();
+  const conetianMediumFireImage = useConetianMediumFire();
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState<number>(0);
@@ -77,7 +80,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
     canvas.height = window.innerHeight;
 
     const birdImage = new Image();
-    birdImage.src = birdImg;
+    birdImage.src = conetianHighFireImage;
 
     const pipeTopImage = new Image();
     pipeTopImage.src = pipeTopImg;
@@ -92,7 +95,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
     groundImageObj.src = groundImage;
 
     const birdFlyImg = new Image();
-    birdFlyImg.src = birdFly;
+    birdFlyImg.src = conetianMediumFireImage;
 
     const birdCanvas = document.createElement('canvas');
     birdCanvas.width = bird.width;

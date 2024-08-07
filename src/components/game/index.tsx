@@ -4,7 +4,7 @@ import { Tap, BackgroundAudio, ConetianDeath } from '../../shared/assets';
 import { playAudio, stopAudio } from '../../shared/functions';
 import { useAudioPlayer } from 'react-use-audio-player';
 
-import { birdImg, groundImage, backgroundImage, pipeBottomImg, pipeTopImg, birdFly } from '../../shared/assets';
+import { EasyConetianMediumFire, EasyConetianHighFire, groundImage, backgroundImage, pipeBottomImg, pipeTopImg, } from '../../shared/assets';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 
 type Props = {
@@ -77,7 +77,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
     canvas.height = window.innerHeight;
 
     const birdImage = new Image();
-    birdImage.src = birdImg;
+    birdImage.src = EasyConetianHighFire;
 
     const pipeTopImage = new Image();
     pipeTopImage.src = pipeTopImg;
@@ -92,7 +92,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
     groundImageObj.src = groundImage;
 
     const birdFlyImg = new Image();
-    birdFlyImg.src = birdFly;
+    birdFlyImg.src = EasyConetianMediumFire;
 
     const birdCanvas = document.createElement('canvas');
     birdCanvas.width = bird.width;

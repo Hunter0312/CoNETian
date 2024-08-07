@@ -180,7 +180,7 @@ function App() {
         <audio src={BackgroundAudio} ref={backAudioRef} loop />
       }
 
-      <ToastContainer autoClose={false} position='bottom-center' toastStyle={{ fontFamily: "FlappyBird", fontSize: "1.2rem" }} />
+      <ToastContainer autoClose={false} position='bottom-center' toastStyle={{ fontFamily: "FlappyBird", fontSize: "1.2rem" }} /> 
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { createOrGetWallet, getWalletCCNTPBalance, importWallet, startMining, stopMining, getRouletteResult } from ".";
+import { createOrGetWallet, getWalletCCNTPBalance, importWallet, startMining, stopMining, getRouletteResult, registerReferrer } from ".";
 
 export const fetchWalletData = async (): Promise<any> => {
     try {
@@ -42,7 +42,7 @@ export const fetchImportWallet = async (walletPrivateKey: string): Promise<any> 
         if (Array.isArray(response) && response.length >= 2) {
             const [status] = response;
             if (status === "SUCCESS") {
-                return response[1][0][0];
+                return response[1][0];
             } else {
                 console.error("Failed to import wallet");
             }
@@ -115,4 +115,23 @@ export const fetchRouletteResult = async (walletAddress: string): Promise<any> =
     }
 
     return { error: true, message: "Failed to fetch roulette result" };
+}
+
+export const fetchRegisterResult = async (referrerAddress: string): Promise<any> => {
+    try {
+        const response = await registerReferrer(referrerAddress);
+
+        if (Array.isArray(response) && response.length >= 2) {
+            const [status, data] = response;
+            if (status === "SUCCESS") {
+                return data[0];
+            } else {
+                console.error("Failed to add referrer");
+            }
+        }
+    } catch (error) {
+        console.error("Failed to add referrer", error);
+    }
+
+    return { error: true, message: "Failed to add referrer" };
 }

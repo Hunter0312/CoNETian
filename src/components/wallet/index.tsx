@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useFlappyBirdContext } from "../../providers/FlappyBirdProvider";
-import { fetchImportWallet, fetchstopMining } from "../../API/getData";
+import { fetchImportWallet, fetchRegisterResult, fetchstopMining } from "../../API/getData";
 import { slice } from "../../shared/functions";
 import copy from "copy-to-clipboard";
 import { IoCopySharp } from "react-icons/io5";
@@ -49,17 +49,15 @@ const importInputStyle = {
 const Wallet: React.FC = () => {
   const {
     setPath,
-    walletAddress,
-    setWalletAddress,
-    privateKey,
-    setPrivateKey,
-    setBalance,
-    balance,
+    profile,
+    setProfile,
   } = useFlappyBirdContext();
 
   const [walletAddr, setWalletAddr] = useState<boolean>(false);
   const [importWalletPrivateKey, setImportWalletPrivateKey] =
     useState<string>("");
+  const [referrer, setReferrer] = useState<string>("");
+  const [copiedReferrer, setCopiedReferrer] = useState<boolean>(false);
   const [privateK, setPrivateK] = useState<boolean>(false);
   const [showImportWalletConfirmModal, setShowImportWalletConfirmModal] =
     useState<boolean>(false);
@@ -75,14 +73,26 @@ const Wallet: React.FC = () => {
         setPrivateK(false);
       }, 4000);
     }
-  }, [walletAddr, privateK]);
+    if (copiedReferrer) {
+      setTimeout(() => {
+        setCopiedReferrer(false);
+      }, 4000);
+    }
+  }, [walletAddr, privateK, copiedReferrer]);
 
   const copyText = (text: string, type: string) => {
     copy(text);
     if (type === "walletAddress") {
       setWalletAddr(true);
-    } else if (type === "walletPrivateKey") {
+      return;
+    }
+    if (type === "walletPrivateKey") {
       setPrivateK(true);
+      return;
+    }
+    if (type === "referrer") {
+      setCopiedReferrer(true);
+      return;
     }
   };
 
@@ -94,16 +104,31 @@ const Wallet: React.FC = () => {
     }
   };
 
+  const handleAddReferrerButton = async () => {
+    if (referrer) {
+      const result = await fetchRegisterResult(referrer)
+
+      if (result && !result?.error) {
+        const newProfile = { ...profile, referrer: result }
+        setProfile(newProfile)
+        toast.success('Adding referrer successful')
+      } else {
+        toast.error(result?.message)
+      }
+
+    } else {
+      toast.error("Please enter a wallet address for referrer");
+    }
+  };
+
   const handleImportWalletConfirm = async () => {
     if (importWalletPrivateKey) {
-      const stopMiningResult = await fetchstopMining(walletAddress);
+      const stopMiningResult = await fetchstopMining(profile?.keyID);
 
       if (stopMiningResult && !stopMiningResult?.error) {
         const importResult = await fetchImportWallet(importWalletPrivateKey);
         if (importResult && !importResult?.error) {
-          setBalance(importResult?.tokens?.cCNTP.balance);
-          setWalletAddress(importResult?.keyID);
-          setPrivateKey(importResult?.privateKeyArmor);
+          setProfile(importResult);
           toast.success("Import Successful!");
         } else {
           toast.error(importResult?.message);
@@ -125,7 +150,7 @@ const Wallet: React.FC = () => {
         className="flex flex-col justify-around"
         style={{ paddingTop: "7rem" }}
       >
-        {walletAddress === "" ? (
+        {!profile || profile?.keyID === "" ? (
           <div
             className="flex justify-center items-center"
             style={{ gap: "5px", marginTop: "10rem" }}
@@ -145,9 +170,9 @@ const Wallet: React.FC = () => {
                   gap: "5px",
                   cursor: "pointer",
                 }}
-                onClick={() => copyText(walletAddress, "walletAddress")}
+                onClick={() => copyText(profile?.keyID, "walletAddress")}
               >
-                {slice(walletAddress)}
+                {slice(profile?.keyID)}
                 {walletAddr === true ? <FaCheck /> : <IoCopySharp />}
               </p>
             </div>
@@ -162,17 +187,75 @@ const Wallet: React.FC = () => {
                   gap: "5px",
                   cursor: "pointer",
                 }}
-                onClick={() => copyText(privateKey, "walletPrivateKey")}
+                onClick={() => copyText(profile?.privateKeyArmor, "walletPrivateKey")}
               >
-                {slice(privateKey)}
+                {slice(profile?.privateKeyArmor)}
                 {privateK === true ? <FaCheck /> : <IoCopySharp />}
               </p>
             </div>
 
             <div style={{ marginBottom: "4rem" }}>
               <p style={{ fontSize: "2rem", margin: 0 }}>CNTP Balance</p>
-              <p style={{ fontSize: "2.5rem", margin: 0 }}>{balance}</p>
+              <p style={{ fontSize: "2.5rem", margin: 0 }}>{profile?.tokens?.CNTP?.balance}</p>
             </div>
+
+            {/* input for adding or viewing wallet referrer */}
+            {profile && profile?.referrer ?
+              (
+                <div style={{ marginBottom: "4rem" }}>
+                  <p style={{ fontSize: "2rem", margin: 0 }}>Referrer Wallet</p>
+                  <p
+                    className="flex items-center justify-center"
+                    style={{
+                      fontSize: "2.5rem",
+                      margin: 0,
+                      gap: "5px",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => copyText(profile?.referrer, "referrer")}
+                  >
+                    {slice(profile?.referrer)}
+                    {copiedReferrer === true ? <FaCheck /> : <IoCopySharp />}
+                  </p>
+                </div>
+              ) : (
+                <div
+                  style={{
+                    marginBottom: "4rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1rem",
+                  }}
+                >
+                  <p style={{ fontSize: "2rem", margin: 0 }}>
+                    Add Referrer Wallet
+                  </p>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: "1rem",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <input
+                      style={importInputStyle}
+                      type="text"
+                      placeholder="Enter referrer wallet address"
+                      onChange={(e) => setReferrer(e.target.value)}
+                    />
+                    <button
+                      onClick={handleAddReferrerButton}
+                      style={importButtonStyle}
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div>
+              )
+            }
 
             {/* input for importing private key */}
             <div

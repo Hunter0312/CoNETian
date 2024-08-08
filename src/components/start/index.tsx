@@ -16,8 +16,7 @@ const StartMessage: React.FC = () => {
     width: "240px"
   }
 
-
-  const { setPath, walletAddress, setGameStatus, miningError, miningRate, onlineMiners, mining, audio, setAudio } = useFlappyBirdContext();
+  const { setPath, profile, setGameStatus, miningError, miningRate, onlineMiners, mining, audio, setAudio } = useFlappyBirdContext();
 
   const [bird, setBird] = useState<number>(0);
 
@@ -38,7 +37,7 @@ const StartMessage: React.FC = () => {
 
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "16px" }}>
         <button style={buttonStyle} className='startButton' onClick={() => { setPath('/start'); setGameStatus(0) }}>Start</button>
-        <button style={buttonStyle} onClick={() => setPath('/difficulty')}>Settings</button>
+        <button style={buttonStyle} onClick={() => setPath('/difficulty')}>Difficulty</button>
         <button style={buttonStyle} onClick={() => setPath('/wallet')}>My Wallet</button>
         <button style={buttonStyle} onClick={() => setPath('/about')}>About</button>
       </div>
@@ -49,7 +48,7 @@ const StartMessage: React.FC = () => {
         </button>
 
         {
-          walletAddress === '' ?
+          !profile || profile?.keyID === '' ?
             <div className='info-message'>
               <div style={{ display: 'flex', flexDirection: "row", gap: "10px" }}>
                 <img src={loading} style={{ width: "15px" }} />

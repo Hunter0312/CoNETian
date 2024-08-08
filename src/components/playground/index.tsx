@@ -8,7 +8,7 @@ import Lottery from '../lottery';
 
 const Playground: React.FC = () => {
   const [score, setScore] = useState<number>(0);
-  const { walletAddress, mining, onlineMiners, miningRate, gameStatus, setGameStatus, miningError } = useFlappyBirdContext();
+  const { profile, mining, onlineMiners, miningRate, gameStatus, setGameStatus, miningError } = useFlappyBirdContext();
   const [highScore, setHighScore] = useState<number>(0);
 
   const gameStatusHandle = (event: number) => {
@@ -48,7 +48,7 @@ const Playground: React.FC = () => {
             <p style={{ position: "fixed", color: "white", top: "20px", fontSize: "3rem", left: "50%" }}>{score}</p>
 
             {
-              walletAddress === '' ?
+              !profile || profile?.keyID === '' ?
                 <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
                   <div className='flex justify-center items-center' style={{ gap: "5px" }}>
                     <img src={loading} style={{ width: "30px" }} />

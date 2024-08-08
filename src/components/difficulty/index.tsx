@@ -2,22 +2,22 @@ import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 
 import { useFlappyBirdContext } from "../../providers/FlappyBirdProvider";
-import { createOrGetWallet, registerReferrer } from "../../API";
 import { loading } from "../../shared/assets";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { fetchRegisterResult } from "../../API/getData";
 
 const SelectDifficulty: React.FC = () => {
-  const { hasReferrer, setGameDifficulty, setPath, walletAddress } = useFlappyBirdContext();
-  const [referrerAddress, setReferrerAddress] = useState<string>('')
+  const { profile, setProfile, setGameDifficulty, setPath } = useFlappyBirdContext();
+  const [_referrerAddress, _setReferrerAddress] = useState<string>('')
   const [validAdd, setValidAdd] = useState<boolean>(false)
 
   useEffect(() => {
-    function validateAddress(add: string): void{
+    function validateAddress(add: string): void {
       setValidAdd(ethers.isAddress(add))
     }
-    validateAddress(referrerAddress)
-  },[referrerAddress])
+    validateAddress(_referrerAddress)
+  }, [_referrerAddress])
 
   const buttonStyle = {
     cursor: "pointer",
@@ -50,14 +50,15 @@ const SelectDifficulty: React.FC = () => {
     borderRadius: "15px",
   };
 
-  async function createReferrer(){
-    const res = await registerReferrer(referrerAddress)
-    console.log(res)
-    if(res[0] !== 'SUCCESS'){
-      toast.error('An error occured')
+  async function createReferrer() {
+    const result = await fetchRegisterResult(_referrerAddress)
+    console.log(result)
+    if (result && !result?.error) {
+      toast.success('Adding referrer successful')
+      const newProfile = { ...profile, referrer: result }
+      setProfile(newProfile)
     } else {
-      toast.success('Success to referrer your wallet')
-      await createOrGetWallet()
+      toast.error(result?.message)
     }
   }
 
@@ -109,17 +110,18 @@ const SelectDifficulty: React.FC = () => {
           >
             Hard
           </p>
+
           {/* input for create referrer */}
-          {walletAddress === '' ? (
-                      <div
-                      className="flex justify-center items-center"
-                      style={{ gap: "5px", marginTop: "10rem" }}
-                    >
-                      <img src={loading} style={{ width: "30px" }} />
-                      <p style={{ fontSize: "2rem" }}>Fetching Wallet Data</p>
-                    </div>
-          ) : hasReferrer ? (
-            <p>Wallet refferer: {hasReferrer}</p>
+          {!profile || profile?.keyID === '' ? (
+            <div
+              className="flex justify-center items-center"
+              style={{ gap: "5px", marginTop: "10rem" }}
+            >
+              <img src={loading} style={{ width: "30px" }} />
+              <p style={{ fontSize: "2rem" }}>Fetching Wallet Data</p>
+            </div>
+          ) : profile?.referrer !== '' ? (
+            <p>Wallet referrer: {profile?.referrer}</p>
           ) : (
             <div
               style={{
@@ -144,16 +146,16 @@ const SelectDifficulty: React.FC = () => {
                   style={importInputStyle}
                   type="text"
                   placeholder="Enter Wallet Address"
-                  value={referrerAddress}
-                  onChange={(e) => setReferrerAddress(e.target.value)}
+                  value={_referrerAddress}
+                  onChange={(e) => _setReferrerAddress(e.target.value)}
                 />
-                {validAdd && 
-                (
-                  <button style={importButtonStyle} onClick={createReferrer} disabled={!validAdd}>Referrer</button>
-                )
+                {validAdd &&
+                  (
+                    <button style={importButtonStyle} onClick={createReferrer} disabled={!validAdd}>Add Referrer</button>
+                  )
                 }
               </div>
-                {!validAdd && referrerAddress.length > 0 && <p style={{marginTop: "-10px"}}>Insert a valid wallet address</p>}
+              {!validAdd && _referrerAddress.length > 0 && <p style={{ marginTop: "-10px" }}>Insert a valid wallet address</p>}
             </div>
           )}
 

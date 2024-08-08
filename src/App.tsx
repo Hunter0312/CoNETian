@@ -15,7 +15,7 @@ import { useAudioPlayer } from 'react-use-audio-player';
 import { toast, ToastContainer } from 'react-toastify';
 import SelectDifficulty from './components/difficulty';
 
-type command = "balanceStatus" | "miningStatus";
+type command = "profileVer" | "miningStatus";
 
 interface channelWroker {
   cmd: command;
@@ -44,19 +44,19 @@ export const listeningMiningHook = (
   return listeningManager("listeningMiningHook", fun);
 };
 
-export const listeningBalanceHook = (
-  balanceHook: React.Dispatch<React.SetStateAction<any[]>>,
+export const listeningProfileHook = (
+  profileHook: React.Dispatch<React.SetStateAction<any[]>>,
 ) => {
   const fun = (e: MessageEvent<any>) =>
-    profileVerChannelListening(e, null, balanceHook);
-  return listeningManager("listeningBalanceHook", fun);
+    profileVerChannelListening(e, null, profileHook);
+  return listeningManager("listeningProfileHook", fun);
 };
 
 
 const profileVerChannelListening = (
   e: MessageEvent<any>,
   miningHook: React.Dispatch<React.SetStateAction<any[]>> | null = null,
-  balanceHook: React.Dispatch<React.SetStateAction<any[]>> | null = null
+  profileHook: React.Dispatch<React.SetStateAction<any[]>> | null = null
 ) => {
   let cmd: channelWroker;
   try {
@@ -75,9 +75,9 @@ const profileVerChannelListening = (
       return "";
     }
 
-    case "balanceStatus": {
-      if (balanceHook) {
-        return balanceHook(cmd?.data);
+    case "profileVer": {
+      if (profileHook) {
+        return profileHook(cmd?.data);
       }
       return "";
     }
@@ -92,7 +92,7 @@ const profileVerChannelListening = (
 
 function App() {
 
-  const { path, setPrivateKey, setWalletAddress, audio, mining, setMining, setOnlineMiners, setMiningRate, setBalance, gameStatus, setHasReferrer } = useFlappyBirdContext();
+  const { path, audio, setOnlineMiners, setMiningRate, setProfile, gameStatus } = useFlappyBirdContext();
 
   const backAudioRef = useRef<HTMLAudioElement | null>(null);
   const { load } = useAudioPlayer();
@@ -131,10 +131,10 @@ function App() {
     }
   });
 
-  listeningBalanceHook((response: any) => {
+  listeningProfileHook((response: any) => {
     try {
       const [data] = response;
-      setBalance(parseFloat(data));
+      setProfile(data);
     } catch (error) {
       console.error("Error parsing balance data", error);
     }
@@ -148,11 +148,7 @@ function App() {
       if (result && result.length >= 1) {
         if (result[0] === 'SUCCESS') {
           if (result[1][0] !== '')
-            setWalletAddress(result[1][0]);
-          if (result[1][1] !== '')
-            setPrivateKey(result[1][1]);
-          if(result[1][2])
-            setHasReferrer(result[1][2])
+            setProfile(result[1][0]);
         }
       } else {
         toast.error(result?.message);

@@ -31,20 +31,21 @@ const importButtonStyle = {
   border: "0",
   backgroundColor: "white",
   color: "black",
-  fontSize: "1rem",
-  padding: "10px 10px",
+  fontSize: "1.5rem",
+  padding: "10px 20px",
   borderRadius: "15px",
-  width: "80px",
-};
+  width: "180px",
+}
 
 const importInputStyle = {
   border: "0",
   backgroundColor: "white",
   color: "black",
-  fontSize: "1rem",
+  fontSize: "1.5rem",
   padding: "10px 20px",
-  borderRadius: "15px",
-};
+  borderRadius: "5px",
+  fontFamily: "FlappyBird",
+}
 
 const Wallet: React.FC = () => {
   const {
@@ -142,164 +143,86 @@ const Wallet: React.FC = () => {
   };
 
   return (
-    <div
-      style={{ height: "100%", gap: "20px", color: "white" }}
-      className="flex flex-col justify-between items-center"
-    >
-      <div
-        className="flex flex-col justify-around"
-        style={{ paddingTop: "7rem" }}
-      >
-        {!profile || profile?.keyID === "" ? (
-          <div
-            className="flex justify-center items-center"
-            style={{ gap: "5px", marginTop: "10rem" }}
-          >
-            <img src={loading} style={{ width: "30px" }} />
-            <p style={{ fontSize: "2rem" }}>Fetching Wallet Data</p>
-          </div>
-        ) : (
-          <>
-            <div style={{ marginBottom: "4rem" }}>
-              <p style={{ fontSize: "2rem", margin: 0 }}>Wallet Address</p>
-              <p
-                className="flex items-center justify-center"
-                style={{
-                  fontSize: "2.5rem",
-                  margin: 0,
-                  gap: "5px",
-                  cursor: "pointer",
-                }}
-                onClick={() => copyText(profile?.keyID, "walletAddress")}
-              >
-                {slice(profile?.keyID)}
-                {walletAddr === true ? <FaCheck /> : <IoCopySharp />}
-              </p>
-            </div>
+    <div style={{ height: "100%", gap: "4rem", color: "white" }} className='flex flex-col justify-center items-center'>
+      <div className='flex flex-col justify-between align-center'>
+        {
+          !profile || profile?.keyID === '' ?
+            <div className='flex justify-center items-center' style={{ gap: "5px", marginTop: "10rem" }}>
+              <img src={loading} style={{ width: "30px" }} />
+              <p style={{ fontSize: "2rem" }}>Fetching Wallet Data</p>
+            </div> :
+            <div className='flex flex-col justify-between' style={{ rowGap: '2rem' }}>
+              <div>
+                <p style={{ fontSize: "2rem", margin: 0 }}>Wallet Address</p>
+                <p className='flex items-center justify-center' style={{ fontSize: "2.5rem", margin: 0, gap: "5px", cursor: "pointer" }} onClick={() => copyText(profile?.keyID, "walletAddress")}>
+                  {slice(profile?.keyID)}
+                  {
+                    walletAddr === true ?
+                      <FaCheck /> :
+                      <IoCopySharp />
+                  }
+                </p>
+              </div>
 
-            <div style={{ marginBottom: "4rem" }}>
-              <p style={{ fontSize: "2rem", margin: 0 }}>Private key</p>
-              <p
-                className="flex items-center justify-center"
-                style={{
-                  fontSize: "2.5rem",
-                  margin: 0,
-                  gap: "5px",
-                  cursor: "pointer",
-                }}
-                onClick={() => copyText(profile?.privateKeyArmor, "walletPrivateKey")}
-              >
-                {slice(profile?.privateKeyArmor)}
-                {privateK === true ? <FaCheck /> : <IoCopySharp />}
-              </p>
-            </div>
+              <div>
+                <p style={{ fontSize: "2rem", margin: 0 }}>Private key</p>
+                <p className='flex items-center justify-center' style={{ fontSize: "2.5rem", margin: 0, gap: "5px", cursor: "pointer" }} onClick={() => copyText(profile?.privateKeyArmor, "walletPrivateKey")}>
+                  {slice(profile?.privateKeyArmor)}
+                  {
+                    privateK === true ?
+                      <FaCheck /> :
+                      <IoCopySharp />
+                  }
+                </p>
+              </div>
 
-            <div style={{ marginBottom: "4rem" }}>
-              <p style={{ fontSize: "2rem", margin: 0 }}>CNTP Balance</p>
-              <p style={{ fontSize: "2.5rem", margin: 0 }}>{profile?.tokens?.CNTP?.balance}</p>
-            </div>
+              <div>
+                <p style={{ fontSize: "2rem", margin: 0 }}>CNTP Balance</p>
+                <p style={{ fontSize: "2.5rem", margin: 0 }}>{profile?.tokens?.CNTP?.balance}</p>
+              </div>
 
-            {/* input for adding or viewing wallet referrer */}
-            {profile && profile?.referrer ?
-              (
-                <div style={{ marginBottom: "4rem" }}>
-                  <p style={{ fontSize: "2rem", margin: 0 }}>Referrer Wallet</p>
-                  <p
-                    className="flex items-center justify-center"
-                    style={{
-                      fontSize: "2.5rem",
-                      margin: 0,
-                      gap: "5px",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => copyText(profile?.referrer, "referrer")}
-                  >
-                    {slice(profile?.referrer)}
-                    {copiedReferrer === true ? <FaCheck /> : <IoCopySharp />}
-                  </p>
-                </div>
-              ) : (
-                <div
-                  style={{
-                    marginBottom: "4rem",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "1rem",
-                  }}
-                >
-                  <p style={{ fontSize: "2rem", margin: 0 }}>
-                    Add Referrer Wallet
-                  </p>
-
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      gap: "1rem",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <input
-                      style={importInputStyle}
-                      type="text"
-                      placeholder="Enter referrer wallet address"
-                      onChange={(e) => setReferrer(e.target.value)}
-                    />
-                    <button
-                      onClick={handleAddReferrerButton}
-                      style={importButtonStyle}
+              {/* input for adding or viewing wallet referrer */}
+              {profile && profile?.referrer ?
+                (
+                  <div style={{ marginBottom: "4rem" }}>
+                    <p style={{ fontSize: "2rem", margin: 0 }}>Referrer Wallet</p>
+                    <p
+                      className="flex items-center justify-center"
+                      style={{
+                        fontSize: "2.5rem",
+                        margin: 0,
+                        gap: "5px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => copyText(profile?.referrer, "referrer")}
                     >
+                      {slice(profile?.referrer)}
+                      {copiedReferrer === true ? <FaCheck /> : <IoCopySharp />}
+                    </p>
+                  </div>
+                ) : (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center", justifyContent: "center" }}>
+                    <p style={{ fontSize: "1.7rem", margin: 0 }}>Referrer Wallet</p>
+                    <input className='import-input' style={importInputStyle} type="text" placeholder="Enter Referrer's Wallet Address" onChange={(e) => setReferrer(e.target.value)} />
+                    <button onClick={handleAddReferrerButton} style={importButtonStyle}>
                       Add
                     </button>
                   </div>
-                </div>
-              )
-            }
+                )
+              }
 
-            {/* input for importing private key */}
-            <div
-              style={{
-                marginBottom: "4rem",
-                display: "flex",
-                flexDirection: "column",
-                gap: "1rem",
-              }}
-            >
-              <p style={{ fontSize: "2rem", margin: 0 }}>
-                Import Wallet Private Key
-              </p>
-
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: "1rem",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <input
-                  style={importInputStyle}
-                  type="text"
-                  placeholder="Enter Private Key"
-                  onChange={(e) => setImportWalletPrivateKey(e.target.value)}
-                />
-                <button
-                  onClick={handleImportWalletButton}
-                  style={importButtonStyle}
-                >
+              {/* input for importing private key */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center", justifyContent: "center" }}>
+                <p style={{ fontSize: "1.7rem", margin: 0 }}>Import Wallet Private Key</p>
+                <input className='import-input' style={importInputStyle} type="text" placeholder="Enter Private Key" onChange={(e) => setImportWalletPrivateKey(e.target.value)} />
+                <button onClick={handleImportWalletButton} style={importButtonStyle}>
                   Import
                 </button>
               </div>
             </div>
-          </>
-        )}
+        }
       </div>
-      <button
-        onClick={() => setPath("/")}
-        style={{ ...buttonStyle, marginBottom: "5rem" }}
-      >
+      <button onClick={() => setPath('/')} style={{ ...buttonStyle }}>
         Main Menu
       </button>
 

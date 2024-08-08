@@ -5,3 +5,12 @@
   --confirm-toast-btn-no-focus: none;
   --confirm-toast-btn-yes-focus: none;
 }
+
+.import-input {
+  text-align: center;
+}
+
+.import-input::placeholder {
+  color: #929092;
+  font-family: "FlappyBird";
+}

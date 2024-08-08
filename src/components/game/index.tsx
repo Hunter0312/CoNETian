@@ -4,17 +4,18 @@ import { Tap, BackgroundAudio, ConetianDeath } from '../../shared/assets';
 import { playAudio, stopAudio } from '../../shared/functions';
 import { useAudioPlayer } from 'react-use-audio-player';
 
-import { birdImg, groundImage, backgroundImage, pipeBottomImg, pipeTopImg, birdFly } from '../../shared/assets';
+import { useConetianHighFire, useConetianMediumFire } from '../../hooks/useConetianHooks';
+import { groundImage, backgroundImage, pipeBottomImg, pipeTopImg, } from '../../shared/assets';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 
 type Props = {
   setGameStatus: (e: number) => void,
   gameStatus: number,
   setScores: (score: number) => void,
+  setRoulette: (event: boolean) => void,
 }
 
-
-const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
+const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulette }) => {
 
   const { load } = useAudioPlayer();
 
@@ -23,8 +24,13 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
   let gameSpeed = gameDifficulty === 2 || gameDifficulty === 1 ? levels.speedLevel1 : levels.speedLevel3;
   let gameFrame = gameDifficulty === 2 || gameDifficulty === 1 ? levels.frameLevel1 : levels.frameLevel3;
 
+  const conetianHighFireImage = useConetianHighFire();
+  const conetianMediumFireImage = useConetianMediumFire();
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState<number>(0);
+  const backAudioRef = useRef<HTMLAudioElement | null>(null);
+
 
   let gravity = 0.6;
   let bird = { x: 30, y: 70, width: 50, height: 50, dy: 0 };
@@ -33,9 +39,6 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
   let frame = 0;
   let flyBird = 0;
   let flagScore = 0;
-
-
-  const backAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     if (audio)
@@ -77,7 +80,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
     canvas.height = window.innerHeight;
 
     const birdImage = new Image();
-    birdImage.src = birdImg;
+    birdImage.src = conetianHighFireImage;
 
     const pipeTopImage = new Image();
     pipeTopImage.src = pipeTopImg;
@@ -92,7 +95,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
     groundImageObj.src = groundImage;
 
     const birdFlyImg = new Image();
-    birdFlyImg.src = birdFly;
+    birdFlyImg.src = conetianMediumFireImage;
 
     const birdCanvas = document.createElement('canvas');
     birdCanvas.width = bird.width;
@@ -262,17 +265,9 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
 
           if (flagScore % 7 === 0 && flagScore >= 7 && profile?.keyID) {
             if (Math.random() > 0.5) {
-              setGames({
-                gameSpeed: gameSpeed,
-                gameFrame: gameFrame,
-                gravity: gravity,
-                bird: bird,
-                pipes: pipes,
-                ground: ground,
-                frame: frame,
-                score: flagScore,
-              });
+              setRoulette(true);
               setGameStatus(2);
+              setRoulette(false)
             }
           }
           pipe.passed = true;
@@ -300,8 +295,19 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, }) => {
       if (frame % 7 === 0)
         flyBird++;
 
-      if (gameStatus === 0 || gameStatus === 3)
+      if (gameStatus === 0 || gameStatus === 3) {
         frame++;
+        setGames({
+          gameSpeed: gameSpeed,
+          gameFrame: gameFrame,
+          gravity: gravity,
+          bird: bird,
+          pipes: pipes,
+          ground: ground,
+          frame: frame,
+          score: flagScore,
+        });
+      }
 
     };
 

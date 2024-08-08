@@ -111,54 +111,6 @@ const SelectDifficulty: React.FC = () => {
             Hard
           </p>
 
-          {/* input for create referrer */}
-          {!profile || profile?.keyID === '' ? (
-            <div
-              className="flex justify-center items-center"
-              style={{ gap: "5px", marginTop: "10rem" }}
-            >
-              <img src={loading} style={{ width: "30px" }} />
-              <p style={{ fontSize: "2rem" }}>Fetching Wallet Data</p>
-            </div>
-          ) : profile?.referrer !== '' ? (
-            <p>Wallet referrer: {profile?.referrer}</p>
-          ) : (
-            <div
-              style={{
-                marginBottom: "4rem",
-                display: "flex",
-                flexDirection: "column",
-                gap: "1rem",
-              }}
-            >
-              <p style={{ fontSize: "2rem", margin: 0 }}>Referrer Wallet</p>
-
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: "1rem",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <input
-                  style={importInputStyle}
-                  type="text"
-                  placeholder="Enter Wallet Address"
-                  value={_referrerAddress}
-                  onChange={(e) => _setReferrerAddress(e.target.value)}
-                />
-                {validAdd &&
-                  (
-                    <button style={importButtonStyle} onClick={createReferrer} disabled={!validAdd}>Add Referrer</button>
-                  )
-                }
-              </div>
-              {!validAdd && _referrerAddress.length > 0 && <p style={{ marginTop: "-10px" }}>Insert a valid wallet address</p>}
-            </div>
-          )}
-
           <div style={{ marginTop: "50px" }}>
             <p
               style={buttonStyle}

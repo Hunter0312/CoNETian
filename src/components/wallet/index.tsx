@@ -185,7 +185,7 @@ const Wallet: React.FC = () => {
               {profile && profile?.referrer ?
                 (
                   <div style={{ marginBottom: "4rem" }}>
-                    <p style={{ fontSize: "2rem", margin: 0 }}>Referrer Wallet</p>
+                    <p style={{ fontSize: "2rem", margin: 0 }}>Referrer's Wallet</p>
                     <p
                       className="flex items-center justify-center"
                       style={{
@@ -202,7 +202,7 @@ const Wallet: React.FC = () => {
                   </div>
                 ) : (
                   <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center", justifyContent: "center" }}>
-                    <p style={{ fontSize: "1.7rem", margin: 0 }}>Referrer Wallet</p>
+                    <p style={{ fontSize: "1.7rem", margin: 0 }}>Referrer's Wallet</p>
                     <input className='import-input' style={importInputStyle} type="text" placeholder="Enter Referrer's Wallet Address" onChange={(e) => setReferrer(e.target.value)} />
                     <button onClick={handleAddReferrerButton} style={importButtonStyle}>
                       Add

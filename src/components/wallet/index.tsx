@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
-import { fetchImportWallet, fetchstopMining } from '../../API/getData';
-import { slice } from '../../shared/functions';
+import React, { useEffect, useState } from "react";
+import { useFlappyBirdContext } from "../../providers/FlappyBirdProvider";
+import { fetchImportWallet, fetchRegisterResult, fetchstopMining } from "../../API/getData";
+import { slice } from "../../shared/functions";
 import copy from "copy-to-clipboard";
 import { IoCopySharp } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
-import { loading } from '../../shared/assets';
-import { ConfirmToast } from 'react-confirm-toast';
-import { toast } from 'react-toastify';
+import { loading } from "../../shared/assets";
+import { ConfirmToast } from "react-confirm-toast";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import './index.css';
+import "./index.css";
 
 const buttonStyle = {
   border: "0",
@@ -19,13 +19,13 @@ const buttonStyle = {
   padding: "10px 20px",
   borderRadius: "15px",
   width: "240px",
-}
+};
 
 const modalButtonStyle = {
-  width: '100px',
-  borderRadius: '8px',
-  fontWeight: 'normal',
-}
+  width: "100px",
+  borderRadius: "8px",
+  fontWeight: "normal",
+};
 
 const importButtonStyle = {
   border: "0",
@@ -48,13 +48,20 @@ const importInputStyle = {
 }
 
 const Wallet: React.FC = () => {
-
-  const { setPath, walletAddress, setWalletAddress, privateKey, setPrivateKey, setBalance, balance } = useFlappyBirdContext();
+  const {
+    setPath,
+    profile,
+    setProfile,
+  } = useFlappyBirdContext();
 
   const [walletAddr, setWalletAddr] = useState<boolean>(false);
-  const [importWalletPrivateKey, setImportWalletPrivateKey] = useState<string>('');
+  const [importWalletPrivateKey, setImportWalletPrivateKey] =
+    useState<string>("");
+  const [referrer, setReferrer] = useState<string>("");
+  const [copiedReferrer, setCopiedReferrer] = useState<boolean>(false);
   const [privateK, setPrivateK] = useState<boolean>(false);
-  const [showImportWalletConfirmModal, setShowImportWalletConfirmModal] = useState<boolean>(false);
+  const [showImportWalletConfirmModal, setShowImportWalletConfirmModal] =
+    useState<boolean>(false);
 
   useEffect(() => {
     if (walletAddr) {
@@ -67,35 +74,62 @@ const Wallet: React.FC = () => {
         setPrivateK(false);
       }, 4000);
     }
-  }, [walletAddr, privateK])
+    if (copiedReferrer) {
+      setTimeout(() => {
+        setCopiedReferrer(false);
+      }, 4000);
+    }
+  }, [walletAddr, privateK, copiedReferrer]);
 
   const copyText = (text: string, type: string) => {
     copy(text);
     if (type === "walletAddress") {
       setWalletAddr(true);
-    } else if (type === "walletPrivateKey") {
-      setPrivateK(true);
+      return;
     }
-  }
+    if (type === "walletPrivateKey") {
+      setPrivateK(true);
+      return;
+    }
+    if (type === "referrer") {
+      setCopiedReferrer(true);
+      return;
+    }
+  };
 
   const handleImportWalletButton = () => {
     if (importWalletPrivateKey) {
-      setShowImportWalletConfirmModal(true)
+      setShowImportWalletConfirmModal(true);
     } else {
       toast.error("Please enter a private key");
     }
-  }
+  };
+
+  const handleAddReferrerButton = async () => {
+    if (referrer) {
+      const result = await fetchRegisterResult(referrer)
+
+      if (result && !result?.error) {
+        const newProfile = { ...profile, referrer: result }
+        setProfile(newProfile)
+        toast.success('Adding referrer successful')
+      } else {
+        toast.error(result?.message)
+      }
+
+    } else {
+      toast.error("Please enter a wallet address for referrer");
+    }
+  };
 
   const handleImportWalletConfirm = async () => {
     if (importWalletPrivateKey) {
-      const stopMiningResult = await fetchstopMining(walletAddress);
+      const stopMiningResult = await fetchstopMining(profile?.keyID);
 
       if (stopMiningResult && !stopMiningResult?.error) {
         const importResult = await fetchImportWallet(importWalletPrivateKey);
         if (importResult && !importResult?.error) {
-          setBalance(importResult?.tokens?.cCNTP.balance);
-          setWalletAddress(importResult?.keyID);
-          setPrivateKey(importResult?.privateKeyArmor);
+          setProfile(importResult);
           toast.success("Import Successful!");
         } else {
           toast.error(importResult?.message);
@@ -106,13 +140,13 @@ const Wallet: React.FC = () => {
     } else {
       toast.error("Please enter a private key");
     }
-  }
+  };
 
   return (
     <div style={{ height: "100%", gap: "4rem", color: "white" }} className='flex flex-col justify-center items-center'>
       <div className='flex flex-col justify-between align-center'>
         {
-          walletAddress === '' ?
+          !profile || profile?.keyID === '' ?
             <div className='flex justify-center items-center' style={{ gap: "5px", marginTop: "10rem" }}>
               <img src={loading} style={{ width: "30px" }} />
               <p style={{ fontSize: "2rem" }}>Fetching Wallet Data</p>
@@ -120,8 +154,8 @@ const Wallet: React.FC = () => {
             <div className='flex flex-col justify-between' style={{ rowGap: '2rem' }}>
               <div>
                 <p style={{ fontSize: "2rem", margin: 0 }}>Wallet Address</p>
-                <p className='flex items-center justify-center' style={{ fontSize: "2.5rem", margin: 0, gap: "5px", cursor: "pointer" }} onClick={() => copyText(walletAddress, "walletAddress")}>
-                  {slice(walletAddress)}
+                <p className='flex items-center justify-center' style={{ fontSize: "2.5rem", margin: 0, gap: "5px", cursor: "pointer" }} onClick={() => copyText(profile?.keyID, "walletAddress")}>
+                  {slice(profile?.keyID)}
                   {
                     walletAddr === true ?
                       <FaCheck /> :
@@ -132,8 +166,8 @@ const Wallet: React.FC = () => {
 
               <div>
                 <p style={{ fontSize: "2rem", margin: 0 }}>Private key</p>
-                <p className='flex items-center justify-center' style={{ fontSize: "2.5rem", margin: 0, gap: "5px", cursor: "pointer" }} onClick={() => copyText(privateKey, "walletPrivateKey")}>
-                  {slice(privateKey)}
+                <p className='flex items-center justify-center' style={{ fontSize: "2.5rem", margin: 0, gap: "5px", cursor: "pointer" }} onClick={() => copyText(profile?.privateKeyArmor, "walletPrivateKey")}>
+                  {slice(profile?.privateKeyArmor)}
                   {
                     privateK === true ?
                       <FaCheck /> :
@@ -144,8 +178,38 @@ const Wallet: React.FC = () => {
 
               <div>
                 <p style={{ fontSize: "2rem", margin: 0 }}>CNTP Balance</p>
-                <p style={{ fontSize: "2.5rem", margin: 0 }}>{balance}</p>
+                <p style={{ fontSize: "2.5rem", margin: 0 }}>{profile?.tokens?.CNTP?.balance}</p>
               </div>
+
+              {/* input for adding or viewing wallet referrer */}
+              {profile && profile?.referrer ?
+                (
+                  <div style={{ marginBottom: "4rem" }}>
+                    <p style={{ fontSize: "2rem", margin: 0 }}>Referrer's Wallet</p>
+                    <p
+                      className="flex items-center justify-center"
+                      style={{
+                        fontSize: "2.5rem",
+                        margin: 0,
+                        gap: "5px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => copyText(profile?.referrer, "referrer")}
+                    >
+                      {slice(profile?.referrer)}
+                      {copiedReferrer === true ? <FaCheck /> : <IoCopySharp />}
+                    </p>
+                  </div>
+                ) : (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center", justifyContent: "center" }}>
+                    <p style={{ fontSize: "1.7rem", margin: 0 }}>Referrer's Wallet</p>
+                    <input className='import-input' style={importInputStyle} type="text" placeholder="Enter Referrer's Wallet Address" onChange={(e) => setReferrer(e.target.value)} />
+                    <button onClick={handleAddReferrerButton} style={importButtonStyle}>
+                      Add
+                    </button>
+                  </div>
+                )
+              }
 
               {/* input for importing private key */}
               <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center", justifyContent: "center" }}>
@@ -163,20 +227,29 @@ const Wallet: React.FC = () => {
       </button>
 
       <ConfirmToast
-        toastText={"If you import a new wallet, you will lose your current one. Are you sure you want to continue?"}
-        buttonNoText='No'
-        buttonYesText='Yes'
+        toastText={
+          "If you import a new wallet, you will lose your current one. Are you sure you want to continue?"
+        }
+        buttonNoText="No"
+        buttonYesText="Yes"
         showCloseIcon={false}
         asModal={true}
         customFunction={handleImportWalletConfirm}
         setShowConfirmToast={setShowImportWalletConfirmModal}
         showConfirmToast={showImportWalletConfirmModal}
-        buttonYesAttributes={{ style: { ...modalButtonStyle, backgroundImage: "linear-gradient(to right, #D775FF, #8DA8FF)" } }}
-        buttonNoAttributes={{ style: { ...modalButtonStyle, border: '1px solid black' } }}
-        className='confirm-toast-style'
+        buttonYesAttributes={{
+          style: {
+            ...modalButtonStyle,
+            backgroundImage: "linear-gradient(to right, #D775FF, #8DA8FF)",
+          },
+        }}
+        buttonNoAttributes={{
+          style: { ...modalButtonStyle, border: "1px solid black" },
+        }}
+        className="confirm-toast-style"
       />
     </div>
-  )
-}
+  );
+};
 
 export default Wallet;

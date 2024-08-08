@@ -20,18 +20,17 @@ const buttonStyle = {
 
 const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
 
-  const { setPath, balance } = useFlappyBirdContext();
-
+  const { setPath, profile } = useFlappyBirdContext();
 
   return (
     <div className='flex flex-col justify-between items-center' style={{ height: "100%" }}>
       <div className='flex flex-col justify-between'>
         <p style={{ color: "white", fontSize: "5rem" }}>{score}</p>
         {
-          balance !== 0 &&
+          profile && profile?.tokens?.CNTP?.balance !== 0 &&
           <>
             <p style={{ color: "white", fontSize: "2.5rem", margin: 0 }}>CNTP Balance:</p>
-            <p style={{ color: "white", fontSize: "3rem", margin: 0, marginBottom: "2rem" }}>{balance}</p>
+            <p style={{ color: "white", fontSize: "3rem", margin: 0, marginBottom: "2rem" }}>{profile?.tokens?.CNTP?.balance}</p>
           </>
         }
         <p style={{ color: "white", fontSize: "2.5rem", margin: 0 }}>Highest Score:</p>

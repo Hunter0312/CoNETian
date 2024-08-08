@@ -19,7 +19,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
 
   const { load } = useAudioPlayer();
 
-  const { setGames, games, audio, gameDifficulty } = useFlappyBirdContext();
+  const { setGames, games, audio, gameDifficulty, profile } = useFlappyBirdContext();
 
   let gameSpeed = gameDifficulty === 2 || gameDifficulty === 1 ? levels.speedLevel1 : levels.speedLevel3;
   let gameFrame = gameDifficulty === 2 || gameDifficulty === 1 ? levels.frameLevel1 : levels.frameLevel3;
@@ -262,7 +262,8 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
           }
           setScore(score => score + 1);
 
-          if (flagScore % 7 === 0 && flagScore >= 7) {
+
+          if (flagScore % 7 === 0 && flagScore >= 7 && profile?.keyID) {
             if (Math.random() > 0.5) {
               setRoulette(true);
               setGameStatus(2);

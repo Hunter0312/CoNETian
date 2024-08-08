@@ -8,7 +8,7 @@ import Lottery from '../lottery';
 
 const Playground: React.FC = () => {
   const [score, setScore] = useState<number>(0);
-  const { walletAddress, mining, onlineMiners, miningRate, gameStatus, setGameStatus, miningError } = useFlappyBirdContext();
+  const { profile, mining, onlineMiners, miningRate, gameStatus, setGameStatus, miningError } = useFlappyBirdContext();
   const [highScore, setHighScore] = useState<number>(0);
   const [roulette, setRoulette] = useState<boolean>(false);
   const [stateRoulette, setStateRoulette] = useState<boolean>(false);
@@ -64,7 +64,7 @@ const Playground: React.FC = () => {
             <p style={{ position: "fixed", color: "white", top: "20px", fontSize: "3rem", left: "50%" }}>{score}</p>
 
             {
-              walletAddress === '' ?
+              !profile || profile?.keyID === '' ?
                 <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
                   <div className='flex justify-center items-center' style={{ gap: "5px" }}>
                     <img src={loading} style={{ width: "30px" }} />
@@ -83,15 +83,6 @@ const Playground: React.FC = () => {
                     </div>)
             }
           </>
-      }
-      {
-        roulette &&
-        <button style={{ position: "fixed", bottom: "100px", right: "0", backgroundColor: "transparent", border: "0" }}
-          onClick={() => { setGameStatus(2); setRoulette(false) }}>
-          <video id="banner-video" autoPlay loop>
-            <source src={rouletteImg} type="video/webm" />
-          </video>
-        </button>
       }
     </>
   )

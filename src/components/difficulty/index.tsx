@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { ethers } from "ethers";
 
 import { useFlappyBirdContext } from "../../providers/FlappyBirdProvider";
+import { loading } from "../../shared/assets";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { fetchRegisterResult } from "../../API/getData";
 
 const SelectDifficulty: React.FC = () => {
-  const { gameDifficulty, setGameDifficulty, setPath } = useFlappyBirdContext();
+  const { profile, setProfile, setGameDifficulty, setPath } = useFlappyBirdContext();
+  const [_referrerAddress, _setReferrerAddress] = useState<string>('')
+  const [validAdd, setValidAdd] = useState<boolean>(false)
+
+  useEffect(() => {
+    function validateAddress(add: string): void {
+      setValidAdd(ethers.isAddress(add))
+    }
+    validateAddress(_referrerAddress)
+  }, [_referrerAddress])
 
   const buttonStyle = {
     cursor: "pointer",
@@ -16,6 +30,37 @@ const SelectDifficulty: React.FC = () => {
     borderRadius: "15px",
     width: "240px",
   };
+
+  const importButtonStyle = {
+    border: "0",
+    backgroundColor: "white",
+    color: "black",
+    fontSize: "1rem",
+    padding: "10px 10px",
+    borderRadius: "15px",
+    width: "80px",
+  };
+
+  const importInputStyle = {
+    border: "0",
+    backgroundColor: "white",
+    color: "black",
+    fontSize: "1rem",
+    padding: "10px 20px",
+    borderRadius: "15px",
+  };
+
+  async function createReferrer() {
+    const result = await fetchRegisterResult(_referrerAddress)
+    console.log(result)
+    if (result && !result?.error) {
+      toast.success('Adding referrer successful')
+      const newProfile = { ...profile, referrer: result }
+      setProfile(newProfile)
+    } else {
+      toast.error(result?.message)
+    }
+  }
 
   return (
     <div
@@ -35,7 +80,7 @@ const SelectDifficulty: React.FC = () => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            gap: '16px',
+            gap: "16px",
           }}
         >
           <p
@@ -65,6 +110,7 @@ const SelectDifficulty: React.FC = () => {
           >
             Hard
           </p>
+
           <div style={{ marginTop: "50px" }}>
             <p
               style={buttonStyle}

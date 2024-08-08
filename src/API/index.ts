@@ -139,3 +139,15 @@ export const getRouletteResult: (walletAddress: string) => Promise<string> = (
     };
     return _postMessage(cmd, true, resolve);
   });
+
+  export const registerReferrer: (
+    referrerAddr: string
+  ) => Promise<any> = (referrerAddr) =>
+    new Promise((resolve) => {
+      const cmd: WorkerCommand = {
+        cmd: "registerReferrer",
+        uuid: v4(),
+        data: [referrerAddr],
+      };
+      return _postMessage(cmd, true, resolve);
+    });

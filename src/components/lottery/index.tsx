@@ -60,7 +60,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
   const { load } = useAudioPlayer();
 
-  const { walletAddress, audio, setLottery, lottery, mining } = useFlappyBirdContext();
+  const { profile, audio, setLottery, lottery } = useFlappyBirdContext();
 
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
@@ -79,10 +79,10 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
     setLottery(1);
 
-    if (!mustSpin && walletAddress) {
+    if (!mustSpin && profile?.keyID) {
 
-      const rouletteResult = await fetchRouletteResult(walletAddress);
-      //!rouletteResult?.error
+      const rouletteResult = await fetchRouletteResult(profile?.keyID);
+
       if (rouletteResult && !rouletteResult?.error) {
         if (audio)
           load(RouletteSpin, {
@@ -118,9 +118,9 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
     if (lottery === 2)
       return;
 
-    if (double === 0 && walletAddress) {
+    if (double === 0 && profile && profile?.keyID) {
       setLottery(2);
-      const rouletteResult = await fetchRouletteResult(walletAddress);
+      const rouletteResult = await fetchRouletteResult(profile?.keyID);
       if (audio)
         load(RouletteSpin, {
           autoplay: true
@@ -207,7 +207,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
               pointerProps={pointerProperties}
             />
             {
-              walletAddress ?
+              profile && profile?.keyID ?
                 <button onClick={handleSpinClick} style={lottery === 1 ? { fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px", backgroundColor: "gray" } : { fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px", backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}>SPIN</button> :
                 <div className='flex justify-center items-center' style={{ gap: "5px" }}>
                   <img src={loading} style={{ width: "30px" }} />

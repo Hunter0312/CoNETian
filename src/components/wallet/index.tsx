@@ -177,7 +177,7 @@ const Wallet: React.FC = () => {
 
               <div>
                 <p style={{ fontSize: "2rem", margin: 0 }}>CNTP Balance</p>
-                <p style={{ fontSize: "2.5rem", margin: 0 }}>{profile?.tokens?.CNTP?.balance}</p>
+                <p style={{ fontSize: "2.5rem", margin: 0 }}>{profile?.tokens?.CNTP?.balance || 0}</p>
               </div>
 
               {/* input for adding or viewing wallet referrer */}

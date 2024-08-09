@@ -9,6 +9,13 @@ const Delay: React.FC<Props> = ({ setContinue }) => {
   const [counter, setCounter] = useState<number>(3);
 
   useEffect(() => {
+    const appElement = document.getElementById("roulette");
+    if (appElement) {
+      appElement.style.minHeight = "fit-content";
+    }
+  }, [])
+
+  useEffect(() => {
     if (counter === 0) {
       setContinue(3);
     }

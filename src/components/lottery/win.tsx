@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { RouletteWin, ButtonClick } from '../../shared/assets';
-import { doubleWin } from '../../shared/assets';
+import { RouletteWin, ButtonClick, doubleWin } from '../../shared/assets';
 import { useAudioPlayer } from 'react-use-audio-player';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 
@@ -53,14 +52,23 @@ const Win: React.FC<Props> = ({ setContinue, prizeNumber, doubleAction }) => {
   }, [audio])
 
   return (
-    <div className='flex flex-col items-center' style={{ height: "100%", justifyContent: 'space-evenly' }}>
+    <div className='flex flex-col items-center'
+      style={{
+        height: "100%",
+        justifyContent: 'space-evenly',
+        overflowX: 'hidden',
+        overflowY: 'auto',
+        padding: '20px',
+        boxSizing: 'border-box',
+        gap: '16px'
+      }}>
       <div>
-        <p style={{ fontSize: "48px", color: "white", margin: 0 }}>You won {prizeNumber} CNTP!</p>
-        <p style={{ color: "white", fontSize: "36px", margin: '0 20px' }}>Try to Double the CNTP that you earned!</p>
-      </div>
+        <p style={{ color: "white", fontSize: "48px", margin: '0 20px' }}>Try to Double the CNTP that you earned!</p>
+        <p style={{ fontSize: "40px", color: "white", margin: 0 }}>You won {prizeNumber} CNTP!</p>
+      </div >
 
       <div className='flex justify-center items-center' style={{ width: "100%" }}>
-        <img src={doubleWin} style={{ width: "350px" }}></img>
+        <img src={doubleWin} style={{ width: "350px" }} />
       </div>
 
       <div className='flex flex-col' style={{ gap: '16px' }}>
@@ -75,7 +83,7 @@ const Win: React.FC<Props> = ({ setContinue, prizeNumber, doubleAction }) => {
           }}>Spin to double</button>
         <button style={{ fontSize: "32px", width: "230px", height: "52px", borderRadius: "16px", border: 0, }} onClick={() => { setContinue("delay"); setLottery(0) }}>Keep playing</button>
       </div>
-    </div>
+    </div >
   )
 }
 

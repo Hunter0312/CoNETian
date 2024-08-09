@@ -16,7 +16,7 @@ const StartMessage: React.FC = () => {
     width: "240px"
   }
 
-  const { setPath, profile, setGameStatus, miningError, miningRate, onlineMiners, mining, audio, setAudio } = useFlappyBirdContext();
+  const { setPath, profile, setGameStatus, miningError, miningRate, onlineMiners, mining, audio, setAudio, gameDifficulty } = useFlappyBirdContext();
 
   const [bird, setBird] = useState<number>(0);
 
@@ -35,7 +35,12 @@ const StartMessage: React.FC = () => {
   }, [])
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%", position: "relative" }}>
+    <div style={{
+      display: "flex",
+      flexDirection: "column",
+      height: "100%",
+      position: "relative"
+    }}>
       <div className='floating-top-container'>
         <button className={audio ? 'audioButton' : 'audioMute'} onClick={() => setAudio(audio ? false : true)}>
           <img src={audioImage} style={{ width: "20px" }} />
@@ -65,8 +70,21 @@ const StartMessage: React.FC = () => {
         }
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100%", gap: "30px" }}>
-        <h1 style={{ color: "white", fontFamily: "FlappyBird", fontSize: "3rem", margin: 0 }}>The CoNETian</h1>
+      <div style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        height: "100%",
+        overflowY: 'auto',
+        boxSizing: 'border-box',
+        padding: '20px'
+      }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: "10px" }}>
+          <h1 style={{ color: "white", fontFamily: "FlappyBird", fontSize: "3rem", margin: 0 }}>The CoNETian</h1>
+          <h2 style={{ color: "white", fontFamily: "FlappyBird", margin: 0 }}>{gameDifficulty === 1 ? 'Easy' : gameDifficulty === 2 ? 'Medium' : 'Hard'} Mode</h2>
+        </div>
+
         <img src={bird % 3 === 0 ? conetianHighFireImage : bird % 3 === 1 ? conetianLowFireImage : conetianMediumFireImage} width={120} />
 
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "16px" }}>

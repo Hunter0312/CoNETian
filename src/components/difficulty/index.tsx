@@ -22,13 +22,13 @@ const SelectDifficulty: React.FC = () => {
   const buttonStyle = {
     cursor: "pointer",
     border: "0",
-    marginTop: "-40px",
     backgroundColor: "white",
     color: "black",
     fontSize: "2rem",
     padding: "10px 20px",
     borderRadius: "15px",
     width: "240px",
+    marginBlock: "0"
   };
 
   const importButtonStyle = {
@@ -64,64 +64,61 @@ const SelectDifficulty: React.FC = () => {
 
   return (
     <div
-      style={{ height: "100%", gap: "20px", color: "white" }}
-      className="flex flex-col justify-between items-center"
+      style={{ height: "100%", color: "white", justifyContent: 'space-evenly', gap: '16px', padding: '20px', boxSizing: 'border-box', overflowY: 'auto' }}
+      className="flex flex-col items-center"
     >
-      <div
-        className="flex flex-col justify-between"
-        style={{ paddingTop: "7rem" }}
-      >
-        <p style={{ fontSize: "2.5rem", marginBottom: "100px" }}>
+      <div>
+        <p style={{ fontSize: "2.5rem", marginBlock: "0" }}>
           Select your Difficulty
         </p>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "16px",
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "16px",
+        }}
+      >
+        <p
+          style={buttonStyle}
+          onClick={() => {
+            setGameDifficulty(1);
+            setPath("/");
           }}
         >
-          <p
-            style={buttonStyle}
-            onClick={() => {
-              setGameDifficulty(1);
-              setPath("/");
-            }}
-          >
-            Easy
-          </p>
-          <p
-            style={buttonStyle}
-            onClick={() => {
-              setGameDifficulty(2);
-              setPath("/");
-            }}
-          >
-            Normal
-          </p>
-          <p
-            style={buttonStyle}
-            onClick={() => {
-              setGameDifficulty(3);
-              setPath("/");
-            }}
-          >
-            Hard
-          </p>
+          Easy
+        </p>
+        <p
+          style={buttonStyle}
+          onClick={() => {
+            setGameDifficulty(2);
+            setPath("/");
+          }}
+        >
+          Normal
+        </p>
+        <p
+          style={buttonStyle}
+          onClick={() => {
+            setGameDifficulty(3);
+            setPath("/");
+          }}
+        >
+          Hard
+        </p>
+      </div>
 
-          <div style={{ marginTop: "50px" }}>
-            <p
-              style={buttonStyle}
-              onClick={() => {
-                setPath("/");
-              }}
-            >
-              Back to Menu
-            </p>
-          </div>
-        </div>
+      <div>
+        <p
+          style={buttonStyle}
+          onClick={() => {
+            setPath("/");
+          }}
+        >
+          Back to Menu
+        </p>
       </div>
     </div>
   );

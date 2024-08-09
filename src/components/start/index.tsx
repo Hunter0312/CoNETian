@@ -16,7 +16,7 @@ const StartMessage: React.FC = () => {
     width: "240px"
   }
 
-  const { setPath, profile, setGameStatus, miningError, miningRate, onlineMiners, mining, audio, setAudio } = useFlappyBirdContext();
+  const { setPath, profile, setGameStatus, miningError, miningRate, onlineMiners, mining, audio, setAudio, gameDifficulty } = useFlappyBirdContext();
 
   const [bird, setBird] = useState<number>(0);
 
@@ -80,7 +80,11 @@ const StartMessage: React.FC = () => {
         boxSizing: 'border-box',
         padding: '20px'
       }}>
-        <h1 style={{ color: "white", fontFamily: "FlappyBird", fontSize: "3rem", margin: 0 }}>The CoNETian</h1>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: "10px" }}>
+          <h1 style={{ color: "white", fontFamily: "FlappyBird", fontSize: "3rem", margin: 0 }}>The CoNETian</h1>
+          <h2 style={{ color: "white", fontFamily: "FlappyBird", margin: 0 }}>{gameDifficulty === 1 ? 'Easy' : gameDifficulty === 2 ? 'Medium' : 'Hard'} Mode</h2>
+        </div>
+
         <img src={bird % 3 === 0 ? conetianHighFireImage : bird % 3 === 1 ? conetianLowFireImage : conetianMediumFireImage} width={120} />
 
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "16px" }}>

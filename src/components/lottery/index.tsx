@@ -184,12 +184,12 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
   }
 
   return (
-    <div id="roulette" className={`flex flex-col justify-center items-center ${status === "delay" ? 'delay' : "lottery"}`}
-      style={{ height: "100%", width: "100vw", position: "absolute", zIndex: "100", top: 0, minHeight: "600px", overflow: "hidden" }}>
+    <div id="roulette" className={`flex flex-col items-center ${status === "delay" ? 'delay' : "lottery"}`}
+      style={{ justifyContent: "space-evenly", height: "100%", width: "100vw", overflowX: "hidden", overflowY: 'auto', padding: "20px", boxSizing: 'border-box', gap: "16px" }}>
       {
         status === "default" ?
           <>
-            <p style={{ fontSize: "34px", color: "white" }}>Spin the wheel for a chance to win extra CNTP</p>
+            <p style={{ marginBlock: 0, fontSize: "34px", color: "white" }}>Spin the wheel for a chance to win extra CNTP</p>
             <Wheel
               mustStartSpinning={mustSpin}
               prizeNumber={rouletteResultMapping[prizeNumber]}
@@ -208,10 +208,10 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
             />
             {
               profile && profile?.keyID ?
-                <button onClick={handleSpinClick} style={lottery === 1 ? { fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px", backgroundColor: "gray" } : { fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, marginTop: "20px", backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}>SPIN</button> :
+                <button onClick={handleSpinClick} style={lottery === 1 ? { fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, backgroundColor: "gray" } : { fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}>SPIN</button> :
                 <div className='flex justify-center items-center' style={{ gap: "5px" }}>
                   <img src={loading} style={{ width: "30px" }} />
-                  <p style={{ fontSize: "2rem", color: "white" }}>Fetching Wallet Data</p>
+                  <p style={{ fontSize: "2rem", color: "white", marginBlock: 0 }}>Fetching Wallet Data</p>
                 </div>
 
             }
@@ -234,7 +234,6 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                   <div className='flex flex-col items-center' style={{ justifyContent: "space-evenly", width: "100%", height: "100%" }}>
                     <p style={{ fontSize: "48px", color: "white", margin: '0 20px', marginBlock: 0 }}>Try to Double the CNTP that you earned!</p>
                     <div className='flex flex-col' style={{ gap: "16px" }}>
-                      <p style={{ color: "white", fontSize: "36px", height: "37px", margin: 0, marginBlock: 0 }}></p>
                       <div className='flex justify-center items-center' style={{ width: "100%" }}>
                         {double === 0 &&
                           <img src={doubleNeutral} style={{ width: "90%" }}></img>

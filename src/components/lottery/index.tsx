@@ -185,7 +185,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
   return (
     <div id="roulette" className={`flex flex-col items-center ${status === "delay" ? 'delay' : "lottery"}`}
-      style={{ justifyContent: "space-evenly", height: "100%", width: "100vw", overflowX: "hidden", overflowY: 'auto', padding: "20px", boxSizing: 'border-box', gap: "16px" }}>
+      style={{ position: "absolute", zIndex: "100", top: 0, justifyContent: "space-evenly", height: "100%", width: "100vw", overflowX: "hidden", overflowY: 'hidden', padding: "20px", boxSizing: 'border-box', gap: "16px" }}>
       {
         status === "default" ?
           <>
@@ -196,14 +196,12 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
               data={wheelData}
               spinDuration={0.5}
               outerBorderColor={localStorage.getItem('mui-mode') === 'light' ? "#D6E3FF" : "#f5eeee"}
-              outerBorderWidth={20}
+              outerBorderWidth={5}
               radiusLineWidth={0}
               fontSize={12}
               onStopSpinning={() => {
                 setMustSpin(false);
               }}
-
-              // pointerRoullete
               pointerProps={pointerProperties}
             />
             {
@@ -236,13 +234,13 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                     <div className='flex flex-col' style={{ gap: "16px" }}>
                       <div className='flex justify-center items-center' style={{ width: "100%" }}>
                         {double === 0 &&
-                          <img src={doubleNeutral} style={{ width: "90%" }}></img>
+                          <img src={doubleNeutral} style={{ width: "350px" }}></img>
                         }
                         {double === 1 &&
-                          <img src={doubleWin} style={{ width: "90%" }}></img>
+                          <img src={doubleWin} style={{ width: "350px" }}></img>
                         }
                         {double === 2 &&
-                          <img src={doubleLose} style={{ width: "90%" }}></img>
+                          <img src={doubleLose} style={{ width: "350px" }}></img>
                         }
                       </div>
                     </div>

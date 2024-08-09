@@ -49,7 +49,7 @@ const Lose: React.FC<Props> = ({ setContinue }) => {
           <>
             <p style={{ fontSize: "48px", color: "white", marginBlock: 0 }}>Sorry, you didn't get any extra CNTP</p>
             <div className='flex justify-center items-center' style={{ width: "100%", gap: "10px" }}>
-              <img src={doubleLose} style={{ width: "90%" }}></img>
+              <img src={doubleLose} style={{ width: "350px" }}></img>
             </div>
             <div className='flex flex-col'>
               <button style={{ fontSize: "32px", width: "230px", height: "52px", borderRadius: "16px", border: 0, }} onClick={() => { setContinue("delay"); }}>Keep playing</button>

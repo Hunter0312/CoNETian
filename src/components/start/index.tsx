@@ -35,7 +35,12 @@ const StartMessage: React.FC = () => {
   }, [])
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%", position: "relative" }}>
+    <div style={{
+      display: "flex",
+      flexDirection: "column",
+      height: "100%",
+      position: "relative"
+    }}>
       <div className='floating-top-container'>
         <button className={audio ? 'audioButton' : 'audioMute'} onClick={() => setAudio(audio ? false : true)}>
           <img src={audioImage} style={{ width: "20px" }} />
@@ -65,7 +70,16 @@ const StartMessage: React.FC = () => {
         }
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100%", gap: "30px" }}>
+      <div style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        height: "100%",
+        overflowY: 'auto',
+        boxSizing: 'border-box',
+        padding: '20px'
+      }}>
         <h1 style={{ color: "white", fontFamily: "FlappyBird", fontSize: "3rem", margin: 0 }}>The CoNETian</h1>
         <img src={bird % 3 === 0 ? conetianHighFireImage : bird % 3 === 1 ? conetianLowFireImage : conetianMediumFireImage} width={120} />
 

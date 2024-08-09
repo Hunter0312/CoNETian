@@ -142,15 +142,15 @@ const Wallet: React.FC = () => {
   };
 
   return (
-    <div style={{ height: "100%", gap: "4rem", color: "white" }} className='flex flex-col justify-center items-center'>
-      <div className='flex flex-col justify-between align-center'>
+    <div style={{ height: "100%", gap: "2rem", color: "white", overflowY: 'auto', justifyContent: 'space-evenly', boxSizing: 'border-box', padding: '20px' }} className='flex flex-col justify-center items-center'>
+      <div className='flex flex-col align-center'>
         {
           !profile || profile?.keyID === '' ?
-            <div className='flex justify-center items-center' style={{ gap: "5px", marginTop: "10rem" }}>
+            <div className='flex justify-center items-center'>
               <img src={loading} style={{ width: "30px" }} />
-              <p style={{ fontSize: "2rem" }}>Fetching Wallet Data</p>
+              <p style={{ fontSize: "2rem", marginBlock: '0' }}>Fetching Wallet Data</p>
             </div> :
-            <div className='flex flex-col justify-between' style={{ rowGap: '2rem' }}>
+            <div className='flex flex-col' style={{ rowGap: '2rem' }}>
               <div>
                 <p style={{ fontSize: "2rem", margin: 0 }}>Wallet Address</p>
                 <p className='flex items-center justify-center' style={{ fontSize: "2.5rem", margin: 0, gap: "5px", cursor: "pointer" }} onClick={() => copyText(profile?.keyID, "walletAddress")}>
@@ -183,7 +183,7 @@ const Wallet: React.FC = () => {
               {/* input for adding or viewing wallet referrer */}
               {profile && profile?.referrer ?
                 (
-                  <div style={{ marginBottom: "4rem" }}>
+                  <div>
                     <p style={{ fontSize: "2rem", margin: 0 }}>Referrer's Wallet</p>
                     <p
                       className="flex items-center justify-center"
@@ -201,7 +201,7 @@ const Wallet: React.FC = () => {
                   </div>
                 ) : (
                   <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center", justifyContent: "center" }}>
-                    <p style={{ fontSize: "1.7rem", margin: 0 }}>Referrer's Wallet</p>
+                    <p style={{ fontSize: "1.7rem", margin: 0 }}>Add Referrer</p>
                     <input className='import-input' style={importInputStyle} type="text" placeholder="Enter Referrer's Wallet Address" onChange={(e) => setReferrer(e.target.value)} />
                     <button onClick={handleAddReferrerButton} style={importButtonStyle}>
                       Add
@@ -212,7 +212,7 @@ const Wallet: React.FC = () => {
 
               {/* input for importing private key */}
               <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center", justifyContent: "center" }}>
-                <p style={{ fontSize: "1.7rem", margin: 0 }}>Import Wallet Private Key</p>
+                <p style={{ fontSize: "1.7rem", margin: 0 }}>Import Another Wallet</p>
                 <input className='import-input' style={importInputStyle} type="text" placeholder="Enter Private Key" onChange={(e) => setImportWalletPrivateKey(e.target.value)} />
                 <button onClick={handleImportWalletButton} style={importButtonStyle}>
                   Import

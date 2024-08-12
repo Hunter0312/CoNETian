@@ -70,28 +70,6 @@ export const _postMessage = (
   channel.close();
 };
 
-export const createOrGetWallet: () => Promise<string> = () =>
-  new Promise((resolve) => {
-    const cmd: WorkerCommand = {
-      cmd: "createOrGetWallet",
-      uuid: v4(),
-      data: [],
-    };
-    return _postMessage(cmd, true, resolve);
-  });
-
-export const getWalletCCNTPBalance: (
-  walletAddress: string
-) => Promise<string> = (walletAddress: string) =>
-  new Promise((resolve) => {
-    const cmd: WorkerCommand = {
-      cmd: "getWalletCCNTPBalance",
-      uuid: v4(),
-      data: [walletAddress],
-    };
-    return _postMessage(cmd, true, resolve);
-  });
-
 export const importWallet: (walletPrivateKey: string) => Promise<string> = (
   walletPrivateKey: string
 ) =>
@@ -140,14 +118,14 @@ export const getRouletteResult: (walletAddress: string) => Promise<string> = (
     return _postMessage(cmd, true, resolve);
   });
 
-  export const registerReferrer: (
-    referrerAddr: string
-  ) => Promise<any> = (referrerAddr) =>
-    new Promise((resolve) => {
-      const cmd: WorkerCommand = {
-        cmd: "registerReferrer",
-        uuid: v4(),
-        data: [referrerAddr],
-      };
-      return _postMessage(cmd, true, resolve);
-    });
+export const registerReferrer: (referrerAddr: string) => Promise<any> = (
+  referrerAddr
+) =>
+  new Promise((resolve) => {
+    const cmd: WorkerCommand = {
+      cmd: "registerReferrer",
+      uuid: v4(),
+      data: [referrerAddr],
+    };
+    return _postMessage(cmd, true, resolve);
+  });

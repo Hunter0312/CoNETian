@@ -7,9 +7,8 @@ import Wallet from './components/wallet';
 import About from './components/about';
 import Leaderboard from './components/leaderboard';
 import { useFlappyBirdContext } from './providers/FlappyBirdProvider';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { initializeWorkerService } from './services/workerService';
-import { fetchWalletData } from './API/getData';
 import { BackgroundAudio, ButtonClick } from './shared/assets';
 import { playAudio, stopAudio } from './shared/functions';
 import { useAudioPlayer } from 'react-use-audio-player';
@@ -142,21 +141,7 @@ function App() {
   });
 
   useEffect(() => {
-    const init = async () => {
-      await initializeWorkerService();
-
-      const result = await fetchWalletData();
-      if (result && result.length >= 1) {
-        if (result[0] === 'SUCCESS') {
-          if (result[1][0] !== '')
-            setProfile(result[1][0]);
-        }
-      } else {
-        toast.error(result?.message);
-      }
-    }
-
-    init();
+    initializeWorkerService();
   }, [])
 
   return (

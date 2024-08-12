@@ -1,40 +1,4 @@
-import { createOrGetWallet, getWalletCCNTPBalance, importWallet, startMining, stopMining, getRouletteResult, registerReferrer } from ".";
-
-export const fetchWalletData = async (): Promise<any> => {
-    try {
-        const response = await createOrGetWallet();
-        if (Array.isArray(response) && response.length >= 2) {
-            const [status] = response;
-            if (status === "SUCCESS") {
-                return response;
-            } else {
-                console.error("Failed to fetch wallet data");
-            }
-        }
-    } catch (error) {
-        console.error("Failed to fetch wallet data", error);
-    }
-
-    return { error: true, message: "Failed to fetch wallet data" };
-}
-
-export const fetchCNTPBalance = async (walletAddress: string): Promise<any> => {
-    try {
-        const response = await getWalletCCNTPBalance(walletAddress);
-        if (Array.isArray(response) && response.length >= 2) {
-            const [status, balance] = response;
-            if (status === "SUCCESS") {
-                return response;
-            } else {
-                console.error("Failed to fetch CNTP balance");
-            }
-        }
-    } catch (error) {
-        console.error("Failed to fetch CNTP balance", error);
-    }
-
-    return { error: true, message: "Failed to fetch CNTP balance" };
-};
+import { importWallet, startMining, stopMining, getRouletteResult, registerReferrer } from ".";
 
 export const fetchImportWallet = async (walletPrivateKey: string): Promise<any> => {
     try {

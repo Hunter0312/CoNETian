@@ -1,6 +1,6 @@
 import { fetchStartMining } from '../API/getData';
 import PropTypes from 'prop-types';
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 
 type FlappyBirdContextBird = {
@@ -35,7 +35,8 @@ type FlappyBirdContextBird = {
   setReferrerAddress: (e: string) => void,
   referrerAddress: string
   profile: any,
-  setProfile: (o: any) => void
+  setProfile: (o: any) => void,
+  miningErrorTimeout: React.MutableRefObject<NodeJS.Timeout | null>
 };
 
 const FlappyBird = createContext<FlappyBirdContextBird | undefined>(undefined);
@@ -78,10 +79,11 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
     frame: 0,
     score: 0,
   })
+  const miningErrorTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const init = async (walletAddress: string) => {
-      if (walletAddress) {
+      if (walletAddress && !mining) {
         const result = await fetchStartMining(walletAddress);
         if (result && !result?.error) {
           setOnlineMiners(result?.online);
@@ -95,7 +97,7 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
           }
 
           setMiningError(true);
-          setTimeout(() => init(walletAddress), 15000);
+          miningErrorTimeout.current = setTimeout(() => init(walletAddress), 15000);
         }
       }
     }
@@ -136,7 +138,8 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
       setReferrerAddress,
       referrerAddress,
       profile,
-      setProfile
+      setProfile,
+      miningErrorTimeout
     }}>
       {children}
     </FlappyBird.Provider>

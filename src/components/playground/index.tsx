@@ -13,7 +13,7 @@ const Playground: React.FC = () => {
   const [roulette, setRoulette] = useState<boolean>(false);
   const [stateRoulette, setStateRoulette] = useState<boolean>(false);
 
-  const clearRouletteBtnTimeout = useRef<NodeJS.Timeout>();
+  const rouletteBtnTimeout = useRef<NodeJS.Timeout>();
 
   const gameStatusHandle = (event: number) => {
     setGameStatus(event);
@@ -38,9 +38,9 @@ const Playground: React.FC = () => {
 
   useEffect(() => {
     if (roulette) {
-      clearRouletteBtnTimeout.current && clearTimeout(clearRouletteBtnTimeout.current);
+      rouletteBtnTimeout.current && clearTimeout(rouletteBtnTimeout.current);
 
-      clearRouletteBtnTimeout.current = setTimeout(() => {
+      rouletteBtnTimeout.current = setTimeout(() => {
         setRoulette(false);
       }, 10000)
     }

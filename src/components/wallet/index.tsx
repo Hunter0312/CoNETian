@@ -52,6 +52,8 @@ const Wallet: React.FC = () => {
     setPath,
     profile,
     setProfile,
+    setMining,
+    miningErrorTimeout
   } = useFlappyBirdContext();
 
   const [walletAddr, setWalletAddr] = useState<boolean>(false);
@@ -126,6 +128,9 @@ const Wallet: React.FC = () => {
       const stopMiningResult = await fetchstopMining(profile?.keyID);
 
       if (stopMiningResult && !stopMiningResult?.error) {
+        miningErrorTimeout.current && clearTimeout(miningErrorTimeout.current);
+        setMining(false);
+
         const importResult = await fetchImportWallet(importWalletPrivateKey);
         if (importResult && !importResult?.error) {
           setProfile(importResult);

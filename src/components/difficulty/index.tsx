@@ -1,23 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { ethers } from "ethers";
 
 import { useFlappyBirdContext } from "../../providers/FlappyBirdProvider";
-import { loading } from "../../shared/assets";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { fetchRegisterResult } from "../../API/getData";
 
 const SelectDifficulty: React.FC = () => {
-  const { profile, setProfile, setGameDifficulty, setPath } = useFlappyBirdContext();
-  const [_referrerAddress, _setReferrerAddress] = useState<string>('')
-  const [validAdd, setValidAdd] = useState<boolean>(false)
-
-  useEffect(() => {
-    function validateAddress(add: string): void {
-      setValidAdd(ethers.isAddress(add))
-    }
-    validateAddress(_referrerAddress)
-  }, [_referrerAddress])
+  const { setGameDifficulty, setPath } = useFlappyBirdContext();
 
   const buttonStyle = {
     cursor: "pointer",
@@ -30,37 +16,6 @@ const SelectDifficulty: React.FC = () => {
     width: "240px",
     marginBlock: "0"
   };
-
-  const importButtonStyle = {
-    border: "0",
-    backgroundColor: "white",
-    color: "black",
-    fontSize: "1rem",
-    padding: "10px 10px",
-    borderRadius: "15px",
-    width: "80px",
-  };
-
-  const importInputStyle = {
-    border: "0",
-    backgroundColor: "white",
-    color: "black",
-    fontSize: "1rem",
-    padding: "10px 20px",
-    borderRadius: "15px",
-  };
-
-  async function createReferrer() {
-    const result = await fetchRegisterResult(_referrerAddress)
-    console.log(result)
-    if (result && !result?.error) {
-      toast.success('Adding referrer successful')
-      const newProfile = { ...profile, referrer: result }
-      setProfile(newProfile)
-    } else {
-      toast.error(result?.message)
-    }
-  }
 
   return (
     <div

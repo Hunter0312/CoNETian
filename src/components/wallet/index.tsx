@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useFlappyBirdContext } from "../../providers/FlappyBirdProvider";
-import { fetchImportWallet, fetchRegisterResult, fetchstopMining } from "../../API/getData";
+import { fetchImportWallet, fetchRegisterReferrer, fetchstopMining } from "../../API/getData";
 import { formatToken, slice } from "../../shared/functions";
 import copy from "copy-to-clipboard";
 import { IoCopySharp } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
-import { loading } from "../../shared/assets";
+import { loading, pointer } from "../../shared/assets";
 import { ConfirmToast } from "react-confirm-toast";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,7 +27,7 @@ const modalButtonStyle = {
   fontWeight: "normal",
 };
 
-const importButtonStyle = {
+const smallButtonStyle = {
   border: "0",
   backgroundColor: "white",
   color: "black",
@@ -37,7 +37,12 @@ const importButtonStyle = {
   width: "180px",
 }
 
-const importInputStyle = {
+const disabledSmallButtonStyle = {
+  ...smallButtonStyle,
+  backgroundColor: "gray",
+}
+
+const inputStyle = {
   border: "0",
   backgroundColor: "white",
   color: "black",
@@ -64,6 +69,8 @@ const Wallet: React.FC = () => {
   const [privateK, setPrivateK] = useState<boolean>(false);
   const [showImportWalletConfirmModal, setShowImportWalletConfirmModal] =
     useState<boolean>(false);
+  const [isAddingReferrer, setIsAddingReferrer] = useState<boolean>(false)
+  const [isImportingWallet, setIsImportingWallet] = useState<boolean>(false)
 
   useEffect(() => {
     if (walletAddr) {
@@ -108,22 +115,28 @@ const Wallet: React.FC = () => {
   };
 
   const handleAddReferrerButton = async () => {
-    if (referrer) {
-      const result = await fetchRegisterResult(referrer)
+    setIsAddingReferrer(true)
 
-      if (result && !result?.error) {
-        const newProfile = { ...profile, referrer: result }
-        setProfile(newProfile)
+    if (referrer) {
+      const registerReferrerResult = await fetchRegisterReferrer(referrer)
+
+      if (registerReferrerResult && !registerReferrerResult?.error) {
+        setProfile(registerReferrerResult)
+        setReferrer('')
         toast.success('Adding referrer successful')
       } else {
-        toast.error(result?.message)
+        toast.error(registerReferrerResult?.message)
       }
     } else {
       toast.error("Please enter a wallet address for referrer");
     }
+
+    setIsAddingReferrer(false)
   };
 
   const handleImportWalletConfirm = async () => {
+    setIsImportingWallet(true)
+
     if (importWalletPrivateKey) {
       const stopMiningResult = await fetchstopMining(profile?.keyID);
 
@@ -134,6 +147,7 @@ const Wallet: React.FC = () => {
         const importResult = await fetchImportWallet(importWalletPrivateKey);
         if (importResult && !importResult?.error) {
           setProfile(importResult);
+          setImportWalletPrivateKey('')
           toast.success("Import Successful!");
         } else {
           toast.error(importResult?.message);
@@ -144,6 +158,8 @@ const Wallet: React.FC = () => {
     } else {
       toast.error("Please enter a private key");
     }
+
+    setIsImportingWallet(false)
   };
 
   return (
@@ -207,8 +223,8 @@ const Wallet: React.FC = () => {
                 ) : (
                   <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center", justifyContent: "center" }}>
                     <p style={{ fontSize: "1.7rem", margin: 0 }}>Add Referrer</p>
-                    <input className='import-input' style={importInputStyle} type="text" placeholder="Enter Referrer's Wallet Address" onChange={(e) => setReferrer(e.target.value)} />
-                    <button onClick={handleAddReferrerButton} style={importButtonStyle}>
+                    <input className='import-input' style={inputStyle} type="text" placeholder="Enter Referrer's Wallet Address" value={referrer} onChange={(e) => setReferrer(e.target.value)} disabled={isAddingReferrer} />
+                    <button onClick={isAddingReferrer ? () => { } : handleAddReferrerButton} style={isAddingReferrer ? disabledSmallButtonStyle : smallButtonStyle} disabled={isAddingReferrer}>
                       Add
                     </button>
                   </div>
@@ -218,8 +234,8 @@ const Wallet: React.FC = () => {
               {/* input for importing private key */}
               <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center", justifyContent: "center" }}>
                 <p style={{ fontSize: "1.7rem", margin: 0 }}>Import Another Wallet</p>
-                <input className='import-input' style={importInputStyle} type="text" placeholder="Enter Private Key" onChange={(e) => setImportWalletPrivateKey(e.target.value)} />
-                <button onClick={handleImportWalletButton} style={importButtonStyle}>
+                <input className='import-input' style={inputStyle} type="text" placeholder="Enter Private Key" value={importWalletPrivateKey} onChange={(e) => setImportWalletPrivateKey(e.target.value)} disabled={isImportingWallet} />
+                <button onClick={isImportingWallet ? () => { } : handleImportWalletButton} style={isImportingWallet ? disabledSmallButtonStyle : smallButtonStyle} disabled={isImportingWallet}>
                   Import
                 </button>
               </div>

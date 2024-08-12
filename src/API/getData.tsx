@@ -117,7 +117,7 @@ export const fetchRouletteResult = async (walletAddress: string): Promise<any> =
     return { error: true, message: "Failed to fetch roulette result" };
 }
 
-export const fetchRegisterResult = async (referrerAddress: string): Promise<any> => {
+export const fetchRegisterReferrer = async (referrerAddress: string): Promise<any> => {
     try {
         const response = await registerReferrer(referrerAddress);
 

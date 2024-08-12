@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 import { BackgroundAudio } from '../../shared/assets';
+import { formatToken } from '../../shared/functions';
 
 type Props = {
   setRestart: () => void,
@@ -43,10 +44,10 @@ const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
           <p style={{ color: "white", fontSize: "3rem", margin: 0, marginBlock: 0 }}>{hScore}</p>
         </div>
         {
-          profile && profile?.tokens?.CNTP?.balance >= 0 &&
+          profile && profile?.tokens?.cCNTP?.balance >= 0 &&
           <>
             <p style={{ color: "white", fontSize: "2.5rem", margin: 0 }}>CNTP Balance:</p>
-            <p style={{ color: "white", fontSize: "3rem", margin: 0, marginBottom: "2rem" }}>{profile?.tokens?.CNTP?.balance}</p>
+            <p style={{ color: "white", fontSize: "3rem", margin: 0, marginBottom: "2rem" }}>{formatToken(profile?.tokens?.cCNTP?.balance)}</p>
           </>
         }
       </div>

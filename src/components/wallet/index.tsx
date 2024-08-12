@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useFlappyBirdContext } from "../../providers/FlappyBirdProvider";
 import { fetchImportWallet, fetchRegisterResult, fetchstopMining } from "../../API/getData";
-import { slice } from "../../shared/functions";
+import { formatToken, slice } from "../../shared/functions";
 import copy from "copy-to-clipboard";
 import { IoCopySharp } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
@@ -177,7 +177,7 @@ const Wallet: React.FC = () => {
 
               <div>
                 <p style={{ fontSize: "2rem", margin: 0 }}>CNTP Balance</p>
-                <p style={{ fontSize: "2.5rem", margin: 0 }}>{profile?.tokens?.CNTP?.balance || 0}</p>
+                <p style={{ fontSize: "2.5rem", margin: 0 }}>{formatToken(profile?.tokens?.cCNTP?.balance || 0)}</p>
               </div>
 
               {/* input for adding or viewing wallet referrer */}

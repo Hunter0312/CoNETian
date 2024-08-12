@@ -31,3 +31,7 @@ export const stopAudio = (audioElementRef: RefObject<HTMLAudioElement>) => {
         audioElementRef.current.pause();
     }
 };
+
+export const formatToken = (token: number) => {
+    return (token * Math.pow(10, -18)).toFixed(6);
+}

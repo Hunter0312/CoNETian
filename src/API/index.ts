@@ -129,3 +129,13 @@ export const registerReferrer: (referrerAddr: string) => Promise<any> = (
     };
     return _postMessage(cmd, true, resolve);
   });
+
+export const clearStorage: () => Promise<any> = () =>
+  new Promise((resolve) => {
+    const cmd: WorkerCommand = {
+      cmd: "clearStorage",
+      uuid: v4(),
+      data: [],
+    };
+    return _postMessage(cmd, true, resolve);
+  });

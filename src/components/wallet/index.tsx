@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useFlappyBirdContext } from "../../providers/FlappyBirdProvider";
-import { fetchImportWallet, fetchRegisterReferrer, fetchstopMining } from "../../API/getData";
+import { fetchClearStorage, fetchImportWallet, fetchRegisterReferrer, fetchstopMining } from "../../API/getData";
 import { formatToken, slice } from "../../shared/functions";
 import copy from "copy-to-clipboard";
 import { IoCopySharp } from "react-icons/io5";
@@ -242,6 +242,11 @@ const Wallet: React.FC = () => {
             </div>
         }
       </div>
+
+      <button onClick={fetchClearStorage} style={{ ...buttonStyle }}>
+        Clear Storage
+      </button>
+
       <button onClick={() => setPath('/')} style={{ ...buttonStyle }}>
         Main Menu
       </button>

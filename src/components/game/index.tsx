@@ -323,9 +323,12 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
     };
 
     window.addEventListener('mousedown', handleMouseClick);
-    window.addEventListener('keyup', event => {
-      if (event.code === 'Space') handleMouseClick();
-    })
+
+    // use spacebar instead of mouse click
+    // fix when roulette is shown
+    // window.addEventListener('keyup', event => {
+    //   if (event.code === 'Space') handleMouseClick();
+    // })
 
     const gameInterval = setInterval(update, 20);
 

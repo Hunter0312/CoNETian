@@ -2,20 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 import { useConetianHighFire, useConetianLowFire, useConetianMediumFire } from '../../hooks/useConetianHooks';
 import { loading } from '../../shared/assets';
-import { audioImage } from '../../shared/assets';
+import { audioImage, arbitrumLogo } from '../../shared/assets';
+
+const buttonStyle = {
+  border: "0",
+  backgroundColor: "white",
+  color: "black",
+  fontSize: "2rem",
+  padding: "10px 20px",
+  borderRadius: "15px",
+  width: "240px"
+}
 
 const StartMessage: React.FC = () => {
-
-  const buttonStyle = {
-    border: "0",
-    backgroundColor: "white",
-    color: "black",
-    fontSize: "2rem",
-    padding: "10px 20px",
-    borderRadius: "15px",
-    width: "240px"
-  }
-
   const { setPath, profile, setGameStatus, miningError, miningRate, onlineMiners, mining, audio, setAudio, gameDifficulty } = useFlappyBirdContext();
 
   const [bird, setBird] = useState<number>(0);
@@ -95,6 +94,21 @@ const StartMessage: React.FC = () => {
         </div>
       </div>
 
+      <div style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "8px",
+        fontSize: "1rem",
+        color: "white",
+        fontFamily: "FlappyBird",
+        padding: "10px",
+      }}>
+        <img src={arbitrumLogo} style={{ width: "20px" }} />
+        <p>built on Arbitrum</p>
+      </div>
+
       {/* UNCOMENT THIS WHEN LEADERBOARD IS READY */}
       {/* <div style={{ display: "flex", justifyContent: "flex-end", flexDirection: "row", padding: "10px" }}>
         <button className='leaderboard' style={{
@@ -102,7 +116,6 @@ const StartMessage: React.FC = () => {
           fontSize: "32px",
           backgroundColor: "transparent",
           border: 0,
-
         }}
           onClick={() => setPath('/leaderboard')}>
           {"Leaderboard >"}

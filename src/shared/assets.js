@@ -32,6 +32,8 @@ import RouletteLose from "../assets/GameSounds/RouletteLoss/Pickup Loss.wav";
 import ConetianDeath from "../assets/GameSounds/ConetianDeath/Death Female.wav";
 import ButtonClick from "../assets/GameSounds/ButtonTouch/Authorize Button.wav";
 
+import arbitrumLogo from "../assets/arbitrum-logo.png";
+
 export {
   pipeTopImg,
   pipeBottomImg,
@@ -61,4 +63,5 @@ export {
   HardConetianLowFire,
   HardConetianMediumFire,
   HardConetianHighFire,
+  arbitrumLogo,
 };

@@ -20,7 +20,8 @@ const linkStyle = {
 const textStyle = {
     color: "white",
     fontSize: "1.5rem",
-    margin: "0"
+    margin: "0",
+    width: "100%"
 }
 
 const About: React.FC = () => {

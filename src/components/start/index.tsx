@@ -77,7 +77,7 @@ const StartMessage: React.FC = () => {
         height: "100%",
         overflowY: 'auto',
         boxSizing: 'border-box',
-        padding: '20px'
+        padding: '0 20px'
       }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: "10px" }}>
           <h1 style={{ color: "white", fontFamily: "FlappyBird", fontSize: "3rem", margin: 0 }}>The CoNETian</h1>

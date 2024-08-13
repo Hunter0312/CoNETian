@@ -33,7 +33,7 @@ const Win: React.FC<Props> = ({ setContinue, prizeNumber, doubleAction }) => {
   const { load } = useAudioPlayer();
 
   const { lottery, setLottery, audio } = useFlappyBirdContext();
-  const [counter, setCounter] = useState<number>(5);
+  const [counter, setCounter] = useState<number>(20);
 
   useEffect(() => {
     if (audio)

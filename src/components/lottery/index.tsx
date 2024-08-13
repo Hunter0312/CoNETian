@@ -33,12 +33,7 @@ const disabledButtonStyle = {
   backgroundColor: "gray",
 }
 
-const rouletteResultMapping: { [key: string]: number } = {
-  '0': 0,
-  '0.1': 1,
-  '0.5': 3,
-  '1': 5,
-}
+const rouletteResultMapping: { [key: string]: number } = {}
 
 const wheelData = [
   { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'white' }, optionSize: 2 },
@@ -106,11 +101,24 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
           load(RouletteSpin, {
             autoplay: true
           })
-        setPrizeNumber(rouletteResult);
+        setPrizeNumber(rouletteResult.valueWon);
         setMustSpin(true);
 
+
+        rouletteResultMapping['0'] = 0;
+
+        if (rouletteResult.possibleValues) {
+          const lowValue = rouletteResult.possibleValues[0];
+          const mediumValue = rouletteResult.possibleValues[1];
+          const highValue = rouletteResult.possibleValues[2];
+
+          rouletteResultMapping[lowValue.toString()] = 1;
+          rouletteResultMapping[mediumValue.toString()] = 3;
+          rouletteResultMapping[highValue.toString()] = 5;
+        }
+
         setTimeout(() => {
-          const mappedResult = rouletteResultMapping[rouletteResult];
+          const mappedResult = rouletteResultMapping[rouletteResult.valueWon.toString()];
           if (wheelData[mappedResult].option !== "Lose") {
             setStatus("win");
           } else {
@@ -143,7 +151,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
         load(RouletteSpin, {
           autoplay: true
         })
-      setPrizeNumber(rouletteResult);
+      setPrizeNumber(rouletteResult.valueWon);
 
       const alternateWinLose = () => {
         if (count % 2 === 0)
@@ -165,7 +173,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
       setTimeout(() => {
         clearTimeout(doublePointsTimeout);
 
-        const mappedResult = rouletteResult > 0 ? 1 : 0;
+        const mappedResult = rouletteResult.valueWon > 0 ? 1 : 0;
 
         if (doubleData[mappedResult].option !== "Lose") {
           // double === 2 means the user lost, so we show the "lose" text first so the user thinks he lost, then we show the win page.
@@ -210,7 +218,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
             <p style={{ marginBlock: 0, fontSize: "34px", color: "white" }}>Spin the wheel for a chance to win extra CNTP</p>
             <Wheel
               mustStartSpinning={mustSpin}
-              prizeNumber={rouletteResultMapping[prizeNumber]}
+              prizeNumber={rouletteResultMapping[prizeNumber] ?? 0}
               data={wheelData}
               spinDuration={0.5}
               outerBorderColor={localStorage.getItem('mui-mode') === 'light' ? "#D6E3FF" : "#f5eeee"}

@@ -291,6 +291,7 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
         addPipe();
       }
 
+      // move fire
       if (frame % 7 === 0)
         flyBird++;
 

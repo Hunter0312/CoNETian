@@ -252,7 +252,6 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
         if (!pipe.passed && pipe.isTop && pipe.x + pipe.width < bird.x) {
           flagScore++;
           if (flagScore === 10 && gameDifficulty === 2) {
-            console.log('entrei')
             gameSpeed = levels.speedLevel2;
             gameFrame = levels.frameLevel2;
           }

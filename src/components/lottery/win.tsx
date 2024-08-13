@@ -9,6 +9,25 @@ type Props = {
   doubleAction: () => void
 }
 
+const buttonStyle = {
+  fontSize: "2rem",
+  width: "240px",
+  padding: "10px 20px",
+  borderRadius: "16px",
+  border: 0
+}
+
+const primaryButtonStyle = {
+  ...buttonStyle,
+  backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)"
+}
+
+const disabledButtonStyle = {
+  ...buttonStyle,
+  backgroundColor: "gray",
+}
+
+
 const Win: React.FC<Props> = ({ setContinue, prizeNumber, doubleAction }) => {
 
   const { load } = useAudioPlayer();
@@ -75,13 +94,13 @@ const Win: React.FC<Props> = ({ setContinue, prizeNumber, doubleAction }) => {
         {counter !== 0 &&
           <p style={{ margin: 0, color: "white", fontSize: "40px", height: "2rem", }}>{counter}</p>
         }
-        <button style={lottery === 2 ? { fontSize: "32px", width: "230px", height: "52px", marginBottom: "16px", borderRadius: "16px", border: 0, backgroundColor: "gray" } : { fontSize: "32px", width: "230px", height: "52px", borderRadius: "16px", border: 0, backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}
+        <button style={lottery === 2 ? disabledButtonStyle : primaryButtonStyle}
           onClick={() => {
             if (counter > 0) {
               doubleAction(); setLottery(0);
             }
-          }}>Spin to double</button>
-        <button style={{ fontSize: "32px", width: "230px", height: "52px", borderRadius: "16px", border: 0, }} onClick={() => { setContinue("delay"); setLottery(0) }}>Keep playing</button>
+          }}>Try to double</button>
+        <button style={buttonStyle} onClick={() => { setContinue("delay"); setLottery(0) }}>Keep playing</button>
       </div>
     </div >
   )

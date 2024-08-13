@@ -15,6 +15,24 @@ type Props = {
   setContinue: (e: number) => void,
 }
 
+const buttonStyle = {
+  fontSize: "2rem",
+  width: "240px",
+  padding: "10px 20px",
+  borderRadius: "16px",
+  border: 0
+}
+
+const primaryButtonStyle = {
+  ...buttonStyle,
+  backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)"
+}
+
+const disabledButtonStyle = {
+  ...buttonStyle,
+  backgroundColor: "gray",
+}
+
 const rouletteResultMapping: { [key: string]: number } = {
   '0': 0,
   '0.1': 1,
@@ -246,9 +264,9 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
                     </div>
                     <div style={{ gap: "16px" }} className='flex flex-col'>
                       <p style={{ margin: 0, marginBlock: 0, height: "2rem" }}></p>
-                      <button style={{ fontSize: "32px", width: "230px", height: "52px", borderRadius: "16px", border: 0, backgroundColor: "gray" }}
-                      >Spin to double</button>
-                      <button style={{ fontSize: "32px", width: "230px", height: "52px", borderRadius: "16px", border: 0, }} onClick={() => {
+                      <button style={disabledButtonStyle}
+                      >Try to double</button>
+                      <button style={buttonStyle} onClick={() => {
                         setStatus("delay"); setLottery(0); if (audio) {
                           load(ButtonClick, {
                             autoplay: true,

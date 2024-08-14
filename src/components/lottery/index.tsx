@@ -3,7 +3,7 @@ import { Wheel } from 'react-custom-roulette';
 import Win from './win';
 import Lose from './lose';
 
-import { doubleLose, doubleNeutral, doubleWin, pointer } from '../../shared/assets';
+import { doubleLose, doubleNeutral, doubleWin, pointer, rouletteBorder } from '../../shared/assets';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 import { fetchRouletteResult } from '../../API/getData';
 import Delay from './delay';
@@ -37,17 +37,23 @@ const rouletteResultMapping: { [key: string]: number } = {}
 
 const wheelData = [
   { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'white' }, optionSize: 2 },
-  { option: 'Low', style: { backgroundColor: "#8DA8FF", textColor: 'black' }, optionSize: 1 },
+  { option: 'Bronze', style: { backgroundColor: "#A4C9FE", textColor: 'black' }, optionSize: 1 },
   { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'white' }, optionSize: 2 },
-  { option: 'Medium', style: { backgroundColor: "#577DFF", textColor: 'black' }, optionSize: 1 },
+  { option: 'Silver', style: { backgroundColor: "#577DFF", textColor: 'white' }, optionSize: 1 },
   { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'white' }, optionSize: 2 },
-  { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
+  { option: 'Gold', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
   { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'white' }, optionSize: 2 },
-  { option: 'Low', style: { backgroundColor: "#8DA8FF", textColor: 'black' }, optionSize: 1 },
+  { option: 'Platinum', style: { backgroundColor: "#3F5F90", textColor: 'white' }, optionSize: 1 },
   { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'white' }, optionSize: 2 },
-  { option: 'Medium', style: { backgroundColor: "#577DFF", textColor: 'black' }, optionSize: 1 },
+  { option: 'Diamond', style: { backgroundColor: "#D775FF", textColor: 'white' }, optionSize: 1 },
   { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'white' }, optionSize: 2 },
-  { option: 'High', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
+  { option: 'Bronze', style: { backgroundColor: "#A4C9FE", textColor: 'black' }, optionSize: 1 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'white' }, optionSize: 2 },
+  { option: 'Silver', style: { backgroundColor: "#577DFF", textColor: 'white' }, optionSize: 1 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'white' }, optionSize: 2 },
+  { option: 'Gold', style: { backgroundColor: "#79F8FF", textColor: 'black' }, optionSize: 1 },
+  { option: 'Lose', style: { backgroundColor: "#1d1d1e", textColor: 'white' }, optionSize: 2 },
+  { option: 'Platinum', style: { backgroundColor: "#3F5F90", textColor: 'white' }, optionSize: 1 },
 ]
 
 const doubleData = [
@@ -62,9 +68,9 @@ const doubleData = [
 const pointerProperties = {
   src: pointer,
   style: {
-    width: "8%",
+    width: "1%",
     transform: "rotate(-45deg)",
-    right: "10%",
+    right: "14%",
     top: "16%"
   }
 }
@@ -106,14 +112,18 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
         rouletteResultMapping['0'] = 0;
 
+        // map the possible values received from the backend to the positions of the wheel
         if (rouletteResult.possibleValues) {
-          const lowValue = rouletteResult.possibleValues[0];
-          const mediumValue = rouletteResult.possibleValues[1];
-          const highValue = rouletteResult.possibleValues[2];
+          let roulettePosition = 1;
 
-          rouletteResultMapping[lowValue.toString()] = 1;
-          rouletteResultMapping[mediumValue.toString()] = 3;
-          rouletteResultMapping[highValue.toString()] = 5;
+          for (let i = 0; i < rouletteResult.possibleValues.length; i++) {
+            const value = rouletteResult.possibleValues[i];
+
+            if (value)
+              rouletteResultMapping[value.toString()] = roulettePosition;
+
+            roulettePosition += 2;
+          }
         }
 
         setTimeout(() => {
@@ -216,20 +226,27 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
         status === "default" ?
           <>
             <p style={{ marginBlock: 0, fontSize: "34px", color: "white" }}>Spin the wheel for a chance to win extra CNTP</p>
-            <Wheel
-              mustStartSpinning={mustSpin}
-              prizeNumber={rouletteResultMapping[prizeNumber] ?? 0}
-              data={wheelData}
-              spinDuration={0.5}
-              outerBorderColor={localStorage.getItem('mui-mode') === 'light' ? "#D6E3FF" : "#f5eeee"}
-              outerBorderWidth={5}
-              radiusLineWidth={0}
-              fontSize={12}
-              onStopSpinning={() => {
-                setMustSpin(false);
-              }}
-              pointerProps={pointerProperties}
-            />
+            <div style={{ display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
+
+              <img src={rouletteBorder} style={{ width: "85%", maxWidth: '483px', position: 'absolute', zIndex: 2 }} />
+
+              <div style={{ position: "relative", zIndex: 1 }}>
+                <Wheel
+                  mustStartSpinning={mustSpin}
+                  prizeNumber={rouletteResultMapping[prizeNumber] ?? 0}
+                  data={wheelData}
+                  spinDuration={0.5}
+                  outerBorderColor={localStorage.getItem('mui-mode') === 'light' ? "#D6E3FF" : "#f5eeee"}
+                  outerBorderWidth={1}
+                  radiusLineWidth={0}
+                  fontSize={12}
+                  onStopSpinning={() => {
+                    setMustSpin(false);
+                  }}
+                  pointerProps={pointerProperties}
+                />
+              </div>
+            </div>
             {
               profile && profile?.keyID ?
                 <button onClick={handleSpinClick} style={lottery === 1 ? { fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, backgroundColor: "gray" } : { fontSize: "32px", width: "182px", height: "52px", borderRadius: "16px", border: 0, backgroundImage: "linear-gradient(to right, #D775FF , #8DA8FF)" }}>SPIN</button> :

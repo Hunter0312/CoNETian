@@ -34,6 +34,8 @@ import ButtonClick from "../assets/GameSounds/ButtonTouch/Authorize Button.wav";
 
 import arbitrumLogo from "../assets/arbitrum-logo.png";
 
+import rouletteBorder from "../assets/roulette-border.png";
+
 export {
   pipeTopImg,
   pipeBottomImg,
@@ -64,4 +66,5 @@ export {
   HardConetianMediumFire,
   HardConetianHighFire,
   arbitrumLogo,
+  rouletteBorder,
 };

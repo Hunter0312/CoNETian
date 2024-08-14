@@ -51,9 +51,9 @@ const Leaderboard: React.FC = () => {
 
   return (
     <div className='flex flex-col items-center' style={{ height: "100%" }}>
-      <div className='flex flex-col' style={{ width: "80vw", maxWidth: "362px", marginBottom: "10px", flex: 1 }}>
+      <div className='flex flex-col' style={{ width: "80vw", maxWidth: "362px", marginBottom: "10px" }}>
         <p style={{ textAlign: "left", color: "white", fontSize: "40px", marginBottom: "10px" }}>Leaderboard</p>
-        <div style={{ flex: 1, backgroundColor: "white", borderRadius: "8px", padding: "20px 0" }}>
+        <div style={{ backgroundColor: "white", borderRadius: "8px", padding: "20px 0" }}>
           <div className='flex flex-col items-center' style={{ height: "100%" }}>
             <div className='flex justify-center items-center' style={{ gap: "5px" }}>
               {
@@ -77,7 +77,7 @@ const Leaderboard: React.FC = () => {
                 <p style={{ width: "70px", textAlign: "left" }}>CNTP</p>
               </div>
             </div>
-            <div style={{ width: "100%", maxHeight: "45vh", overflow: "auto" }}>
+            <div style={{ width: "100%", height: "47vh", overflow: "auto" }}>
               <div style={{ margin: "0 20px" }}>
                 {
                   currentList ? (

@@ -311,29 +311,32 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
 
     };
 
-    const handleMouseClick = () => {
-
+    const jumpConetian = () => {
       if (gameStatus === 0 || gameStatus === 3) {
         if (audio)
           load(Tap, {
             autoplay: true,
           })
+
         bird.dy = -10;
       }
-    };
+    }
+
+    const handleMouseClick = () => jumpConetian();
+
+    const handleSpaceBarPress = (event: KeyboardEvent) => {
+      if (event.code === 'Space')
+        jumpConetian();
+    }
 
     window.addEventListener('mousedown', handleMouseClick);
-
-    // use spacebar instead of mouse click
-    // fix when roulette is shown
-    // window.addEventListener('keyup', event => {
-    //   if (event.code === 'Space') handleMouseClick();
-    // })
+    window.addEventListener('keyup', handleSpaceBarPress);
 
     const gameInterval = setInterval(update, 20);
 
     return () => {
       window.removeEventListener('mousedown', handleMouseClick);
+      window.removeEventListener('keyup', handleSpaceBarPress);
       clearInterval(gameInterval);
     };
   }, [gameStatus]);

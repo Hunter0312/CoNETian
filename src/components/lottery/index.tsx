@@ -104,7 +104,6 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
         setPrizeNumber(rouletteResult.valueWon);
         setMustSpin(true);
 
-
         rouletteResultMapping['0'] = 0;
 
         if (rouletteResult.possibleValues) {
@@ -119,7 +118,8 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
 
         setTimeout(() => {
           const mappedResult = rouletteResultMapping[rouletteResult.valueWon.toString()];
-          if (wheelData[mappedResult].option !== "Lose") {
+
+          if (wheelData[mappedResult] && wheelData[mappedResult]?.option !== "Lose") {
             setStatus("win");
           } else {
             setLottery(0);

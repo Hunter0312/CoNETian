@@ -243,9 +243,9 @@ const Wallet: React.FC = () => {
         }
       </div>
 
-      <button onClick={fetchClearStorage} style={{ ...buttonStyle }}>
+      {/* <button onClick={fetchClearStorage} style={{ ...buttonStyle }}>
         Clear Storage
-      </button>
+      </button> */}
 
       <button onClick={() => setPath('/')} style={{ ...buttonStyle }}>
         Main Menu

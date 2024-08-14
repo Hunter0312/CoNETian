@@ -68,7 +68,7 @@ export const fetchRouletteResult = async (walletAddress: string): Promise<any> =
             if (Array.isArray(response) && response.length >= 2) {
                 const [status, data] = response;
                 if (status === "SUCCESS") {
-                    return { possibleValues: data[0]?.lotterRate, valueWon: data[0]?.lottery };
+                    return { possibleValues: data[0]?.lotterRate || null, valueWon: data[0]?.lottery || 0 };
                 } else {
                     console.error("Failed to fetch roulette result");
                 }

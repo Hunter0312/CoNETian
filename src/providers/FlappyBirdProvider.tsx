@@ -100,8 +100,8 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
           setMiningError(false);
         } else {
           if (path !== '/start') {
-            toast.clearWaitingQueue({ containerId: 'miningError' });
-            toast.error(result?.message, { toastId: 'miningError' });
+            // toast.clearWaitingQueue({ containerId: 'miningError' });
+            // toast.error(result?.message, { toastId: 'miningError' });
           }
 
           setMiningError(true);

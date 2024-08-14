@@ -14,49 +14,6 @@ const buttonStyle = {
   width: "240px"
 }
 
-const CntpData = [
-  {
-    user: "0x7dda1662Eec5f8d20523CC56Bed5DA2130F32591",
-    points: 2000000,
-  },
-  {
-    user: "0x7dda1662Eec5f8d20523CC56Bed5DA2130F32591",
-    points: 200,
-  },
-  {
-    user: "0x7dda1662Eec5f8d20523CC56Bed5DA2130F32591",
-    points: 200,
-  },
-  {
-    user: "0x7dda1662Eec5f8d20523CC56Bed5DA2130F32591",
-    points: 200,
-  },
-  {
-    user: "0x7dda1662Eec5f8d20523CC56Bed5DA2130F32591",
-    points: 200,
-  },
-  {
-    user: "0x7dda1662Eec5f8d20523CC56Bed5DA2130F32591",
-    points: 200,
-  },
-  {
-    user: "0x7dda1662Eec5f8d20523CC56Bed5DA2130F32591",
-    points: 200,
-  },
-  {
-    user: "0x7dda1662Eec5f8d20523CC56Bed5DA2130F32591",
-    points: 200,
-  },
-  {
-    user: "0x7dda1662Eec5f8d20523CC56Bed5DA2130F32591",
-    points: 200,
-  },
-  {
-    user: "0x7dda1662Eec5f8d20523CC56Bed5DA2130F32591",
-    points: 200,
-  }
-];
-
 export type LeaderboardType = 'all-time' | 'weekly' | 'daily';
 
 export type LeaderboardOption = {
@@ -132,7 +89,7 @@ const Leaderboard: React.FC = () => {
                               index === 0 ?
                                 <p style={{ width: "39px", textAlign: "left" }} className='flex items-center'>
                                   {index + 1}
-                                  <img src={StarImg} style={{ marginLeft: "10px" }} />
+                                  <img src={StarImg} style={{ marginLeft: "10px" }} alt="star" />
                                 </p> :
                                 <p style={{ width: "39px", textAlign: "left" }}>{index + 1}</p>
                             }

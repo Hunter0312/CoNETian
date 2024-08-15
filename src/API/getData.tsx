@@ -70,15 +70,15 @@ export const fetchRouletteResult = async (walletAddress: string): Promise<any> =
                 if (status === "SUCCESS") {
                     return { possibleValues: data[0]?.lotterRate || null, valueWon: data[0]?.lottery || 0 };
                 } else {
-                    console.error("Failed to fetch roulette result");
+                    console.error("Failed to fetch roulette result. Please try again later.");
                 }
             }
         } catch (error) {
-            console.error("Failed to fetch roulette result", error);
+            console.error("Failed to fetch roulette result. Please try again later.", error);
         }
     }
 
-    return { error: true, message: "Failed to fetch roulette result" };
+    return { error: true, message: "Failed to fetch roulette result. Please try again later." };
 }
 
 export const fetchRegisterReferrer = async (referrerAddress: string): Promise<any> => {

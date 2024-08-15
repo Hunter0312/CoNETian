@@ -62,7 +62,7 @@ const Leaderboard: React.FC = () => {
         <p style={{ textAlign: "left", color: "white", fontSize: "40px", marginBottom: "10px" }}>Leaderboard</p>
         <div style={{ backgroundColor: "white", borderRadius: "8px", padding: "20px 0" }}>
           <div className='flex flex-col items-center' style={{ height: "100%" }}>
-            <div className='flex custom-scrollbar' style={{ gap: "5px", maxWidth: "340px", overflow: "auto", paddingBottom: "6px" }}>
+            <div className='flex custom-scrollbar' style={{ gap: "5px", maxWidth: "340px", overflow: "auto", padding: "0px 3px 6px" }}>
               {
                 leaderboardOptions.map((option) => (
                   <button

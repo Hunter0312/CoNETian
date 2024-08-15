@@ -24,9 +24,7 @@ export type LeaderboardOption = {
 }
 
 const Leaderboard: React.FC = () => {
-  const { leaderboard, setPath } = useFlappyBirdContext();
-
-  console.log(leaderboard);
+  const { leaderboard, setPath, isLeaderboardLoading } = useFlappyBirdContext();
 
   const [choosenLeaderboard, setChoosenLeaderboard] = useState<LeaderboardType>('all-time');
 
@@ -88,7 +86,9 @@ const Leaderboard: React.FC = () => {
             <div style={{ width: "100%", height: "47vh", overflow: "auto" }}>
               <div style={{ margin: "0 20px" }}>
                 {
-                  currentList ? (
+                  isLeaderboardLoading ? (
+                    <p>Fetching data...</p>
+                  ) : currentList ? (
                     currentList.map((item, index) => {
                       return (
                         <div className='flex justify-between leaderBtnBody' style={{ width: "100%" }}>

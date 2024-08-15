@@ -27,6 +27,7 @@ type FlappyBirdContextBird = {
   setLottery: (e: number) => void,
   leaderboard: Leaderboard,
   setLeaderboard: (e: Leaderboard) => void,
+  isLeaderboardLoading : boolean,
   gameStatus: number,
   setGameStatus: (e: number) => void,
   lotteryBalance: number,
@@ -68,6 +69,7 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
   const [gameStatus, setGameStatus] = useState<number>(0);
   const [gameDifficulty, setGameDifficulty] = useState<number>(1)
   const [lotteryBalance, setLotteryBalance] = useState<number>(0);
+  const [isLeaderboardLoading, setIsLeaderboardLoading] = useState<boolean>(true);
   const [leaderboard, setLeaderboard] = useState<Leaderboard>({
     allTime: [],
     weekly: [],
@@ -114,6 +116,11 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
     init(profile?.keyID);
   }, [profile])
 
+  function handleSetLeaderboard(leaderboard: Leaderboard) {
+    setLeaderboard(leaderboard);
+    setIsLeaderboardLoading(false);
+  }
+
   return (
     <FlappyBird.Provider value={{
       path,
@@ -141,7 +148,8 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
       lotteryBalance,
       setLotteryBalance,
       leaderboard,
-      setLeaderboard,
+      setLeaderboard: handleSetLeaderboard,
+      isLeaderboardLoading,
       audio,
       setAudio,
       setGameDifficulty,

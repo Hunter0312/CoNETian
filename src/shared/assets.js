@@ -8,6 +8,18 @@ import audioImage from "../assets/audio.png";
 import rouletteImg from "../assets/sticker.webm";
 import StarImg from "../assets/star.png";
 
+import AstronautSkins from "../assets/astronaut_skins.png";
+import BackgroundAstronaut from "../assets/background_astronaut.png";
+import AstronautMain from "../assets/astronaut_main.png";
+import CNTPEarned from "../assets/cntp_earned.png";
+import BackgroundPlatform from "../assets/background_platform.jpg";
+
+import ChinaAstronaut from "../assets/china_astronaut.png";
+import ItalyAstronaut from "../assets/italy_astronaut.png";
+import BrazilAstronaut from "../assets/brazil_astronaut.png";
+
+import ProfileImg from "../assets/profile_img.png";
+
 import doubleLose from "../assets/double-lose.png";
 import doubleWin from "../assets/double-win.png";
 import doubleNeutral from "../assets/double-neutral.png";
@@ -67,4 +79,13 @@ export {
   HardConetianHighFire,
   arbitrumLogo,
   rouletteBorder,
+  ProfileImg,
+  AstronautSkins,
+  BackgroundAstronaut,
+  AstronautMain,
+  CNTPEarned,
+  ChinaAstronaut,
+  ItalyAstronaut,
+  BrazilAstronaut,
+  BackgroundPlatform,
 };

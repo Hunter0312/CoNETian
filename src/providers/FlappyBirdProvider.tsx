@@ -71,7 +71,8 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
   const [leaderboard, setLeaderboard] = useState<Leaderboard>({
     allTime: [],
     weekly: [],
-    daily: []
+    daily: [],
+    monthly: [],
   })
   const [audio, setAudio] = useState<boolean>(false);
   const [miningError, setMiningError] = useState<boolean>(false);

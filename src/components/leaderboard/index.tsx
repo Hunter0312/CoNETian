@@ -14,7 +14,7 @@ const buttonStyle = {
   width: "240px"
 }
 
-export type LeaderboardType = 'all-time' | 'weekly' | 'daily';
+export type LeaderboardType = 'all-time' | 'weekly' | 'daily' | 'monthly';
 
 export type LeaderboardOption = {
   label: string;
@@ -26,6 +26,8 @@ export type LeaderboardOption = {
 const Leaderboard: React.FC = () => {
   const { leaderboard, setPath } = useFlappyBirdContext();
 
+  console.log(leaderboard);
+
   const [choosenLeaderboard, setChoosenLeaderboard] = useState<LeaderboardType>('all-time');
 
   const leaderboardOptions = useMemo<LeaderboardOption[]>(() => ([
@@ -34,6 +36,11 @@ const Leaderboard: React.FC = () => {
       value: 'all-time',
       current: choosenLeaderboard === 'all-time',
       items: leaderboard.allTime,
+    }, {
+      label: 'Monthly',
+      value: 'monthly',
+      current: choosenLeaderboard === 'monthly',
+      items: leaderboard.monthly,
     }, {
       label: 'Weekly',
       value: 'weekly',
@@ -55,13 +62,14 @@ const Leaderboard: React.FC = () => {
         <p style={{ textAlign: "left", color: "white", fontSize: "40px", marginBottom: "10px" }}>Leaderboard</p>
         <div style={{ backgroundColor: "white", borderRadius: "8px", padding: "20px 0" }}>
           <div className='flex flex-col items-center' style={{ height: "100%" }}>
-            <div className='flex justify-center items-center' style={{ gap: "5px" }}>
+            <div className='flex custom-scrollbar' style={{ gap: "5px", maxWidth: "340px", overflow: "auto", paddingBottom: "6px" }}>
               {
                 leaderboardOptions.map((option) => (
                   <button
                     className={option.current ? 'leaderBtn leaderBtnActive' : 'leaderBtn'}
                     onClick={() => setChoosenLeaderboard(option.value as LeaderboardType)}
                     disabled={!option.items?.length}
+                    style={{ whiteSpace: 'nowrap' }}
                   >
                     {option.label}
                   </button>

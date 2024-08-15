@@ -10,4 +10,5 @@ export default interface Leaderboard {
   allTime: LeaderboardArrayItem[],
   weekly: LeaderboardArrayItem[],
   daily: LeaderboardArrayItem[],
+  monthly: LeaderboardArrayItem[],
 }

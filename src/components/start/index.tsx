@@ -8,7 +8,7 @@ const buttonStyle = {
   border: "0",
   backgroundColor: "white",
   color: "black",
-  fontSize: "2rem",
+  fontSize: "1.8rem",
   padding: "10px 20px",
   borderRadius: "15px",
   width: "240px"
@@ -79,17 +79,18 @@ const StartMessage: React.FC = () => {
         boxSizing: 'border-box',
         padding: '0 20px'
       }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: "10px" }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
           <h1 style={{ color: "white", fontFamily: "FlappyBird", fontSize: "3rem", margin: 0 }}>The CoNETian</h1>
           <h2 style={{ color: "white", fontFamily: "FlappyBird", margin: 0 }}>{gameDifficulty === 1 ? 'Easy' : gameDifficulty === 2 ? 'Medium' : 'Hard'} Mode</h2>
         </div>
 
         <img src={bird % 3 === 0 ? conetianHighFireImage : bird % 3 === 1 ? conetianLowFireImage : conetianMediumFireImage} width={120} />
 
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "16px" }}>
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "12px" }}>
           <button style={buttonStyle} className='startButton' onClick={() => { setPath('/start'); setGameStatus(0) }}>Start</button>
           <button style={buttonStyle} onClick={() => setPath('/difficulty')}>Difficulty</button>
           <button style={buttonStyle} onClick={() => setPath('/wallet')}>My Wallet</button>
+          <button style={buttonStyle} onClick={() => setPath('/leaderboard')}>Leaderboard</button>
           <button style={buttonStyle} onClick={() => setPath('/about')}>About</button>
         </div>
       </div>

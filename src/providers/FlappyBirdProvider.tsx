@@ -1,3 +1,4 @@
+import Leaderboard from '@/components/leaderboard/types';
 import { fetchStartMining } from '../API/getData';
 import PropTypes from 'prop-types';
 import { createContext, useContext, useState, ReactNode, useEffect, useRef } from 'react';
@@ -24,6 +25,8 @@ type FlappyBirdContextBird = {
   setGames: (o: any) => void,
   lottery: number,
   setLottery: (e: number) => void,
+  leaderboard: Leaderboard,
+  setLeaderboard: (e: Leaderboard) => void,
   gameStatus: number,
   setGameStatus: (e: number) => void,
   lotteryBalance: number,
@@ -65,6 +68,12 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
   const [gameStatus, setGameStatus] = useState<number>(0);
   const [gameDifficulty, setGameDifficulty] = useState<number>(1)
   const [lotteryBalance, setLotteryBalance] = useState<number>(0);
+  const [leaderboard, setLeaderboard] = useState<Leaderboard>({
+    allTime: [],
+    weekly: [],
+    daily: [],
+    monthly: [],
+  })
   const [audio, setAudio] = useState<boolean>(false);
   const [miningError, setMiningError] = useState<boolean>(false);
   const [referrerAddress, setReferrerAddress] = useState<string>('');
@@ -92,8 +101,8 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
           setMiningError(false);
         } else {
           if (path !== '/start') {
-            toast.clearWaitingQueue({ containerId: 'miningError' });
-            toast.error(result?.message, { toastId: 'miningError' });
+            // toast.clearWaitingQueue({ containerId: 'miningError' });
+            // toast.error(result?.message, { toastId: 'miningError' });
           }
 
           setMiningError(true);
@@ -131,6 +140,8 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
       setGameStatus,
       lotteryBalance,
       setLotteryBalance,
+      leaderboard,
+      setLeaderboard,
       audio,
       setAudio,
       setGameDifficulty,

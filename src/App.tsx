@@ -92,7 +92,7 @@ const profileVerChannelListening = (
 
 function App() {
 
-  const { path, audio, setOnlineMiners, setMiningRate, setProfile, gameStatus } = useFlappyBirdContext();
+  const { path, audio, setOnlineMiners, setMiningRate, setProfile, setLeaderboard, gameStatus } = useFlappyBirdContext();
 
   const backAudioRef = useRef<HTMLAudioElement | null>(null);
   const { load } = useAudioPlayer();
@@ -133,8 +133,10 @@ function App() {
 
   listeningProfileHook((response: any) => {
     try {
-      const [data] = response;
-      setProfile(data);
+      const [profile, leaderboard] = response;
+
+      setProfile(profile);
+      setLeaderboard(leaderboard);
     } catch (error) {
       console.error("Error parsing balance data", error);
     }

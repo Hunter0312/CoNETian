@@ -204,12 +204,11 @@ button {
 }
 
 .leaderBtn {
-  width: 132px;
-  height: 32px;
-  font-size: 24px;
+  font-size: 20px;
   border-radius: 8px;
   border: 1px solid;
   background: transparent;
+  padding: 0 1rem;
 }
 
 .leaderBtnActive {
@@ -224,4 +223,26 @@ button {
 .leaderBtnBody p {
   margin-bottom: 0;
   font-size: 18px;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  height: 10px;
+}
+
+/* Track */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 9999px;
+}
+
+/* Handle */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(to right, #d775ff, #8da8ff);
+  background: #ccc;
+  border-radius: 9999px;
+}
+
+/* Handle on hover */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
 }

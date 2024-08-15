@@ -11,9 +11,9 @@ export const slice = (text: string) => {
 
 export const LeaderSlice = (text: string) => {
     if (text) {
-        let str = text.slice(0, 8);
+        let str = text.slice(0, 4);
         str += "...";
-        str += text.slice(text.length - 6, text.length);
+        str += text.slice(text.length - 4, text.length);
         return str;
     }
 }

@@ -109,19 +109,6 @@ const StartMessage: React.FC = () => {
         <img src={arbitrumLogo} style={{ width: "20px" }} />
         <p>built on Arbitrum</p>
       </div>
-
-      {/* UNCOMENT THIS WHEN LEADERBOARD IS READY */}
-      {/* <div style={{ display: "flex", justifyContent: "flex-end", flexDirection: "row", padding: "10px" }}>
-        <button className='leaderboard' style={{
-          color: "white",
-          fontSize: "32px",
-          backgroundColor: "transparent",
-          border: 0,
-        }}
-          onClick={() => setPath('/leaderboard')}>
-          {"Leaderboard >"}
-        </button>
-      </div> */}
     </div >
   )
 }

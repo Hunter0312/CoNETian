@@ -136,7 +136,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
             setStatus("lose");
           }
           setMustSpin(true);
-        }, 6000);
+        }, 7000);
       } else {
         toast.error(rouletteResult?.message, { autoClose: 5000 });
         setLottery(0);

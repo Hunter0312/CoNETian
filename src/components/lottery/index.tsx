@@ -138,7 +138,7 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
           setMustSpin(true);
         }, 7000);
       } else {
-        toast.error(rouletteResult?.message, { autoClose: 5000 });
+        toast.error(rouletteResult?.message, { autoClose: 2000 });
         setLottery(0);
         setMustSpin(true);
         setStatus('delay');
@@ -157,60 +157,68 @@ const Lottery: React.FC<Props> = ({ setContinue }) => {
     if (double === 0 && profile && profile?.keyID) {
       setLottery(2);
       const rouletteResult = await fetchRouletteResult(profile?.keyID);
-      if (audio)
-        load(RouletteSpin, {
-          autoplay: true
-        })
-      setPrizeNumber(rouletteResult.valueWon);
 
-      const alternateWinLose = () => {
-        if (count % 2 === 0)
-          // double === 1 means the user won
-          setDouble(1);
-        else
-          // double === 2 means the user lost
-          setDouble(2);
-        count++;
+      if (rouletteResult && !rouletteResult?.error) {
+        if (audio)
+          load(RouletteSpin, {
+            autoplay: true
+          })
 
-        if (count >= 20)
-          timerSpeedDown += 100;
+        setPrizeNumber(rouletteResult.valueWon);
 
-        doublePointsTimeout = setTimeout(alternateWinLose, timerSpeedDown);
-      };
+        const alternateWinLose = () => {
+          if (count % 2 === 0)
+            // double === 1 means the user won
+            setDouble(1);
+          else
+            // double === 2 means the user lost
+            setDouble(2);
+          count++;
 
-      alternateWinLose();
+          if (count >= 20)
+            timerSpeedDown += 100;
 
-      setTimeout(() => {
-        clearTimeout(doublePointsTimeout);
+          doublePointsTimeout = setTimeout(alternateWinLose, timerSpeedDown);
+        };
 
-        const mappedResult = rouletteResult.valueWon > 0 ? 1 : 0;
+        alternateWinLose();
 
-        if (doubleData[mappedResult].option !== "Lose") {
-          // double === 2 means the user lost, so we show the "lose" text first so the user thinks he lost, then we show the win page.
-          setDouble(2);
+        setTimeout(() => {
+          clearTimeout(doublePointsTimeout);
 
-          // wait 500ms to show the win text and build expectation on the user
-          setTimeout(() => {
-            setStatus("win")
+          const mappedResult = rouletteResult.valueWon > 0 ? 1 : 0;
 
-            // double === 0 for the text to stop flashing
-            setDouble(0);
-          }, 500);
-        } else {
-          setLottery(3);
+          if (doubleData[mappedResult].option !== "Lose") {
+            // double === 2 means the user lost, so we show the "lose" text first so the user thinks he lost, then we show the win page.
+            setDouble(2);
 
-          // double === 1 means the user won, so we show the "win" text first so the user thinks he won, then we show the lose page.
-          setDouble(1);
+            // wait 500ms to show the win text and build expectation on the user
+            setTimeout(() => {
+              setStatus("win")
 
-          // wait 500ms to show the lose text and build expectation on the user
-          setTimeout(() => {
-            setStatus("lose")
+              // double === 0 for the text to stop flashing
+              setDouble(0);
+            }, 500);
+          } else {
+            setLottery(3);
 
-            // double === 0 for the text to stop flashing
-            setDouble(0);
-          }, 500);
-        }
-      }, 6000);
+            // double === 1 means the user won, so we show the "win" text first so the user thinks he won, then we show the lose page.
+            setDouble(1);
+
+            // wait 500ms to show the lose text and build expectation on the user
+            setTimeout(() => {
+              setStatus("lose")
+
+              // double === 0 for the text to stop flashing
+              setDouble(0);
+            }, 500);
+          }
+        }, 6000);
+      } else {
+        toast.error(rouletteResult?.message, { autoClose: 2000 });
+        setDouble(0);
+        setStatus('delay');
+      }
     }
   }
 

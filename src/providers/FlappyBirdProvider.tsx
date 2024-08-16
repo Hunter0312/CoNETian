@@ -25,6 +25,8 @@ type FlappyBirdContextBird = {
   setLottery: (e: number) => void,
   leaderboard: Leaderboard,
   setLeaderboard: (e: Leaderboard) => void,
+  isLeaderboardLoading: boolean,
+  setIsLeaderboardLoading: (e: boolean) => void,
   gameStatus: number,
   setGameStatus: (e: number) => void,
   lotteryBalance: number,
@@ -66,6 +68,7 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
   const [gameStatus, setGameStatus] = useState<number>(0);
   const [gameDifficulty, setGameDifficulty] = useState<number>(1)
   const [lotteryBalance, setLotteryBalance] = useState<number>(0);
+  const [isLeaderboardLoading, setIsLeaderboardLoading] = useState<boolean>(true);
   const [leaderboard, setLeaderboard] = useState<Leaderboard>({
     allTime: [],
     weekly: [],
@@ -93,6 +96,7 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
     const init = async (walletAddress: string) => {
       if (walletAddress && !mining) {
         const result = await fetchStartMining(walletAddress);
+
         if (result && !result?.error) {
           setOnlineMiners(result?.online);
           setMiningRate(result?.rate);
@@ -108,7 +112,7 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
 
           if (miningErrorTimeout.current)
             clearTimeout(miningErrorTimeout.current);
-
+        
           miningErrorTimeout.current = setTimeout(() => init(walletAddress), 15000);
         }
       }
@@ -147,6 +151,8 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
       setLotteryBalance,
       leaderboard,
       setLeaderboard,
+      setIsLeaderboardLoading,
+      isLeaderboardLoading,
       audio,
       setAudio,
       setGameDifficulty,

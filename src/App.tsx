@@ -92,7 +92,7 @@ const profileVerChannelListening = (
 
 function App() {
 
-  const { path, audio, setOnlineMiners, setMiningRate, setProfile, setLeaderboard, gameStatus } = useFlappyBirdContext();
+  const { path, audio, setOnlineMiners, setMiningRate, setProfile, setLeaderboard, gameStatus, setIsLeaderboardLoading } = useFlappyBirdContext();
 
   const backAudioRef = useRef<HTMLAudioElement | null>(null);
   const { load } = useAudioPlayer();
@@ -104,6 +104,7 @@ function App() {
     const container = document.getElementsByTagName("button");
 
     const buttonArray = Array.from(container);
+
     const init = () => {
       load(ButtonClick, {
         autoplay: true,
@@ -137,6 +138,7 @@ function App() {
 
       setProfile(profile);
       setLeaderboard(leaderboard);
+      setIsLeaderboardLoading(false);
     } catch (error) {
       console.error("Error parsing balance data", error);
     }

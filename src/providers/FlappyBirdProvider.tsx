@@ -27,7 +27,8 @@ type FlappyBirdContextBird = {
   setLottery: (e: number) => void,
   leaderboard: Leaderboard,
   setLeaderboard: (e: Leaderboard) => void,
-  isLeaderboardLoading : boolean,
+  isLeaderboardLoading: boolean,
+  setIsLeaderboardLoading: (e: boolean) => void,
   gameStatus: number,
   setGameStatus: (e: number) => void,
   lotteryBalance: number,
@@ -96,6 +97,7 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
     const init = async (walletAddress: string) => {
       if (walletAddress && !mining) {
         const result = await fetchStartMining(walletAddress);
+
         if (result && !result?.error) {
           setOnlineMiners(result?.online);
           setMiningRate(result?.rate);
@@ -103,11 +105,12 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
           setMiningError(false);
         } else {
           if (path !== '/start') {
-            // toast.clearWaitingQueue({ containerId: 'miningError' });
-            // toast.error(result?.message, { toastId: 'miningError' });
+            toast.clearWaitingQueue({ containerId: 'miningError' });
+            toast.error(result?.message, { toastId: 'miningError' });
           }
 
           setMiningError(true);
+
           miningErrorTimeout.current = setTimeout(() => init(walletAddress), 15000);
         }
       }
@@ -115,11 +118,6 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
 
     init(profile?.keyID);
   }, [profile])
-
-  function handleSetLeaderboard(leaderboard: Leaderboard) {
-    setLeaderboard(leaderboard);
-    setIsLeaderboardLoading(false);
-  }
 
   return (
     <FlappyBird.Provider value={{
@@ -148,7 +146,8 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
       lotteryBalance,
       setLotteryBalance,
       leaderboard,
-      setLeaderboard: handleSetLeaderboard,
+      setLeaderboard,
+      setIsLeaderboardLoading,
       isLeaderboardLoading,
       audio,
       setAudio,

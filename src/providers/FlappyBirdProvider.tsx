@@ -7,8 +7,6 @@ import { toast } from 'react-toastify';
 type FlappyBirdContextBird = {
   path: string;
   setPath: (path: string) => void;
-  walletAddress: string;
-  setWalletAddress: (key: string) => void;
   privateKey: string;
   setPrivateKey: (key: string) => void;
   balance: number;
@@ -42,6 +40,7 @@ type FlappyBirdContextBird = {
   profile: any,
   setProfile: (o: any) => void,
   miningErrorTimeout: React.MutableRefObject<NodeJS.Timeout | null>
+  walletAddress: React.MutableRefObject<string>
 };
 
 const FlappyBird = createContext<FlappyBirdContextBird | undefined>(undefined);
@@ -60,7 +59,6 @@ type FlappyBirdProps = {
 
 export function FlappyBirdProvider({ children }: FlappyBirdProps) {
   const [path, setPath] = useState<string>('/');
-  const [walletAddress, setWalletAddress] = useState<string>('');
   const [privateKey, setPrivateKey] = useState<string>('');
   const [balance, setBalance] = useState<number>(0);
   const [mining, setMining] = useState<boolean>(false);
@@ -92,6 +90,7 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
     score: 0,
   })
   const miningErrorTimeout = useRef<NodeJS.Timeout | null>(null);
+  const walletAddress = useRef<string>('');
 
   useEffect(() => {
     const init = async (walletAddress: string) => {
@@ -111,12 +110,18 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
 
           setMiningError(true);
 
+          if (miningErrorTimeout.current)
+            clearTimeout(miningErrorTimeout.current);
+        
           miningErrorTimeout.current = setTimeout(() => init(walletAddress), 15000);
         }
       }
     }
 
-    init(profile?.keyID);
+    if (profile?.keyID && profile?.keyID !== walletAddress.current) {
+      walletAddress.current = profile?.keyID
+      init(profile?.keyID);
+    }
   }, [profile])
 
   return (
@@ -124,7 +129,6 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
       path,
       setPath,
       walletAddress,
-      setWalletAddress,
       privateKey,
       setPrivateKey,
       balance,

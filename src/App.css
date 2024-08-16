@@ -143,6 +143,35 @@ button {
   left: 0;
 }
 
+.progress-container {
+  width: 100%;
+  background-color: #414143;
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 186px;
+  margin-top: 4px;
+}
+
+.progress-bar {
+  height: 5px;
+  background: linear-gradient(to right, #79f8ff, #d775ff);
+  border-radius: 10px;
+  transition: width 3s ease-in-out;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  33% {
+    transform: translate(-50%, -50%) translateY(-10px) translateX(5px);
+  }
+
+  66% {
+    transform: translate(-50%, -50%) translateY(10px) translateX(-5px);
+  }
+}
+
 .leaderboard {
   text-shadow: 0 0 4px #000000, 0 0 4px #000000;
 }

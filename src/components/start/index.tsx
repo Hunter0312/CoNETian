@@ -14,6 +14,13 @@ const buttonStyle = {
   width: "240px"
 }
 
+const devStyle = {
+  ...buttonStyle,
+  backgroundColor: "black",
+  color: "white",
+  fontSize: "1rem",
+}
+
 const StartMessage: React.FC = () => {
   const { setPath, profile, setGameStatus, miningError, miningRate, onlineMiners, mining, audio, setAudio, gameDifficulty } = useFlappyBirdContext();
 
@@ -22,6 +29,20 @@ const StartMessage: React.FC = () => {
   const conetianHighFireImage = useConetianHighFire();
   const conetianMediumFireImage = useConetianMediumFire();
   const conetianLowFireImage = useConetianLowFire();
+
+  const [clickCount, setClickCount] = useState(0);
+  const [developerMode, setDeveloperMode] = useState(false);
+
+  const handleArbitrumClick = () => {
+    setClickCount(prevCount => {
+      const newCount = prevCount + 1;
+      if (newCount === 5) {
+        // Change the state when 5 clicks are reached
+        setDeveloperMode(true);
+      }
+      return newCount;
+    });
+  };
 
   useEffect(() => {
     const init = setInterval(() => {
@@ -92,6 +113,8 @@ const StartMessage: React.FC = () => {
           <button style={buttonStyle} onClick={() => setPath('/wallet')}>My Wallet</button>
           <button style={buttonStyle} onClick={() => setPath('/leaderboard')}>Leaderboard</button>
           <button style={buttonStyle} onClick={() => setPath('/about')}>About</button>
+          {developerMode && <button style={devStyle} onClick={() => setPath('/dashboard')}>Developer Mode</button>}
+
         </div>
       </div>
 
@@ -105,23 +128,10 @@ const StartMessage: React.FC = () => {
         color: "white",
         fontFamily: "FlappyBird",
         padding: "10px",
-      }}>
+      }} onClick={handleArbitrumClick}>
         <img src={arbitrumLogo} style={{ width: "20px" }} />
         <p>built on Arbitrum</p>
       </div>
-
-      {/* UNCOMENT THIS WHEN LEADERBOARD IS READY */}
-      {/* <div style={{ display: "flex", justifyContent: "flex-end", flexDirection: "row", padding: "10px" }}>
-        <button className='leaderboard' style={{
-          color: "white",
-          fontSize: "32px",
-          backgroundColor: "transparent",
-          border: 0,
-        }}
-          onClick={() => setPath('/leaderboard')}>
-          {"Leaderboard >"}
-        </button>
-      </div> */}
     </div >
   )
 }

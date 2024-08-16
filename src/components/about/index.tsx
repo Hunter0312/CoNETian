@@ -30,36 +30,65 @@ const About: React.FC = () => {
     return (
         <div className='flex flex-col items-center' style={{ height: "100%", justifyContent: "space-evenly", overflow: "auto", padding: '20px', boxSizing: 'border-box', gap: "40px" }}>
 
-            <p style={{ color: "white", fontSize: "2rem", margin: 0 }}>The CoNETian 1.0</p>
-
-            <p style={{ ...textStyle, textAlign: "left" }}>
-                Welcome to The CoNETian, where every tap unlocks the potential to mine and earn $CNTP!
+            <p style={{ color: "white", fontSize: "2rem", margin: 0 }}>
+                Welcome to The CoNETian!
             </p>
 
             <p style={{ ...textStyle, textAlign: "left" }}>
-                As soon as you start playing, you begin mining and accumulating rewards.
-                Spin the wheel for a chance to win even more $CNTP, and choose to take your winnings or go for double or nothing!
+                The CoNETian isn't just a game – it's your gateway to joining the revolutionary CoNET ecosystem.
             </p>
 
             <p style={{ ...textStyle, textAlign: "left" }}>
-                We're continuously adding exciting features, like box openings to win bigger prizes and more interactive gameplay elements.
+                We've developed this mining mini-game on Telegram as an innovative way to let everyone participate in our decentralized network.
             </p>
 
             <p style={{ ...textStyle, textAlign: "left" }}>
+                Why did we build this game?
+                We created The CoNETian to make it easy for anyone, anywhere in the world, to join our project.
+                By playing this game, you’re not just having fun – you’re actively participating in a decentralized future.
+            </p>
+
+            <p style={{ ...textStyle, textAlign: "left" }}>
+                The CoNETian uses Blockchain technology for rewards distribution, emphasizing our commitment to decentralization.
+            </p>
+
+            <p style={{ ...textStyle, textAlign: "left" }}>
+                As you play, you’ll start mining and earning $CNTP.
+                We’re also introducing exciting features like box openings for bigger prizes and more interactive gameplay.
                 Every day, 200k $CNTP are up for grabs through spinning and other in-game activities.
             </p>
 
             <p style={{ ...textStyle, textAlign: "left" }}>
-                CoNET is a DePIN project focused on Decentralization, Privacy, and Rewards.
-                Utilizing our unique Layer Minus protocol, we replace traditional IP addresses with wallet addresses, ensuring complete privacy and security.
+                This isn’t just about rewards – it’s about giving you a chance to be part of something bigger.
             </p>
 
             <p style={{ ...textStyle, textAlign: "left" }}>
-                At CoNET we also launched Silent Pass, an enhanced privacy tool, fast, and secure, as part of our commitment to protecting your online activities.
+                Soon, this game will allow players to mine in our DePIN network simply by sharing bandwidth, all while enjoying the gameplay.
             </p>
 
             <p style={{ ...textStyle, textAlign: "left" }}>
-                Check out CoNET platform and welcome to the new internet!
+                What’s Next?
+                As we prepare to launch our main-net, The CoNETian will evolve, allowing users to contribute to and benefit from our decentralized infrastructure just by playing and sharing their bandwidth.
+            </p>
+
+            <p style={{ ...textStyle, textAlign: "left" }}>
+                No complicated setups – just your mobile device and the game.
+            </p>
+
+            <p style={{ color: "white", fontSize: "2rem", margin: 0 }}>
+                About CoNET:
+            </p>
+
+            <p style={{ ...textStyle, textAlign: "left" }}>
+                CoNET is a DePIN project focused on Decentralization, Privacy, and Rewards. Our unique Layer Minus protocol replaces traditional IP addresses with wallet addresses, ensuring your online activities remain private and secure.
+            </p>
+
+            <p style={{ ...textStyle, textAlign: "left" }}>
+                Additionally, we've launched Silent Pass, a fast and secure privacy tool, as part of our commitment to protecting your online presence.Join us in building the future of the internet – decentralized, secure, and rewarding.
+            </p>
+
+            <p style={{ ...textStyle, textAlign: "left" }}>
+                Welcome to The CoNETian and the new era of online participation!
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: "center", gap: "16px" }}>

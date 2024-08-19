@@ -1,5 +1,5 @@
 import Leaderboard from '@/components/leaderboard/types';
-import { fetchStartMining } from '../API/getData';
+import { fetchRegisterReferrer, fetchStartMining } from '../API/getData';
 import PropTypes from 'prop-types';
 import { createContext, useContext, useState, ReactNode, useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
@@ -120,6 +120,17 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
 
     if (profile?.keyID && profile?.keyID !== walletAddress) {
       setWalletAddress(profile?.keyID)
+
+      const url = window.location.search
+
+      const splitUrl = url.split('referrer=')
+
+      if (splitUrl.length > 1) {
+        const referrer = splitUrl[1]
+        if (referrer)
+          fetchRegisterReferrer(referrer);
+      }
+
       init(profile?.keyID);
     }
   }, [profile])

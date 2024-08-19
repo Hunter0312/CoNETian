@@ -24,6 +24,27 @@
   background-color: #0000008c;
 }
 
+.pause-button {
+  background: none;
+  border: 2px solid #ffffff;
+  border-radius: 1rem;
+  padding: 1rem .8rem .8rem;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 999999999;
+}
+
+@media (min-width: 1024px) {
+  .pause-button {
+    top: initial;
+    right: 59%;
+    bottom: 32px;
+
+    transform: translateY(25%);
+  }
+}
+
 .sc-gsTCUz {
   transform: rotateZ(45deg);
 }

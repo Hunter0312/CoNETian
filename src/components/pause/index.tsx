@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Delay from '../delay';
-import { FaPause } from 'react-icons/fa6';
+import { FaPlay } from 'react-icons/fa6';
 
 type Props = {
   setContinue: (e: number) => void;
@@ -18,7 +18,7 @@ const Pause: React.FC<Props> = ({setContinue}) => {
 
   return (
     <div
-      id="roulette"
+      id="pause"
       className={`flex flex-col items-center delay`}
       style={{ position: "absolute", zIndex: "100", top: 0, justifyContent: "center", height: "100%", width: "100vw", overflowX: "hidden", overflowY: 'hidden', padding: "20px", boxSizing: 'border-box', gap: "16px" }}
     >
@@ -39,7 +39,7 @@ const Pause: React.FC<Props> = ({setContinue}) => {
                 padding: "1rem .8rem .8rem"
               }}
             >
-              <FaPause color="#ffffff" size={42} />
+              <FaPlay color="#ffffff" size={42} />
             </button>
           </>
         )

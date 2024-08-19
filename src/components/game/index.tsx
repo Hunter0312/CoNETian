@@ -7,7 +7,7 @@ import { useAudioPlayer } from 'react-use-audio-player';
 import { useConetianHighFire, useConetianMediumFire } from '../../hooks/useConetianHooks';
 import { groundImage, backgroundImage, pipeBottomImg, pipeTopImg, } from '../../shared/assets';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
-import { FaPlay } from 'react-icons/fa6';
+import { FaPause } from 'react-icons/fa6';
 
 type Props = {
   setGameStatus: (e: number) => void,
@@ -367,19 +367,13 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
       {
         (gameStatus === 0 || gameStatus === 3) && (
           <button
-            onClick={() => setGameStatus(4)}
-            style={{
-              background: "none",
-              border: "2px solid #ffffff",
-              borderRadius: "1rem",
-              padding: "1rem .8rem .8rem",
-              position: "absolute",
-              top: "1rem",
-              right: "1rem",
-              zIndex: 999999999,
+            className="pause-button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setGameStatus(4);
             }}
           >
-            <FaPlay color="#ffffff" size={36} />
+            <FaPause color="#ffffff" size={36} />
           </button>
         )
       }

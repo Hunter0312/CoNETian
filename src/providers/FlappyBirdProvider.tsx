@@ -39,8 +39,8 @@ type FlappyBirdContextBird = {
   referrerAddress: string
   profile: any,
   setProfile: (o: any) => void,
+  walletAddress: string,
   miningErrorTimeout: React.MutableRefObject<NodeJS.Timeout | null>
-  walletAddress: React.MutableRefObject<string>
 };
 
 const FlappyBird = createContext<FlappyBirdContextBird | undefined>(undefined);
@@ -79,6 +79,7 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
   const [miningError, setMiningError] = useState<boolean>(false);
   const [referrerAddress, setReferrerAddress] = useState<string>('');
   const [profile, setProfile] = useState<any>(null);
+  const [walletAddress, setWalletAddress] = useState<string>('');
   const [games, setGames] = useState<object>({
     gameSpeed: 0,
     gameFrame: 100,
@@ -90,7 +91,6 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
     score: 0,
   })
   const miningErrorTimeout = useRef<NodeJS.Timeout | null>(null);
-  const walletAddress = useRef<string>('');
 
   useEffect(() => {
     const init = async (walletAddress: string) => {
@@ -112,14 +112,14 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
 
           if (miningErrorTimeout.current)
             clearTimeout(miningErrorTimeout.current);
-        
+
           miningErrorTimeout.current = setTimeout(() => init(walletAddress), 15000);
         }
       }
     }
 
-    if (profile?.keyID && profile?.keyID !== walletAddress.current) {
-      walletAddress.current = profile?.keyID
+    if (profile?.keyID && profile?.keyID !== walletAddress) {
+      setWalletAddress(profile?.keyID)
       init(profile?.keyID);
     }
   }, [profile])

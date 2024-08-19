@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useFlappyBirdContext } from "../../providers/FlappyBirdProvider";
 import { fetchClearStorage, fetchImportWallet, fetchRegisterReferrer, fetchstopMining } from "../../API/getData";
 import { formatToken, slice } from "../../shared/functions";
@@ -58,18 +58,19 @@ const Wallet: React.FC = () => {
     profile,
     setProfile,
     setMining,
-    miningErrorTimeout
+    miningErrorTimeout,
+    walletAddress
   } = useFlappyBirdContext();
 
   const [walletAddr, setWalletAddr] = useState<boolean>(false);
   const [importWalletPrivateKey, setImportWalletPrivateKey] =
     useState<string>("");
-  const [referrer, setReferrer] = useState<string>("");
+  const [myReferralLink, setMyReferralLink] = useState<string>("");
   const [copiedReferrer, setCopiedReferrer] = useState<boolean>(false);
+  const [copiedLink, setCopiedLink] = useState<boolean>(false);
   const [privateK, setPrivateK] = useState<boolean>(false);
   const [showImportWalletConfirmModal, setShowImportWalletConfirmModal] =
     useState<boolean>(false);
-  const [isAddingReferrer, setIsAddingReferrer] = useState<boolean>(false)
   const [isImportingWallet, setIsImportingWallet] = useState<boolean>(false)
 
   useEffect(() => {
@@ -88,7 +89,18 @@ const Wallet: React.FC = () => {
         setCopiedReferrer(false);
       }, 4000);
     }
+    if (copiedLink) {
+      setTimeout(() => {
+        setCopiedLink(false);
+      }, 4000);
+    }
   }, [walletAddr, privateK, copiedReferrer]);
+
+  useEffect(() => {
+    if (walletAddress) {
+      setMyReferralLink(`https://t.me/conetianLearn_bot/?start=${walletAddress}`)
+    }
+  }, [walletAddress])
 
   const copyText = (text: string, type: string) => {
     copy(text);
@@ -104,6 +116,10 @@ const Wallet: React.FC = () => {
       setCopiedReferrer(true);
       return;
     }
+    if (type === "referralLink") {
+      setCopiedLink(true);
+      return;
+    }
   };
 
   const handleImportWalletButton = () => {
@@ -112,26 +128,6 @@ const Wallet: React.FC = () => {
     } else {
       toast.error("Please enter a private key");
     }
-  };
-
-  const handleAddReferrerButton = async () => {
-    setIsAddingReferrer(true)
-
-    if (referrer) {
-      const registerReferrerResult = await fetchRegisterReferrer(referrer)
-
-      if (registerReferrerResult && !registerReferrerResult?.error) {
-        setProfile(registerReferrerResult)
-        setReferrer('')
-        toast.success('Adding referrer successful')
-      } else {
-        toast.error(registerReferrerResult?.message)
-      }
-    } else {
-      toast.error("Please enter a wallet address for referrer");
-    }
-
-    setIsAddingReferrer(false)
   };
 
   const handleImportWalletConfirm = async () => {
@@ -197,6 +193,18 @@ const Wallet: React.FC = () => {
               </div>
 
               <div>
+                <p style={{ fontSize: "2rem", margin: 0 }}>My Referral Link</p>
+                <p className='flex items-center justify-center' style={{ fontSize: "2.5rem", margin: 0, gap: "5px", cursor: "pointer" }} onClick={() => copyText(myReferralLink, "referralLink")}>
+                  {slice(myReferralLink)}
+                  {
+                    copiedLink === true ?
+                      <FaCheck /> :
+                      <IoCopySharp />
+                  }
+                </p>
+              </div>
+
+              <div>
                 <p style={{ fontSize: "2rem", margin: 0 }}>CNTP Balance</p>
                 <p style={{ fontSize: "2.5rem", margin: 0 }}>{formatToken(profile?.tokens?.cCNTP?.balance || 0)}</p>
               </div>
@@ -220,15 +228,7 @@ const Wallet: React.FC = () => {
                       {copiedReferrer === true ? <FaCheck /> : <IoCopySharp />}
                     </p>
                   </div>
-                ) : (
-                  <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center", justifyContent: "center" }}>
-                    <p style={{ fontSize: "1.7rem", margin: 0 }}>Add Referrer</p>
-                    <input className='import-input' style={inputStyle} type="text" placeholder="Enter Referrer's Wallet Address" value={referrer} onChange={(e) => setReferrer(e.target.value)} disabled={isAddingReferrer} />
-                    <button onClick={isAddingReferrer ? () => { } : handleAddReferrerButton} style={isAddingReferrer ? disabledSmallButtonStyle : smallButtonStyle} disabled={isAddingReferrer}>
-                      Add
-                    </button>
-                  </div>
-                )
+                ) : <></>
               }
 
               {/* input for importing private key */}

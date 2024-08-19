@@ -3,15 +3,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import Game from '../game';
 import GameOver from '../over';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
-import { loading, rouletteImg } from '../../shared/assets';
+import { loading } from '../../shared/assets';
 import Lottery from '../lottery';
+import Pause from '../pause';
 
 const Playground: React.FC = () => {
   const [score, setScore] = useState<number>(0);
   const { profile, mining, onlineMiners, miningRate, gameStatus, setGameStatus, miningError } = useFlappyBirdContext();
   const [highScore, setHighScore] = useState<number>(0);
   const [roulette, setRoulette] = useState<boolean>(false);
-  const [stateRoulette, setStateRoulette] = useState<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
 
   const rouletteBtnTimeout = useRef<NodeJS.Timeout>();
 
@@ -55,6 +56,10 @@ const Playground: React.FC = () => {
             {
               gameStatus === 2 &&
               <Lottery setContinue={() => gameStatusHandle(3)} />
+            }
+            {
+              gameStatus === 4 &&
+              <Pause setContinue={() => gameStatusHandle(3)} />
             }
             <Game
               setGameStatus={(event: number) => gameStatusHandle(event)} gameStatus={gameStatus}

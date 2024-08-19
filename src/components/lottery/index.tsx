@@ -6,7 +6,7 @@ import Lose from './lose';
 import { doubleLose, doubleNeutral, doubleWin, pointer, rouletteBorder } from '../../shared/assets';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
 import { fetchRouletteResult } from '../../API/getData';
-import Delay from './delay';
+import Delay from '../delay';
 import { useAudioPlayer } from 'react-use-audio-player';
 import { RouletteSpin, ButtonClick, loading } from '../../shared/assets';
 import { toast } from 'react-toastify';

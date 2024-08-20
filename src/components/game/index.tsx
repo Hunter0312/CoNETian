@@ -7,6 +7,7 @@ import { useAudioPlayer } from 'react-use-audio-player';
 import { useConetianHighFire, useConetianMediumFire } from '../../hooks/useConetianHooks';
 import { groundImage, backgroundImage, pipeBottomImg, pipeTopImg, } from '../../shared/assets';
 import { useFlappyBirdContext } from '../../providers/FlappyBirdProvider';
+import { FaPause } from 'react-icons/fa6';
 
 type Props = {
   setGameStatus: (e: number) => void,
@@ -16,7 +17,6 @@ type Props = {
 }
 
 const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulette }) => {
-
   const { load } = useAudioPlayer();
 
   const { setGames, games, audio, gameDifficulty, profile } = useFlappyBirdContext();
@@ -69,6 +69,17 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
       pipes = games.pipes;
       ground = games.ground;
       frame = games.frame;
+      flagScore = games.score;
+    }
+
+    if (gameStatus === 4) {
+      gameSpeed = 0;
+      gravity = 0;
+      bird = games.bird;
+      pipes = games.pipes;
+      ground = games.ground;
+      frame = games.frame;
+      bird.dy = 0;
       flagScore = games.score;
     }
 
@@ -347,11 +358,24 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
   }, [score])
 
   return (
-    <div style={{ overflow: 'hidden', height: "100vh" }}>
+    <div style={{ overflow: 'hidden', height: "100vh", position: "relative" }}>
       <canvas ref={canvasRef} />
       {
         audio &&
         <audio src={BackgroundAudio} ref={backAudioRef} loop />
+      }
+      {
+        (gameStatus === 0 || gameStatus === 3) && (
+          <button
+            className="pause-button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setGameStatus(4);
+            }}
+          >
+            <FaPause color="#ffffff" size={36} />
+          </button>
+        )
       }
     </div>
   );

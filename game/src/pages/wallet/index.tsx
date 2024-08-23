@@ -13,16 +13,20 @@ export default function Wallet() {
   const { setRouter } = useGameContext();
 
   return (
-    <FlexDiv $direction="column" $align="flex-start" $gap="32px" $margin="32px 16px 140px 16px">
+    <FlexDiv $direction="column" $gap="32px" $margin="32px 16px 140px 16px">
       <MiningStatus />
-      <Button onClick={() => setRouter("/")}>
-        <FlexDiv $align="center" >
-          <Image width={32} height={32} alt="Arrow" src={Img.ArrowImg} />
-          <P $fontSize="32px" $color="#F6F1F2">
-            My Wallet
-          </P>
-        </FlexDiv>
-      </Button>
+
+      <FlexDiv $direction="column" $align="flex-start" $width='100%'>
+        <Button onClick={() => setRouter("/")}>
+          <FlexDiv $align="center" >
+            <Image width={32} height={32} alt="Arrow" src={Img.ArrowImg} />
+            <P $fontSize="32px" $color="#F6F1F2">
+              My Wallet
+            </P>
+          </FlexDiv>
+        </Button>
+      </FlexDiv>
+
       <FlexDiv $direction="column" $gap="12px" $width="100%">
         <FlexDiv $gap="8px" $align="center">
           <Image src={Img.LogoImg} width={32} height={32} alt="Conet" />
@@ -33,7 +37,8 @@ export default function Wallet() {
           <P $fontSize="12px">CNTP EARNED</P>
         </FlexDiv>
       </FlexDiv>
-      <FlexDiv $direction="column" $gap="8px">
+
+      <FlexDiv $direction="column" $gap="8px" $width='100%'>
         <FlexDiv $direction="column" $gap="16px" $height="200px" $width="100%" $padding="14px 24px" $border="1px solid rgba(255, 255, 255, .1)" $radius="16px">
           <P $fontSize="24px">Your CoNETian Wallet</P>
           <FlexDiv $direction="column" $gap="16px">
@@ -57,7 +62,7 @@ export default function Wallet() {
             </FlexDiv>
           </FlexDiv>
         </FlexDiv>
-        <FlexDiv $gap="8px" $align="center">
+        <FlexDiv $gap="8px" $align="center" $padding='0 0 0 24px'>
           <P $fontSize="14px" $color="#C8C6C8">Your inviter:</P>
           <P $fontSize="12px">0x305...05c4d</P>
         </FlexDiv>

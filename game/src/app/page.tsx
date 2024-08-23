@@ -6,6 +6,7 @@ import { useGameContext } from "@/utilitiy/providers/GameProvider";
 
 import Home from "@/pages/home";
 import Menu from "@/components/menu";
+import Wallet from '@/pages/wallet';
 
 const S = {
   Main: styled.div`
@@ -18,7 +19,10 @@ export default function App() {
   const { router } = useGameContext();
   return (
     <>
-      <S.Main>{router === "/" && <Home />}</S.Main>
+      <S.Main>
+        {router === "/" && <Home />}
+        {router === "/wallet" && <Wallet />}
+      </S.Main>
       <Menu />
     </>
   );

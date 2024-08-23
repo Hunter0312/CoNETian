@@ -10,4 +10,7 @@ export const Img = {
   RoulletImg: "/roullet.png",
   WalletImg: "/Wallet.png",
   SettingImg: "/Settings.png",
+  ArrowImg: "/Arrow.svg",
+  LogoImg: "/Conet.svg",
+  CopyImg: "/Copy.svg",
 };

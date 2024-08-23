@@ -23,12 +23,12 @@ export default function Wallet() {
           </P>
         </FlexDiv>
       </Button>
-      <FlexDiv $direction="column" $gap="12px">
+      <FlexDiv $direction="column" $gap="12px" $width="100%">
         <FlexDiv $gap="8px" $align="center">
           <Image src={Img.LogoImg} width={32} height={32} alt="Conet" />
           <P $fontSize="24px">Current balance</P>
         </FlexDiv>
-        <FlexDiv $gap="8px" $align="center">
+        <FlexDiv $gap="8px" $align="center" $justify="space-between">
           <P $fontSize="28px">1645.000645</P>
           <P $fontSize="12px">CNTP EARNED</P>
         </FlexDiv>

@@ -6,6 +6,7 @@ import UserData from "@/components/userData";
 import { Img } from "@/utilitiy/images";
 import Image from "next/image";
 import styled from "styled-components";
+import { fetchImportWallet } from "@/API/getData";
 
 const S = {
   PlayButton: styled(Div)`

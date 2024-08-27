@@ -81,8 +81,29 @@ const profileVerChannelListening = (
   }
 };
 
+export const listeningMiningHook = (
+  miningHook: React.Dispatch<React.SetStateAction<any[]>>
+) => {
+  const fun = (e: MessageEvent<any>) =>
+    profileVerChannelListening(e, miningHook);
+  return listeningManager("listeningMiningHook", fun);
+};
+
 export default function App() {
-  const { router, setProfile, setLeaderboard } = useGameContext();
+  const { router, setProfile, setLeaderboard, setMiningRate, setOnlineMiners } =
+    useGameContext();
+
+  listeningMiningHook((response: any) => {
+    try {
+      const [data] = response;
+      const parsedData = JSON.parse(data);
+
+      setMiningRate(Number(parsedData?.rate));
+      setOnlineMiners(parsedData?.online);
+    } catch (error) {
+      console.error("Error parsing mining data", error);
+    }
+  });
 
   listeningProfileHook((response: any) => {
     try {

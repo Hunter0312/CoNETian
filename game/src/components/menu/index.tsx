@@ -40,7 +40,7 @@ const Menu = () => {
               src={Img.RoulletImg}
               alt="roullet image"
             />
-            <P>Bet</P>
+            <P>Earn</P>
           </FlexDiv>
         </Button>
         <Button>

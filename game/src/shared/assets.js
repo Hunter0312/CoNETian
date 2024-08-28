@@ -1,5 +1,9 @@
-import pipeTopImg from "../assets/toppipe.png";
-import pipeBottomImg from "../assets/botpipe.png";
+import asteroid1 from "../assets/asteroid1.png";
+import asteroid2 from "../assets/asteroid2.png";
+import asteroid3 from "../assets/asteroid2.png";
+import asteroid4 from "../assets/asteroid2.png";
+import asteroid5 from "../assets/asteroid2.png";
+import asteroid6 from "../assets/asteroid2.png";
 import backgroundImage from "../assets/bgconetian.png";
 import groundImage from "../assets/bgconetian.png";
 import loading from "../assets/logo_conet_rotation.gif";
@@ -49,8 +53,12 @@ import arbitrumLogo from "../assets/arbitrum-logo.png";
 import rouletteBorder from "../assets/roulette-border.png";
 
 export {
-  pipeTopImg,
-  pipeBottomImg,
+  asteroid1,
+  asteroid2,
+  asteroid3,
+  asteroid4,
+  asteroid5,
+  asteroid6,
   backgroundImage,
   groundImage,
   loading,

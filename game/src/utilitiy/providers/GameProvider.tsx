@@ -79,8 +79,8 @@ export function GameProvider({ children }: GameProps) {
     gameSpeed: 0,
     gameFrame: 100,
     gravity: 0.6,
-    bird: { x: 30, y: 30, width: 50, height: 50, dy: 0 },
-    pipes: [],
+    conetian: { x: 30, y: 30, width: 50, height: 50, dy: 0 },
+    asteroids: [],
     frame: 0,
     score: 0,
   })

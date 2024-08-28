@@ -4,6 +4,7 @@ import MiningStatus from "@/components/miningStatus";
 import { GradientP, P } from "@/components/p";
 import UserData from "@/components/userData";
 import { Img } from "@/utilitiy/images";
+import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import Image from "next/image";
 import styled from "styled-components";
 
@@ -22,6 +23,8 @@ const S = {
 };
 
 export default function Home() {
+  const { setRouter } = useGameContext();
+
   return (
     <FlexDiv $direction="column" $gap="32px" $margin="32px 0 0 0">
       <MiningStatus />
@@ -102,7 +105,7 @@ export default function Home() {
       </FlexDiv>
       <FlexDiv $justify="center">
         <Button $radius="50%">
-          <S.PlayButton>
+          <S.PlayButton onClick={() => setRouter('/playground')}>
             <Image
               width={289}
               height={289}

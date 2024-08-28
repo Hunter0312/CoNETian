@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 
 import Home from "@/pages/home";
+import Playground from "@/pages/playground";
 import Menu from "@/components/menu";
 
 const S = {
@@ -19,6 +20,7 @@ export default function App() {
   return (
     <>
       <S.Main>{router === "/" && <Home />}</S.Main>
+      <S.Main>{router === "/playground" && <Playground />}</S.Main>
       <Menu />
     </>
   );

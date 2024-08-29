@@ -13,6 +13,7 @@ export const Div = styled.div.attrs<{
   $bottom?: string;
   $left?: string;
   $right?: string;
+  $index?: string;
 }>((props) => ({
   $padding: props.$padding || "0",
   $margin: props.$margin || "0",
@@ -31,6 +32,7 @@ export const Div = styled.div.attrs<{
   bottom: ${(props) => props.$bottom};
   left: ${(props) => props.$left};
   right: ${(props) => props.$right};
+  z-index: ${(props) => props.$index};
 `;
 
 export const FlexDiv = styled(Div).attrs<{

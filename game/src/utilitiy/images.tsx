@@ -24,4 +24,7 @@ export const Img = {
   SecondLeadBadgeImg: "/second.png",
   ThirdLeadBadgeImg: "/third.png",
   BioDefaultImg: "/bioDefaultImg.png",
+  ArrowImg: "/Arrow.svg",
+  LogoImg: "/Conet.svg",
+  CopyImg: "/Copy.svg",
 };

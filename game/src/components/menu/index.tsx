@@ -7,6 +7,7 @@ import { useGameContext } from "@/utilitiy/providers/GameProvider";
 
 const Menu = () => {
   const { router, setRouter } = useGameContext();
+
   return (
     <FlexDiv $position="fixed" $width="100%" $bottom="50px" $justify="center">
       <FlexDiv
@@ -28,7 +29,7 @@ const Menu = () => {
             <P $color={router === "/" ? "#79F8FF" : "white"}>Home</P>
           </FlexDiv>
         </Button>
-        <Button>
+        <Button onClick={() => setRouter("/wallet")}>
           <FlexDiv $direction="column" $justify="center" $align="center">
             <Image
               width={29}

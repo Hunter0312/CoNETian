@@ -6,6 +6,7 @@ import Home from "@/pages/home";
 import Menu from "@/components/menu";
 import { useEffect } from "react";
 import Leaderboard from "@/pages/leaderboard";
+import Wallet from "@/pages/wallet";
 
 const S = {
   Main: styled.div`
@@ -128,6 +129,7 @@ export default function App() {
       <S.Main>
         {router === "/" && <Home />}
         {router === "/leaderboard" && <Leaderboard />}
+        {router === "/wallet" && <Wallet />}
       </S.Main>
       <Menu />
     </>

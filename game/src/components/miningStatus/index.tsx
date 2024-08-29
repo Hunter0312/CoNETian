@@ -23,7 +23,7 @@ const MiningStatus = () => {
   const { mining, miningRate, onlineMiners } = useGameContext();
 
   return (
-    <FlexDiv $align="center" $padding="0 15px" $justify="space-between">
+    <FlexDiv $align="center" $padding="0" $justify="space-between">
       <FlexDiv
         $align="center"
         $border="1px solid #CFCFCF0A"

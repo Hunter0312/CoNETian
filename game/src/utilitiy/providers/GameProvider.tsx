@@ -72,7 +72,6 @@ export function GameProvider({ children }: GameProps) {
           setMining(true);
           setMiningError(false);
         } else {
-          console.log("................................");
           // if (path !== "/start") {
           //   toast.clearWaitingQueue({ containerId: "miningError" });
           //   toast.error(result?.message, { toastId: "miningError" });

@@ -38,15 +38,18 @@ export const FlexDiv = styled(Div).attrs<{
   $justify?: string;
   $align?: string;
   $gap?: string;
+  $grow?: string;
 }>((props) => ({
   $direction: props.$direction || "unset",
   $justify: props.$justify || "unset",
   $align: props.$align || "unset",
   $gap: props.$gap || "0",
+  $grow: props.$grow,
 }))`
   display: flex;
   flex-direction: ${(props) => props.$direction};
   justify-content: ${(props) => props.$justify};
   align-items: ${(props) => props.$align};
   gap: ${(props) => props.$gap};
+  flex-grow: ${(props) => props.$grow};
 `;

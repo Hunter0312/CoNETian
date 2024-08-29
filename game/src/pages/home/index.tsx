@@ -25,7 +25,7 @@ const S = {
 };
 
 export default function Home() {
-  const { profile } = useGameContext();
+  const { profile, setRouter } = useGameContext();
 
   return (
     <FlexDiv $direction="column" $gap="32px" $margin="32px 0 0 0">
@@ -62,7 +62,12 @@ export default function Home() {
         </Button>
       </FlexDiv>
       <FlexDiv $justify="space-between" $padding="0 15px">
-        <GradientButton width="267px">
+        <GradientButton
+          width="267px"
+          onClick={() => {
+            setRouter("/leaderboard");
+          }}
+        >
           <FlexDiv $align="center" $gap="8px">
             <Image
               width={24}

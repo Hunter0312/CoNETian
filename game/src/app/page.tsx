@@ -1,12 +1,11 @@
 "use client";
-import { Button } from "@/components/button";
-import { FlexDiv } from "@/components/div";
 import styled from "styled-components";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import { initializeWorkerService } from "@/services/workerService";
 import Home from "@/pages/home";
 import Menu from "@/components/menu";
 import { useEffect } from "react";
+import Leaderboard from "@/pages/leaderboard";
 
 const S = {
   Main: styled.div`
@@ -90,8 +89,14 @@ export const listeningMiningHook = (
 };
 
 export default function App() {
-  const { router, setProfile, setLeaderboard, setMiningRate, setOnlineMiners } =
-    useGameContext();
+  const {
+    router,
+    setProfile,
+    setLeaderboard,
+    setMiningRate,
+    setOnlineMiners,
+    leaderboard,
+  } = useGameContext();
 
   listeningMiningHook((response: any) => {
     try {
@@ -107,9 +112,9 @@ export default function App() {
 
   listeningProfileHook((response: any) => {
     try {
-      const [profile, leaderboard] = response;
+      const [profile, leader] = response;
       setProfile(profile);
-      setLeaderboard(leaderboard);
+      if (leaderboard.allTime.length === 0) setLeaderboard(leader);
     } catch (error) {
       console.error("Error parsing balance data", error);
     }
@@ -120,7 +125,10 @@ export default function App() {
   }, []);
   return (
     <>
-      <S.Main>{router === "/" && <Home />}</S.Main>
+      <S.Main>
+        {router === "/" && <Home />}
+        {router === "/leaderboard" && <Leaderboard />}
+      </S.Main>
       <Menu />
     </>
   );

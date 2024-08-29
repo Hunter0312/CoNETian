@@ -13,4 +13,7 @@ export const Img = {
   ArrowImg: "/Arrow.svg",
   LogoImg: "/Conet.svg",
   CopyImg: "/Copy.svg",
+  SettingsConetian: "/SettingsConetian.png",
+  SoundOn: "/SoundOn.svg",
+  SoundOff: "/SoundOff.svg",
 };

@@ -35,7 +35,7 @@ const Menu = () => {
             <P>My Wallet</P>
           </FlexDiv>
         </Button>
-        <Button onClick={() => setRouter("/about")}>
+        <Button>
           <FlexDiv $direction="column" $justify="center" $align="center">
             <Image
               width={29}
@@ -46,7 +46,7 @@ const Menu = () => {
             <P>Bet</P>
           </FlexDiv>
         </Button>
-        <Button>
+        <Button onClick={() => setRouter("/settings")}>
           <FlexDiv $direction="column" $justify="center" $align="center">
             <Image
               width={29}

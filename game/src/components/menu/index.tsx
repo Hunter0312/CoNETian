@@ -34,21 +34,21 @@ const Menu = () => {
             <Image
               width={29}
               height={29}
-              src={Img.WalletImg}
+              src={router === "/wallet" ? Img.ActiveWalletImg : Img.WalletImg}
               alt="wallet image"
             />
-            <P>My Wallet</P>
+            <P $color={router === "/wallet" ? "#C4A6EA" : "white"} >My Wallet</P>
           </FlexDiv>
         </Button>
-        <Button>
+        <Button onClick={() => setRouter("/earn")}>
           <FlexDiv $direction="column" $justify="center" $align="center">
             <Image
               width={29}
               height={29}
-              src={Img.RoulletImg}
-              alt="roullet image"
+              src={router === "/earn" ? Img.ActiveEarnImg : Img.EarnImg}
+              alt="round image"
             />
-            <P>Earn</P>
+            <P $color={router === "/earn" ? "#6AE092" : "white"}>Earn</P>
           </FlexDiv>
         </Button>
         <Button onClick={() => setRouter("/settings")}>
@@ -56,10 +56,10 @@ const Menu = () => {
             <Image
               width={29}
               height={29}
-              src={Img.SettingImg}
+              src={router === "/settings" || router === "/about" ? Img.ActiveSettingImg : Img.SettingImg}
               alt="settings image"
             />
-            <P>Settings</P>
+            <P $color={router === "/settings" || router === "/about" ? "#E39DFF" : "white"}>Settings</P>
           </FlexDiv>
         </Button>
       </FlexDiv>

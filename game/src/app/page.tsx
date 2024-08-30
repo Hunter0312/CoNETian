@@ -134,6 +134,7 @@ export default function App() {
         {router === "/wallet" && <Wallet />}
         {router === "/about" && <About />}
         {router === "/settings" && <Settings />}
+        {router === "/earn" && <p>earn</p>}
       </S.Main>
       <Menu />
     </>

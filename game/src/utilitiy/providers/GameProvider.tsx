@@ -23,6 +23,8 @@ type GameContext = {
   setEffects: (val: number) => void;
   music: number;
   setMusic: (val: number) => void;
+  highScore: number;
+  setHighScore: (e: number) => void;
   profile: any;
   setProfile: (o: any) => void;
   leaderboard: Leaderboard;
@@ -80,6 +82,7 @@ export function GameProvider({ children }: GameProps) {
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
   const [music, setMusic] = useState<number>(70);
   const [effects, setEffects] = useState<number>(70);
+  const [highScore, setHighScore] = useState<number>(0);
   const [profile, setProfile] = useState<any>(null);
   const [leaderboard, setLeaderboard] = useState<Leaderboard>({
     allTime: [],
@@ -149,6 +152,14 @@ export function GameProvider({ children }: GameProps) {
     }
   }, [profile]);
 
+  useEffect(() => {
+    const hScore = localStorage.getItem('hScore');
+
+    if (hScore) {
+      setHighScore(parseInt(hScore));
+    }
+  }, [])
+
   return (
     <Game.Provider
       value={{
@@ -160,6 +171,8 @@ export function GameProvider({ children }: GameProps) {
         setEffects,
         music,
         setMusic,
+        highScore,
+        setHighScore,
         profile,
         setProfile,
         leaderboard,

@@ -8,8 +8,7 @@ import { useGameContext } from '../../utilitiy/providers/GameProvider';
 
 const Playground: React.FC = () => {
   const [score, setScore] = useState<number>(0);
-  const { profile, mining, onlineMiners, miningRate, gameStatus, setGameStatus, miningError } = useGameContext();
-  const [highScore, setHighScore] = useState<number>(0);
+  const { profile, mining, onlineMiners, miningRate, gameStatus, setGameStatus, miningError, highScore, setHighScore } = useGameContext();
   const [roulette, setRoulette] = useState<boolean>(false);
   const [stateRoulette, setStateRoulette] = useState<boolean>(false);
 
@@ -20,7 +19,6 @@ const Playground: React.FC = () => {
   }
 
   useEffect(() => {
-
     if (gameStatus === 1) {
       setRoulette(false);
       const hScore = localStorage.getItem('hScore');

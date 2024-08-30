@@ -4,7 +4,6 @@ import MiningStatus from "@/components/miningStatus";
 import { GradientP, P } from "@/components/p";
 import UserData from "@/components/userData";
 import { Img } from "@/utilitiy/images";
-import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import Image from "next/image";
 import styled from "styled-components";
 import Skeleton from "react-loading-skeleton";
@@ -26,7 +25,11 @@ const S = {
 };
 
 export default function Home() {
-  const { profile, setRouter } = useGameContext();
+  const { profile, setRouter, highScore } = useGameContext();
+
+  function handleOpenPlatform() {
+    window.open("https://platform.conet.network", "_blank");
+  }
 
   return (
     <FlexDiv $direction="column" $gap="32px" $margin="32px 0 0 0">
@@ -107,7 +110,7 @@ export default function Home() {
         >
           <P>Highest Score</P>
           <GradientP $first="#79F8FF" $second="#499599" $fontSize="24px">
-            102
+            {highScore}
           </GradientP>
         </FlexDiv>
       </FlexDiv>
@@ -134,7 +137,7 @@ export default function Home() {
             )}
           </P>
         </FlexDiv>
-        <GradientButton>Open Platform</GradientButton>
+        <GradientButton onClick={handleOpenPlatform}>Open Platform</GradientButton>
       </FlexDiv>
       <FlexDiv $justify="center" $gap="8px" $margin="0 0 150px 0">
         <Image width={16} height={16} src={Img.ArbitrumLogo} alt="logo" />

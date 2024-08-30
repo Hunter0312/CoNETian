@@ -2,15 +2,17 @@ import { Button } from '@/components/button';
 import { FlexDiv } from '@/components/div';
 import MiningStatus from '@/components/miningStatus';
 import { P } from '@/components/p';
+import { formatToken } from '@/utilitiy/functions';
 import { Img } from '@/utilitiy/images';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import Image from 'next/image';
 import { useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 export default function Wallet() {
   const [newWallet, setNewWallet] = useState<string>('');
 
-  const { setRouter } = useGameContext();
+  const { profile, setRouter } = useGameContext();
 
   return (
     <FlexDiv $direction="column" $gap="32px" $margin="32px 16px 140px 16px">
@@ -33,7 +35,13 @@ export default function Wallet() {
           <P $fontSize="24px">Current balance</P>
         </FlexDiv>
         <FlexDiv $gap="8px" $align="center" $justify="space-between">
-          <P $fontSize="28px">1645.000645</P>
+          <P $fontSize="28px">
+            {profile ? (
+              formatToken(profile?.tokens?.cCNTP?.balance)
+            ) : (
+              <Skeleton width={100} />
+            )}
+          </P>
           <P $fontSize="12px">CNTP EARNED</P>
         </FlexDiv>
       </FlexDiv>

@@ -51,7 +51,7 @@ const Menu = () => {
             <P>Earn</P>
           </FlexDiv>
         </Button>
-        <Button>
+        <Button onClick={() => setRouter("/settings")}>
           <FlexDiv $direction="column" $justify="center" $align="center">
             <Image
               width={29}

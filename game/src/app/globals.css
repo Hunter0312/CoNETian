@@ -102,3 +102,45 @@ a {
     color-scheme: dark;
   }
 }
+
+.range-input {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+}
+
+.range-input::-webkit-slider-runnable-track {
+  background: #7C8595;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.range-input::-moz-range-track {
+  background: #7C8595;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  position: relative;
+  z-index: 2;
+  appearance: none;
+  height: 24px;
+  width: 24px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  margin-top: -10px;
+}
+
+.range-input::before {
+  z-index: 0;
+  content: '';
+  position: absolute;
+  background: #79F8FF;
+  height: 100%;
+  left: 0;
+  width: var(--track-width);
+}

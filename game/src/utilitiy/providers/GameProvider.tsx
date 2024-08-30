@@ -12,9 +12,16 @@ import {
 import Leaderboard from "../types/leaderboard";
 import { fetchStartMining } from "@/API/getData";
 
+export type Difficulty = 'easy' | 'normal' | 'hard';
 type GameContext = {
   router: string;
   setRouter: (props: string) => void;
+  difficulty: Difficulty;
+  setDifficulty: (val: Difficulty) => void;
+  effects: number;
+  setEffects: (val: number) => void;
+  music: number;
+  setMusic: (val: number) => void;
   profile: any;
   setProfile: (o: any) => void;
   leaderboard: Leaderboard;
@@ -47,6 +54,9 @@ type GameProps = {
 
 export function GameProvider({ children }: GameProps) {
   const [router, setRouter] = useState<string>("/");
+  const [difficulty, setDifficulty] = useState<Difficulty>("normal");
+  const [music, setMusic] = useState<number>(70);
+  const [effects, setEffects] = useState<number>(70);
   const [profile, setProfile] = useState<any>(null);
   const [leaderboard, setLeaderboard] = useState<Leaderboard>({
     allTime: [],
@@ -101,6 +111,12 @@ export function GameProvider({ children }: GameProps) {
       value={{
         router,
         setRouter,
+        difficulty,
+        setDifficulty,
+        effects,
+        setEffects,
+        music,
+        setMusic,
         profile,
         setProfile,
         leaderboard,

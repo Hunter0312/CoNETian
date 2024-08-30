@@ -12,6 +12,7 @@ export const Button = styled.button<{
   $width?: string;
   $height?: string;
   $radius?: string;
+  $flex?: string;
   $direction?: string;
   $gap?: string;
 }>`
@@ -24,6 +25,7 @@ export const Button = styled.button<{
   width: ${(props) => props.$width};
   height: ${(props) => props.$height};
   border-radius: ${(props) => props.$radius};
+  flex: ${(props) => props.$flex};
   display: flex;
   flex-direction: ${(props) => props.$direction || "column"};
   justify-content: center;

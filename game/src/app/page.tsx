@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import { initializeWorkerService } from "@/services/workerService";
 import Home from "@/pages/home";
+import Playground from "@/pages/playground";
 import Menu from "@/components/menu";
 import { useEffect } from "react";
 import Leaderboard from "@/pages/leaderboard";
@@ -135,6 +136,7 @@ export default function App() {
         {router === "/about" && <About />}
         {router === "/settings" && <Settings />}
         {router === "/earn" && <p>earn</p>}
+        {router === "/playground" && <Playground />}
       </S.Main>
       <Menu />
     </>

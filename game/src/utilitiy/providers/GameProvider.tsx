@@ -13,6 +13,7 @@ import Leaderboard from "../types/leaderboard";
 import { fetchStartMining } from "@/API/getData";
 
 export type Difficulty = 'easy' | 'normal' | 'hard';
+
 type GameContext = {
   router: string;
   setRouter: (props: string) => void;
@@ -28,6 +29,12 @@ type GameContext = {
   setLeaderboard: (e: Leaderboard) => void;
   miningErrorTimeout: React.MutableRefObject<NodeJS.Timeout | null>;
   walletAddress: React.MutableRefObject<string>;
+  path: string;
+  setPath: (path: string) => void;
+  privateKey: string;
+  setPrivateKey: (key: string) => void;
+  balance: number;
+  setBalance: (num: number) => void;
   mining: boolean;
   setMining: (e: boolean) => void;
   miningError: boolean;
@@ -36,6 +43,22 @@ type GameContext = {
   setOnlineMiners: (num: number) => void;
   miningRate: number;
   setMiningRate: (num: number) => void;
+  games: any,
+  setGames: (o: any) => void,
+  lottery: number,
+  setLottery: (e: number) => void,
+  isLeaderboardLoading: boolean,
+  setIsLeaderboardLoading: (e: boolean) => void,
+  gameStatus: number,
+  setGameStatus: (e: number) => void,
+  lotteryBalance: number,
+  setLotteryBalance: (e: number) => void,
+  audio: boolean,
+  setAudio: (e: boolean) => void,
+  setGameDifficulty: (num: number) => void,
+  gameDifficulty: number,
+  setReferrerAddress: (e: string) => void,
+  referrerAddress: string
 };
 
 const Game = createContext<GameContext | undefined>(undefined);
@@ -64,12 +87,32 @@ export function GameProvider({ children }: GameProps) {
     daily: [],
     monthly: [],
   });
-  const walletAddress = useRef<string>("");
   const [mining, setMining] = useState<boolean>(false);
   const [onlineMiners, setOnlineMiners] = useState<number>(0);
   const [miningRate, setMiningRate] = useState<number>(0);
   const [miningError, setMiningError] = useState<boolean>(false);
+  const [path, setPath] = useState<string>('/');
+  const [privateKey, setPrivateKey] = useState<string>('');
+  const [balance, setBalance] = useState<number>(0);
+  const [lottery, setLottery] = useState<number>(0);
+  const [gameStatus, setGameStatus] = useState<number>(0);
+  const [gameDifficulty, setGameDifficulty] = useState<number>(1)
+  const [lotteryBalance, setLotteryBalance] = useState<number>(0);
+  const [isLeaderboardLoading, setIsLeaderboardLoading] = useState<boolean>(true);
+  const [audio, setAudio] = useState<boolean>(false);
+  const [referrerAddress, setReferrerAddress] = useState<string>('');
+  const [games, setGames] = useState<object>({
+    gameSpeed: 0,
+    gameFrame: 100,
+    gravity: 0.6,
+    conetian: { x: 30, y: 30, width: 50, height: 50, dy: 0 },
+    asteroids: [],
+    frame: 0,
+    score: 0,
+  })
+
   const miningErrorTimeout = useRef<NodeJS.Timeout | null>(null);
+  const walletAddress = useRef<string>('');
 
   useEffect(() => {
     const init = async (walletAddress: string) => {
@@ -124,13 +167,35 @@ export function GameProvider({ children }: GameProps) {
         walletAddress,
         mining,
         setMining,
+        path,
+        setPath,
+        privateKey,
+        setPrivateKey,
+        balance,
+        setBalance,
+        miningError,
+        setMiningError,
         onlineMiners,
         setOnlineMiners,
         miningRate,
         setMiningRate,
-        miningError,
-        setMiningError,
         miningErrorTimeout,
+        games,
+        setGames,
+        lottery,
+        setLottery,
+        gameStatus,
+        setGameStatus,
+        lotteryBalance,
+        setLotteryBalance,
+        setIsLeaderboardLoading,
+        isLeaderboardLoading,
+        audio,
+        setAudio,
+        setGameDifficulty,
+        gameDifficulty,
+        setReferrerAddress,
+        referrerAddress,
       }}
     >
       {children}

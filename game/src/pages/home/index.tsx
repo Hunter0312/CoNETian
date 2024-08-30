@@ -1,6 +1,5 @@
 import { Button, GradientButton } from "@/components/button";
 import { Div, FlexDiv } from "@/components/div";
-import MiningStatus from "@/components/miningStatus";
 import { GradientP, P } from "@/components/p";
 import UserData from "@/components/userData";
 import { Img } from "@/utilitiy/images";
@@ -9,6 +8,7 @@ import styled from "styled-components";
 import Skeleton from "react-loading-skeleton";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import { formatToken } from "@/utilitiy/functions";
+import PageWrapper from '@/components/pageWrapper';
 
 const S = {
   PlayButton: styled(Div)`
@@ -28,8 +28,7 @@ export default function Home() {
   const { profile, setRouter } = useGameContext();
 
   return (
-    <FlexDiv $direction="column" $gap="32px" $margin="32px 0 0 0">
-      <MiningStatus />
+    <PageWrapper>
       <FlexDiv $justify="space-between" $padding="0 15px">
         <FlexDiv $gap="16px">
           <UserData />
@@ -139,6 +138,6 @@ export default function Home() {
         <Image width={16} height={16} src={Img.ArbitrumLogo} alt="logo" />
         <P $fontSize="14px">built on Arbitrum</P>
       </FlexDiv>
-    </FlexDiv>
+    </PageWrapper>
   );
 }

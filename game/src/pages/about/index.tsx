@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Button } from '@/components/button';
 import { FlexDiv } from '@/components/div';
-import MiningStatus from '@/components/miningStatus';
 import { P } from '@/components/p';
+import PageWrapper from '@/components/pageWrapper';
 import { Img } from '@/utilitiy/images';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import Image from 'next/image';
@@ -15,9 +15,7 @@ export default function About() {
   }
 
   return (
-    <FlexDiv $direction="column" $gap="32px" $margin="32px 16px 140px 16px">
-      <MiningStatus />
-
+    <PageWrapper margin="32px 16px 140px 16px">
       <FlexDiv $direction="column" $align="flex-start" $width='100%'>
         <Button onClick={() => setRouter("/")}>
           <FlexDiv $align="center" >
@@ -60,6 +58,6 @@ export default function About() {
           Main Menu
         </Button>
       </FlexDiv>
-    </FlexDiv>
+    </PageWrapper>
   )
 }

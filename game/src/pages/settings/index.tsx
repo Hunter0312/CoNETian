@@ -2,6 +2,7 @@ import { Button } from '@/components/button';
 import { FlexDiv } from '@/components/div';
 import MiningStatus from '@/components/miningStatus';
 import { P } from '@/components/p';
+import PageWrapper from '@/components/pageWrapper';
 import { Img } from '@/utilitiy/images';
 import { Difficulty, useGameContext } from '@/utilitiy/providers/GameProvider';
 import Image from 'next/image';
@@ -35,9 +36,7 @@ export default function Settings() {
   }, [effects, music]);
 
   return (
-    <FlexDiv $direction="column" $gap="32px" $margin="32px 16px 140px 16px">
-      <MiningStatus />
-
+    <PageWrapper margin="32px 16px 140px 16px">
       <FlexDiv $direction="column" $align="flex-start" $width='100%'>
         <Button onClick={() => setRouter("/")}>
           <FlexDiv $align="center" >
@@ -111,6 +110,6 @@ export default function Settings() {
       <Button $padding="18px" $radius="32px" $border="1px solid #04DAE8" onClick={() => setRouter("/about")}>
         About The CoNETian
       </Button>
-    </FlexDiv>
+    </PageWrapper>
   )
 }

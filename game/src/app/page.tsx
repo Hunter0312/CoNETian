@@ -9,6 +9,7 @@ import Leaderboard from "@/pages/leaderboard";
 import Wallet from "@/pages/wallet";
 import About from '@/pages/about';
 import Settings from '@/pages/settings';
+import Shopping from '@/pages/shopping';
 
 const S = {
   Main: styled.div`
@@ -134,7 +135,8 @@ export default function App() {
         {router === "/wallet" && <Wallet />}
         {router === "/about" && <About />}
         {router === "/settings" && <Settings />}
-        {router === "/earn" && <p>earn</p>}
+        {/* {router === "/earn" && <p>earn</p>} */}
+        {router === "/earn" && <Shopping />}
       </S.Main>
       <Menu />
     </>

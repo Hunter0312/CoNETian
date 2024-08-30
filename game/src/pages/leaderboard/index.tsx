@@ -10,6 +10,7 @@ import LeaderUser from "@/components/leaderUser";
 import FirstLeaderUser from "@/components/leaderUser/firstUser";
 import SecondLeaderUser from "@/components/leaderUser/secondUser";
 import ThirdLeaderUser from "@/components/leaderUser/thirdUser";
+import PageWrapper from '@/components/pageWrapper';
 
 const Leaderboard = () => {
   const [filter, setFilter] = useState<number>(0);
@@ -28,8 +29,7 @@ const Leaderboard = () => {
   };
 
   return (
-    <FlexDiv $direction="column" $gap="32px" $margin="32px 0 150px 0">
-      <MiningStatus />
+    <PageWrapper margin="32px 0 150px 0">
       <FlexDiv $padding="0 15px">
         <Button $direction="row" $gap="10px" onClick={() => setRouter("/")}>
           {filter === 0 ? (
@@ -73,18 +73,19 @@ const Leaderboard = () => {
         leaderboard.allTime.map((item, index) => {
           if (index === 0)
             return (
-              <FirstLeaderUser address={item.wallet} cntp={item.win_cntp} />
+              <FirstLeaderUser address={item.wallet} cntp={item.win_cntp} key={index} />
             );
           if (index === 1)
             return (
-              <SecondLeaderUser address={item.wallet} cntp={item.win_cntp} />
+              <SecondLeaderUser address={item.wallet} cntp={item.win_cntp} key={index} />
             );
           if (index === 2)
             return (
-              <ThirdLeaderUser address={item.wallet} cntp={item.win_cntp} />
+              <ThirdLeaderUser address={item.wallet} cntp={item.win_cntp} key={index} />
             );
           return (
             <LeaderUser
+              key={index}
               index={index}
               address={item.wallet}
               cntp={item.win_cntp}
@@ -96,21 +97,22 @@ const Leaderboard = () => {
         leaderboard.monthly.map((item, index) => {
           if (index === 0)
             return (
-              <FirstLeaderUser address={item.wallet} cntp={item.win_cntp} />
+              <FirstLeaderUser address={item.wallet} cntp={item.win_cntp} key={index} />
             );
           if (index === 1)
             return (
-              <SecondLeaderUser address={item.wallet} cntp={item.win_cntp} />
+              <SecondLeaderUser address={item.wallet} cntp={item.win_cntp} key={index} />
             );
           if (index === 2)
             return (
-              <ThirdLeaderUser address={item.wallet} cntp={item.win_cntp} />
+              <ThirdLeaderUser address={item.wallet} cntp={item.win_cntp} key={index} />
             );
           return (
             <LeaderUser
               index={index}
               address={item.wallet}
               cntp={item.win_cntp}
+              key={index}
             />
           );
         })}
@@ -119,21 +121,22 @@ const Leaderboard = () => {
         leaderboard.weekly.map((item, index) => {
           if (index === 0)
             return (
-              <FirstLeaderUser address={item.wallet} cntp={item.win_cntp} />
+              <FirstLeaderUser address={item.wallet} cntp={item.win_cntp} key={index} />
             );
           if (index === 1)
             return (
-              <SecondLeaderUser address={item.wallet} cntp={item.win_cntp} />
+              <SecondLeaderUser address={item.wallet} cntp={item.win_cntp} key={index} />
             );
           if (index === 2)
             return (
-              <ThirdLeaderUser address={item.wallet} cntp={item.win_cntp} />
+              <ThirdLeaderUser address={item.wallet} cntp={item.win_cntp} key={index} />
             );
           return (
             <LeaderUser
               index={index}
               address={item.wallet}
               cntp={item.win_cntp}
+              key={index}
             />
           );
         })}
@@ -142,25 +145,26 @@ const Leaderboard = () => {
         leaderboard.daily.map((item, index) => {
           if (index === 0)
             return (
-              <FirstLeaderUser address={item.wallet} cntp={item.win_cntp} />
+              <FirstLeaderUser address={item.wallet} cntp={item.win_cntp} key={index} />
             );
           if (index === 1)
             return (
-              <SecondLeaderUser address={item.wallet} cntp={item.win_cntp} />
+              <SecondLeaderUser address={item.wallet} cntp={item.win_cntp} key={index} />
             );
           if (index === 2)
             return (
-              <ThirdLeaderUser address={item.wallet} cntp={item.win_cntp} />
+              <ThirdLeaderUser address={item.wallet} cntp={item.win_cntp} key={index} />
             );
           return (
             <LeaderUser
               index={index}
               address={item.wallet}
               cntp={item.win_cntp}
+              key={index}
             />
           );
         })}
-    </FlexDiv>
+    </PageWrapper>
   );
 };
 

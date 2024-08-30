@@ -36,4 +36,8 @@ export const Img = {
   Tickets: "/tickets.svg",
   Tooltip: "/tooltip.svg",
   RouletteIcon: "/roulette-icon.png",
+  ComingSoon1: "/comingSoon1.svg",
+  ComingSoon2: "/comingSoon2.svg",
+  ComingSoon3: "/comingSoon3.svg",
+  X: "/X.svg",
 };

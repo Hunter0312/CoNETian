@@ -20,11 +20,26 @@ const shoppingOptions = [
   }
 ]
 
+const comingSoonOptions = [
+  {
+    key: 1,
+    image: Img.ComingSoon1,
+  },
+  {
+    key: 2,
+    image: Img.ComingSoon2,
+  },
+  {
+    key: 3,
+    image: Img.ComingSoon3,
+  },
+]
+
 export default function Shopping() {
   const { setRouter } = useGameContext();
 
   return (
-    <PageWrapper>
+    <PageWrapper margin="32px 16px 140px 16px">
       <BackButton text="Shop" />
       <FlexDiv $align="center" $justify="space-between">
         <FlexDiv $gap="12px" $align="center">
@@ -48,7 +63,7 @@ export default function Shopping() {
       <FlexDiv $direction="column" $gap="16px">
         {
           shoppingOptions.map((option) => (
-            <Button key={option.key} $padding="16px" $radius="16px" className="option-button" $background="#262527" $border="1px solid #79F8FF" onClick={() => setRouter(option.link)}>
+            <Button key={option.key} $padding="16px" $radius="16px" $height="104px" className="option-button" $background="#262527" $border="1px solid #79F8FF" onClick={() => setRouter(option.link)}>
               <FlexDiv $justify="space-between" $width="100%" $align="center">
                 <FlexDiv $gap="14px" $align="center">
                   <FlexDiv $align="center">
@@ -62,6 +77,13 @@ export default function Shopping() {
                 <Image src={Img.RightArrowImg} alt="Arrow" width={32} height={32} />
               </FlexDiv>
             </Button>
+          ))
+        }
+        {
+          comingSoonOptions.map((option) => (
+            <div key={option.key} className="coming-soon-wrapper">
+              <Image src={option.image} alt="Coming Soon" fill />
+            </div>
           ))
         }
       </FlexDiv>

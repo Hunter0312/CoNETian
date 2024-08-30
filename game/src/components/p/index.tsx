@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-
 export const P = styled.p.attrs<{
   $color?: string;
   $fontSize?: string;
   $align?: string;
-  $lineHeight?: string, 
-  $alignSelf?: string 
+  $lineHeight?: string;
+  $alignSelf?: string;
+  $width?: string;
 }>((props) => ({
   $color: props.$color || "white",
   $fontSize: props.$fontSize || "1rem",
@@ -19,6 +19,7 @@ export const P = styled.p.attrs<{
   text-align: ${(props) => props.$align};
   line-height: ${(props) => props.$lineHeight};
   align-self: ${(props) => props.$alignSelf};
+  width: ${(props) => props.$width};
 `;
 
 export const GradientP = styled(P)<{ $first?: string; $second?: string }>`

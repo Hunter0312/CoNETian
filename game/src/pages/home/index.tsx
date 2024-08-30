@@ -8,7 +8,6 @@ import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import Image from "next/image";
 import styled from "styled-components";
 import Skeleton from "react-loading-skeleton";
-import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import { formatToken } from "@/utilitiy/functions";
 
 const S = {
@@ -113,7 +112,7 @@ export default function Home() {
       </FlexDiv>
       <FlexDiv $justify="center">
         <Button $radius="50%">
-          <S.PlayButton onClick={() => setRouter('/playground')}>
+          <S.PlayButton onClick={() => setRouter("/playground")}>
             <Image
               width={289}
               height={289}

@@ -7,6 +7,9 @@ import { Img } from "@/utilitiy/images";
 import Image from "next/image";
 import styled from "styled-components";
 import { fetchImportWallet } from "@/API/getData";
+import Link from 'next/link'
+import { useGameContext } from "@/utilitiy/providers/GameProvider";
+import { useState } from "react";
 
 const S = {
   PlayButton: styled(Div)`
@@ -23,6 +26,9 @@ const S = {
 };
 
 export default function Home() {
+  const { setRouter } = useGameContext();
+
+
   return (
     <FlexDiv $direction="column" $gap="32px" $margin="32px 0 0 0">
       <MiningStatus />
@@ -34,6 +40,7 @@ export default function Home() {
             $height="32px"
             $background="#474648"
             $radius="50%"
+            onClick={() => setRouter('/profile')}
           >
             <Image
               width={16}

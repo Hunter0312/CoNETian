@@ -7,6 +7,7 @@ import { initializeWorkerService } from "@/services/workerService";
 import Home from "@/pages/home";
 import Menu from "@/components/menu";
 import { useEffect } from "react";
+import Profile from "@/pages/profile";
 
 const S = {
   Main: styled.div`
@@ -97,9 +98,10 @@ export default function App() {
   useEffect(() => {
     initializeWorkerService();
   }, []);
+  console.log(router)
   return (
     <>
-      <S.Main>{router === "/" && <Home />}</S.Main>
+      <S.Main>{router === "/" && <Home /> || router === '/profile' && <Profile />}</S.Main>
       <Menu />
     </>
   );

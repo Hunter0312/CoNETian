@@ -6,11 +6,49 @@ import { formatToken, hideMiddleOfString } from '@/utilitiy/functions';
 import { Img } from '@/utilitiy/images';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import copy from "copy-to-clipboard";
 
 export default function Wallet() {
   const [newWallet, setNewWallet] = useState<string>('');
+  const [copiedReferrer, setCopiedReferrer] = useState<boolean>(false);
+  const [copiedPrivateKey, setCopiedPrivateKey] = useState<boolean>(false);
+  const [copiedWalletAddress, setCopiedWalletAddress] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (copiedWalletAddress) {
+      setTimeout(() => {
+        setCopiedWalletAddress(false);
+      }, 4000);
+    }
+    if (copiedPrivateKey) {
+      setTimeout(() => {
+        setCopiedPrivateKey(false);
+      }, 4000);
+    }
+    if (copiedReferrer) {
+      setTimeout(() => {
+        setCopiedReferrer(false);
+      }, 4000);
+    }
+  }, [copiedWalletAddress, copiedPrivateKey, copiedReferrer]);
+
+  const copyText = (text: string, type: string) => {
+    copy(text);
+    if (type === "walletAddress") {
+      setCopiedWalletAddress(true);
+      return;
+    }
+    if (type === "walletPrivateKey") {
+      setCopiedPrivateKey(true);
+      return;
+    }
+    if (type === "referrer") {
+      setCopiedReferrer(true);
+      return;
+    }
+  };
 
   const { profile, setRouter } = useGameContext();
 
@@ -54,27 +92,32 @@ export default function Wallet() {
               <P $color="#C8C6C8">Wallet Address</P>
               <FlexDiv $padding="0 16px" $justify="space-between">
                 <P>{hideMiddleOfString(profile?.keyID)}</P>
-                <Button>
-                  <Image height={24} width={24} alt="Copy" src={Img.CopyImg} />
+                <Button onClick={() => copyText(profile?.keyID, "walletAddress")}>
+                  <Image height={24} width={24} alt="Copy" src={copiedWalletAddress ? Img.CheckImg : Img.CopyImg} />
                 </Button>
               </FlexDiv>
             </FlexDiv>
             <FlexDiv $direction="column" $gap="12px">
-              <P $color="#C8C6C8">Private key</P>
+              <P $color="#C8C6C8">Private Key</P>
               <FlexDiv $padding="0 16px" $justify="space-between">
                 <P>{hideMiddleOfString(profile?.privateKeyArmor)}</P>
-                <Button>
-                  <Image height={24} width={24} alt="Copy" src={Img.CopyImg} />
+                <Button onClick={() => copyText(profile?.privateKeyArmor, "privateKey")}>
+                  <Image height={24} width={24} alt="Copy" src={copiedPrivateKey ? Img.CheckImg : Img.CopyImg} />
                 </Button>
               </FlexDiv>
             </FlexDiv>
           </FlexDiv>
         </FlexDiv>
-        {profile?.referrer && (
+        {true && (
           <>
             <FlexDiv $gap="8px" $align="center" $padding='0 0 0 24px'>
               <P $fontSize="14px" $color="#C8C6C8">Your inviter:</P>
-              <P $fontSize="12px">{hideMiddleOfString(profile?.referrer)}</P>
+              <FlexDiv $gap="8px" $align="center">
+                <P $fontSize="12px">{hideMiddleOfString(profile?.referrer)}</P>
+                <Button onClick={() => copyText(profile?.referrer, "referrer")}>
+                  <Image height={16} width={16} alt="Copy" src={copiedReferrer ? Img.CheckImg : Img.CopyImg} />
+                </Button>
+              </FlexDiv>
             </FlexDiv>
           </>
         )}

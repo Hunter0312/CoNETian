@@ -29,6 +29,7 @@ export const Img = {
   BioDefaultImg: "/bioDefaultImg.png",
   ArrowImg: "/arrow.svg",
   LogoImg: "/conet.svg",
+  CheckImg: "/check.svg",
   CopyImg: "/copy.svg",
   SettingsConetian: "/settingsConetian.png",
   SoundOn: "/soundOn.svg",

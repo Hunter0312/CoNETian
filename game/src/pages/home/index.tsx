@@ -6,6 +6,9 @@ import UserData from "@/components/userData";
 import { Img } from "@/utilitiy/images";
 import Image from "next/image";
 import styled from "styled-components";
+import Skeleton from "react-loading-skeleton";
+import { useGameContext } from "@/utilitiy/providers/GameProvider";
+import { formatToken } from "@/utilitiy/functions";
 
 const S = {
   PlayButton: styled(Div)`
@@ -22,6 +25,8 @@ const S = {
 };
 
 export default function Home() {
+  const { profile, setRouter } = useGameContext();
+
   return (
     <FlexDiv $direction="column" $gap="32px" $margin="32px 0 0 0">
       <MiningStatus />
@@ -57,7 +62,12 @@ export default function Home() {
         </Button>
       </FlexDiv>
       <FlexDiv $justify="space-between" $padding="0 15px">
-        <GradientButton width="267px">
+        <GradientButton
+          width="267px"
+          onClick={() => {
+            setRouter("/leaderboard");
+          }}
+        >
           <FlexDiv $align="center" $gap="8px">
             <Image
               width={24}
@@ -115,7 +125,13 @@ export default function Home() {
       <FlexDiv $justify="center" $gap="24px" $align="center">
         <FlexDiv $direction="column" $align="center" $gap="4px">
           <P $fontSize="12px">CNTP earned</P>
-          <P $fontSize="20px">1645.000645</P>
+          <P $fontSize="20px">
+            {profile ? (
+              formatToken(profile?.tokens?.cCNTP?.balance)
+            ) : (
+              <Skeleton width={100} />
+            )}
+          </P>
         </FlexDiv>
         <GradientButton>Open Platform</GradientButton>
       </FlexDiv>

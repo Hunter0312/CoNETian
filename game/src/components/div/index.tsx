@@ -13,6 +13,7 @@ export const Div = styled.div.attrs<{
   $bottom?: string;
   $left?: string;
   $right?: string;
+  $index?: string;
 }>((props) => ({
   $padding: props.$padding || "0",
   $margin: props.$margin || "0",
@@ -31,6 +32,7 @@ export const Div = styled.div.attrs<{
   bottom: ${(props) => props.$bottom};
   left: ${(props) => props.$left};
   right: ${(props) => props.$right};
+  z-index: ${(props) => props.$index};
 `;
 
 export const FlexDiv = styled(Div).attrs<{
@@ -38,15 +40,18 @@ export const FlexDiv = styled(Div).attrs<{
   $justify?: string;
   $align?: string;
   $gap?: string;
+  $grow?: string;
 }>((props) => ({
   $direction: props.$direction || "unset",
   $justify: props.$justify || "unset",
   $align: props.$align || "unset",
   $gap: props.$gap || "0",
+  $grow: props.$grow,
 }))`
   display: flex;
   flex-direction: ${(props) => props.$direction};
   justify-content: ${(props) => props.$justify};
   align-items: ${(props) => props.$align};
   gap: ${(props) => props.$gap};
+  flex-grow: ${(props) => props.$grow};
 `;

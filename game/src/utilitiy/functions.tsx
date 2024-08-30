@@ -6,3 +6,7 @@ export const slice = (text: string) => {
     return str;
   }
 };
+
+export const formatToken = (token: number) => {
+  return (token * Math.pow(10, -18)).toFixed(6);
+};

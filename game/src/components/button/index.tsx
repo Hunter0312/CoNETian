@@ -13,6 +13,8 @@ export const Button = styled.button<{
   $height?: string;
   $radius?: string;
   $flex?: string;
+  $direction?: string;
+  $gap?: string;
 }>`
   margin: ${(props) => props.$margin || 0};
   padding: ${(props) => props.$padding || 0};
@@ -25,9 +27,10 @@ export const Button = styled.button<{
   border-radius: ${(props) => props.$radius};
   flex: ${(props) => props.$flex};
   display: flex;
-  flex-direction: column;
+  flex-direction: ${(props) => props.$direction || "column"};
   justify-content: center;
   align-items: center;
+  gap: ${(props) => props.$gap || "0"};
   overflow: hidden;
   cursor: pointer;
 `;
@@ -47,11 +50,13 @@ const GradientImage = styled(FlexDiv)`
 type GradientButtonProps = {
   children: ReactNode;
   width?: string;
+  onClick?: () => void;
 };
 
 export const GradientButton: React.FC<GradientButtonProps> = ({
   children,
   width,
+  onClick,
 }) => {
   return (
     <GradientImage>
@@ -61,6 +66,7 @@ export const GradientButton: React.FC<GradientButtonProps> = ({
         $radius="32px"
         $fontSize="14px"
         $width={width}
+        onClick={onClick}
       >
         {children}
       </Button>

@@ -3,10 +3,10 @@ import Image from "next/image";
 import { Img } from "@/utilitiy/images";
 import { Button } from "../button";
 import { P } from "../p";
-import { useGameContext } from '@/utilitiy/providers/GameProvider';
+import { useGameContext } from "@/utilitiy/providers/GameProvider";
 
 const Menu = () => {
-  const { setRouter } = useGameContext();
+  const { router, setRouter } = useGameContext();
 
   return (
     <FlexDiv $position="fixed" $width="100%" $bottom="50px" $justify="center">
@@ -20,8 +20,13 @@ const Menu = () => {
       >
         <Button onClick={() => setRouter("/")}>
           <FlexDiv $direction="column" $justify="center" $align="center">
-            <Image width={29} height={29} src={Img.HomeImg} alt="home image" />
-            <P $color="#79F8FF">Home</P>
+            <Image
+              width={29}
+              height={29}
+              src={router === "/" ? Img.ActiveHomeImg : Img.HomeImg}
+              alt="home image"
+            />
+            <P $color={router === "/" ? "#79F8FF" : "white"}>Home</P>
           </FlexDiv>
         </Button>
         <Button onClick={() => setRouter("/wallet")}>
@@ -43,7 +48,7 @@ const Menu = () => {
               src={Img.RoulletImg}
               alt="roullet image"
             />
-            <P>Bet</P>
+            <P>Earn</P>
           </FlexDiv>
         </Button>
         <Button onClick={() => setRouter("/settings")}>

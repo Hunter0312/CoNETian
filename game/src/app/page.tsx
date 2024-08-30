@@ -4,12 +4,13 @@ import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import { initializeWorkerService } from "@/services/workerService";
 import Home from "@/pages/home";
 import Menu from "@/components/menu";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import Leaderboard from "@/pages/leaderboard";
 import Wallet from "@/pages/wallet";
 import About from '@/pages/about';
 import Settings from '@/pages/settings';
 import Shopping from '@/pages/shopping';
+import Roulette from '@/pages/roulette';
 
 const S = {
   Main: styled.div`
@@ -92,6 +93,23 @@ export const listeningMiningHook = (
   return listeningManager("listeningMiningHook", fun);
 };
 
+function CurrentPage() {
+  const { router } = useGameContext();
+
+  const pages: Record<string, ReactNode> = {
+    "/": <Home />,
+    "/leaderboard": <Leaderboard />,
+    "/wallet": <Wallet />,
+    "/about": <About />,
+    "/settings": <Settings />,
+    /* "/earn": <p>earn</p>, */
+    "/earn": <Shopping />,
+    "/roulette": <Roulette />
+  }
+
+  return pages[router];
+}
+
 export default function App() {
   const {
     router,
@@ -130,13 +148,7 @@ export default function App() {
   return (
     <>
       <S.Main>
-        {router === "/" && <Home />}
-        {router === "/leaderboard" && <Leaderboard />}
-        {router === "/wallet" && <Wallet />}
-        {router === "/about" && <About />}
-        {router === "/settings" && <Settings />}
-        {/* {router === "/earn" && <p>earn</p>} */}
-        {router === "/earn" && <Shopping />}
+        <CurrentPage />
       </S.Main>
       <Menu />
     </>

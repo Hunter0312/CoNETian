@@ -33,4 +33,7 @@ export const Img = {
   SettingsConetian: "/settingsConetian.png",
   SoundOn: "/soundOn.svg",
   SoundOff: "/soundOff.svg",
+  Tickets: "/tickets.svg",
+  Tooltip: "/tooltip.svg",
+  RouletteIcon: "/roulette-icon.png",
 };

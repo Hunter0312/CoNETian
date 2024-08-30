@@ -67,7 +67,7 @@ export default function Shopping() {
               <FlexDiv $justify="space-between" $width="100%" $align="center">
                 <FlexDiv $gap="14px" $align="center">
                   <FlexDiv $align="center">
-                    <Image src={option.image} alt={option.title} width={60} height={60} />
+                    <Image src={option.image} alt={option.title} width={55} height={55} />
                   </FlexDiv>
                   <FlexDiv $direction="column" $gap="6px">
                     <P $fontSize="24px">{option.title}</P>

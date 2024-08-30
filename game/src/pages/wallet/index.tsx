@@ -2,7 +2,7 @@ import { Button } from '@/components/button';
 import { FlexDiv } from '@/components/div';
 import MiningStatus from '@/components/miningStatus';
 import { P } from '@/components/p';
-import { formatToken } from '@/utilitiy/functions';
+import { formatToken, hideMiddleOfString } from '@/utilitiy/functions';
 import { Img } from '@/utilitiy/images';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import Image from 'next/image';
@@ -53,7 +53,7 @@ export default function Wallet() {
             <FlexDiv $direction="column" $gap="12px">
               <P $color="#C8C6C8">Wallet Address</P>
               <FlexDiv $padding="0 16px" $justify="space-between">
-                <P>0x00e...fcdf0</P>
+                <P>{hideMiddleOfString(profile?.keyID)}</P>
                 <Button>
                   <Image height={24} width={24} alt="Copy" src={Img.CopyImg} />
                 </Button>
@@ -62,7 +62,7 @@ export default function Wallet() {
             <FlexDiv $direction="column" $gap="12px">
               <P $color="#C8C6C8">Private key</P>
               <FlexDiv $padding="0 16px" $justify="space-between">
-                <P>0xela...68b96</P>
+                <P>{hideMiddleOfString(profile?.privateKeyArmor)}</P>
                 <Button>
                   <Image height={24} width={24} alt="Copy" src={Img.CopyImg} />
                 </Button>
@@ -70,10 +70,14 @@ export default function Wallet() {
             </FlexDiv>
           </FlexDiv>
         </FlexDiv>
-        <FlexDiv $gap="8px" $align="center" $padding='0 0 0 24px'>
-          <P $fontSize="14px" $color="#C8C6C8">Your inviter:</P>
-          <P $fontSize="12px">0x305...05c4d</P>
-        </FlexDiv>
+        {profile?.referrer && (
+          <>
+            <FlexDiv $gap="8px" $align="center" $padding='0 0 0 24px'>
+              <P $fontSize="14px" $color="#C8C6C8">Your inviter:</P>
+              <P $fontSize="12px">{hideMiddleOfString(profile?.referrer)}</P>
+            </FlexDiv>
+          </>
+        )}
       </FlexDiv>
       <FlexDiv $direction="column" $gap="18px">
         <FlexDiv $direction="column" $gap="8px">

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { FlexDiv } from "../div";
 import { Img } from "@/utilitiy/images";
-import { slice } from "@/utilitiy/functions";
+import { hideMiddleOfString } from "@/utilitiy/functions";
 import { P } from "../p";
 import Skeleton from "react-loading-skeleton";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
@@ -20,7 +20,7 @@ const UserData = () => {
       <FlexDiv $direction="column" $gap="2px">
         <P $fontSize="14px">Anonymous User</P>
         <P $fontSize="12px" $color="#B1B1B2">
-          {slice(profile?.keyID)}
+          {hideMiddleOfString(profile?.keyID)}
           {!profile?.keyID && <Skeleton />}
         </P>
       </FlexDiv>

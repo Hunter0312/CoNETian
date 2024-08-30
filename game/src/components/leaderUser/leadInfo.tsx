@@ -1,6 +1,6 @@
 import { FlexDiv } from "../div";
 import { P } from "../p";
-import { slice } from "@/utilitiy/functions";
+import { hideMiddleOfString } from "@/utilitiy/functions";
 
 type Props = {
   cntp: number;
@@ -19,7 +19,7 @@ const LeadInfo: React.FC<Props> = ({ address, cntp }) => {
         <FlexDiv $direction="column">
           <P $fontSize="18px">Anonymous User</P>
           <P $fontSize="12px" $color="#B1B1B2">
-            {slice(address)}
+            {hideMiddleOfString(address)}
           </P>
         </FlexDiv>
         <FlexDiv $justify="space-between" $align="center">

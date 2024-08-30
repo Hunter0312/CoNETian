@@ -1,9 +1,10 @@
+import BackButton from '@/components/backButton';
 import PageWrapper from '@/components/pageWrapper';
 
 export default function Shopping() {
   return (
     <PageWrapper>
-      <p>Shopping</p>
+      <BackButton text="Shop" />
     </PageWrapper>
   )
 }

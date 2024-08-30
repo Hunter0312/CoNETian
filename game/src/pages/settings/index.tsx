@@ -1,6 +1,6 @@
+import BackButton from '@/components/backButton';
 import { Button } from '@/components/button';
 import { FlexDiv } from '@/components/div';
-import MiningStatus from '@/components/miningStatus';
 import { P } from '@/components/p';
 import PageWrapper from '@/components/pageWrapper';
 import { Img } from '@/utilitiy/images';
@@ -37,16 +37,7 @@ export default function Settings() {
 
   return (
     <PageWrapper margin="32px 16px 140px 16px">
-      <FlexDiv $direction="column" $align="flex-start" $width='100%'>
-        <Button onClick={() => setRouter("/")}>
-          <FlexDiv $align="center" >
-            <Image width={32} height={32} alt="Arrow" src={Img.ArrowImg} />
-            <P $fontSize="32px" $color="#F6F1F2">
-              Settings
-            </P>
-          </FlexDiv>
-        </Button>
-      </FlexDiv>
+      <BackButton text="Settings" />
 
       <FlexDiv $direction="column" $align="center">
         <P $alignSelf="flex-start" $fontSize="24px">Game mode</P>

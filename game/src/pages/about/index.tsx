@@ -1,11 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
+import BackButton from '@/components/backButton';
 import { Button } from '@/components/button';
 import { FlexDiv } from '@/components/div';
 import { P } from '@/components/p';
 import PageWrapper from '@/components/pageWrapper';
-import { Img } from '@/utilitiy/images';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
-import Image from 'next/image';
 
 export default function About() {
   const { setRouter } = useGameContext();
@@ -16,16 +15,7 @@ export default function About() {
 
   return (
     <PageWrapper margin="32px 16px 140px 16px">
-      <FlexDiv $direction="column" $align="flex-start" $width='100%'>
-        <Button onClick={() => setRouter("/")}>
-          <FlexDiv $align="center" >
-            <Image width={32} height={32} alt="Arrow" src={Img.ArrowImg} />
-            <P $fontSize="32px" $color="#F6F1F2">
-              About The CoNETian
-            </P>
-          </FlexDiv>
-        </Button>
-      </FlexDiv>
+      <BackButton text="About The CoNETian" />
 
       <FlexDiv $direction="column" $width="100%" $gap="64px">
         <FlexDiv $direction="column" $gap="16px">

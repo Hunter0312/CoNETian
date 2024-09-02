@@ -1,0 +1,15 @@
+.split {
+  background: linear-gradient(to right, transparent, #79F8FF, #D775FF, transparent);
+  height: 1px;
+}
+
+.text-max-width {
+  max-width: 340px
+}
+
+.coming-soon-wrapper {
+  position: relative;
+  width: 100%;
+  height: 104px;
+  cursor: not-allowed;
+}

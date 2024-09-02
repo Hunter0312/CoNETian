@@ -1,3 +1,4 @@
+import BackButton from '@/components/backButton';
 import { Button } from "@/components/button";
 import { FlexDiv } from "@/components/div";
 import MiningStatus from "@/components/miningStatus";
@@ -101,16 +102,7 @@ export default function Wallet() {
       <FlexDiv $direction="column" $gap="32px" $margin="32px 16px 140px 16px">
         <MiningStatus />
 
-        <FlexDiv $direction="column" $align="flex-start" $width="100%">
-          <Button onClick={() => setRouter("/")}>
-            <FlexDiv $align="center">
-              <Image width={32} height={32} alt="Arrow" src={Img.ArrowImg} />
-              <P $fontSize="32px" $color="#F6F1F2">
-                My Wallet
-              </P>
-            </FlexDiv>
-          </Button>
-        </FlexDiv>
+        <BackButton text="My Wallet" />
 
         <FlexDiv $direction="column" $gap="12px" $width="100%">
           <FlexDiv $gap="8px" $align="center">

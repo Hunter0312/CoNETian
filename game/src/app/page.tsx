@@ -5,12 +5,14 @@ import { initializeWorkerService } from "@/services/workerService";
 import Home from "@/pages/home";
 import Playground from "@/pages/playground";
 import Menu from "@/components/menu";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import Leaderboard from "@/pages/leaderboard";
 import Wallet from "@/pages/wallet";
 import About from '@/pages/about';
 import Settings from '@/pages/settings';
 import Profile from "@/pages/profile";
+import Shopping from '@/pages/shopping';
+import Roulette from '@/pages/roulette';
 
 const S = {
   Main: styled.div`
@@ -93,6 +95,25 @@ export const listeningMiningHook = (
   return listeningManager("listeningMiningHook", fun);
 };
 
+function CurrentPage() {
+  const { router } = useGameContext();
+
+  const pages: Record<string, ReactNode> = {
+    "/": <Home />,
+    "/leaderboard": <Leaderboard />,
+    "/wallet": <Wallet />,
+    "/about": <About />,
+    "/settings": <Settings />,
+    "/shopping": <Shopping />,
+    "/earn": <p>earn</p>,
+    "/roulette": <Roulette />,
+    "/playground": <Playground />,
+    "/profile": <Profile />
+  }
+
+  return pages[router];
+}
+
 export default function App() {
   const {
     router,
@@ -132,14 +153,7 @@ export default function App() {
   return (
     <>
       <S.Main>
-        {router === "/" && <Home />}
-        {router === "/leaderboard" && <Leaderboard />}
-        {router === "/wallet" && <Wallet />}
-        {router === "/about" && <About />}
-        {router === "/settings" && <Settings />}
-        {router === "/earn" && <p>earn</p>}
-        {router === "/playground" && <Playground />}
-        {router === "/profile" && <Profile />}
+        <CurrentPage />
       </S.Main>
       <Menu />
     </>

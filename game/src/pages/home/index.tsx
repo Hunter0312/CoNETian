@@ -66,9 +66,9 @@ export default function Home() {
           />
         </Button>
       </FlexDiv>
-      <FlexDiv $justify="space-between" $padding="0 15px">
+      <FlexDiv $justify="space-between" $padding="0 15px" $gap="16px">
         <GradientButton
-          width="267px"
+          flex={2}
           onClick={() => {
             setRouter("/leaderboard");
           }}
@@ -83,15 +83,16 @@ export default function Home() {
             Leaderboard
           </FlexDiv>
         </GradientButton>
-        <GradientButton>
+
+        <GradientButton flex={1}>
           <FlexDiv $align="center" $gap="8px">
             <Image
               width={24}
               height={24}
-              src={Img.ShareImg}
-              alt="user group image"
+              src={Img.Shop}
+              alt="shop page"
             />
-            Share
+            Shop
           </FlexDiv>
         </GradientButton>
       </FlexDiv>

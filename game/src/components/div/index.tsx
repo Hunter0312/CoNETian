@@ -14,6 +14,7 @@ export const Div = styled.div.attrs<{
   $left?: string;
   $right?: string;
   $index?: string;
+  $flex?: number;
 }>((props) => ({
   $padding: props.$padding || "0",
   $margin: props.$margin || "0",
@@ -33,6 +34,7 @@ export const Div = styled.div.attrs<{
   left: ${(props) => props.$left};
   right: ${(props) => props.$right};
   z-index: ${(props) => props.$index};
+  flex: ${(props) => props.$flex};
 `;
 
 export const FlexDiv = styled(Div).attrs<{
@@ -41,6 +43,7 @@ export const FlexDiv = styled(Div).attrs<{
   $align?: string;
   $gap?: string;
   $grow?: string;
+  $flex?: number;
 }>((props) => ({
   $direction: props.$direction || "unset",
   $justify: props.$justify || "unset",
@@ -54,4 +57,5 @@ export const FlexDiv = styled(Div).attrs<{
   align-items: ${(props) => props.$align};
   gap: ${(props) => props.$gap};
   flex-grow: ${(props) => props.$grow};
+  flex: ${(props) => props.$flex};
 `;

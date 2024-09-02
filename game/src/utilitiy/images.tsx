@@ -34,4 +34,5 @@ export const Img = {
   SettingsConetian: "/settingsConetian.png",
   SoundOn: "/soundOn.svg",
   SoundOff: "/soundOff.svg",
+  Shop: "/shop.png",
 };

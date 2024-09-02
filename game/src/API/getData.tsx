@@ -1,4 +1,4 @@
-import { importWallet, startMining, stopMining, getRouletteResult, registerReferrer, clearStorage } from ".";
+import { importWallet, startMining, stopMining, getRouletteResult, registerReferrer, clearStorage, getTicketResult } from ".";
 
 export const fetchImportWallet = async (walletPrivateKey: string): Promise<any> => {
     try {
@@ -79,6 +79,27 @@ export const fetchRouletteResult = async (walletAddress: string): Promise<any> =
     }
 
     return { error: true, message: "Failed to fetch roulette result. Please try again later." };
+}
+
+export const fetchTicketResult = async (walletAddress: string): Promise<any> => {
+    if (walletAddress) {
+        try {
+            const response = await getTicketResult(walletAddress);
+
+            if (Array.isArray(response) && response.length >= 2) {
+                const [status, data] = response;
+                if (status === "SUCCESS") {
+                    return { ticket: data[0]?.ticket || 0 };
+                } else {
+                    console.error("Failed to fetch ticket result. Please try again later.");
+                }
+            }
+        } catch (error) {
+            console.error("Failed to fetch ticket result. Please try again later.", error);
+        }
+    }
+
+    return { error: true, message: "Failed to fetch ticket result. Please try again later." };
 }
 
 export const fetchRegisterReferrer = async (referrerAddress: string): Promise<any> => {

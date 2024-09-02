@@ -7,6 +7,7 @@ import { useAudioPlayer } from 'react-use-audio-player';
 import { useConetianHighFire, useConetianMediumFire } from '../../hooks/useConetianHooks';
 import { groundImage, backgroundImage, pipeBottomImg, pipeTopImg, } from '../../shared/assets';
 import { useGameContext } from '../../utilitiy/providers/GameProvider';
+import { fetchTicketResult } from '@/API/getData';
 
 type Props = {
   setGameStatus: (e: number) => void,
@@ -257,10 +258,8 @@ const Game: React.FC<Props> = ({ setGameStatus, gameStatus, setScores, setRoulet
           setScore(score => score + 1);
 
           if (flagScore % 5 === 0 && flagScore >= 1 && profile?.keyID) {
-            if (Math.random() > 0.5) {
-              setRoulette(true);
-              setGameStatus(2);
-              setRoulette(false)
+            if (Math.random() < 0.3) {
+              fetchTicketResult(profile?.keyID);
             }
           }
           pipe.passed = true;

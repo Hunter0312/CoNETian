@@ -8,6 +8,7 @@ interface WorkerCommand {
 }
 
 const channelWrokerListenName = "toMainWroker";
+
 export const _postMessage = (
   cmd: WorkerCommand,
   close: boolean,
@@ -42,14 +43,18 @@ export const _postMessage = (
       if (resolve) {
         return resolve([cmd.err, cmd.data]);
       }
+
       if (Callback) {
         return Callback(cmd.err, [cmd.data]);
       }
+
       return console.log(`postMessage Callback && resolve all null`, cmd.err);
     }
+
     if (resolve) {
       return resolve(["SUCCESS", cmd.data]);
     }
+
     if (Callback) {
       if (!cmd.data.length) {
         if (listenChannel) {
@@ -58,14 +63,17 @@ export const _postMessage = (
 
         return Callback("", []);
       }
+
       return Callback("", cmd.data);
     }
+
     return console.log(`postMessage Callback && resolve all null`, cmd.data);
   };
 
   if (listenChannel) {
     listenChannel.addEventListener("message", kk);
   }
+
   channel.postMessage(JSON.stringify(cmd));
   channel.close();
 };
@@ -112,6 +120,18 @@ export const getRouletteResult: (walletAddress: string) => Promise<string> = (
   new Promise((resolve) => {
     const cmd: WorkerCommand = {
       cmd: "getRouletteResult",
+      uuid: v4(),
+      data: [walletAddress],
+    };
+    return _postMessage(cmd, true, resolve);
+  });
+
+export const getTicketResult: (walletAddress: string) => Promise<string> = (
+  walletAddress: string
+) =>
+  new Promise((resolve) => {
+    const cmd: WorkerCommand = {
+      cmd: "getTicketResult",
       uuid: v4(),
       data: [walletAddress],
     };

@@ -34,16 +34,6 @@ const Playground: React.FC = () => {
     }
   }, [gameStatus])
 
-  useEffect(() => {
-    if (roulette) {
-      rouletteBtnTimeout.current && clearTimeout(rouletteBtnTimeout.current);
-
-      rouletteBtnTimeout.current = setTimeout(() => {
-        setRoulette(false);
-      }, 10000)
-    }
-  }, [roulette])
-
   return (
     <>
       {
@@ -51,17 +41,16 @@ const Playground: React.FC = () => {
           // <GameOver setRestart={() => gameStatusHandle(0)} score={score} hScore={highScore} /> :
           <h1> game over</h1> :
           <>
-            {
-              gameStatus === 2 &&
-              <h1> lottery</h1>
-              // <Lottery setContinue={() => gameStatusHandle(3)} />
-            }
             <Game
               setGameStatus={(event: number) => gameStatusHandle(event)} gameStatus={gameStatus}
               setScores={(score: number) => setScore(score)}
               setRoulette={(event: boolean) => setRoulette(true)}
             />
-            <p style={{ position: "fixed", color: "white", top: "20px", fontSize: "3rem", left: "50%" }}>{score}</p>
+
+            <div style={{ "display": "flex", "flexDirection": "row", }}>
+              <p style={{ position: "fixed", color: "white", top: "40px", fontSize: "3rem", left: "50%" }}>{score}</p>
+              <p style={{ position: "fixed", color: "white", top: "40px", fontSize: "3rem", left: "10%" }} >{profile?.tickets?.balance}</p>
+            </div>
 
             {
               !profile || profile?.keyID === '' ?
@@ -85,7 +74,7 @@ const Playground: React.FC = () => {
             }
           </>
       }
-    </ >
+    </>
   )
 }
 

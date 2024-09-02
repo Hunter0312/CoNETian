@@ -9,6 +9,7 @@ import { Img } from '@/utilitiy/images';
 import Tooltip from '@/components/tooltip';
 import { Button } from '@/components/button';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
+import { formatToken } from '@/utilitiy/functions';
 
 const shoppingOptions = [
   {
@@ -36,7 +37,7 @@ const comingSoonOptions = [
 ]
 
 export default function Shopping() {
-  const { setRouter } = useGameContext();
+  const { setRouter, profile } = useGameContext();
 
   return (
     <PageWrapper margin="32px 16px 140px 16px">
@@ -48,11 +49,11 @@ export default function Shopping() {
         </FlexDiv>
         <FlexDiv $align="center" $gap="8px" $background="#262527" $padding="8px" $radius="8px">
           <Image src={Img.Tickets} alt="Tickets" width={42.15} height={32} />
-          <P>x 010</P>
+          <P>x {profile?.tickets?.balance}</P>
         </FlexDiv>
       </FlexDiv>
       <FlexDiv $gap="8px" $align="center">
-        <P $fontSize="20px">1645.000645</P>
+        <P $fontSize="20px">{formatToken(profile?.tokens.cCNTP.balance)}</P>
         <P $fontSize="12px">CNTP EARNED</P>
       </FlexDiv>
       <div className="split"></div>

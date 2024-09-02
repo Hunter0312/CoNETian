@@ -5,8 +5,8 @@ export const P = styled.p.attrs<{
   $color?: string;
   $fontSize?: string;
   $align?: string;
-  $lineHeight?: string, 
-  $alignSelf?: string 
+  $lineHeight?: string,
+  $alignSelf?: string
 }>((props) => ({
   $color: props.$color || "white",
   $fontSize: props.$fontSize || "1rem",

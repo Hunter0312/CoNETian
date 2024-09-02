@@ -144,3 +144,18 @@ a {
   left: 0;
   width: var(--track-width);
 }
+
+.highlight-button-wrapper {
+  background: linear-gradient(to right, #79F8FF, #D775FF);
+  box-shadow: 0px 0px 16px 0px #FFFFFF4D;
+  padding: 1px;
+  border-radius: 8px;
+}
+
+.stars-bg {
+  background-image: url("../../public/stars-bg.png");
+}
+
+.white-text-shadow {
+  text-shadow: 0px 0px 8px #FFFFFF80;
+}

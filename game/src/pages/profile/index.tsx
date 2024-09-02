@@ -5,11 +5,10 @@ import MiningStatus from "@/components/miningStatus";
 import { P } from "@/components/p";
 import Image from "next/image";
 
-import leftArrow from '@/assets/left-arrow.png'
-import edit from '@/assets/edit.svg'
 import conetAnonymousIcon from '@/assets/conet-anonymous-icon.svg'
 import { useState } from "react";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
+import BackButton from "@/components/backButton";
 
 export default function Profile() {
     const { setRouter } = useGameContext();
@@ -31,15 +30,7 @@ export default function Profile() {
     return (
         <FlexDiv $direction="column" $gap="32px" $margin="32px 0 0 0">
             <MiningStatus />
-            <FlexDiv $padding="0 16px" $justify="space-between" $align="center">
-                <FlexDiv $align="center">
-                    <Image src={leftArrow} height={32} width={32} alt="back-arrow" onClick={() => setRouter('/')} />
-                    <P $fontSize="32px">My Profile</P>
-                </FlexDiv>
-                <FlexDiv>
-                    <Image src={edit} height={32} width={32} alt="back-arrow" />
-                </FlexDiv>
-            </FlexDiv>
+            <BackButton text="My Profile" />
             <FlexDiv $padding="0 16px">
                 <FlexDiv $justify="space-between" $align="flex-start" $width="100%">
                     <Image src={conetAnonymousIcon} height={120} width={120} alt="profile-logo" />

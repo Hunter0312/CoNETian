@@ -10,6 +10,7 @@ import Leaderboard from "@/pages/leaderboard";
 import Wallet from "@/pages/wallet";
 import About from '@/pages/about';
 import Settings from '@/pages/settings';
+import Profile from "@/pages/profile";
 
 const S = {
   Main: styled.div`
@@ -127,6 +128,7 @@ export default function App() {
   useEffect(() => {
     initializeWorkerService();
   }, []);
+
   return (
     <>
       <S.Main>
@@ -137,6 +139,7 @@ export default function App() {
         {router === "/settings" && <Settings />}
         {router === "/earn" && <p>earn</p>}
         {router === "/playground" && <Playground />}
+        {router === "/profile" && <Profile />}
       </S.Main>
       <Menu />
     </>

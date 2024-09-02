@@ -42,6 +42,7 @@ export default function Home() {
             $height="32px"
             $background="#474648"
             $radius="50%"
+            onClick={() => setRouter('/profile')}
           >
             <Image
               width={16}

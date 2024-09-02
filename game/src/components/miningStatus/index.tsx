@@ -31,8 +31,19 @@ const MiningStatus = () => {
         $radius="16px"
         $gap="8px"
       >
-        {mining ? <S.SuccessStatusBadge /> : <S.FailedStatusBadge />}
-        <P $fontSize="10px">Mining UP</P>
+        {mining ? (
+          <>
+            <S.SuccessStatusBadge />
+            <P $fontSize="10px">Mining UP</P>
+          </>
+        )
+          : (
+            <>
+              <S.FailedStatusBadge />
+              <P $fontSize="10px">Mining DOWN</P>
+            </>
+          )}
+
       </FlexDiv>
       <FlexDiv
         $align="center"

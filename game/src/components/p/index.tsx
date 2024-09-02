@@ -22,7 +22,7 @@ export const P = styled.p.attrs<{
   width: ${(props) => props.$width};
 `;
 
-export const GradientP = styled(P)<{ $first?: string; $second?: string }>`
+export const GradientP = styled(P) <{ $first?: string; $second?: string }>`
   background: linear-gradient(
     ${(props) => props.$first},
     ${(props) => props.$second}

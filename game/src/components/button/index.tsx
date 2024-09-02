@@ -73,3 +73,41 @@ export const GradientButton: React.FC<GradientButtonProps> = ({
     </GradientImage>
   );
 };
+
+export const FilledButton: React.FC<{
+  children: ReactNode;
+  width?: string;
+  height?: string;
+  backgroundColor?: string;
+  onClick?: () => void;
+}> = ({
+  children,
+  width,
+  height,
+  backgroundColor,
+  onClick,
+}) => {
+    return (
+      <Button $color="#FFFFFF" $background={backgroundColor} $radius="8px" $width={width} $height={height} onClick={onClick}>
+        {children}
+      </Button>
+    )
+  }
+
+export const OutlinedButton: React.FC<{
+  children: ReactNode;
+  width?: string;
+  height?: string;
+  onClick?: () => void;
+}> = ({
+  children,
+  width,
+  height,
+  onClick,
+}) => {
+    return (
+      <Button $color="#FFFFFF" $background="transparent" $radius="8px" $width={width} $height={height} onClick={onClick}>
+        {children}
+      </Button>
+    )
+  }

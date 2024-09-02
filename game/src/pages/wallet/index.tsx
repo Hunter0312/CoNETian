@@ -11,8 +11,8 @@ import Skeleton from "react-loading-skeleton";
 import { FaCheck } from "react-icons/fa6";
 import copy from "copy-to-clipboard";
 import { fetchImportWallet, fetchstopMining } from "@/API/getData";
-import { ConfirmToast } from "react-confirm-toast";
 import { toast } from "react-toastify";
+import ConfirmModal from "@/components/modal/confirmModal";
 
 export default function Wallet() {
   const [newWalletPrivateKey, setNewWalletPrivateKey] = useState<string>('');
@@ -93,6 +93,7 @@ export default function Wallet() {
     }
 
     setIsImportingWallet(false)
+    setShowImportWalletConfirmModal(false)
   };
 
   return (
@@ -235,29 +236,17 @@ export default function Wallet() {
           </Button>
         </FlexDiv>
       </FlexDiv>
-      <FlexDiv $justify="center" $align="center">
-        <ConfirmToast
-          toastText={
-            "If you import a new wallet, you will lose your current one. Are you sure you want to continue?"
-          }
-          buttonNoText="No"
-          buttonYesText="Yes"
-          showCloseIcon={false}
-          asModal={true}
-          customFunction={handleImportWalletConfirm}
-          setShowConfirmToast={setShowImportWalletConfirmModal}
-          showConfirmToast={showImportWalletConfirmModal}
-          buttonYesAttributes={{
-            style: {
-              backgroundImage: "linear-gradient(to right, #D775FF, #8DA8FF)",
-            },
-          }}
-          buttonNoAttributes={{
-            style: { border: "1px solid black" },
-          }}
-          className="confirm-toast-style"
-        />
-      </FlexDiv>
+
+      <ConfirmModal
+        title="Import Wallet"
+        message="If you import a new wallet, you will lose your current one. Are you sure you want to continue?"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleImportWalletConfirm}
+        cancelButtonAction={() => setShowImportWalletConfirmModal(false)}
+        closeButtonAction={() => setShowImportWalletConfirmModal(false)}
+        showConfirmModal={showImportWalletConfirmModal}
+      />
     </>
   );
 }

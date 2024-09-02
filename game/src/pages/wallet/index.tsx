@@ -1,23 +1,18 @@
-import { Button } from '@/components/button';
-import { FlexDiv } from '@/components/div';
-import MiningStatus from '@/components/miningStatus';
-import { P } from '@/components/p';
-import { formatToken, hideMiddleOfString } from '@/utilitiy/functions';
-import { Img } from '@/utilitiy/images';
-import { useGameContext } from '@/utilitiy/providers/GameProvider';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { Button } from "@/components/button";
+import { FlexDiv } from "@/components/div";
+import MiningStatus from "@/components/miningStatus";
+import { P } from "@/components/p";
+import { formatToken, slice } from "@/utilitiy/functions";
+import { Img } from "@/utilitiy/images";
+import { useGameContext } from "@/utilitiy/providers/GameProvider";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
+import { FaCheck } from "react-icons/fa6";
 import copy from "copy-to-clipboard";
-import { toast } from 'react-toastify';
-import { ConfirmToast } from 'react-confirm-toast';
-import { fetchImportWallet, fetchstopMining } from '@/API/getData';
-
-const modalButtonStyle = {
-  width: "100px",
-  borderRadius: "8px",
-  fontWeight: "normal",
-};
+import { fetchImportWallet, fetchstopMining } from "@/API/getData";
+import { ConfirmToast } from "react-confirm-toast";
+import { toast } from "react-toastify";
 
 export default function Wallet() {
   const [newWalletPrivateKey, setNewWalletPrivateKey] = useState<string>('');
@@ -101,11 +96,11 @@ export default function Wallet() {
   };
 
   return (
-    <FlexDiv $align='center' $direction='column'>
+    <>
       <FlexDiv $direction="column" $gap="32px" $margin="32px 16px 140px 16px">
         <MiningStatus />
 
-        <FlexDiv $direction="column" $align="flex-start" $width='100%'>
+        <FlexDiv $direction="column" $align="flex-start" $width="100%">
           <Button onClick={() => setRouter("/")}>
             <FlexDiv $align="center">
               <Image width={32} height={32} alt="Arrow" src={Img.ArrowImg} />
@@ -126,43 +121,81 @@ export default function Wallet() {
               {profile ? (
                 formatToken(profile?.tokens?.cCNTP?.balance)
               ) : (
-                <Skeleton width={100} />
+                <Skeleton width={200} />
               )}
             </P>
             <P $fontSize="12px">CNTP EARNED</P>
           </FlexDiv>
         </FlexDiv>
 
-        <FlexDiv $direction="column" $gap="8px" $width='100%'>
-          <FlexDiv $direction="column" $gap="16px" $height="200px" $width="100%" $padding="14px 24px" $border="1px solid rgba(255, 255, 255, .1)" $radius="16px">
+        <FlexDiv $direction="column" $gap="8px" $width="100%">
+          <FlexDiv
+            $direction="column"
+            $gap="16px"
+            $height="200px"
+            $width="100%"
+            $padding="14px 24px"
+            $border="1px solid rgba(255, 255, 255, .1)"
+            $radius="16px"
+          >
             <P $fontSize="24px">Your CoNETian Wallet</P>
             <FlexDiv $direction="column" $gap="16px">
               <FlexDiv $direction="column" $gap="12px">
                 <P $color="#C8C6C8">Wallet Address</P>
                 <FlexDiv $padding="0 16px" $justify="space-between">
-                  <P>{hideMiddleOfString(profile?.keyID)}</P>
-                  <Button onClick={() => copyText(profile?.keyID, "walletAddress")}>
-                    <Image height={24} width={24} alt="Copy" src={copiedWalletAddress ? Img.CheckImg : Img.CopyImg} />
+                  <P>
+                    {slice(profile?.keyID)}
+                    {!profile?.keyID && <Skeleton width={100} />}
+                  </P>
+                  <Button
+                    onClick={() => copyText(profile?.keyID, "walletAddress")}
+                  >
+                    {copiedWalletAddress ? (
+                      <FaCheck />
+                    ) : (
+                      <Image
+                        height={24}
+                        width={24}
+                        alt="Copy"
+                        src={Img.CopyImg}
+                      />
+                    )}
                   </Button>
                 </FlexDiv>
               </FlexDiv>
               <FlexDiv $direction="column" $gap="12px">
-                <P $color="#C8C6C8">Private Key</P>
+                <P $color="#C8C6C8">Private key</P>
                 <FlexDiv $padding="0 16px" $justify="space-between">
-                  <P>{hideMiddleOfString(profile?.privateKeyArmor)}</P>
-                  <Button onClick={() => copyText(profile?.privateKeyArmor, "privateKey")}>
-                    <Image height={24} width={24} alt="Copy" src={copiedPrivateKey ? Img.CheckImg : Img.CopyImg} />
+                  <P>
+                    {slice(profile?.privateKeyArmor)}
+                    {!profile?.privateKeyArmor && <Skeleton width={100} />}
+                  </P>
+                  <Button
+                    onClick={() =>
+                      copyText(profile?.privateKeyArmor, "walletPrivateKey")
+                    }
+                  >
+                    {copiedPrivateKey ? (
+                      <FaCheck />
+                    ) : (
+                      <Image
+                        height={24}
+                        width={24}
+                        alt="Copy"
+                        src={Img.CopyImg}
+                      />
+                    )}
                   </Button>
                 </FlexDiv>
               </FlexDiv>
             </FlexDiv>
           </FlexDiv>
-          {true && (
+          {profile?.referrer && (
             <>
               <FlexDiv $gap="8px" $align="center" $padding='0 0 0 24px'>
                 <P $fontSize="14px" $color="#C8C6C8">Your inviter:</P>
                 <FlexDiv $gap="8px" $align="center">
-                  <P $fontSize="12px">{hideMiddleOfString(profile?.referrer)}</P>
+                  <P $fontSize="12px">{slice(profile?.referrer)}</P>
                   <Button onClick={() => copyText(profile?.referrer, "referrer")}>
                     <Image height={16} width={16} alt="Copy" src={copiedReferrer ? Img.CheckImg : Img.CopyImg} />
                   </Button>
@@ -174,7 +207,10 @@ export default function Wallet() {
         <FlexDiv $direction="column" $gap="18px">
           <FlexDiv $direction="column" $gap="8px">
             <P $fontSize="24px">Import Another Wallet</P>
-            <P $color="#C8C6C8">Import a wallet from CoNET platform into CoNETian for easier management and boosted benefits!</P>
+            <P $color="#C8C6C8">
+              Import a wallet from CoNET platform into CoNETian for easier
+              management and boosted benefits!
+            </P>
           </FlexDiv>
           <input
             value={newWalletPrivateKey}
@@ -188,34 +224,40 @@ export default function Wallet() {
               borderRadius: "16px",
             }}
           />
-          <Button $padding="18px" $radius="32px" $border="1px solid #04DAE8" $background={isImportingWallet ? "gray" : ""} onClick={isImportingWallet ? () => { } : handleImportWalletButton} disabled={isImportingWallet}>
+          <Button
+            $padding="18px"
+            $radius="32px"
+            $border="1px solid #04DAE8"
+            onClick={isImportingWallet ? () => { } : handleImportWalletButton}
+            disabled={isImportingWallet}
+          >
             Import Wallet
           </Button>
         </FlexDiv>
       </FlexDiv>
-
-      <ConfirmToast
-        toastText={
-          "If you import a new wallet, you will lose the current one. Are you sure you want to continue?"
-        }
-        buttonNoText="No"
-        buttonYesText="Yes"
-        showCloseIcon={false}
-        asModal={true}
-        customFunction={handleImportWalletConfirm}
-        setShowConfirmToast={setShowImportWalletConfirmModal}
-        showConfirmToast={showImportWalletConfirmModal}
-        buttonYesAttributes={{
-          style: {
-            ...modalButtonStyle,
-            backgroundImage: "linear-gradient(to right, #D775FF, #8DA8FF)",
-          },
-        }}
-        buttonNoAttributes={{
-          style: { ...modalButtonStyle, border: "1px solid black" },
-        }}
-        className="confirm-toast-style"
-      />
-    </FlexDiv>
-  )
+      <FlexDiv $justify="center" $align="center">
+        <ConfirmToast
+          toastText={
+            "If you import a new wallet, you will lose your current one. Are you sure you want to continue?"
+          }
+          buttonNoText="No"
+          buttonYesText="Yes"
+          showCloseIcon={false}
+          asModal={true}
+          customFunction={handleImportWalletConfirm}
+          setShowConfirmToast={setShowImportWalletConfirmModal}
+          showConfirmToast={showImportWalletConfirmModal}
+          buttonYesAttributes={{
+            style: {
+              backgroundImage: "linear-gradient(to right, #D775FF, #8DA8FF)",
+            },
+          }}
+          buttonNoAttributes={{
+            style: { border: "1px solid black" },
+          }}
+          className="confirm-toast-style"
+        />
+      </FlexDiv>
+    </>
+  );
 }

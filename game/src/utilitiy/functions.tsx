@@ -1,4 +1,4 @@
-export const hideMiddleOfString = (text: string) => {
+export const slice = (text: string) => {
   if (text) {
     let str = text.slice(0, 4);
     str += "...";

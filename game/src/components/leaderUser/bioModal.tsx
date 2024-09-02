@@ -48,7 +48,7 @@ const BioModal: React.FC<Props> = ({ close }) => {
           $margin="20px 0 0 0"
         >
           <Image src={Img.BioDefaultImg} width={100} height={100} alt="" />
-          <P $line="1.7">
+          <P $lineHeight="1.7">
             Ground Control to Major Tom! Lorem ipsum dolor sit amet, consectetur
             adipiscing elit.
           </P>

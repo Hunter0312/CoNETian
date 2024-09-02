@@ -112,13 +112,13 @@ a {
 }
 
 .range-input::-webkit-slider-runnable-track {
-  background: #7C8595;
+  background: #7c8595;
   height: 4px;
   border-radius: 2px;
 }
 
 .range-input::-moz-range-track {
-  background: #7C8595;
+  background: #7c8595;
   height: 4px;
   border-radius: 2px;
 }
@@ -137,10 +137,18 @@ a {
 
 .range-input::before {
   z-index: 0;
-  content: '';
+  content: "";
   position: absolute;
-  background: #79F8FF;
+  background: #79f8ff;
   height: 100%;
   left: 0;
   width: var(--track-width);
+}
+
+.confirm-toast-style {
+  max-width: 300px;
+  --confirm-toast-btn-yes-color: black;
+  --confirm-toast-btn-no-color: black;
+  --confirm-toast-btn-no-focus: none;
+  --confirm-toast-btn-yes-focus: none;
 }

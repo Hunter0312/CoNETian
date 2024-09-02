@@ -1,4 +1,3 @@
-import MiningStatus from "@/components/miningStatus";
 import { FlexDiv } from "@/components/div";
 import React, { useState } from "react";
 import { Button } from "@/components/button";
@@ -31,16 +30,17 @@ const Leaderboard = () => {
   return (
     <PageWrapper margin="32px 0 150px 0">
       <FlexDiv $padding="0 15px">
-        <Button $direction="row" $gap="10px" onClick={() => setRouter("/")}>
-          {filter === 0 ? (
-            <Image height={11} width={7} src={Img.BlueLeftArrow} alt="" />
-          ) : (
-            <Image height={11} width={7} src={Img.PinkLeftArrow} alt="" />
-          )}
-
+        <Button $direction="row" $gap="10px" onClick={() => {
+          if (filter === 0)
+            setRouter("/")
+          else
+            setFilter(0)
+        }}>
+          <Image height={32} width={32} src={Img.ArrowImg} alt="" />
           <P $fontSize="32px">Leaderboard</P>
         </Button>
       </FlexDiv>
+
       <FlexDiv $justify="space-between" $padding="0 30px">
         <Button onClick={() => prev()}>
           <Image src={Img.LeadLeftArrow} width={16} height={32} alt="" />
@@ -59,15 +59,17 @@ const Leaderboard = () => {
           <Image src={Img.LeadRightArrow} width={16} height={32} alt="" />
         </Button>
       </FlexDiv>
+
       <P $align="center" $fontSize="24px">
         {filter === 0
           ? "All Time"
           : filter === 1
-          ? "Monthly"
-          : filter === 2
-          ? "Weekly"
-          : "Daily"}
+            ? "Monthly"
+            : filter === 2
+              ? "Weekly"
+              : "Daily"}
       </P>
+
       {filter === 0 &&
         leaderboard.allTime &&
         leaderboard.allTime.map((item, index) => {
@@ -92,6 +94,7 @@ const Leaderboard = () => {
             />
           );
         })}
+
       {filter === 1 &&
         leaderboard.monthly &&
         leaderboard.monthly.map((item, index) => {
@@ -116,6 +119,7 @@ const Leaderboard = () => {
             />
           );
         })}
+
       {filter === 2 &&
         leaderboard.weekly &&
         leaderboard.weekly.map((item, index) => {
@@ -140,6 +144,7 @@ const Leaderboard = () => {
             />
           );
         })}
+
       {filter === 3 &&
         leaderboard.daily &&
         leaderboard.daily.map((item, index) => {

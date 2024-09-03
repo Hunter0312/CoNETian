@@ -11,7 +11,7 @@ import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import BackButton from "@/components/backButton";
 
 export default function Profile() {
-    const { setRouter } = useGameContext();
+    const { setRouter, highScore } = useGameContext();
     const [name, setName] = useState<string>('')
     const [bio, setBio] = useState<string>('')
     const [error, setError] = useState<string>('')
@@ -20,13 +20,14 @@ export default function Profile() {
         const newBio = e.target.value;
 
         if (newBio.length > 140) {
-            setError('*The number of characters exceeded the limit.');
+            setError('* The number of characters exceeded the limit.');
         } else {
             setError('');
         }
 
         setBio(newBio.slice(0, 140));
     };
+
     return (
         <FlexDiv $direction="column" $gap="32px" $margin="32px 0 0 0">
             <MiningStatus />
@@ -47,7 +48,7 @@ export default function Profile() {
                                 }}
                             >
                                 <P $color="#929092" $fontSize="12px" style={{ lineHeight: '28px' }}>Highest Score</P>
-                                <P $fontSize="20px">102</P>
+                                <P $fontSize="20px">{highScore}</P>
                             </FlexDiv>
                             <FlexDiv $direction="column" $padding="0 16px">
                                 <P $color="#929092" $fontSize="12px" style={{ lineHeight: '28px' }}>World Ranking</P>

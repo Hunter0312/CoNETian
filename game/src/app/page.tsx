@@ -13,6 +13,8 @@ import Settings from '@/pages/settings';
 import Profile from "@/pages/profile";
 import Shopping from '@/pages/shopping';
 import Roulette from '@/pages/roulette';
+import Earn from '@/pages/earn';
+import { Toaster } from 'react-hot-toast';
 
 const S = {
   Main: styled.div`
@@ -105,7 +107,7 @@ function CurrentPage() {
     "/about": <About />,
     "/settings": <Settings />,
     "/shopping": <Shopping />,
-    "/earn": <p>earn</p>,
+    "/earn": <Earn />,
     "/roulette": <Roulette />,
     "/playground": <Playground />,
     "/profile": <Profile />
@@ -152,6 +154,7 @@ export default function App() {
 
   return (
     <>
+      <Toaster />
       <S.Main>
         <CurrentPage />
       </S.Main>

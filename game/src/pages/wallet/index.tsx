@@ -1,5 +1,6 @@
 import BackButton from '@/components/backButton';
 import { Button } from "@/components/button";
+import CurrentBalance from '@/components/currentBalance';
 import { FlexDiv } from "@/components/div";
 import MiningStatus from "@/components/miningStatus";
 import { P } from "@/components/p";
@@ -104,22 +105,7 @@ export default function Wallet() {
 
         <BackButton text="My Wallet" />
 
-        <FlexDiv $direction="column" $gap="12px" $width="100%">
-          <FlexDiv $gap="8px" $align="center">
-            <Image src={Img.LogoImg} width={32} height={32} alt="Conet" />
-            <P $fontSize="24px">Current balance</P>
-          </FlexDiv>
-          <FlexDiv $gap="8px" $align="center" $justify="space-between">
-            <P $fontSize="28px">
-              {profile ? (
-                formatToken(profile?.tokens?.cCNTP?.balance)
-              ) : (
-                <Skeleton width={200} />
-              )}
-            </P>
-            <P $fontSize="12px">CNTP EARNED</P>
-          </FlexDiv>
-        </FlexDiv>
+        <CurrentBalance />
 
         <FlexDiv $direction="column" $gap="8px" $width="100%">
           <FlexDiv

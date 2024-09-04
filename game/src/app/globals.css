@@ -159,3 +159,18 @@ a {
 .white-text-shadow {
   text-shadow: 0px 0px 8px #ffffff80;
 }
+
+.text-primary-gradient {
+  background: linear-gradient(90.11deg, #79f8ff 0.04%, #d775ff 72.97%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-max-width {
+  max-width: 340px;
+}
+
+.small-text-max-width {
+  max-width: 240px;
+}

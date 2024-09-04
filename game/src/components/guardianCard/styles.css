@@ -1,0 +1,13 @@
+.guardian-wrapper {
+  overflow: hidden;
+
+  cursor: pointer;
+}
+
+.guardian-wrapper img {
+  position: absolute;
+  right: -10%;
+  top: -25%;
+
+  opacity: .1;
+}

@@ -1,6 +1,6 @@
 export const Img = {
   UserDefaultImg: "/userDefault.png",
-  RightArrowImg: "/rightArrow.png",
+  RightArrowImg: "/rightArrow.svg",
   VolumeImg: "/volume.png",
   UserGroupImg: "/userGroup.png",
   ShareImg: "/share.png",
@@ -47,4 +47,8 @@ export const Img = {
   DoubleWinHighlight: "/double-win-highlight.png",
   DoubleLose: "/double-lose.png",
   DoubleLoseHighlight: "/double-lose-highlight.png",
+  Coin: "/coin.svg",
+  TaskCheck: "/check.svg",
+  OpenExternal: "/openExternal.svg",
+  Share: "/share.svg",
 };

@@ -27,7 +27,7 @@ export const Div = styled.div.attrs<{
   border-radius: ${(props) => props.$radius};
   width: ${(props) => props.$width};
   height: ${(props) => props.$height};
-  background-color: ${(props) => props.$background};
+  background: ${(props) => props.$background};
   position: ${(props) => props.$position};
   top: ${(props) => props.$top};
   bottom: ${(props) => props.$bottom};
@@ -50,6 +50,7 @@ export const FlexDiv = styled(Div).attrs<{
   $align: props.$align || "unset",
   $gap: props.$gap || "0",
   $grow: props.$grow,
+  $flex: props.$flex,
 }))`
   display: flex;
   flex-direction: ${(props) => props.$direction};

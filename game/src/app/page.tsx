@@ -12,6 +12,7 @@ import Settings from '@/pages/settings';
 import Shopping from '@/pages/shopping';
 import Roulette from '@/pages/roulette';
 import Earn from '@/pages/earn';
+import { Toaster } from 'react-hot-toast';
 
 const S = {
   Main: styled.div`
@@ -148,6 +149,7 @@ export default function App() {
   }, []);
   return (
     <>
+      <Toaster />
       <S.Main>
         <CurrentPage />
       </S.Main>

@@ -1,0 +1,31 @@
+.task:not(.completed) {
+  cursor: pointer;
+}
+
+.task .text-content {
+  flex: 1;
+}
+
+.modal-content {
+  border: 1px solid #E5E5E580 !important;
+  border-top-right-radius: 24px !important;
+  border-top-left-radius: 24px !important;
+}
+
+.modal-content > button.close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+}
+
+button:disabled {
+
+  cursor: default;
+}
+
+.text-overflow {
+  max-width: 176px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,10 +1,10 @@
 import BackButton from '@/components/backButton';
 import { Button } from '@/components/button';
+import CurrentBalance from '@/components/currentBalance';
 import { FlexDiv } from '@/components/div';
 import MiningStatus from '@/components/miningStatus';
 import { P } from '@/components/p';
 import { Img } from '@/utilitiy/images';
-import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -17,16 +17,7 @@ export default function Wallet() {
 
       <BackButton text="My Wallet" />
 
-      <FlexDiv $direction="column" $gap="12px" $width="100%">
-        <FlexDiv $gap="8px" $align="center">
-          <Image src={Img.LogoImg} width={32} height={32} alt="Conet" />
-          <P $fontSize="24px">Current balance</P>
-        </FlexDiv>
-        <FlexDiv $gap="8px" $align="center" $justify="space-between">
-          <P $fontSize="28px">1645.000645</P>
-          <P $fontSize="12px">CNTP EARNED</P>
-        </FlexDiv>
-      </FlexDiv>
+      <CurrentBalance />
 
       <FlexDiv $direction="column" $gap="8px" $width='100%'>
         <FlexDiv $direction="column" $gap="16px" $height="200px" $width="100%" $padding="14px 24px" $border="1px solid rgba(255, 255, 255, .1)" $radius="16px">

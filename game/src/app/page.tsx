@@ -11,6 +11,7 @@ import About from '@/pages/about';
 import Settings from '@/pages/settings';
 import Shopping from '@/pages/shopping';
 import Roulette from '@/pages/roulette';
+import Earn from '@/pages/earn';
 
 const S = {
   Main: styled.div`
@@ -102,8 +103,8 @@ function CurrentPage() {
     "/wallet": <Wallet />,
     "/about": <About />,
     "/settings": <Settings />,
-    /* "/earn": <p>earn</p>, */
-    "/earn": <Shopping />,
+    "/earn": <Earn />,
+    "/shop": <Shopping />,
     "/roulette": <Roulette />
   }
 

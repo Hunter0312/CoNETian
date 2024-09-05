@@ -66,11 +66,12 @@ export default function Earn() {
         {
           tasks.map((category) => (
             <FlexDiv $direction="column" key={category.title} $gap="12px" className="task-category">
-              <FlexDiv $gap="5px">
+              <FlexDiv $gap="5px" $align="center">
+                {category.icon && <Image alt={category.title} width={24} height={24} src={category.icon} />}
                 <P $fontSize="24px">{category.title}</P>
               </FlexDiv>
               {
-                category.tasks.map((task) => (
+                category.tasks.filter((task) => task.active).map((task) => (
                   <FlexDiv key={task.title} $gap="16px" $padding="16px" $border="1px solid #FFFFFF1A" $radius="16px" $align="center" className={`task ${task.completed ? 'completed': ''}`} onClick={() => chooseTask(task)}>
                     {
                       task.logo && (

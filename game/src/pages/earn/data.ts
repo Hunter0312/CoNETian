@@ -2,6 +2,7 @@ import { Img } from '@/utilitiy/images';
 
 export interface TaskCategory {
   title: string;
+  icon?: string;
   tasks: Task[];
 }
 
@@ -11,17 +12,19 @@ export interface Task {
   completed: boolean;
   logo?: {
     uri?: string;
-    color: string;
+    color?: string;
   },
   resource?: string;
   caption?: string;
   referral?: boolean;
   cta?: string;
+  active: boolean;
 }
 
 export const taskCategories = [
   {
     title: "Send Invitation",
+    icon: Img.TaskInvitation,
     tasks: [
       {
         title: "Invite Friends",
@@ -29,11 +32,13 @@ export const taskCategories = [
         completed: false,
         caption: "Share your referral link and earn CNTP when your friends join us! It might take a time to process it.",
         referral: true,
+        active: true,
       }
     ]
   },
   {
     title: "Join Us",
+    icon: Img.TaskJoin,
     tasks: [
       {
         title: "Follow Us on X",
@@ -45,7 +50,8 @@ export const taskCategories = [
         },
         caption: "Follow Us on X and earn CNTPs just for staying connected!",
         cta: "Open X",
-        resource: "x.com/conet_network?lang=en"
+        resource: "x.com/conet_network?lang=en",
+        active: true,
       },
       {
         title: "Join our Community",
@@ -58,6 +64,7 @@ export const taskCategories = [
         caption: "Join our Community on Telegram and earn CNTPs just for staying connected!",
         cta: "Open Telegram",
         resource: "https://t.me/conet_network",
+        active: true,
       },
       {
         title: "Join our Server",
@@ -70,19 +77,22 @@ export const taskCategories = [
         caption: "Join our Server on Discord and earn CNTPs just for staying connected!",
         cta: "Open Discord",
         resource: "https://discord.gg/JrpMBFkewd",
+        active: true,
       }
     ]
   },
   {
     title: "Daily Tasks",
+    icon: Img.TaskDaily,
     tasks: [
       {
         title: "Quiz",
         reward: 2,
         completed: false,
         logo: {
-          uri: Img.CommonTask,
-        }
+          uri: Img.TaskQuiz,
+        },
+        active: false,
       },
       {
         title: "Interact with Us on X",
@@ -91,12 +101,14 @@ export const taskCategories = [
         logo: {
           uri: Img.TwitterX,
           color: "#000000",
-        }
+        },
+        active: true,
       }
     ]
   },
   {
     title: "Extras",
+    icon: Img.TaskExtras,
     tasks: [
       {
         title: "Follow Collaborator",
@@ -104,7 +116,8 @@ export const taskCategories = [
         completed: true,
         logo: {
           color: "#CC00D0"
-        }
+        },
+        active: true,
       },
       {
         title: "Join Collab Community",
@@ -112,7 +125,8 @@ export const taskCategories = [
         completed: false,
         logo: {
           color: "#CC00D0"
-        }
+        },
+        active: true,
       },
       {
         title: "Try Collab Mini App",
@@ -120,12 +134,14 @@ export const taskCategories = [
         completed: false,
         logo: {
           color: "#CC00D0"
-        }
+        },
+        active: true,
       }
     ]
   },
   {
     title: "Finished Tasks",
+    icon: Img.TaskFinished,
     tasks: [
       {
         title: "Daily Task",
@@ -133,7 +149,8 @@ export const taskCategories = [
         completed: true,
         logo: {
           uri: Img.CommonTask,
-        }
+        },
+        active: true,
       },
       {
         title: "Watch Video",
@@ -141,7 +158,8 @@ export const taskCategories = [
         completed: true,
         logo: {
           uri: Img.WatchVideo,
-        }
+        },
+        active: true,
       }
     ]
   }

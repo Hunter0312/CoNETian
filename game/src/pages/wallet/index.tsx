@@ -4,7 +4,7 @@ import CurrentBalance from '@/components/currentBalance';
 import { FlexDiv } from "@/components/div";
 import MiningStatus from "@/components/miningStatus";
 import { P } from "@/components/p";
-import { formatToken, slice } from "@/utilitiy/functions";
+import { slice } from "@/utilitiy/functions";
 import { Img } from "@/utilitiy/images";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import Image from "next/image";

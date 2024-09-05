@@ -1,3 +1,5 @@
+import { Img } from '@/utilitiy/images';
+
 export interface TaskCategory {
   title: string;
   tasks: Task[];
@@ -38,6 +40,7 @@ export const taskCategories = [
         reward: 2,
         completed: true,
         logo: {
+          uri: Img.TwitterX,
           color: "#000000",
         },
         caption: "Follow Us on X and earn CNTPs just for staying connected!",
@@ -49,6 +52,7 @@ export const taskCategories = [
         reward: 2,
         completed: false,
         logo: {
+          uri: Img.Telegram,
           color: "#66ACDD",
         },
         caption: "Join our Community on Telegram and earn CNTPs just for staying connected!",
@@ -60,6 +64,7 @@ export const taskCategories = [
         reward: 2,
         completed: false,
         logo: {
+          uri: Img.Discord,
           color: "#5865F2",
         },
         caption: "Join our Server on Discord and earn CNTPs just for staying connected!",
@@ -75,12 +80,16 @@ export const taskCategories = [
         title: "Quiz",
         reward: 2,
         completed: false,
+        logo: {
+          uri: Img.CommonTask,
+        }
       },
       {
         title: "Interact with Us on X",
         reward: 2,
         completed: false,
         logo: {
+          uri: Img.TwitterX,
           color: "#000000",
         }
       }
@@ -122,11 +131,17 @@ export const taskCategories = [
         title: "Daily Task",
         reward: 2,
         completed: true,
+        logo: {
+          uri: Img.CommonTask,
+        }
       },
       {
         title: "Watch Video",
         reward: 2,
         completed: true,
+        logo: {
+          uri: Img.WatchVideo,
+        }
       }
     ]
   }

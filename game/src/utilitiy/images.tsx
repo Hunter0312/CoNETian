@@ -51,4 +51,9 @@ export const Img = {
   TaskCheck: "/check.svg",
   OpenExternal: "/openExternal.svg",
   Share: "/share.svg",
+  Discord: "/Discord.svg",
+  TwitterX: "/TwitterX.svg",
+  Telegram: "/Telegram.svg",
+  WatchVideo: "/WatchVideo.svg",
+  CommonTask: "/CommonTask.svg",
 };

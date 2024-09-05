@@ -13,6 +13,7 @@ import { Button } from '@/components/button';
 
 import "./styles.css";
 import toast from 'react-hot-toast';
+import copy from 'copy-to-clipboard';
 
 export default function Earn() {
   const [tasks, setTasks] = useState<TaskCategory[]>(taskCategories);
@@ -34,7 +35,7 @@ export default function Earn() {
 
   function copyReferralLink() {
     //Copy and Toast
-    navigator.clipboard.writeText(userReferralLink);
+    copy(userReferralLink);
 
     toast.success("Referral Link copied to the clipbboard!", {
       position: "bottom-center",
@@ -75,7 +76,7 @@ export default function Earn() {
                       task.logo && (
                         <FlexDiv $width="60px" $height="60px" $background={task.logo?.color || "transparent"} $radius="8px" $justify="center" $align="center">
                           {task.logo.uri && (
-                            <Image src={task.logo.uri} alt="Task" width={28} height={28} />
+                            <Image src={task.logo.uri} alt="Task" width={task.logo.color ? 28 : 48} height={task.logo.color ? 28 : 48} />
                           )}
                         </FlexDiv>
                       )

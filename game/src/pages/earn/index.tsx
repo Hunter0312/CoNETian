@@ -12,8 +12,9 @@ import Modal from '@/components/modal';
 import { Button } from '@/components/button';
 
 import "./styles.css";
-import toast from 'react-hot-toast';
-import copy from 'copy-to-clipboard';
+import DailyClaim from './tasks/DailyClaim';
+import CommonTask from './tasks/CommonTask';
+import DailyQuiz from './tasks/DailyQuiz';
 
 export default function Earn() {
   const [tasks, setTasks] = useState<TaskCategory[]>(taskCategories);
@@ -29,18 +30,7 @@ export default function Earn() {
   }
 
   function closeTask() {
-
     setChoosenTask(undefined);
-  }
-
-  function copyReferralLink() {
-    //Copy and Toast
-    copy(userReferralLink);
-
-    toast.success("Referral Link copied to the clipbboard!", {
-      position: "bottom-center",
-      duration: 2000,
-    });
   }
 
   function buttonAction() {
@@ -108,35 +98,16 @@ export default function Earn() {
               <FlexDiv $background="#111113E5" $width="100%" $padding="24px" className="modal-content" $direction="column" $align="center" $position="relative" $gap="24px">
                 <Button className="close" onClick={closeTask}>X</Button>
                 <P $fontSize="20px">{choosenTask.title}</P>
-                <FlexDiv $gap="12px" $align="center">
-                  {
-                    choosenTask.logo && (
-                      <FlexDiv $width="100px" $height="100px" $background={choosenTask.logo.color || "transparent"} $radius="8px" $justify="center" $align="center">
-                        {choosenTask.logo.uri && (
-                          <Image src={choosenTask.logo.uri} alt="Task" width={28} height={28} />
-                        )}
-                      </FlexDiv>
-                    )
-                  }
-                  <FlexDiv $flex={1} $direction="column" $gap="12px">
-                    <P $fontSize="14px">{choosenTask.caption}</P>
-                    <FlexDiv $gap="5px" $align="center">
-                        <Image src={Img.Coin} alt="CNTP" width={32} height={32} />
-                        <P $fontSize="14px">+{choosenTask.reward} CNTPs</P>
-                      </FlexDiv>
-                  </FlexDiv>
-                </FlexDiv>
                 {
-                  choosenTask.referral && (
-                    <FlexDiv $width="100%" $direction="column">
-                      <P $color="#C8C6C8" $fontSize="18px">Your referral link:</P>
-                      <FlexDiv $justify="space-between" $padding="8px 16px">
-                        <P className="text-overflow">{userReferralLink}</P>
-                        <Button onClick={copyReferralLink}>
-                          <Image src={Img.CopyImg} alt="Copy" width={24} height={24} />
-                        </Button>
-                      </FlexDiv>
-                    </FlexDiv>
+                  choosenTask.claim ? (
+                    <DailyClaim />
+                  ) : choosenTask.quiz ? (
+                    <DailyQuiz />
+                  ) : (
+                    <CommonTask
+                      choosenTask={choosenTask}
+                      referral={choosenTask.referral ? userReferralLink : ""}
+                    />
                   )
                 }
                 {
@@ -148,7 +119,7 @@ export default function Earn() {
                         <P>Check your rewards in the Earn Page</P>
                       </FlexDiv>
                     </FlexDiv>
-                  ) : (
+                  ) : (choosenTask.referral || choosenTask.cta) && (
                     <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={buttonAction} $padding="18px">
                       <FlexDiv $align="center" $gap="8px">
                         <Image src={choosenTask.referral ? Img.Share : Img.OpenExternal} alt="Open External" width={24} height={24} />

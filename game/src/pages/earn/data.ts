@@ -8,8 +8,8 @@ export interface TaskCategory {
 
 export interface Task {
   title: string;
-  reward: number;
-  completed: boolean;
+  reward?: number;
+  completed?: boolean;
   logo?: {
     uri?: string;
     color?: string;
@@ -18,8 +18,14 @@ export interface Task {
   caption?: string;
   referral?: boolean;
   cta?: string;
+  quiz?: boolean;
+  claim?: boolean;
   active: boolean;
 }
+
+export const quiz = [
+
+]
 
 export const taskCategories = [
   {
@@ -32,6 +38,22 @@ export const taskCategories = [
         completed: false,
         caption: "Share your referral link and earn CNTP when your friends join us! It might take a time to process it.",
         referral: true,
+        active: true,
+      }
+    ]
+  },
+  {
+    title: "Daily Rewards",
+    icon: Img.TaskDaily,
+    tasks: [
+      {
+        title: "Daily Claim",
+        claim: true,
+        logo: {
+          uri: Img.DailyClaim,
+        },
+        caption: "Claim daily rewards and earn CNTPs by logging in each day without skipping!",
+        cta: "Claim today’s reward",
         active: true,
       }
     ]
@@ -92,7 +114,8 @@ export const taskCategories = [
         logo: {
           uri: Img.TaskQuiz,
         },
-        active: false,
+        quiz: true,
+        active: true,
       },
       {
         title: "Interact with Us on X",

@@ -6,32 +6,24 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 interface Props {
+  pageState: 1 | 2 | 3 | 4 | 5;
+  prizeNumber: number;
+  double: ImageStateType;
   handleDouble: () => void;
   backToRoulette: () => void;
   doubleFinished: boolean;
-  doubleFailed: boolean;
+  doubleRunning: boolean;
 }
 
-type ImageStateType = 'normal' | 'win' | 'lose';
+type ImageStateType = 'off' | 'win' | 'lose';
 
 const ImageScheme: Record<ImageStateType, any> = {
-  normal: [Img.DoubleWin, Img.DoubleLose],
+  off: [Img.DoubleWin, Img.DoubleLose],
   win: [Img.DoubleWinHighlight, Img.DoubleLose],
   lose: [Img.DoubleWin, Img.DoubleLoseHighlight],
 }
 
-export default function PageState2({ handleDouble, backToRoulette, doubleFinished, doubleFailed }: Props) {
-  const [imageState, setImageState] = useState<ImageStateType>('normal');
-
-  useEffect(() => {
-    if (!doubleFinished) return;
-
-    if (doubleFailed) {
-      setImageState('lose');
-    } else {
-      setImageState('win');
-    }
-  }, [doubleFinished, doubleFailed])
+export default function PageState2({ pageState, double, prizeNumber, handleDouble, backToRoulette, doubleFinished, doubleRunning }: Props) {
 
   return (
     <>
@@ -39,40 +31,47 @@ export default function PageState2({ handleDouble, backToRoulette, doubleFinishe
         <FlexDiv $direction="column" $gap="24px" $width="296px" $align="center">
           {
             doubleFinished ? (
-              doubleFailed ? (
-                // eslint-disable-next-line react/no-unescaped-entities
+              pageState === 4 ? (
                 <P $fontSize="24px" $align="center">Sorry, you didn't get any extra CNTP</P>
               ) : (
                 <>
                   <P $fontSize="24px" className="white-text-shadow">You won!</P>
-                  <P $fontSize="32px" className="white-text-shadow">20 extra CNTP!</P>
+                  <P $fontSize="32px" className="white-text-shadow">{prizeNumber || 0} extra CNTP!</P>
                 </>
               )
             ) : (
-              <>
-                <P $fontSize="24px" $align="center" className="white-text-shadow">Try to Double your current Prize!</P>
-                <P $fontSize="18px" $align="center">You won 10 CNTP!</P>
-              </>
+              doubleRunning ? (
+                <>
+                </>
+              ) : (
+                <>
+                  <P $fontSize="24px" $align="center" className="white-text-shadow">Try to Double your current Prize!</P>
+                  <P $fontSize="18px" $align="center">You won {prizeNumber || 0} CNTP!</P>
+                </>
+              )
             )
           }
         </FlexDiv>
+
         <FlexDiv $gap="20px" $width="100%" $height="400px">
           <FlexDiv $position="relative" style={{ flex: 1 }} $justify="center" $align="center">
-            <Image src={ImageScheme[imageState][0]} alt="Win" fill style={{ objectFit: "contain" }} />
+            <Image src={ImageScheme[double][0]} alt="Win" fill style={{ objectFit: "contain" }} />
           </FlexDiv>
           <FlexDiv $position="relative" style={{ flex: 1 }} $justify="center" $align="center">
-            <Image src={ImageScheme[imageState][1]} alt="Lose" fill style={{ objectFit: "contain" }} />
+            <Image src={ImageScheme[double][1]} alt="Lose" fill style={{ objectFit: "contain" }} />
           </FlexDiv>
         </FlexDiv>
+
         {
           !doubleFinished && (
             <P>18</P>
           )
         }
+
       </FlexDiv>
       <FlexDiv $direction="column" $align="center" $margin="40px 0 0 0" $gap="20px">
         {
-          !doubleFinished && (
+          pageState !== 4 && (
             <div className="highlight-button-wrapper">
               <Button $background="#111113" $width="196px" $height="45px" $radius="8px" onClick={handleDouble}>
                 Try to double

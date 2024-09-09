@@ -3,7 +3,7 @@ import { Div, FlexDiv } from '@/components/div';
 import { P } from '@/components/p';
 import { Img } from '@/utilitiy/images';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Props {
   pageState: 1 | 2 | 3 | 4 | 5;
@@ -24,6 +24,23 @@ const ImageScheme: Record<ImageStateType, any> = {
 }
 
 export default function PageState2({ pageState, double, prizeNumber, handleDouble, backToRoulette, doubleFinished, doubleRunning }: Props) {
+  const [counter, setCounter] = useState(20);
+  const interval = useRef<NodeJS.Timeout | undefined>(undefined);
+
+  useEffect(() => {
+    interval.current = setInterval(() => {
+      setCounter(counter => counter - 1);
+    }, 1000);
+
+    return () => clearInterval(interval.current);
+  }, []);
+
+  useEffect(() => {
+    if (counter === 0) {
+      clearInterval(interval.current);
+      backToRoulette();
+    }
+  }, [counter])
 
   return (
     <>
@@ -64,7 +81,7 @@ export default function PageState2({ pageState, double, prizeNumber, handleDoubl
 
         {
           !doubleFinished && (
-            <P>18</P>
+            <P>{counter}</P>
           )
         }
 

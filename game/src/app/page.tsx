@@ -23,6 +23,7 @@ const S = {
     height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
+    scrollbar-width: none;
   `,
 };
 

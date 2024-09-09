@@ -3,6 +3,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import Game from '../game';
 import GameOver from '../over';
 import { useGameContext } from '../../utilitiy/providers/GameProvider';
+import { FlexDiv } from '@/components/div';
+import Image from 'next/image';
+import { P } from '@/components/p';
+import { Img } from '@/utilitiy/images';
+import { formatNumberWithLeadingZeros } from '@/shared/functions';
 // import { loading, rouletteImg } from '../../shared/assets';
 // import Lottery from '../lottery';
 
@@ -46,30 +51,44 @@ const Playground: React.FC = () => {
               setRoulette={(event: boolean) => setRoulette(true)}
             />
 
-            <div style={{ "display": "flex", "flexDirection": "row", }}>
-              <p style={{ position: "fixed", color: "white", top: "40px", fontSize: "3rem", left: "50%" }}>{score}</p>
-              <p style={{ position: "fixed", color: "white", top: "40px", fontSize: "3rem", left: "10%" }} >{profile?.tickets?.balance}</p>
+            <div style={{ "display": "flex", "flexDirection": "row", alignItems: 'center', justifyContent: 'center', width: '100%', height: '10%', position: 'absolute', top: 0, }}>
+              <div style={{ display: 'flex' }}>
+                <p style={{ color: "white", fontSize: "3rem" }}>{score}</p>
+              </div>
+            </div>
+
+            <div style={{ "display": "flex", "flexDirection": "row", alignItems: 'center', justifyContent: 'flex-end', width: '100%', height: '10%', position: 'absolute', top: 0, right: 20 }}>
+              <FlexDiv $direction='column' $align='center'>
+                <Image src={Img.Tickets} alt="Tickets" width={42.15} height={32} />
+                <P>x {profile?.tickets?.balance}</P>
+              </FlexDiv>
             </div>
 
             {
               !profile || profile?.keyID === '' ?
                 <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
-                  <div className='flex justify-center items-center' style={{ gap: "5px" }}>
+                  <div style={{ position: "absolute", bottom: 20, right: 20, color: "white", display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end' }} >
                     {/* <img src={loading} style={{ width: "30px" }} /> */}
-                    <h1>loading</h1>
-                    <p style={{ fontSize: "2rem" }}>Fetching Wallet Data</p>
+                    <p style={{ fontSize: "1rem" }}>Fetching Wallet Data</p>
                   </div>
                 </div> :
-                mining ?
-                  <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
-                    <p style={{ fontSize: "1.5rem", margin: 0 }}>Mining Rate: {miningRate.toFixed(7)}</p>
-                    <p style={{ fontSize: "1.5rem", margin: 0, marginBottom: "10px" }}>Online Miners: {onlineMiners}</p>
-                  </div> : (miningError ? <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end blink_me'>
-                    <p style={{ fontSize: "2rem" }}>Failed to start mining</p>
-                  </div> :
-                    <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
-                      <p style={{ fontSize: "2rem" }}>Initiating Mining...</p>
-                    </div>)
+                mining ? (
+                  <div style={{ position: "absolute", bottom: 20, right: 20, color: "white", display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end' }} >
+                    <p style={{ fontSize: "1rem", margin: 0 }}>Mining Rate: {miningRate.toFixed(7)}</p>
+                    <p style={{ fontSize: "1rem", margin: 0, marginBottom: "10px" }}>Online Miners: {onlineMiners}</p>
+                  </div>
+                )
+                  : (
+                    miningError ? (
+                      <div style={{ position: "absolute", bottom: 20, right: 20, color: "white", display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end' }} >
+                        <p style={{ fontSize: "1rem" }}>Failed to start mining</p>
+                      </div>
+                    ) : (
+                      <div style={{ position: "absolute", bottom: 20, right: 20, color: "white", display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end' }} >
+                        <p style={{ fontSize: "1rem" }}>Initiating Mining...</p>
+                      </div>
+                    )
+                  )
             }
           </>
       }

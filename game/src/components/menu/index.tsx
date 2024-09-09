@@ -15,7 +15,7 @@ const Menu = () => {
         $padding="0 32px"
         $width="412px"
         $height="72px"
-        $background="#31313473"
+        $background="#313134EF"
         $radius="40px"
       >
         <Button onClick={() => setRouter("/")}>

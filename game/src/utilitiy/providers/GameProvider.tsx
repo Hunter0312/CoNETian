@@ -19,10 +19,6 @@ type GameContext = {
   setRouter: (props: string) => void;
   difficulty: Difficulty;
   setDifficulty: (val: Difficulty) => void;
-  effects: number;
-  setEffects: (val: number) => void;
-  music: number;
-  setMusic: (val: number) => void;
   highScore: number;
   setHighScore: (e: number) => void;
   profile: any;
@@ -56,7 +52,11 @@ type GameContext = {
   lotteryBalance: number,
   setLotteryBalance: (e: number) => void,
   audio: boolean,
-  setAudio: (e: boolean) => void,
+  setAudio: (e: boolean) => void;
+  musicVolume: number,
+  setMusicVolume: (e: number) => void;
+  effectsVolume: number,
+  setEffectsVolume: (e: number) => void;
   setGameDifficulty: (num: number) => void,
   gameDifficulty: number,
   setReferrerAddress: (e: string) => void,
@@ -80,8 +80,6 @@ type GameProps = {
 export function GameProvider({ children }: GameProps) {
   const [router, setRouter] = useState<string>("/");
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
-  const [music, setMusic] = useState<number>(70);
-  const [effects, setEffects] = useState<number>(70);
   const [highScore, setHighScore] = useState<number>(0);
   const [profile, setProfile] = useState<any>(null);
   const [leaderboard, setLeaderboard] = useState<Leaderboard>({
@@ -103,6 +101,8 @@ export function GameProvider({ children }: GameProps) {
   const [lotteryBalance, setLotteryBalance] = useState<number>(0);
   const [isLeaderboardLoading, setIsLeaderboardLoading] = useState<boolean>(true);
   const [audio, setAudio] = useState<boolean>(false);
+  const [musicVolume, setMusicVolume] = useState<number>(70);
+  const [effectsVolume, setEffectsVolume] = useState<number>(70);
   const [referrerAddress, setReferrerAddress] = useState<string>('');
   const [games, setGames] = useState<object>({
     gameSpeed: 0,
@@ -167,10 +167,6 @@ export function GameProvider({ children }: GameProps) {
         setRouter,
         difficulty,
         setDifficulty,
-        effects,
-        setEffects,
-        music,
-        setMusic,
         highScore,
         setHighScore,
         profile,
@@ -205,6 +201,10 @@ export function GameProvider({ children }: GameProps) {
         isLeaderboardLoading,
         audio,
         setAudio,
+        musicVolume,
+        setMusicVolume,
+        effectsVolume,
+        setEffectsVolume,
         setGameDifficulty,
         gameDifficulty,
         setReferrerAddress,

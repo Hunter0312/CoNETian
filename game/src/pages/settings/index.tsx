@@ -15,10 +15,10 @@ export default function Settings() {
     setRouter,
     difficulty,
     setDifficulty,
-    music,
-    setMusic,
-    effects,
-    setEffects,
+    musicVolume,
+    setMusicVolume,
+    effectsVolume,
+    setEffectsVolume,
   } = useGameContext();
 
   const musicRef = useRef<any>();
@@ -31,9 +31,9 @@ export default function Settings() {
   }
 
   useEffect(() => {
-    updateTrackColor(musicRef.current, String(music));
-    updateTrackColor(effectsRef.current, String(effects));
-  }, [effects, music]);
+    updateTrackColor(musicRef.current, String(musicVolume));
+    updateTrackColor(effectsRef.current, String(effectsVolume));
+  }, [effectsVolume, musicVolume]);
 
   return (
     <PageWrapper margin="32px 16px 140px 16px">
@@ -65,7 +65,7 @@ export default function Settings() {
         <P $fontSize="22px">Sounds</P>
         <FlexDiv $padding="12px 0" $align="center" $gap="8px">
           <FlexDiv $gap="8px" $align="center" $width="100px">
-            <Image width={32} height={32} alt="Arrow" src={effects > 0 ? Img.SoundOn : Img.SoundOff} />
+            <Image width={32} height={32} alt="Arrow" src={effectsVolume > 0 ? Img.SoundOn : Img.SoundOff} />
             <P $fontSize="13px">EFFECTS</P>
           </FlexDiv>
           <input
@@ -73,8 +73,8 @@ export default function Settings() {
             className="range-input"
             type="range"
             min={0} max={100} step={1}
-            value={effects} onChange={(e) => {
-              setEffects(Number(e.target.value));
+            value={effectsVolume} onChange={(e) => {
+              setEffectsVolume(Number(e.target.value));
               updateTrackColor(effectsRef.current, e.target.value);
             }}
             style={{ marginLeft: "8px", flex: 1 }}
@@ -82,7 +82,7 @@ export default function Settings() {
         </FlexDiv>
         <FlexDiv $padding="12px 0" $align="center" $gap="12px">
           <FlexDiv $gap="8px" $align="center" $width="100px">
-            <Image width={32} height={32} alt="Arrow" src={music > 0 ? Img.SoundOn : Img.SoundOff} />
+            <Image width={32} height={32} alt="Arrow" src={musicVolume > 0 ? Img.SoundOn : Img.SoundOff} />
             <P $fontSize="13px">MUSIC</P>
           </FlexDiv>
           <input
@@ -90,8 +90,8 @@ export default function Settings() {
             className="range-input"
             type="range"
             min={0} max={100} step={1}
-            value={music} onChange={(e) => {
-              setMusic(Number(e.target.value));
+            value={musicVolume} onChange={(e) => {
+              setMusicVolume(Number(e.target.value));
               updateTrackColor(musicRef.current, e.target.value);
             }}
             style={{ flex: 1 }}

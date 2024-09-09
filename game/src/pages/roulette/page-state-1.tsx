@@ -61,7 +61,7 @@ export default function PageState1({ pageState, isSpinning, handleSpin, mustSpin
         </div>
       </div>
 
-      <FlexDiv $direction="column" $gap="16px">
+      <FlexDiv $direction="column" $gap="16px" $align='center' $justify='center'>
         {profile?.tickets?.balance !== '0' ? (
           isSpinning ? (
             <Button $width="196px" $height="45px" $radius="8px" $border="1px solid #04DAE8" disabled $background={"gray"}>
@@ -79,8 +79,14 @@ export default function PageState1({ pageState, isSpinning, handleSpin, mustSpin
         )}
 
         <FlexDiv $align="center" $justify="center" $gap="8px">
-          <Image src={Img.Tickets} alt="Ticket" width={20} height={20} />
-          <P $fontSize="12px">Use 1 ticket to Spin</P>
+          {profile?.tickets?.balance !== '0' && !mustSpin ? (
+            <>
+              <Image src={Img.Tickets} alt="Ticket" width={20} height={20} />
+              <P $fontSize="12px">Use 1 ticket to Spin</P>
+            </>
+          ) : (
+            <P $fontSize="12px" $color='#FFDAD6' $align='center' $width='70%'>You don't have enough tickets to spin the roulette</P>
+          )}
         </FlexDiv>
       </FlexDiv>
 

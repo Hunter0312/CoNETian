@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import Game from '../game';
-// import GameOver from '../over';
+import GameOver from '../over';
 import { useGameContext } from '../../utilitiy/providers/GameProvider';
 // import { loading, rouletteImg } from '../../shared/assets';
 // import Lottery from '../lottery';
@@ -38,8 +38,7 @@ const Playground: React.FC = () => {
     <>
       {
         gameStatus === 1 ?
-          // <GameOver setRestart={() => gameStatusHandle(0)} score={score} hScore={highScore} /> :
-          <h1> game over</h1> :
+          <GameOver setRestart={() => gameStatusHandle(0)} score={score} hScore={highScore} /> :
           <>
             <Game
               setGameStatus={(event: number) => gameStatusHandle(event)} gameStatus={gameStatus}

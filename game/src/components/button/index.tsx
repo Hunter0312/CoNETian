@@ -44,13 +44,14 @@ const GradientImage = styled(FlexDiv)`
     #04dae8 75%
   );
   padding: 1px;
-  border-radius: 32px;
+  border-radius:  ${(props) => props.$radius};
   flex: ${(props) => props.$flex};
 `;
 
 type GradientButtonProps = {
   children: ReactNode;
   width?: string;
+  radius?: string;
   flex?: number;
   onClick?: () => void;
 };
@@ -58,15 +59,16 @@ type GradientButtonProps = {
 export const GradientButton: React.FC<GradientButtonProps> = ({
   children,
   width,
+  radius,
   flex,
   onClick,
 }) => {
   return (
-    <GradientImage $flex={flex}>
+    <GradientImage $radius={radius || "32px"} $flex={flex}>
       <Button
         $background="#252527"
         $padding="16px 24px"
-        $radius="32px"
+        $radius={radius || "32px"}
         $fontSize="14px"
         $width={width}
         onClick={onClick}

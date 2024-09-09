@@ -68,3 +68,14 @@ button:disabled {
 .reward-taken {
   margin: 14px 0;
 }
+
+.quiz-backdrop {
+  box-shadow: 0px 0px 80px 0px #FF41054D;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.small-dropshadow {
+  text-shadow: 0px 0px 20px #FFFFFF80;
+}

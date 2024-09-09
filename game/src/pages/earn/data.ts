@@ -2,6 +2,20 @@ import { Img } from '@/utilitiy/images';
 
 type RewardType = "CNTP" | "KEY" | "TICKET";
 
+export interface Quiz {
+  title: string;
+  caption: string;
+  questions: QuizQuestion[];
+  reward: number;
+}
+
+export interface QuizQuestion {
+  quest: string;
+  options: string[];
+  answerIndex: number;
+  timer: number;
+}
+
 export interface TaskCategory {
   title: string;
   icon?: string;
@@ -29,6 +43,20 @@ export interface Task {
   quiz?: boolean;
   claim?: boolean;
   active: boolean;
+}
+
+export const dailyQuiz: Quiz = {
+  reward: 1,
+  title: "What is a Wallet?",
+  caption: "A digital wallet is a software application that allows you to store, send, and receive cryptocurrencies. It interacts with blockchain networks and manages your private and public keys, which are crucial for conducting transactions.",
+  questions: [
+    {
+      quest: "What is the primary function of a cryptocurrency wallet?",
+      options: ["To store physical coins", "To securely store and manage your cryptocurrencies and keys", "To make online purchases only"],
+      answerIndex: 1,
+      timer: 15,
+    }
+  ]
 }
 
 export const dailyClaims: Day[] = [

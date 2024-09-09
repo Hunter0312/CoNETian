@@ -9,7 +9,7 @@ const Menu = () => {
   const { router, setRouter } = useGameContext();
 
   return (
-    <FlexDiv $position="fixed" $width="100%" $bottom="50px" $justify="center">
+    <FlexDiv $position="fixed" $width="100%" $bottom="50px" $justify="center" $index="10">
       <FlexDiv
         $justify="space-between"
         $padding="0 32px"

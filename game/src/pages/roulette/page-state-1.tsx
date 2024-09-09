@@ -6,7 +6,7 @@ import { Img } from '@/utilitiy/images';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-const Wheel = dynamic(() => import('react-custom-roulette').then((mod) => mod.Wheel), { ssr: false, });
+import { Wheel } from 'react-custom-roulette';
 
 interface Props {
   pageState: 1 | 2 | 3 | 4 | 5;
@@ -42,12 +42,12 @@ export default function PageState1({ pageState, handleSpin, mustSpin, setMustSpi
         }
       </div>
 
-      <div style={{ flex: 1, position: "relative", width: "100%", minHeight: "400px" }}>
+      <div style={{ flex: 1, position: "relative" }}>
         <Wheel
           mustStartSpinning={mustSpin}
           prizeNumber={rouletteResultMapping[prizeNumber] ?? 0}
           data={wheelData}
-          spinDuration={1}
+          spinDuration={0.5}
           outerBorderColor={localStorage.getItem('mui-mode') === 'light' ? "#D6E3FF" : "#f5eeee"}
           outerBorderWidth={1}
           radiusLineWidth={0}
@@ -55,14 +55,19 @@ export default function PageState1({ pageState, handleSpin, mustSpin, setMustSpi
           onStopSpinning={() => {
             setMustSpin(false);
           }}
-        // pointerProps={pointerProperties}
+          pointerProps={pointerProperties}
         />
       </div>
 
       <FlexDiv $direction="column" $gap="16px">
-        <Button $width="196px" $height="45px" $radius="8px" $border="1px solid #04DAE8" onClick={profile?.tickets?.balance ? handleSpin : () => { }} disabled={profile?.tickets?.balance ? false : true} $background={profile?.tickets?.balance ? "" : "gray"}>
-          {pageState === 1 ? "Spin" : "Spin Again"}
-        </Button>
+        {profile?.tickets?.balance !== '0' && !mustSpin ? (
+          <Button $width="196px" $height="45px" $radius="8px" $border="1px solid #04DAE8" onClick={handleSpin}>
+            {pageState === 1 ? "Spin" : "Spin Again"}
+          </Button>) : (
+          <Button $width="196px" $height="45px" $radius="8px" $border="1px solid #04DAE8" disabled $background={"gray"}>
+            {pageState === 1 ? "Spin" : "Spin Again"}
+          </Button>
+        )}
 
         <FlexDiv $align="center" $justify="center" $gap="8px">
           <Image src={Img.Tickets} alt="Ticket" width={20} height={20} />

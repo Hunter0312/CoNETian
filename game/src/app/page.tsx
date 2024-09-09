@@ -158,7 +158,7 @@ export default function App() {
       <S.Main>
         <CurrentPage />
       </S.Main>
-      <Menu />
+      {!router.includes("/playground") && <Menu />}
     </>
   );
 }

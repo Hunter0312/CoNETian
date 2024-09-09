@@ -9,12 +9,14 @@ import conetAnonymousIcon from '@/assets/conet-anonymous-icon.svg'
 import { useState } from "react";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import BackButton from "@/components/backButton";
+import { formatToken } from "@/utilitiy/functions";
 
 export default function Profile() {
     const { setRouter, highScore } = useGameContext();
     const [name, setName] = useState<string>('')
     const [bio, setBio] = useState<string>('')
     const [error, setError] = useState<string>('')
+    const { profile } = useGameContext();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newBio = e.target.value;
@@ -81,7 +83,7 @@ export default function Profile() {
             </FlexDiv>
             <FlexDiv $padding="0 16px" $direction="column" $gap="16px">
                 <P $fontSize="24px" style={{ lineHeight: '32px', letterSpacing: '0.1px' }}>My Achievements</P>
-                <P $fontSize="20px" style={{ lineHeight: '16px' }}>1645.000645 CNTP EARNED</P>
+                <P $fontSize="20px" style={{ lineHeight: '16px' }}>{formatToken(profile?.tokens?.cCNTP?.balance)} CNTP EARNED</P>
             </FlexDiv>
         </FlexDiv>
     )

@@ -12,6 +12,7 @@ import React from 'react';
 
 interface Props {
   pageState: 1 | 2 | 3 | 4 | 5;
+  isSpinning: boolean;
   handleSpin: () => void;
   mustSpin: boolean;
   setMustSpin: (e: boolean) => void;
@@ -22,7 +23,7 @@ const pointerProperties = {
   style: { visibility: "hidden" }
 }
 
-export default function PageState1({ pageState, handleSpin, mustSpin, setMustSpin, prizeNumber }: Props) {
+export default function PageState1({ pageState, isSpinning, handleSpin, mustSpin, setMustSpin, prizeNumber }: Props) {
 
   const { profile } = useGameContext();
 
@@ -61,7 +62,7 @@ export default function PageState1({ pageState, handleSpin, mustSpin, setMustSpi
       </div>
 
       <FlexDiv $direction="column" $gap="16px">
-        {profile?.tickets?.balance !== '0' && !mustSpin ? (
+        {profile?.tickets?.balance !== '0' && !mustSpin && !isSpinning ? (
           <Button $width="196px" $height="45px" $radius="8px" $border="1px solid #04DAE8" onClick={handleSpin}>
             {pageState === 1 ? "Spin" : "Spin Again"}
           </Button>) : (

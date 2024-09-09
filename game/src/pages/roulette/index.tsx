@@ -22,18 +22,20 @@ export default function Roulette() {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [double, setDouble] = useState<"off" | "win" | "lose">("off");
+  const [isSpinning, setIsSpinning] = useState(false);
 
   const { profile } = useGameContext();
 
   async function handleSpin() {
     setPageState(1);
+    setIsSpinning(true);
 
     // if (audio)
     //   load(ButtonClick, {
     //     autoplay: true,
     //   });
 
-    if (!mustSpin && profile?.keyID) {
+    if (!mustSpin && !isSpinning && profile?.keyID) {
       const rouletteResult = await fetchRouletteResult(profile?.keyID);
 
       if (rouletteResult && !rouletteResult?.error) {
@@ -71,14 +73,17 @@ export default function Roulette() {
           }
 
           setMustSpin(false);
+          setIsSpinning(false);
         }, 7000);
       } else {
         toast.error(rouletteResult?.message, { autoClose: 2000 });
         setPageState(2);
         setMustSpin(false);
+        setIsSpinning(false);
       }
     } else {
       setMustSpin(false);
+      setIsSpinning(false);
     }
   }
 
@@ -173,7 +178,7 @@ export default function Roulette() {
       <BackButton text="Roulette" to="/shopping" />
       {
         pageState <= 2
-          ? <PageState1 pageState={pageState} handleSpin={handleSpin} mustSpin={mustSpin} setMustSpin={setMustSpin} prizeNumber={prizeNumber} />
+          ? <PageState1 pageState={pageState} isSpinning={isSpinning} handleSpin={handleSpin} mustSpin={mustSpin} setMustSpin={setMustSpin} prizeNumber={prizeNumber} />
           : <PageState2
             pageState={pageState}
             double={double}

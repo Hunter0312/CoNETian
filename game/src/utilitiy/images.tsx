@@ -63,4 +63,5 @@ export const Img = {
   TaskJoin: "/taskJoin.svg",
   DailyClaim: "/dailyClaim.svg",
   TaskQuiz: "/quiz.svg",
+  Key: "/normal-key.svg",
 };

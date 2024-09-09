@@ -76,7 +76,7 @@ export default function Earn() {
                       <P $fontSize="24px">{task.title}</P>
                       <FlexDiv $gap="5px" $align="center">
                         <Image src={Img.Coin} alt="CNTP" width={32} height={32} />
-                        <P $fontSize="14px">+{task.reward} CNTPs</P>
+                        <P $fontSize="14px">+{task.reward || "1"} CNTPs</P>
                       </FlexDiv>
                     </FlexDiv>
                     {

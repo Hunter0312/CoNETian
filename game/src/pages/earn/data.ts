@@ -1,9 +1,17 @@
 import { Img } from '@/utilitiy/images';
 
+type RewardType = "CNTP" | "KEY" | "TICKET";
+
 export interface TaskCategory {
   title: string;
   icon?: string;
   tasks: Task[];
+}
+
+export interface Day {
+  day: number;
+  reward: number;
+  type: RewardType;
 }
 
 export interface Task {
@@ -23,11 +31,45 @@ export interface Task {
   active: boolean;
 }
 
-export const quiz = [
-
+export const dailyClaims: Day[] = [
+  {
+    day: 1,
+    reward: 1,
+    type: "CNTP",
+  },
+  {
+    day: 2,
+    reward: 1,
+    type: "CNTP",
+  },
+  {
+    day: 3,
+    reward: 1,
+    type: "CNTP",
+  },
+  {
+    day: 4,
+    reward: 1,
+    type: "CNTP",
+  },
+  {
+    day: 5,
+    reward: 1,
+    type: "TICKET",
+  },
+  {
+    day: 6,
+    reward: 1,
+    type: "CNTP",
+  },
+  {
+    day: 7,
+    reward: 1,
+    type: "KEY",
+  },
 ]
 
-export const taskCategories = [
+export const taskCategories: TaskCategory[] = [
   {
     title: "Send Invitation",
     icon: Img.TaskInvitation,

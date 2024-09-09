@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import BackButton from "@/components/backButton";
 import { formatToken } from "@/utilitiy/functions";
+import PageWrapper from "@/components/pageWrapper";
 
 export default function Profile() {
     const { setRouter, highScore } = useGameContext();
@@ -31,14 +32,16 @@ export default function Profile() {
     };
 
     return (
-        <FlexDiv $direction="column" $gap="32px" $margin="32px 0 0 0">
-            <MiningStatus />
-            <BackButton text="My Profile" />
-            <FlexDiv $padding="0 16px">
+        <PageWrapper margin="32px 16px 140px 16px">
+            <FlexDiv $direction="column" $gap="32px">
+                <BackButton text="My Profile" />
+
                 <FlexDiv $justify="space-between" $align="flex-start" $width="100%">
                     <Image src={conetAnonymousIcon} height={120} width={120} alt="profile-logo" />
+
                     <FlexDiv $direction="column" $justify="space-between">
-                        <input placeholder="Anonymous User" value={name} onChange={(e) => setName(e.target.value)} style={{ backgroundColor: 'transparent', border: '1px solid #FFFFFF1A', borderRadius: '16px', height: '56px', padding: '12px 14px', marginBottom: '28px' }} />
+                        <input placeholder="Anonymous User" disabled value={name} onChange={(e) => setName(e.target.value)} style={{ backgroundColor: 'transparent', border: '1px solid #FFFFFF1A', borderRadius: '16px', height: '56px', padding: '12px 14px', marginBottom: '28px' }} />
+
                         <FlexDiv>
                             <FlexDiv $direction="column"
                                 $padding="0 12px"
@@ -50,41 +53,47 @@ export default function Profile() {
                                 }}
                             >
                                 <P $color="#929092" $fontSize="12px" style={{ lineHeight: '28px' }}>Highest Score</P>
+
                                 <P $fontSize="20px">{highScore}</P>
                             </FlexDiv>
+
                             <FlexDiv $direction="column" $padding="0 16px">
                                 <P $color="#929092" $fontSize="12px" style={{ lineHeight: '28px' }}>World Ranking</P>
                                 <P $fontSize="20px">4.614</P>
                             </FlexDiv>
                         </FlexDiv>
-
                     </FlexDiv>
                 </FlexDiv>
+
+                <FlexDiv $direction="column">
+                    <P $fontSize="24px" style={{ marginBottom: '16px', lineHeight: '32px', letterSpacing: '0.1px' }}>My Bio</P>
+
+                    <textarea
+                        disabled
+                        placeholder="Add a bio to share a little bit about yourself."
+                        value={bio}
+                        onChange={handleChange}
+                        style={{
+                            backgroundColor: 'transparent',
+                            border: '1px solid #FFFFFF1A',
+                            borderRadius: '16px',
+                            height: '160px',
+                            padding: '14px',
+                            width: '100%',
+                            resize: 'none',
+                            overflowWrap: 'break-word',
+                            whiteSpace: 'pre-wrap',
+                        }}
+                    />
+
+                    {error && <P $color="#FFDAD6" $fontSize="10px" style={{ lineHeight: '12px' }}>{error}</P>}
+                </FlexDiv>
+
+                <FlexDiv $direction="column" $gap="16px">
+                    <P $fontSize="24px" style={{ lineHeight: '32px', letterSpacing: '0.1px' }}>My Achievements</P>
+                    <P $fontSize="20px" style={{ lineHeight: '16px' }}>{formatToken(profile?.tokens?.cCNTP?.balance)} CNTP EARNED</P>
+                </FlexDiv>
             </FlexDiv>
-            <FlexDiv $padding="0 16px" $direction="column">
-                <P $fontSize="24px" style={{ marginBottom: '16px', lineHeight: '32px', letterSpacing: '0.1px' }}>My Bio</P>
-                <textarea
-                    placeholder="Add a bio to share a little bit about yourself."
-                    value={bio}
-                    onChange={handleChange}
-                    style={{
-                        backgroundColor: 'transparent',
-                        border: '1px solid #FFFFFF1A',
-                        borderRadius: '16px',
-                        height: '160px',
-                        padding: '14px',
-                        width: '100%',
-                        resize: 'none',
-                        overflowWrap: 'break-word',
-                        whiteSpace: 'pre-wrap',
-                    }}
-                />
-                {error && <P $color="#FFDAD6" $fontSize="10px" style={{ lineHeight: '12px' }}>{error}</P>}
-            </FlexDiv>
-            <FlexDiv $padding="0 16px" $direction="column" $gap="16px">
-                <P $fontSize="24px" style={{ lineHeight: '32px', letterSpacing: '0.1px' }}>My Achievements</P>
-                <P $fontSize="20px" style={{ lineHeight: '16px' }}>{formatToken(profile?.tokens?.cCNTP?.balance)} CNTP EARNED</P>
-            </FlexDiv>
-        </FlexDiv>
+        </PageWrapper>
     )
 }

@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 interface Props {
   pageState: 1 | 2 | 3 | 4 | 5;
   prizeNumber: number;
-  double: ImageStateType;
+  doubleImageState: ImageStateType;
   handleDouble: () => void;
   backToRoulette: () => void;
   doubleFinished: boolean;
@@ -23,7 +23,7 @@ const ImageScheme: Record<ImageStateType, any> = {
   lose: [Img.DoubleWin, Img.DoubleLoseHighlight],
 }
 
-export default function PageState2({ pageState, double, prizeNumber, handleDouble, backToRoulette, doubleFinished, doubleRunning }: Props) {
+export default function PageState2({ pageState, doubleImageState, prizeNumber, handleDouble, backToRoulette, doubleFinished, doubleRunning }: Props) {
   const [counter, setCounter] = useState(20);
   const interval = useRef<NodeJS.Timeout | undefined>(undefined);
 
@@ -72,10 +72,10 @@ export default function PageState2({ pageState, double, prizeNumber, handleDoubl
 
         <FlexDiv $gap="20px" $width="100%" $height="400px">
           <FlexDiv $position="relative" style={{ flex: 1 }} $justify="center" $align="center">
-            <Image src={ImageScheme[double][0]} alt="Win" fill style={{ objectFit: "contain" }} />
+            <Image src={ImageScheme[doubleImageState][0]} alt="Win" fill style={{ objectFit: "contain" }} />
           </FlexDiv>
           <FlexDiv $position="relative" style={{ flex: 1 }} $justify="center" $align="center">
-            <Image src={ImageScheme[double][1]} alt="Lose" fill style={{ objectFit: "contain" }} />
+            <Image src={ImageScheme[doubleImageState][1]} alt="Lose" fill style={{ objectFit: "contain" }} />
           </FlexDiv>
         </FlexDiv>
 

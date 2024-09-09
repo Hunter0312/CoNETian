@@ -21,7 +21,7 @@ export default function Roulette() {
   const [doubleRunning, setDoubleRunning] = useState<boolean>(false);
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
-  const [double, setDouble] = useState<"off" | "win" | "lose">("off");
+  const [doubleImageState, setDoubleImageState] = useState<"off" | "win" | "lose">("off");
   const [isSpinning, setIsSpinning] = useState(false);
 
   const { profile } = useGameContext();
@@ -91,7 +91,7 @@ export default function Roulette() {
     let count = 0;
     let timerSpeedDown = 100;
     let doublePointsTimeout: NodeJS.Timeout;
-    setDouble('off')
+    setDoubleImageState('off')
     setDoubleFinished(false);
     setPageState(3);
     setDoubleRunning(true);
@@ -110,11 +110,11 @@ export default function Roulette() {
         const alternateWinLose = () => {
           if (count % 2 === 0) {
             // double === 1 means the user won
-            setDouble("win");
+            setDoubleImageState("win");
           }
           else {
             // double === 2 means the user lost
-            setDouble("lose");
+            setDoubleImageState("lose");
           }
           count++;
 
@@ -133,22 +133,22 @@ export default function Roulette() {
 
           if (doubleData[mappedResult].option !== "Lose") {
             // Show the "lose" text first so the user thinks he lost, then show the win page.
-            setDouble("lose");
+            setDoubleImageState("lose");
 
             // wait 500ms to show the win text and build expectation on the user
             setTimeout(() => {
-              setDouble("win")
+              setDoubleImageState("win")
               setDoubleFinished(true);
               setPageState(5);
               setDoubleRunning(false);
             }, 500);
           } else {
             // Show the "win" text first so the user thinks he won, then show the lose page.
-            setDouble("win");
+            setDoubleImageState("win");
 
             // wait 500ms to show the lose text and build expectation on the user
             setTimeout(() => {
-              setDouble("lose")
+              setDoubleImageState("lose")
               setDoubleFinished(true);
               setPageState(4);
               setDoubleRunning(false);
@@ -157,7 +157,7 @@ export default function Roulette() {
         }, 6000);
       } else {
         toast.error(rouletteResult?.message, { autoClose: 2000 });
-        setDouble("lose");
+        setDoubleImageState("lose");
         setDoubleFinished(true);
         setPageState(4);
         setDoubleRunning(false);
@@ -166,7 +166,7 @@ export default function Roulette() {
   }
 
   function backToRoulette() {
-    setDouble("off");
+    setDoubleImageState("off");
     setDoubleFinished(false);
     setDoubleRunning(false);
     setPageState(1);
@@ -181,7 +181,7 @@ export default function Roulette() {
           ? <PageState1 pageState={pageState} isSpinning={isSpinning} handleSpin={handleSpin} mustSpin={mustSpin} setMustSpin={setMustSpin} prizeNumber={prizeNumber} />
           : <PageState2
             pageState={pageState}
-            double={double}
+            doubleImageState={doubleImageState}
             prizeNumber={prizeNumber}
             handleDouble={handleDouble}
             backToRoulette={backToRoulette}

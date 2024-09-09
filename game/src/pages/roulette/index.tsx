@@ -171,6 +171,7 @@ export default function Roulette() {
     setDoubleRunning(false);
     setPageState(1);
     setMustSpin(false);
+    setIsSpinning(false)
   }
 
   return (

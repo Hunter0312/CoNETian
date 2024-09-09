@@ -64,4 +64,5 @@ export const Img = {
   DailyClaim: "/dailyClaim.svg",
   TaskQuiz: "/quiz.svg",
   Key: "/normal-key.svg",
+  Lock: "/lock.svg",
 };

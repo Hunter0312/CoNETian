@@ -20,6 +20,8 @@ export default function Earn() {
   const [tasks, setTasks] = useState<TaskCategory[]>(taskCategories);
   const [choosenTask, setChoosenTask] = useState<Task>();
 
+  const [claimStreak, setClaimStreak] = useState<number>(3);
+
   //! Should change later to proper current user referral link
   const userReferralLink = "https://t.me/conetianLearn_bot/?start=0xad1fd987e70e4fce4f9e1ba023e57ccbe191424c";
 
@@ -36,6 +38,11 @@ export default function Earn() {
   function buttonAction() {
     if (!choosenTask) return;
 
+    if (choosenTask.claim) {
+      handleClaim();
+      return;
+    }
+
     if (choosenTask.referral) {
       // Open Telegram Contact List
 
@@ -45,6 +52,12 @@ export default function Earn() {
     if (!choosenTask.resource) return;
 
     window.open(choosenTask.resource, "_blank");
+  }
+
+  function handleClaim() {
+    // process the claim;
+
+    setClaimStreak((prev) => prev === 7 ? 0 : prev + 1);
   }
 
   return (
@@ -100,7 +113,9 @@ export default function Earn() {
                 <P $fontSize="20px">{choosenTask.title}</P>
                 {
                   choosenTask.claim ? (
-                    <DailyClaim />
+                    <DailyClaim
+                      claimStreak={claimStreak} handleClaim={handleClaim}
+                    />
                   ) : choosenTask.quiz ? (
                     <DailyQuiz />
                   ) : (
@@ -122,7 +137,11 @@ export default function Earn() {
                   ) : (choosenTask.referral || choosenTask.cta) && (
                     <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={buttonAction} $padding="18px">
                       <FlexDiv $align="center" $gap="8px">
-                        <Image src={choosenTask.referral ? Img.Share : Img.OpenExternal} alt="Open External" width={24} height={24} />
+                        {
+                          !choosenTask.claim && (
+                            <Image src={choosenTask.referral ? Img.Share : Img.OpenExternal} alt="Open External" width={24} height={24} />
+                          )
+                        }
                         <P>{choosenTask.referral ? "Share referral link" : choosenTask.cta}</P>
                       </FlexDiv>
                     </Button>

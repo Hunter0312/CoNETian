@@ -8,7 +8,6 @@ import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import { doubleData, rouletteResultMapping, wheelData } from '@/shared/wheelVars';
 import { toast } from 'react-toastify';
 
-
 export default function Roulette() {
 
   // 1 - idle roulette
@@ -27,7 +26,6 @@ export default function Roulette() {
   const { profile } = useGameContext();
 
   async function handleSpin() {
-    setMustSpin(true);
     setPageState(1);
 
     // if (audio)
@@ -45,6 +43,7 @@ export default function Roulette() {
         //   })
 
         setPrizeNumber(rouletteResult.valueWon);
+        setMustSpin(true);
 
         rouletteResultMapping['0'] = 0;
 

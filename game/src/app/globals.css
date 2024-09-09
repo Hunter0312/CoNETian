@@ -174,3 +174,7 @@ a {
 .small-text-max-width {
   max-width: 240px;
 }
+
+.sc-gsTCUz {
+  transform: rotateZ(45deg);
+}

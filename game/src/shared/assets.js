@@ -52,7 +52,7 @@ import HardConetianHighFire from "../assets/hard-conetian-high-fire.png";
 
 import arbitrumLogo from "../assets/arbitrum-logo.png";
 
-import rouletteBorder from "../assets/roulette-border.png";
+import rouletteDesign from "../assets/roulette-design.png";
 
 export {
   asteroid1,
@@ -90,7 +90,7 @@ export {
   HardConetianMediumFire,
   HardConetianHighFire,
   arbitrumLogo,
-  rouletteBorder,
+  rouletteDesign,
   ProfileImg,
   AstronautSkins,
   BackgroundAstronaut,

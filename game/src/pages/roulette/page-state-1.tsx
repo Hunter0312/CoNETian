@@ -7,6 +7,8 @@ import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { Wheel } from 'react-custom-roulette';
+import { rouletteDesign } from '@/shared/assets';
+import React from 'react';
 
 interface Props {
   pageState: 1 | 2 | 3 | 4 | 5;
@@ -17,12 +19,7 @@ interface Props {
 }
 
 const pointerProperties = {
-  style: {
-    width: "1%",
-    transform: "rotate(-45deg)",
-    right: "14%",
-    top: "16%"
-  }
+  style: { visibility: "hidden" }
 }
 
 export default function PageState1({ pageState, handleSpin, mustSpin, setMustSpin, prizeNumber }: Props) {
@@ -41,22 +38,26 @@ export default function PageState1({ pageState, handleSpin, mustSpin, setMustSpi
           </>
         }
       </div>
+      <div style={{ display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
 
-      <div style={{ flex: 1, position: "relative" }}>
-        <Wheel
-          mustStartSpinning={mustSpin}
-          prizeNumber={rouletteResultMapping[prizeNumber] ?? 0}
-          data={wheelData}
-          spinDuration={0.5}
-          outerBorderColor={localStorage.getItem('mui-mode') === 'light' ? "#D6E3FF" : "#f5eeee"}
-          outerBorderWidth={1}
-          radiusLineWidth={0}
-          fontSize={12}
-          onStopSpinning={() => {
-            setMustSpin(false);
-          }}
-          pointerProps={pointerProperties}
-        />
+        <img src={rouletteDesign.src} style={{ width: "85%", maxWidth: '483px', position: 'absolute', zIndex: 2 }} />
+
+        <div style={{ flex: 1, position: "relative", zIndex: 1 }}>
+          <Wheel
+            mustStartSpinning={mustSpin}
+            prizeNumber={rouletteResultMapping[prizeNumber] ?? 0}
+            data={wheelData}
+            spinDuration={0.5}
+            outerBorderColor={localStorage.getItem('mui-mode') === 'light' ? "#D6E3FF" : "#f5eeee"}
+            outerBorderWidth={1}
+            radiusLineWidth={0}
+            fontSize={12}
+            onStopSpinning={() => {
+              setMustSpin(false);
+            }}
+            pointerProps={pointerProperties}
+          />
+        </div>
       </div>
 
       <FlexDiv $direction="column" $gap="16px">

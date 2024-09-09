@@ -12,9 +12,9 @@ import Modal from '@/components/modal';
 import { Button } from '@/components/button';
 
 import "./styles.css";
-import DailyClaim from './tasks/DailyClaim';
-import CommonTask from './tasks/CommonTask';
-import DailyQuiz from './tasks/DailyQuiz';
+import DailyClaim from './page-components/DailyClaim';
+import CommonTask from './page-components/CommonTask';
+import DailyQuiz from './page-components/DailyQuiz';
 
 export default function Earn() {
   const [tasks, setTasks] = useState<TaskCategory[]>(taskCategories);

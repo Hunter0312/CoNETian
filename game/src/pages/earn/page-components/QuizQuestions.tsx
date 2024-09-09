@@ -4,21 +4,38 @@ import { Img } from '@/utilitiy/images';
 import { P } from '@/components/p';
 import { Div, FlexDiv } from '@/components/div';
 import QuizOption from './QuizOption';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Timer from '@/components/timer';
 
 interface Props {
   questions: QuizQuestion[];
   answered: boolean;
   answer: (answer: string) => void;
+  timeout: () => void;
 }
 
-export default function QuizQuestions({ questions, answered, answer }: Props) {
+export default function QuizQuestions({ questions, answered, answer, timeout }: Props) {
   const [choosenAnswer, setChoosenAnswer] = useState("");
+  const [seconds, setSeconds] = useState(questions[0].timer);
 
   function handleAnswer(option: string) {
     setChoosenAnswer(option);
     answer(option);
   }
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+
+    if (seconds > 0) {
+      timer = setInterval(() => {
+        setSeconds((prevSeconds) => prevSeconds - 1);
+      }, 1000);
+    } else {
+      timeout();
+    }
+
+    return () => clearInterval(timer); // Clean up interval on component unmount
+  }, [seconds, timeout]);
 
   return (
     <>
@@ -26,11 +43,10 @@ export default function QuizQuestions({ questions, answered, answer }: Props) {
         <Image src={Img.QuizMoon} alt="Quiz" width={90} height={90} />
       </FlexDiv>
       <P $fontSize="18px">{questions[0].quest}</P>
-      <FlexDiv $align="center" $gap="10px" $width="100%" $margin="15px 0 30px">
-        <P>Time</P>
-        <Div $flex={1} $border="0.5px solid #FFFFFF1A" $height="10px" $radius="10px" $background="#FFFFFF0D"></Div>
-        <P>00:00</P>
-      </FlexDiv>
+      <Timer
+        seconds={seconds}
+        totalTime={questions[0].timer}
+      />
       <FlexDiv $direction="column" $gap="16px">
         {
           questions[0].options.map((option, i) => (

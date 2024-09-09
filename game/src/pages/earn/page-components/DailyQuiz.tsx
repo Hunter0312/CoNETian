@@ -50,6 +50,7 @@ export default function DailyQuiz() {
             questions={dailyQuiz.questions}
             answered={questionAnswered}
             answer={answerQuiz}
+            timeout={() => setQuizState("finished")}
           />
         )
       }

@@ -15,6 +15,7 @@ export const Div = styled.div.attrs<{
   $right?: string;
   $index?: string;
   $flex?: number;
+  $boxShadow?: string;
 }>((props) => ({
   $padding: props.$padding || "0",
   $margin: props.$margin || "0",
@@ -35,6 +36,7 @@ export const Div = styled.div.attrs<{
   right: ${(props) => props.$right};
   z-index: ${(props) => props.$index};
   flex: ${(props) => props.$flex};
+  box-shadow: ${(props) => props.$boxShadow};
 `;
 
 export const FlexDiv = styled(Div).attrs<{

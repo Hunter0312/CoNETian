@@ -1,15 +1,38 @@
 import { Img } from '@/utilitiy/images';
 
+type RewardType = "CNTP" | "KEY" | "TICKET";
+
+export interface Quiz {
+  title: string;
+  caption: string;
+  questions: QuizQuestion[];
+  reward: number;
+}
+
+export interface QuizQuestion {
+  quest: string;
+  options: string[];
+  answerIndex: number;
+  timer: number;
+}
+
 export interface TaskCategory {
   title: string;
   icon?: string;
   tasks: Task[];
+  reward?: number;
+  completed?: boolean;
+}
+
+export interface Day {
+  day: number;
+  reward: number;
+  type: RewardType;
 }
 
 export interface Task {
   title: string;
-  reward: number;
-  completed: boolean;
+  completed?: boolean;
   logo?: {
     uri?: string;
     color?: string;
@@ -18,17 +41,72 @@ export interface Task {
   caption?: string;
   referral?: boolean;
   cta?: string;
+  quiz?: boolean;
+  claim?: boolean;
   active: boolean;
 }
 
-export const taskCategories = [
+export const dailyQuiz: Quiz = {
+  reward: 1,
+  title: "What is a Wallet?",
+  caption: "A digital wallet is a software application that allows you to store, send, and receive cryptocurrencies. It interacts with blockchain networks and manages your private and public keys, which are crucial for conducting transactions.",
+  questions: [
+    {
+      quest: "What is the primary function of a cryptocurrency wallet?",
+      options: ["To store physical coins", "To securely store and manage your cryptocurrencies and keys", "To make online purchases only"],
+      answerIndex: 1,
+      timer: 15,
+    }
+  ]
+}
+
+export const dailyClaims: Day[] = [
+  {
+    day: 1,
+    reward: 1,
+    type: "CNTP",
+  },
+  {
+    day: 2,
+    reward: 1,
+    type: "CNTP",
+  },
+  {
+    day: 3,
+    reward: 1,
+    type: "CNTP",
+  },
+  {
+    day: 4,
+    reward: 1,
+    type: "CNTP",
+  },
+  {
+    day: 5,
+    reward: 1,
+    type: "TICKET",
+  },
+  {
+    day: 6,
+    reward: 1,
+    type: "CNTP",
+  },
+  {
+    day: 7,
+    reward: 1,
+    type: "KEY",
+  },
+]
+
+export const taskCategories: TaskCategory[] = [
   {
     title: "Send Invitation",
     icon: Img.TaskInvitation,
+    reward: 1,
+    completed: false,
     tasks: [
       {
         title: "Invite Friends",
-        reward: 2,
         completed: false,
         caption: "Share your referral link and earn CNTP when your friends join us! It might take a time to process it.",
         referral: true,
@@ -37,12 +115,29 @@ export const taskCategories = [
     ]
   },
   {
+    title: "Daily Rewards",
+    icon: Img.TaskDaily,
+    tasks: [
+      {
+        title: "Daily Claim",
+        claim: true,
+        logo: {
+          uri: Img.DailyClaim,
+        },
+        caption: "Claim daily rewards and earn CNTPs by logging in each day without skipping!",
+        cta: "Claim today’s reward",
+        active: false,
+      }
+    ]
+  },
+  {
     title: "Join Us",
     icon: Img.TaskJoin,
+    reward: 1,
+    completed: false,
     tasks: [
       {
         title: "Follow Us on X",
-        reward: 2,
         completed: true,
         logo: {
           uri: Img.TwitterX,
@@ -55,7 +150,6 @@ export const taskCategories = [
       },
       {
         title: "Join our Community",
-        reward: 2,
         completed: false,
         logo: {
           uri: Img.Telegram,
@@ -68,7 +162,6 @@ export const taskCategories = [
       },
       {
         title: "Join our Server",
-        reward: 2,
         completed: false,
         logo: {
           uri: Img.Discord,
@@ -84,19 +177,20 @@ export const taskCategories = [
   {
     title: "Daily Tasks",
     icon: Img.TaskDaily,
+    reward: 1,
+    completed: false,
     tasks: [
       {
         title: "Quiz",
-        reward: 2,
         completed: false,
         logo: {
           uri: Img.TaskQuiz,
         },
+        quiz: true,
         active: false,
       },
       {
         title: "Interact with Us on X",
-        reward: 2,
         completed: false,
         logo: {
           uri: Img.TwitterX,
@@ -109,10 +203,11 @@ export const taskCategories = [
   {
     title: "Extras",
     icon: Img.TaskExtras,
+    reward: 1,
+    completed: false,
     tasks: [
       {
         title: "Follow Collaborator",
-        reward: 2,
         completed: true,
         logo: {
           color: "#CC00D0"
@@ -121,7 +216,6 @@ export const taskCategories = [
       },
       {
         title: "Join Collab Community",
-        reward: 2,
         completed: false,
         logo: {
           color: "#CC00D0"
@@ -130,7 +224,6 @@ export const taskCategories = [
       },
       {
         title: "Try Collab Mini App",
-        reward: 2,
         completed: false,
         logo: {
           color: "#CC00D0"
@@ -145,7 +238,6 @@ export const taskCategories = [
     tasks: [
       {
         title: "Daily Task",
-        reward: 2,
         completed: true,
         logo: {
           uri: Img.CommonTask,
@@ -154,7 +246,6 @@ export const taskCategories = [
       },
       {
         title: "Watch Video",
-        reward: 2,
         completed: true,
         logo: {
           uri: Img.WatchVideo,

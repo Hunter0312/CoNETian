@@ -103,6 +103,10 @@ a {
   }
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .range-input {
   -webkit-appearance: none;
   appearance: none;

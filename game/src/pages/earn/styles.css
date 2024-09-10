@@ -19,7 +19,6 @@
 }
 
 button:disabled {
-
   cursor: default;
 }
 
@@ -28,4 +27,60 @@ button:disabled {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.daily-claim-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+
+  gap: 16px;
+}
+
+.daily-claim-grid > div.current {
+  cursor: pointer;
+}
+
+.daily-claim-grid > div:last-of-type {
+  grid-column: 1 / 4;
+}
+
+.blocked {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+
+  backdrop-filter: blur(6px);
+}
+
+.blocked img {
+  margin-top: 10px;
+}
+
+.label {
+  position: relative;
+  z-index: 10;
+}
+
+.reward-taken {
+  margin: 14px 0;
+}
+
+.quiz-backdrop {
+  box-shadow: 0px 0px 80px 0px #FF41054D;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.quiz-backdrop ~ img {
+  position: relative;
+  z-index: 1;
+}
+
+.small-dropshadow {
+  text-shadow: 0px 0px 20px #FFFFFF80;
 }

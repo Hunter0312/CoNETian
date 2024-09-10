@@ -51,6 +51,8 @@ export const Img = {
   DoubleLoseHighlight: "/double-lose-highlight.png",
   Coin: "/coin.svg",
   TaskCheck: "/check.svg",
+  TaskCheckGreen: "/greenCheck.svg",
+  TaskCheckRed: "/checkRed.svg",
   OpenExternal: "/openExternal.svg",
   Share: "/share.svg",
   Discord: "/discord.svg",
@@ -65,4 +67,8 @@ export const Img = {
   TaskJoin: "/taskJoin.svg",
   DailyClaim: "/dailyClaim.svg",
   TaskQuiz: "/quiz.svg",
+  Key: "/normal-key.svg",
+  Lock: "/lock.svg",
+  QuizMoon: "/quizMoon.svg",
+  QuizMeteor: "/quizMeteor.svg",
 };

@@ -59,7 +59,7 @@ export default function Profile() {
 
                             <FlexDiv $direction="column" $padding="0 16px">
                                 <P $color="#929092" $fontSize="12px" style={{ lineHeight: '28px' }}>World Ranking</P>
-                                <P $fontSize="20px">4.614</P>
+                                <P $fontSize="20px">&infin;</P>
                             </FlexDiv>
                         </FlexDiv>
                     </FlexDiv>

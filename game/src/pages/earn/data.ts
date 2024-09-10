@@ -126,7 +126,7 @@ export const taskCategories: TaskCategory[] = [
         },
         caption: "Claim daily rewards and earn CNTPs by logging in each day without skipping!",
         cta: "Claim today’s reward",
-        active: true,
+        active: false,
       }
     ]
   },
@@ -187,7 +187,7 @@ export const taskCategories: TaskCategory[] = [
           uri: Img.TaskQuiz,
         },
         quiz: true,
-        active: true,
+        active: false,
       },
       {
         title: "Interact with Us on X",
@@ -216,7 +216,7 @@ export const taskCategories: TaskCategory[] = [
       },
       {
         title: "Join Collab Community",
-        completed: true,
+        completed: false,
         logo: {
           color: "#CC00D0"
         },
@@ -224,7 +224,7 @@ export const taskCategories: TaskCategory[] = [
       },
       {
         title: "Try Collab Mini App",
-        completed: true,
+        completed: false,
         logo: {
           color: "#CC00D0"
         },

@@ -96,7 +96,7 @@ export default function Earn() {
         <CurrentBalance small />
         <GuardianCard />
         {
-          tasks.map((category) => (
+          tasks.filter((category) => !!category.tasks.find((task) => task.active)).map((category) => (
             <FlexDiv $direction="column" key={category.title} $gap="12px" className="task-category">
               <FlexDiv $direction="column" $gap="8px">
                 <FlexDiv $gap="5px" $align="center">

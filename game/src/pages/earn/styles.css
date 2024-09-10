@@ -76,6 +76,11 @@ button:disabled {
   transform: translate(-50%, -50%);
 }
 
+.quiz-backdrop ~ img {
+  position: relative;
+  z-index: 1;
+}
+
 .small-dropshadow {
   text-shadow: 0px 0px 20px #FFFFFF80;
 }

@@ -2,8 +2,8 @@ import BackButton from '@/components/backButton';
 import CurrentBalance from '@/components/currentBalance';
 import GuardianCard from '@/components/guardianCard';
 import PageWrapper from '@/components/pageWrapper';
-import { useState } from 'react';
-import { FlexDiv } from '@/components/div';
+import { useEffect, useState } from 'react';
+import { Div, FlexDiv } from '@/components/div';
 import { P } from '@/components/p';
 import { Task, taskCategories, TaskCategory } from './data';
 import Image from 'next/image';
@@ -21,6 +21,8 @@ export default function Earn() {
   const [choosenTask, setChoosenTask] = useState<Task>();
 
   const [claimStreak, setClaimStreak] = useState<number>(3);
+
+  const [completedTaskCategory, setCompletedTaskCategory] = useState<TaskCategory>();
 
   //! Should change later to proper current user referral link
   const userReferralLink = "https://t.me/conetianLearn_bot/?start=0xad1fd987e70e4fce4f9e1ba023e57ccbe191424c";
@@ -60,6 +62,33 @@ export default function Earn() {
     setClaimStreak((prev) => prev === 7 ? 0 : prev + 1);
   }
 
+  function handleCompleteTaskCategory() {
+    // complete task category
+    if (!completedTaskCategory) return;
+
+    setTasks((prev) => prev.map((category) => category.title === completedTaskCategory.title ? ({
+      ...category,
+      completed: true,
+    }) : category))
+
+    setCompletedTaskCategory(undefined);
+  }
+
+  useEffect(() => {
+    let completedCategory: TaskCategory | undefined = undefined;
+
+    tasks.filter((task) => task.reward && !task.completed).forEach((category) => {
+      const anyUncompletedTask = category.tasks.find((task) => !task.completed);
+
+      if (!anyUncompletedTask) {
+        completedCategory = category;
+      }
+    })
+
+    completedCategory &&
+      setCompletedTaskCategory(completedCategory);
+  }, [tasks]);
+
   return (
     <>
       <PageWrapper margin="32px 16px 160px 16px">
@@ -69,13 +98,16 @@ export default function Earn() {
         {
           tasks.map((category) => (
             <FlexDiv $direction="column" key={category.title} $gap="12px" className="task-category">
-              <FlexDiv $gap="5px" $align="center">
-                {category.icon && <Image alt={category.title} width={24} height={24} src={category.icon} />}
-                <P $fontSize="24px">{category.title}</P>
+              <FlexDiv $direction="column" $gap="8px">
+                <FlexDiv $gap="5px" $align="center">
+                  {category.icon && <Image alt={category.title} width={24} height={24} src={category.icon} />}
+                  <P $fontSize="24px">{category.title}</P>
+                </FlexDiv>
+                {(category.reward && !category.completed) && (<P $fontSize="14px">Complete all tasks and receive the reward</P>)}
               </FlexDiv>
               {
                 category.tasks.filter((task) => task.active).map((task) => (
-                  <FlexDiv key={task.title} $gap="16px" $padding="16px" $border="1px solid #FFFFFF1A" $radius="16px" $align="center" className={`task ${task.completed ? 'completed': ''}`} onClick={() => chooseTask(task)}>
+                  <FlexDiv key={task.title} $gap="16px" $padding="16px" $border="1px solid #FFFFFF1A" $radius="16px" $align="center" $height="95px" className={`task ${task.completed ? 'completed': ''}`} onClick={() => chooseTask(task)}>
                     {
                       task.logo && (
                         <FlexDiv $width="60px" $height="60px" $background={task.logo?.color || "transparent"} $radius="8px" $justify="center" $align="center">
@@ -87,10 +119,6 @@ export default function Earn() {
                     }
                     <FlexDiv className="text-content" $direction="column" $gap="4px">
                       <P $fontSize="24px">{task.title}</P>
-                      <FlexDiv $gap="5px" $align="center">
-                        <Image src={Img.Coin} alt="CNTP" width={32} height={32} />
-                        <P $fontSize="14px">+{task.reward || "1"} CNTPs</P>
-                      </FlexDiv>
                     </FlexDiv>
                     {
                       task.completed ? (
@@ -104,6 +132,30 @@ export default function Earn() {
               }
             </FlexDiv>
           ))
+        }
+        {
+          completedTaskCategory && (
+            <Modal align="flex-end" close={() => setCompletedTaskCategory(undefined)}>
+              <FlexDiv $background="#111113E5" $width="100%" $padding="24px" className="modal-content" $direction="column" $align="center" $position="relative" $gap="24px">
+                <Button className="close" onClick={() => setCompletedTaskCategory(undefined)}>X</Button>
+                <P $fontSize="20px">Tasks Completed</P>
+                <FlexDiv $align="center" $gap="24px" >
+                  <FlexDiv $justify="center" $align="center" $radius="18px" $border="1px solid #999999" $background="#1B1B1D" $width="108px" $height="108px" $position="relative">
+                    <Div $width="40px" $height="30px" $radius="999px" $position="absolute" className="quiz-backdrop" $boxShadow="0px 0px 40px 0px #04DAE8"></Div>
+                    <Image src={Img.Tickets} alt="Tickets" width={60} height={60} />
+                  </FlexDiv>
+                  <FlexDiv $flex={1}>
+                    <P>You have completed all the tasks, claim your reward!</P>
+                  </FlexDiv>
+                </FlexDiv>
+                <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={handleCompleteTaskCategory} $padding="18px">
+                  <FlexDiv $align="center" $gap="8px">
+                    <P>Claim Reward</P>
+                  </FlexDiv>
+                </Button>
+              </FlexDiv>
+            </Modal>
+          )
         }
         {
           choosenTask && (

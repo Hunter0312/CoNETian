@@ -20,6 +20,8 @@ export interface TaskCategory {
   title: string;
   icon?: string;
   tasks: Task[];
+  reward?: number;
+  completed?: boolean;
 }
 
 export interface Day {
@@ -30,7 +32,6 @@ export interface Day {
 
 export interface Task {
   title: string;
-  reward?: number;
   completed?: boolean;
   logo?: {
     uri?: string;
@@ -101,10 +102,11 @@ export const taskCategories: TaskCategory[] = [
   {
     title: "Send Invitation",
     icon: Img.TaskInvitation,
+    reward: 1,
+    completed: false,
     tasks: [
       {
         title: "Invite Friends",
-        reward: 2,
         completed: false,
         caption: "Share your referral link and earn CNTP when your friends join us! It might take a time to process it.",
         referral: true,
@@ -131,10 +133,11 @@ export const taskCategories: TaskCategory[] = [
   {
     title: "Join Us",
     icon: Img.TaskJoin,
+    reward: 1,
+    completed: false,
     tasks: [
       {
         title: "Follow Us on X",
-        reward: 2,
         completed: true,
         logo: {
           uri: Img.TwitterX,
@@ -147,7 +150,6 @@ export const taskCategories: TaskCategory[] = [
       },
       {
         title: "Join our Community",
-        reward: 2,
         completed: false,
         logo: {
           uri: Img.Telegram,
@@ -160,7 +162,6 @@ export const taskCategories: TaskCategory[] = [
       },
       {
         title: "Join our Server",
-        reward: 2,
         completed: false,
         logo: {
           uri: Img.Discord,
@@ -176,10 +177,11 @@ export const taskCategories: TaskCategory[] = [
   {
     title: "Daily Tasks",
     icon: Img.TaskDaily,
+    reward: 1,
+    completed: false,
     tasks: [
       {
         title: "Quiz",
-        reward: 2,
         completed: false,
         logo: {
           uri: Img.TaskQuiz,
@@ -189,7 +191,6 @@ export const taskCategories: TaskCategory[] = [
       },
       {
         title: "Interact with Us on X",
-        reward: 2,
         completed: false,
         logo: {
           uri: Img.TwitterX,
@@ -202,10 +203,11 @@ export const taskCategories: TaskCategory[] = [
   {
     title: "Extras",
     icon: Img.TaskExtras,
+    reward: 1,
+    completed: false,
     tasks: [
       {
         title: "Follow Collaborator",
-        reward: 2,
         completed: true,
         logo: {
           color: "#CC00D0"
@@ -214,8 +216,7 @@ export const taskCategories: TaskCategory[] = [
       },
       {
         title: "Join Collab Community",
-        reward: 2,
-        completed: false,
+        completed: true,
         logo: {
           color: "#CC00D0"
         },
@@ -223,8 +224,7 @@ export const taskCategories: TaskCategory[] = [
       },
       {
         title: "Try Collab Mini App",
-        reward: 2,
-        completed: false,
+        completed: true,
         logo: {
           color: "#CC00D0"
         },
@@ -238,7 +238,6 @@ export const taskCategories: TaskCategory[] = [
     tasks: [
       {
         title: "Daily Task",
-        reward: 2,
         completed: true,
         logo: {
           uri: Img.CommonTask,
@@ -247,7 +246,6 @@ export const taskCategories: TaskCategory[] = [
       },
       {
         title: "Watch Video",
-        reward: 2,
         completed: true,
         logo: {
           uri: Img.WatchVideo,

@@ -79,13 +79,13 @@ export default function PageState1({ pageState, isSpinning, handleSpin, mustSpin
         )}
 
         <FlexDiv $align="center" $justify="center" $gap="8px">
-          {profile?.tickets?.balance !== '0' && !mustSpin ? (
+          {profile?.tickets?.balance === '0' && !mustSpin ? (
+            <P $fontSize="12px" $color='#FFDAD6' $align='center' $width='70%'>You don't have enough tickets to spin the roulette</P>
+          ) : (
             <>
               <Image src={Img.Tickets} alt="Ticket" width={20} height={20} />
               <P $fontSize="12px">Use 1 ticket to Spin</P>
             </>
-          ) : (
-            <P $fontSize="12px" $color='#FFDAD6' $align='center' $width='70%'>You don't have enough tickets to spin the roulette</P>
           )}
         </FlexDiv>
       </FlexDiv>

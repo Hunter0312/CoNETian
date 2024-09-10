@@ -9,6 +9,7 @@ import Skeleton from "react-loading-skeleton";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import { formatToken } from "@/utilitiy/functions";
 import PageWrapper from '@/components/pageWrapper';
+import { motion } from "framer-motion";
 
 const S = {
   PlayButton: styled(Div)`
@@ -120,18 +121,75 @@ export default function Home() {
           </GradientP>
         </FlexDiv>
       </FlexDiv>
-      <FlexDiv $justify="center">
+
+      <FlexDiv $justify="center" $margin="40px 0">
         <Button $radius="50%">
           <S.PlayButton onClick={() => setRouter('/playground')}>
-            <Image
+            <img
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                height: "auto", // Adjust as needed
+              }}
+              src={Img.BackgroundAstronaut}
+              alt="Background"
+            />
+
+            <motion.div
+              style={{
+                position: "absolute",
+                zIndex: 1,
+                left: '25%',
+              }}
+              animate={["initial"]}
+              whileHover={["grow"]}
+              variants={{
+                grow: {
+                  scale: 1.1
+                },
+                rotate: {
+                  rotate: [null, -5, 5, 0],
+                  transition: {
+                    // delay,
+                    duration: 10
+                    // repeat: Infinity,
+                    // repeatDelay: 0.2,
+                    // repeatType: "reverse"
+                  }
+                },
+                initial: {
+                  y: [-10, 20],
+                  rotate: 0,
+                  transition: {
+                    delay: 0.3,
+                    duration: 2,
+                    repeat: Infinity,
+                    // repeatDelay: 0.2,
+                    repeatType: "reverse"
+                  }
+                }
+              }}
+            >
+              <img
+
+                src={Img.Astronaut}
+                alt="Astronaut"
+              />
+            </motion.div>
+
+            {/* <Image
               width={289}
               height={289}
+              style={{ animation: "float 6s ease-in-out infinite", transform: 'translate(-50 %, -50 %)' }}
               src={Img.PlayImg}
               alt="play image"
-            />
+            /> */}
           </S.PlayButton>
         </Button>
       </FlexDiv>
+
       <FlexDiv $justify="center" $gap="24px" $align="center">
         <FlexDiv $direction="column" $align="center" $gap="4px">
           <P $fontSize="12px">CNTP earned</P>

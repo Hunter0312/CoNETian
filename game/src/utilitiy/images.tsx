@@ -5,6 +5,8 @@ export const Img = {
   UserGroupImg: "/userGroup.png",
   ShareImg: "/share.png",
   PlayImg: "/play.png",
+  Astronaut: "/astronaut_main.png",
+  BackgroundAstronaut: "/background_astronaut.png",
   ArbitrumLogo: "/arbitrum-logo.png",
   HomeImg: "/home.png",
   ActiveHomeImg: "/activeHome.png",

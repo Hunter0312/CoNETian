@@ -205,7 +205,7 @@ export const taskCategories: TaskCategory[] = [
           uri: Img.TwitterX,
           color: "#000000",
         },
-        active: true,
+        active: false,
       },
     ],
   },
@@ -221,7 +221,7 @@ export const taskCategories: TaskCategory[] = [
         logo: {
           color: "#CC00D0",
         },
-        active: true,
+        active: false,
       },
       {
         title: "Join Collab Community",
@@ -229,7 +229,7 @@ export const taskCategories: TaskCategory[] = [
         logo: {
           color: "#CC00D0",
         },
-        active: true,
+        active: false,
       },
       {
         title: "Try Collab Mini App",
@@ -237,7 +237,7 @@ export const taskCategories: TaskCategory[] = [
         logo: {
           color: "#CC00D0",
         },
-        active: true,
+        active: false,
       },
     ],
   },
@@ -251,7 +251,7 @@ export const taskCategories: TaskCategory[] = [
         logo: {
           uri: Img.CommonTask,
         },
-        active: true,
+        active: false,
       },
       {
         title: "Watch Video",
@@ -259,7 +259,7 @@ export const taskCategories: TaskCategory[] = [
         logo: {
           uri: Img.WatchVideo,
         },
-        active: true,
+        active: false,
       },
     ],
   },

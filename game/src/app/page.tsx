@@ -20,10 +20,6 @@ const S = {
   Main: styled.div`
     max-width: 430px;
     margin: 0 auto;
-    height: 100vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-width: none;
   `,
 };
 

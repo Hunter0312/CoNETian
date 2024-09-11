@@ -46,7 +46,6 @@ export const FlexDiv = styled(Div).attrs<{
   $gap?: string;
   $grow?: string;
   $flex?: number;
-  $blur?: string;
 }>((props) => ({
   $direction: props.$direction || "unset",
   $justify: props.$justify || "unset",
@@ -54,7 +53,6 @@ export const FlexDiv = styled(Div).attrs<{
   $gap: props.$gap || "0",
   $grow: props.$grow,
   $flex: props.$flex,
-  $blur: props.$blur || "0",
 }))`
   display: flex;
   flex-direction: ${(props) => props.$direction};
@@ -63,6 +61,4 @@ export const FlexDiv = styled(Div).attrs<{
   gap: ${(props) => props.$gap};
   flex-grow: ${(props) => props.$grow};
   flex: ${(props) => props.$flex};
-  filter: blur(${(props) => props.$blur});
-  -webkit-filter: blur(${(props) => props.$blur});
 `;

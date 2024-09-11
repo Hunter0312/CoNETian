@@ -41,7 +41,7 @@ export default function PageState1({ pageState, isSpinning, handleSpin, mustSpin
       </div>
       <div style={{ display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
 
-        {/* <img src={rouletteDesign.src} style={{ width: "85%", maxWidth: '483px', position: 'absolute', zIndex: 2 }} /> */}
+        <img src={rouletteDesign.src} style={{ width: "85%", maxWidth: '483px', position: 'absolute', zIndex: 2 }} />
 
         <div style={{ flex: 1, position: "relative", zIndex: 1 }}>
           <Wheel

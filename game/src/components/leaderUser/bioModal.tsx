@@ -28,7 +28,7 @@ const BioModal: React.FC<Props> = ({ close }) => {
       $position="fixed"
       $top="0"
       $left="0"
-      $index="10"
+      $index="20"
       $align="flex-end"
       onClick={() => close()}
     >

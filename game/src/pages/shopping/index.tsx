@@ -6,10 +6,9 @@ import { FlexDiv } from '@/components/div';
 import { P } from '@/components/p';
 import Image from 'next/image';
 import { Img } from '@/utilitiy/images';
-import Tooltip from '@/components/tooltip';
 import { Button } from '@/components/button';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
-import { formatToken } from '@/utilitiy/functions';
+import Supplies from '@/components/supplies';
 
 const shoppingOptions = [
   {
@@ -18,6 +17,13 @@ const shoppingOptions = [
     caption: "Spin the Roulette and try to earn CNTP",
     image: Img.RouletteIcon,
     link: "/roulette",
+  },
+  {
+    key: 2,
+    title: "Open the Box",
+    caption: "Try your luck and receive special perks",
+    image: Img.ConetiumBox,
+    link: "/box",
   }
 ]
 
@@ -37,25 +43,12 @@ const comingSoonOptions = [
 ]
 
 export default function Shopping() {
-  const { setRouter, profile } = useGameContext();
+  const { setRouter } = useGameContext();
 
   return (
     <PageWrapper margin="32px 16px 140px 16px">
       <BackButton text="Shop" />
-      <FlexDiv $align="center" $justify="space-between">
-        <FlexDiv $gap="12px" $align="center">
-          <P $fontSize="24px">Supplies</P>
-          <Tooltip message="Each ticket is a valuable asset. Keep playing The CoNETian to earn more tickets!" />
-        </FlexDiv>
-        <FlexDiv $align="center" $gap="8px" $background="#262527" $padding="8px" $radius="8px">
-          <Image src={Img.Tickets} alt="Tickets" width={42.15} height={32} />
-          <P>x {profile?.tickets?.balance}</P>
-        </FlexDiv>
-      </FlexDiv>
-      <FlexDiv $gap="8px" $align="center">
-        <P $fontSize="20px">{formatToken(profile?.tokens.cCNTP.balance)}</P>
-        <P $fontSize="12px">CNTP EARNED</P>
-      </FlexDiv>
+      <Supplies />
       <div className="split"></div>
       <FlexDiv $direction="column" $gap="12px">
         <P $fontSize="24px">Storage and lounge</P>

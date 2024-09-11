@@ -182,3 +182,15 @@ a {
 .sc-gsTCUz {
   transform: rotateZ(45deg);
 }
+
+.guardian-wrapper {
+  overflow: hidden;
+}
+
+.guardian-wrapper .conet-img {
+  position: absolute;
+  right: -10%;
+  top: -25%;
+
+  opacity: .1;
+}

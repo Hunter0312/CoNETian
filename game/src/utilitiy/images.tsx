@@ -71,4 +71,11 @@ export const Img = {
   Lock: "/lock.svg",
   QuizMoon: "/quizMoon.svg",
   QuizMeteor: "/quizMeteor.svg",
+  BronzeBox: "/bronzeBox.svg",
+  SilverBox: "/silverBox.svg",
+  GoldBox: "/goldBox.svg",
+  PlatinumBox: "/platinumBox.svg",
+  OsmiumBox: "/osmiumBox.svg",
+  ConetiumBox: "/conetiumBox.svg",
+  GuardianBox: "/guardianBox.svg",
 };

@@ -15,6 +15,7 @@ import Shopping from '@/pages/shopping';
 import Roulette from '@/pages/roulette';
 import Earn from '@/pages/earn';
 import { Toaster } from 'react-hot-toast';
+import Boxes from '@/pages/boxes';
 
 const S = {
   Main: styled.div`
@@ -110,7 +111,8 @@ function CurrentPage() {
     "/earn": <Earn />,
     "/roulette": <Roulette />,
     "/playground": <Playground />,
-    "/profile": <Profile />
+    "/profile": <Profile />,
+    "/box": <Boxes />
   }
 
   return pages[router];

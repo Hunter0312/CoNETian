@@ -5,7 +5,7 @@ import PageWrapper from '@/components/pageWrapper';
 import { useEffect, useState } from 'react';
 import { Div, FlexDiv } from '@/components/div';
 import { P } from '@/components/p';
-import { Task, taskCategories, TaskCategory } from './data';
+import { Task, taskCategories, TaskCategory } from '../../shared/earnTasks';
 import Image from 'next/image';
 import { Img } from '@/utilitiy/images';
 import Modal from '@/components/modal';
@@ -107,7 +107,7 @@ export default function Earn() {
               </FlexDiv>
               {
                 category.tasks.filter((task) => task.active).map((task) => (
-                  <FlexDiv key={task.title} $gap="16px" $padding="16px" $border="1px solid #FFFFFF1A" $radius="16px" $align="center" $height="95px" className={`task ${task.completed ? 'completed': ''}`} onClick={() => chooseTask(task)}>
+                  <FlexDiv key={task.title} $gap="16px" $padding="16px" $border="1px solid #FFFFFF1A" $radius="16px" $align="center" $height="95px" className={`task ${task.completed ? 'completed' : ''}`} onClick={() => chooseTask(task)}>
                     {
                       task.logo && (
                         <FlexDiv $width="60px" $height="60px" $background={task.logo?.color || "transparent"} $radius="8px" $justify="center" $align="center">

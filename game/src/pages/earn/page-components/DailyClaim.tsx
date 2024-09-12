@@ -1,7 +1,7 @@
 import { FlexDiv } from '@/components/div';
 import { P } from '../../../components/p';
 import { useState } from 'react';
-import { dailyClaims } from '../data';
+import { dailyClaims } from '../../../shared/earnTasks';
 import Image from 'next/image';
 import { Img } from '@/utilitiy/images';
 
@@ -45,15 +45,15 @@ export default function DailyClaim({ claimStreak, handleClaim }: Props) {
               $direction="column" $align="center" $justify="space-between" $radius="16px"
             >
               <P className="label">Day {option.day}</P>
-             {
-              claimStreak >= option.day
-                ? (
-                  <Image src={Img.CheckImg} alt="Reward Taken" width={24} height={24} className="reward-taken" />
-                )
-                : (
-                  <Image src={dailyClaimTypeImage[option.type].uri} alt="Reward" width={dailyClaimTypeImage[option.type].size} height={dailyClaimTypeImage[option.type].size} />
-                )
-             }
+              {
+                claimStreak >= option.day
+                  ? (
+                    <Image src={Img.CheckImg} alt="Reward Taken" width={24} height={24} className="reward-taken" />
+                  )
+                  : (
+                    <Image src={dailyClaimTypeImage[option.type].uri} alt="Reward" width={dailyClaimTypeImage[option.type].size} height={dailyClaimTypeImage[option.type].size} />
+                  )
+              }
               <P>{option.reward} {option.type}</P>
               {
                 option.day > claimStreak + 1 && (

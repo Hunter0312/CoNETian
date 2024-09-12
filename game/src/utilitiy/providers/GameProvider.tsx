@@ -15,65 +15,62 @@ import { fetchStartMining } from "@/API/getData";
 export type Difficulty = 'easy' | 'normal' | 'hard';
 
 type GameContext = {
-  router: string;
-  setRouter: (props: string) => void;
-  difficulty: Difficulty;
-  setDifficulty: (val: Difficulty) => void;
-  effects: number;
-  setEffects: (val: number) => void;
-  music: number;
-  setMusic: (val: number) => void;
-  highScore: number;
-  setHighScore: (e: number) => void;
-  profile: any;
-  setProfile: (o: any) => void;
-  leaderboard: Leaderboard;
-  setLeaderboard: (e: Leaderboard) => void;
-  miningErrorTimeout: React.MutableRefObject<NodeJS.Timeout | null>;
-  walletAddress: React.MutableRefObject<string>;
-  path: string;
-  setPath: (path: string) => void;
-  privateKey: string;
-  setPrivateKey: (key: string) => void;
-  balance: number;
-  setBalance: (num: number) => void;
-  mining: boolean;
-  setMining: (e: boolean) => void;
-  miningError: boolean;
-  setMiningError: (e: boolean) => void;
-  onlineMiners: number;
-  setOnlineMiners: (num: number) => void;
-  miningRate: number;
-  setMiningRate: (num: number) => void;
-  games: any,
-  setGames: (o: any) => void,
-  lottery: number,
-  setLottery: (e: number) => void,
-  isLeaderboardLoading: boolean,
-  setIsLeaderboardLoading: (e: boolean) => void,
-  gameStatus: number,
-  setGameStatus: (e: number) => void,
-  lotteryBalance: number,
-  setLotteryBalance: (e: number) => void,
-  audio: boolean,
-  setAudio: (e: boolean) => void;
-  musicVolume: number,
-  setMusicVolume: (e: number) => void;
-  effectsVolume: number,
-  setEffectsVolume: (e: number) => void;
-  setGameDifficulty: (num: number) => void,
-  gameDifficulty: number,
-  setReferrerAddress: (e: string) => void,
-  referrerAddress: string
+  router?: string;
+  setRouter?: (props: string) => void;
+  difficulty?: Difficulty;
+  setDifficulty?: (val: Difficulty) => void;
+  effects?: number;
+  setEffects?: (val: number) => void;
+  music?: number;
+  setMusic?: (val: number) => void;
+  highScore?: number;
+  setHighScore?: (e: number) => void;
+  profile?: any;
+  setProfile?: (o: any) => void;
+  leaderboard?: Leaderboard;
+  setLeaderboard?: (e: Leaderboard) => void;
+  miningErrorTimeout?: React.MutableRefObject<NodeJS.Timeout | null>;
+  walletAddress?: React.MutableRefObject<string>;
+  path?: string;
+  setPath?: (path: string) => void;
+  privateKey?: string;
+  setPrivateKey?: (key: string) => void;
+  balance?: number;
+  setBalance?: (num: number) => void;
+  mining?: boolean;
+  setMining?: (e: boolean) => void;
+  miningError?: boolean;
+  setMiningError?: (e: boolean) => void;
+  onlineMiners?: number;
+  setOnlineMiners?: (num: number) => void;
+  miningRate?: number;
+  setMiningRate?: (num: number) => void;
+  games?: any,
+  setGames?: (o: any) => void,
+  lottery?: number,
+  setLottery?: (e: number) => void,
+  isLeaderboardLoading?: boolean,
+  setIsLeaderboardLoading?: (e: boolean) => void,
+  gameStatus?: number,
+  setGameStatus?: (e: number) => void,
+  lotteryBalance?: number,
+  setLotteryBalance?: (e: number) => void,
+  audio?: boolean,
+  setAudio?: (e: boolean) => void;
+  musicVolume?: number,
+  setMusicVolume?: (e: number) => void;
+  effectsVolume?: number,
+  setEffectsVolume?: (e: number) => void;
+  setGameDifficulty?: (num: number) => void,
+  gameDifficulty?: number,
+  setReferrerAddress?: (e: string) => void,
+  referrerAddress?: string
 };
 
-const Game = createContext<GameContext | undefined>(undefined);
+const Game = createContext<GameContext>({});
 
 export function useGameContext() {
   const context = useContext(Game);
-  if (!context) {
-    throw new Error("useRouterContext must be used within a RouterProvider");
-  }
   return context;
 }
 

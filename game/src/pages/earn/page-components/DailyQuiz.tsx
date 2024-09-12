@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { dailyQuiz as dailyQuizOptions, Quiz } from '../data';
+import { dailyQuiz as dailyQuizOptions, Quiz } from '../../../shared/earnTasks';
 import { FlexDiv } from '@/components/div';
 import QuizStart from './QuizStart';
 import QuizFinish from './QuizFinish';

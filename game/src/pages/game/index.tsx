@@ -1,8 +1,5 @@
-// components/FlappyBirdGame.tsx
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-//import Phaser from "phaser";
 import { Img } from "@/utilitiy/images";
-import dynamic from "next/dynamic";
 type Props = {
   restart: boolean;
   setRestart: (e: boolean) => void;

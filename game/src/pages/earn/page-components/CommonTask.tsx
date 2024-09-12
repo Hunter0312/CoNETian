@@ -3,7 +3,7 @@ import { FlexDiv } from '@/components/div';
 import { P } from '@/components/p';
 import { Img } from '@/utilitiy/images';
 import Image from 'next/image';
-import { Task } from '../data';
+import { Task } from '../../../shared/earnTasks';
 import copy from 'copy-to-clipboard';
 import toast from 'react-hot-toast';
 

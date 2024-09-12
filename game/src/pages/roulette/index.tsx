@@ -1,7 +1,13 @@
 import BackButton from '@/components/backButton';
 import PageWrapper from '@/components/pageWrapper';
 import { useState } from 'react';
-import PageState1 from './page-state-1';
+import dynamic from "next/dynamic";
+
+const PageState1 = dynamic<any>(() =>
+  import("./page-state-1").then((mod) => mod.default),
+  { ssr: false }
+);
+
 import PageState2 from './page-state-2';
 import { fetchRouletteResult } from '@/API/getData';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';

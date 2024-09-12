@@ -6,10 +6,14 @@ import { Img } from '@/utilitiy/images';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { Wheel } from 'react-custom-roulette';
 import { rouletteDesign } from '@/shared/assets';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PointerProps } from 'react-custom-roulette/dist/components/Wheel/types';
+
+const Wheel = dynamic<any>(() =>
+  import("react-custom-roulette").then((mod) => mod.Wheel),
+  { ssr: false }
+);
 
 interface Props {
   pageState: 1 | 2 | 3 | 4 | 5;

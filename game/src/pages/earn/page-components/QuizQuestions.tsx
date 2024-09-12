@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { QuizQuestion } from '../data'
+import { QuizQuestion } from '../../../shared/earnTasks'
 import { Img } from '@/utilitiy/images';
 import { P } from '@/components/p';
 import { Div, FlexDiv } from '@/components/div';

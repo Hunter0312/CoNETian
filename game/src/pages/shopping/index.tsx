@@ -64,7 +64,7 @@ export default function Shopping() {
       <FlexDiv $direction="column" $gap="16px">
         {
           shoppingOptions.map((option) => (
-            <Button key={option.key} $padding="16px" $radius="16px" $height="104px" className="option-button" $background="#262527" $border="1px solid #79F8FF" onClick={() => setRouter(option.link)}>
+            <Button key={option.key} $padding="16px" $radius="16px" $height="104px" className="option-button" $background="#262527" $border="1px solid #79F8FF" onClick={() => setRouter?.(option.link)}>
               <FlexDiv $justify="space-between" $width="100%" $align="center">
                 <FlexDiv $gap="14px" $align="center">
                   <FlexDiv $align="center">

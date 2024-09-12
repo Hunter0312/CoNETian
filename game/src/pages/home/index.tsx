@@ -41,7 +41,7 @@ export default function Home() {
             $height="32px"
             $background="#474648"
             $radius="50%"
-            onClick={() => setRouter('/profile')}
+            onClick={() => setRouter?.('/profile')}
           >
             <Image
               width={16}
@@ -69,7 +69,7 @@ export default function Home() {
         <GradientButton
           flex={2}
           onClick={() => {
-            setRouter("/leaderboard");
+            setRouter?.("/leaderboard");
           }}
         >
           <FlexDiv $align="center" $gap="8px">
@@ -86,7 +86,7 @@ export default function Home() {
         <GradientButton
           flex={1}
           onClick={() => {
-            setRouter("/shopping");
+            setRouter?.("/shopping");
           }}
         >
           <FlexDiv $align="center" $gap="8px">
@@ -122,7 +122,7 @@ export default function Home() {
       </FlexDiv>
       <FlexDiv $justify="center">
         <Button $radius="50%">
-          <S.PlayButton onClick={() => setRouter('/playground')}>
+          <S.PlayButton onClick={() => setRouter?.('/playground')}>
             <Image
               width={289}
               height={289}

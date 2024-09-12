@@ -44,7 +44,7 @@ export default function About() {
         <Button $width="196px" $height="45px" $radius="8px" $border="1px solid #04DAE8" onClick={handleOpenPlatform}>
           Open Platform
         </Button>
-        <Button $width="196px" $height="45px" $radius="8px" $color="rgba(121, 248, 255, 1)" onClick={() => setRouter("/")}>
+        <Button $width="196px" $height="45px" $radius="8px" $color="rgba(121, 248, 255, 1)" onClick={() => setRouter?.("/")}>
           Main Menu
         </Button>
       </FlexDiv>

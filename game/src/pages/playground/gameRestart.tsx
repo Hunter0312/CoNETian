@@ -59,7 +59,7 @@ const GameRestart: React.FC<Props> = ({ restart, score, highScore }) => {
             Restart
           </GradientButton>
         </S.GradientImage>
-        <S.MainMenu onClick={() => setRouter("/")}>Main Menu</S.MainMenu>
+        <S.MainMenu onClick={() => setRouter?.("/")}>Main Menu</S.MainMenu>
       </FlexDiv>
     </S.GameRestartDiv>
   );

@@ -72,10 +72,10 @@ export default function PageState2({ pageState, doubleImageState, prizeNumber, h
 
         <FlexDiv $gap="20px" $width="100%" $height="400px">
           <FlexDiv $position="relative" style={{ flex: 1 }} $justify="center" $align="center">
-            <Image src={ImageScheme[doubleImageState][0]} alt="Win" fill style={{ objectFit: "contain" }} />
+            <Image src={ImageScheme?.[doubleImageState]?.[0]} alt="Win" fill style={{ objectFit: "contain" }} />
           </FlexDiv>
           <FlexDiv $position="relative" style={{ flex: 1 }} $justify="center" $align="center">
-            <Image src={ImageScheme[doubleImageState][1]} alt="Lose" fill style={{ objectFit: "contain" }} />
+            <Image src={ImageScheme?.[doubleImageState]?.[1]} alt="Lose" fill style={{ objectFit: "contain" }} />
           </FlexDiv>
         </FlexDiv>
 

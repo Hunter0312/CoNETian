@@ -113,7 +113,7 @@ function CurrentPage() {
     "/playground": <Playground />,
   };
 
-  return pages[router];
+  return pages[router as keyof typeof pages] ?? null;
 }
 
 export default function App() {
@@ -131,8 +131,8 @@ export default function App() {
       const [data] = response;
       const parsedData = JSON.parse(data);
 
-      setMiningRate(Number(parsedData?.rate));
-      setOnlineMiners(parsedData?.online);
+      setMiningRate?.(Number(parsedData?.rate));
+      setOnlineMiners?.(parsedData?.online);
     } catch (error) {
       console.error("Error parsing mining data", error);
     }
@@ -141,8 +141,8 @@ export default function App() {
   listeningProfileHook((response: any) => {
     try {
       const [profile, leader] = response;
-      setProfile(profile);
-      if (leaderboard.allTime.length === 0) setLeaderboard(leader);
+      setProfile?.(profile);
+      if (leaderboard?.allTime.length === 0) setLeaderboard?.(leader);
     } catch (error) {
       console.error("Error parsing balance data", error);
     }

@@ -23,16 +23,16 @@ const Playground = () => {
 
   useEffect(() => {
     if (restart) {
-      const hScore = localStorage.getItem('hScore');
+      const hScore = localStorage?.getItem('hScore');
       if (hScore) {
         if (parseInt(hScore) < score)
-          localStorage.setItem('hScore', score.toString());
+          localStorage?.setItem('hScore', score.toString());
       } else {
-        localStorage.setItem('hScore', score.toString());
+        localStorage?.setItem('hScore', score.toString());
       }
-      const temp = localStorage.getItem('hScore');
+      const temp = localStorage?.getItem('hScore');
       if (temp)
-        setHighScore(parseInt(temp));
+        setHighScore?.(parseInt(temp));
     } else {
       setScore(0);
     }
@@ -115,7 +115,7 @@ const Playground = () => {
                 </Button>
               </FlexDiv>
               <FlexDiv $direction="column" $align="flex-end" $gap="10px">
-                <P>Mining Rate: {mining && miningRate.toFixed(10)}</P>
+                <P>Mining Rate: {mining && miningRate?.toFixed(10)}</P>
                 <P>Online Miners: {mining && onlineMiners}</P>
               </FlexDiv>
             </FlexDiv>
@@ -127,7 +127,7 @@ const Playground = () => {
       {restart && (
         <GameRestart
           score={score}
-          highScore={highScore}
+          highScore={highScore || 0}
           restart={() => setRestart(false)}
         />
       )}

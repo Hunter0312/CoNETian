@@ -25,7 +25,7 @@ export default function Wallet() {
     useState<boolean>(false);
   const [isImportingWallet, setIsImportingWallet] = useState<boolean>(false)
 
-  const { profile, setProfile, setMining, miningErrorTimeout, setRouter } = useGameContext();
+  const { profile, setProfile, setMining, miningErrorTimeout } = useGameContext();
 
   useEffect(() => {
     if (copiedWalletAddress) {
@@ -76,12 +76,12 @@ export default function Wallet() {
       const stopMiningResult = await fetchstopMining(profile?.keyID);
 
       if (stopMiningResult && !stopMiningResult?.error) {
-        miningErrorTimeout.current && clearTimeout(miningErrorTimeout.current);
-        setMining(false);
+        miningErrorTimeout?.current && clearTimeout(miningErrorTimeout.current);
+        setMining?.(false);
 
         const importResult = await fetchImportWallet(newWalletPrivateKey);
         if (importResult && !importResult?.error) {
-          setProfile(importResult);
+          setProfile?.(importResult);
           setNewWalletPrivateKey('')
           toast.success("Import Successful!");
         } else {

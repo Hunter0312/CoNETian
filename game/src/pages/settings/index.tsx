@@ -52,7 +52,7 @@ export default function Settings() {
                 $border={currDifficulty === difficulty ? "1px solid #04DAE8" : "1px solid #787679"}
                 $flex={1}
                 $fontSize="18px"
-                onClick={() => setDifficulty(currDifficulty)}
+                onClick={() => setDifficulty?.(currDifficulty)}
               >
                 {currDifficulty.toUpperCase()}
               </Button>
@@ -65,7 +65,7 @@ export default function Settings() {
         <P $fontSize="22px">Sounds</P>
         <FlexDiv $padding="12px 0" $align="center" $gap="8px">
           <FlexDiv $gap="8px" $align="center" $width="100px">
-            <Image width={32} height={32} alt="Arrow" src={effectsVolume > 0 ? Img.SoundOn : Img.SoundOff} />
+            <Image width={32} height={32} alt="Arrow" src={effectsVolume && effectsVolume > 0 ? Img.SoundOn : Img.SoundOff} />
             <P $fontSize="13px">EFFECTS</P>
           </FlexDiv>
           <input
@@ -74,7 +74,7 @@ export default function Settings() {
             type="range"
             min={0} max={100} step={1}
             value={effectsVolume} onChange={(e) => {
-              setEffectsVolume(Number(e.target.value));
+              setEffectsVolume?.(Number(e.target.value));
               updateTrackColor(effectsRef.current, e.target.value);
             }}
             style={{ marginLeft: "8px", flex: 1 }}
@@ -82,7 +82,7 @@ export default function Settings() {
         </FlexDiv>
         <FlexDiv $padding="12px 0" $align="center" $gap="12px">
           <FlexDiv $gap="8px" $align="center" $width="100px">
-            <Image width={32} height={32} alt="Arrow" src={musicVolume > 0 ? Img.SoundOn : Img.SoundOff} />
+            <Image width={32} height={32} alt="Arrow" src={musicVolume && musicVolume > 0 ? Img.SoundOn : Img.SoundOff} />
             <P $fontSize="13px">MUSIC</P>
           </FlexDiv>
           <input
@@ -91,14 +91,14 @@ export default function Settings() {
             type="range"
             min={0} max={100} step={1}
             value={musicVolume} onChange={(e) => {
-              setMusicVolume(Number(e.target.value));
+              setMusicVolume?.(Number(e.target.value));
               updateTrackColor(musicRef.current, e.target.value);
             }}
             style={{ flex: 1 }}
           />
         </FlexDiv>
       </FlexDiv>
-      <Button $padding="18px" $radius="32px" $border="1px solid #04DAE8" onClick={() => setRouter("/about")}>
+      <Button $padding="18px" $radius="32px" $border="1px solid #04DAE8" onClick={() => setRouter?.("/about")}>
         About The CoNETian
       </Button>
     </PageWrapper>

@@ -16,7 +16,7 @@ interface Props {
 
 export default function QuizQuestions({ questions, answered, answer, timeout }: Props) {
   const [choosenAnswer, setChoosenAnswer] = useState("");
-  const [seconds, setSeconds] = useState(questions[0].timer);
+  const [seconds, setSeconds] = useState(questions?.[0]?.timer);
 
   function handleAnswer(option: string) {
     setChoosenAnswer(option);
@@ -42,18 +42,18 @@ export default function QuizQuestions({ questions, answered, answer, timeout }: 
       <FlexDiv $padding="20px 0">
         <Image src={Img.QuizMoon} alt="Quiz" width={90} height={90} />
       </FlexDiv>
-      <P $fontSize="18px">{questions[0].quest}</P>
+      <P $fontSize="18px">{questions?.[0]?.quest}</P>
       <Timer
         seconds={seconds}
-        totalTime={questions[0].timer}
+        totalTime={questions?.[0]?.timer}
       />
       <FlexDiv $direction="column" $gap="16px">
         {
-          questions[0].options.map((option, i) => (
+          questions?.[0]?.options.map((option, i) => (
             <QuizOption
               key={i} text={option} index={i}
               state={answered ? (
-                option === questions[0].options[questions[0].answerIndex]
+                option === questions?.[0]?.options[questions?.[0]?.answerIndex]
                   ? "correct"
                   : option === choosenAnswer
                     ? "incorrect"

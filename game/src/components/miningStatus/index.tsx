@@ -52,7 +52,7 @@ const MiningStatus = () => {
         $radius="16px"
         $gap="8px"
       >
-        <P $fontSize="10px">Mining Rate: {mining && miningRate.toFixed(10)}</P>
+        <P $fontSize="10px">Mining Rate: {mining && miningRate?.toFixed(10)}</P>
         {!mining && <Skeleton width={40} />}
       </FlexDiv>
       <FlexDiv

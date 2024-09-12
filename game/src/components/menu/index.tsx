@@ -18,7 +18,7 @@ const Menu = () => {
         $background="#313134EF"
         $radius="40px"
       >
-        <Button onClick={() => setRouter("/")}>
+        <Button onClick={() => setRouter?.("/")}>
           <FlexDiv $direction="column" $justify="center" $align="center">
             <Image
               width={29}
@@ -29,7 +29,7 @@ const Menu = () => {
             <P $color={router === "/" ? "#79F8FF" : "white"}>Home</P>
           </FlexDiv>
         </Button>
-        <Button onClick={() => setRouter("/wallet")}>
+        <Button onClick={() => setRouter?.("/wallet")}>
           <FlexDiv $direction="column" $justify="center" $align="center">
             <Image
               width={29}
@@ -40,7 +40,7 @@ const Menu = () => {
             <P $color={router === "/wallet" ? "#C4A6EA" : "white"} >My Wallet</P>
           </FlexDiv>
         </Button>
-        <Button onClick={() => setRouter("/earn")}>
+        <Button onClick={() => setRouter?.("/earn")}>
           <FlexDiv $direction="column" $justify="center" $align="center">
             <Image
               width={29}
@@ -51,7 +51,7 @@ const Menu = () => {
             <P $color={router === "/earn" ? "#6AE092" : "white"}>Earn</P>
           </FlexDiv>
         </Button>
-        <Button onClick={() => setRouter("/settings")}>
+        <Button onClick={() => setRouter?.("/settings")}>
           <FlexDiv $direction="column" $justify="center" $align="center">
             <Image
               width={29}

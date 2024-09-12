@@ -30,24 +30,24 @@ export default function CommonTask({ choosenTask, referral }: Props) {
     <>
       <FlexDiv $gap="12px" $align="center">
         {
-          choosenTask.logo && (
-            <FlexDiv $width="100px" $height="100px" $background={choosenTask.logo.color || "transparent"} $radius="8px" $justify="center" $align="center">
-              {choosenTask.logo.uri && (
-                <Image src={choosenTask.logo.uri} alt="Task" width={28} height={28} />
+          choosenTask?.logo && (
+            <FlexDiv $width="100px" $height="100px" $background={choosenTask?.logo?.color || "transparent"} $radius="8px" $justify="center" $align="center">
+              {choosenTask?.logo?.uri && (
+                <Image src={choosenTask?.logo?.uri} alt="Task" width={28} height={28} />
               )}
             </FlexDiv>
           )
         }
         <FlexDiv $flex={1} $direction="column" $gap="12px">
-          <P $fontSize="14px">{choosenTask.caption}</P>
+          <P $fontSize="14px">{choosenTask?.caption}</P>
           <FlexDiv $gap="5px" $align="center">
             <Image src={Img.Tickets} alt="CNTP" width={32} height={32} />
-            <P $fontSize="14px">+{choosenTask.reward} Tickets</P>
+            <P $fontSize="14px">+{choosenTask?.reward} Tickets</P>
           </FlexDiv>
         </FlexDiv>
       </FlexDiv>
       {
-        referral && choosenTask.referral && (
+        referral && choosenTask?.referral && (
           <FlexDiv $width="100%" $direction="column">
             <P $color="#C8C6C8" $fontSize="18px">Your referral link:</P>
             <FlexDiv $justify="space-between" $padding="8px 16px">

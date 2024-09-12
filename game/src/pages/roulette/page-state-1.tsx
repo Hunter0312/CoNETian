@@ -54,7 +54,7 @@ export default function PageState1({ pageState, isSpinning, handleSpin, mustSpin
             prizeNumber={rouletteResultMapping[prizeNumber] ?? 0}
             data={wheelData}
             spinDuration={0.5}
-            outerBorderColor={localStorage.getItem('mui-mode') === 'light' ? "#D6E3FF" : "#f5eeee"}
+            outerBorderColor="#f5eeee"
             outerBorderWidth={1}
             radiusLineWidth={0}
             fontSize={12}

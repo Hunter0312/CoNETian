@@ -54,7 +54,7 @@ const GameOver: React.FC<Props> = ({ setRestart, score, hScore }) => {
           <GradientButton radius='8px' width='200px' onClick={setRestart}>          Restart        </GradientButton>
         </div>
 
-        <Button $width="196px" $height="45px" $radius="8px" $color="rgba(121, 248, 255, 1)" onClick={() => { setRestart(); setRouter("/") }}>
+        <Button $width="196px" $height="45px" $radius="8px" $color="rgba(121, 248, 255, 1)" onClick={() => { setRestart(); setRouter?.("/") }}>
           Main Menu
         </Button>
       </div>

@@ -156,7 +156,7 @@ export function GameProvider({ children }: GameProps) {
   }, [profile]);
 
   useEffect(() => {
-    const hScore = localStorage.getItem('hScore');
+    const hScore = localStorage?.getItem('hScore');
 
     if (hScore) {
       setHighScore(parseInt(hScore));

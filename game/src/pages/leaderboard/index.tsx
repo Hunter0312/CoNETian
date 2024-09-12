@@ -32,7 +32,7 @@ const Leaderboard = () => {
       <FlexDiv $padding="0 15px">
         <Button $direction="row" $gap="10px" onClick={() => {
           if (filter === 0)
-            setRouter("/")
+            setRouter?.("/")
           else
             setFilter(0)
         }}>
@@ -71,8 +71,8 @@ const Leaderboard = () => {
       </P>
 
       {filter === 0 &&
-        leaderboard.allTime &&
-        leaderboard.allTime.map((item, index) => {
+        leaderboard?.allTime &&
+        leaderboard?.allTime.map((item, index) => {
           if (index === 0)
             return (
               <FirstLeaderUser address={item.wallet} cntp={item.win_cntp} key={index} />
@@ -96,8 +96,8 @@ const Leaderboard = () => {
         })}
 
       {filter === 1 &&
-        leaderboard.monthly &&
-        leaderboard.monthly.map((item, index) => {
+        leaderboard?.monthly &&
+        leaderboard?.monthly.map((item, index) => {
           if (index === 0)
             return (
               <FirstLeaderUser address={item.wallet} cntp={item.win_cntp} key={index} />
@@ -121,8 +121,8 @@ const Leaderboard = () => {
         })}
 
       {filter === 2 &&
-        leaderboard.weekly &&
-        leaderboard.weekly.map((item, index) => {
+        leaderboard?.weekly &&
+        leaderboard?.weekly.map((item, index) => {
           if (index === 0)
             return (
               <FirstLeaderUser address={item.wallet} cntp={item.win_cntp} key={index} />
@@ -146,8 +146,8 @@ const Leaderboard = () => {
         })}
 
       {filter === 3 &&
-        leaderboard.daily &&
-        leaderboard.daily.map((item, index) => {
+        leaderboard?.daily &&
+        leaderboard?.daily.map((item, index) => {
           if (index === 0)
             return (
               <FirstLeaderUser address={item.wallet} cntp={item.win_cntp} key={index} />

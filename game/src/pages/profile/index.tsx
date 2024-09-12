@@ -13,7 +13,7 @@ import { formatToken } from "@/utilitiy/functions";
 import PageWrapper from "@/components/pageWrapper";
 
 export default function Profile() {
-    const { setRouter, highScore } = useGameContext();
+    const { highScore } = useGameContext();
     const [name, setName] = useState<string>('')
     const [bio, setBio] = useState<string>('')
     const [error, setError] = useState<string>('')

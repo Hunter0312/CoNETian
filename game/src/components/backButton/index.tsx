@@ -15,7 +15,7 @@ export default function BackButton({ text, to = "/" }: Props) {
 
   return (
     <FlexDiv $direction="column" $align="flex-start" $width='100%'>
-      <Button onClick={() => setRouter(to)}>
+      <Button onClick={() => setRouter?.(to)}>
         <FlexDiv $align="center" >
           <Image width={32} height={32} alt="Arrow" src={Img.ArrowImg} />
           <P $fontSize="32px" $color="#F6F1F2">

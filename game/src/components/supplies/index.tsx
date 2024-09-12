@@ -5,6 +5,7 @@ import Tooltip from '../tooltip';
 import { Img } from '@/utilitiy/images';
 import { formatToken } from '@/utilitiy/functions';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
+import Rank from './rank';
 
 export default function Supplies() {
   const { profile } = useGameContext();
@@ -21,13 +22,7 @@ export default function Supplies() {
           <P>x {profile?.tickets?.balance}</P>
         </FlexDiv>
       </FlexDiv>
-      <FlexDiv $direction="column" $gap="4px">
-        <P $color="#ADAAAD" $fontSize="14px">Your rank:</P>
-        <FlexDiv $gap="12px" $align="center">
-          <P className="white-text-shadow">Lieutenant Colonel</P>
-          <P $color="#ADAAAD" $fontSize="12px"><strong style={{ color: "#FFFFFF" }}>6</strong>/12</P>
-        </FlexDiv>
-      </FlexDiv>
+      <Rank />
       <FlexDiv $gap="8px" $align="center">
         <P $fontSize="20px">{formatToken(profile?.tokens.cCNTP.balance)}</P>
         <P $fontSize="12px">CNTP EARNED</P>

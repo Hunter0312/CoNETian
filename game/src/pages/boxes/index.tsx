@@ -4,16 +4,27 @@ import { P } from '@/components/p';
 import PageWrapper from '@/components/pageWrapper';
 import Supplies from '@/components/supplies';
 import { useState } from 'react';
-import { Box, boxes } from './boxes';
+import { BoxType, boxes } from './boxes';
 import Image from 'next/image';
 
 import "./styles.css";
 import { Button } from '@/components/button';
 import { Img } from '@/utilitiy/images';
 import GradientWrapper from '@/components/gradientWrapper';
+import Box from './page-components/box';
 
 export default function Boxes() {
-  const [boxList, setBoxList] = useState<Box[]>(boxes);
+  const [choosenBox, setChoosenBox] = useState<BoxType>();
+  const [boxList, setBoxList] = useState<BoxType[]>(boxes);
+
+  if (choosenBox) {
+    return (
+      <PageWrapper margin="32px 16px 140px 16px">
+        <BackButton text={choosenBox.title} action={() => setChoosenBox(undefined)} />
+        <Box box={choosenBox} />
+      </PageWrapper>
+    )
+  }
 
   return (
     <PageWrapper margin="32px 16px 140px 16px">
@@ -31,7 +42,7 @@ export default function Boxes() {
         {
           boxList.map((box, i) => box.title === "Guardian box" ? (
             <GradientWrapper key={box.title} radius="16px" className="guardian-box">
-              <FlexDiv className="guardian-wrapper" $height="100%" $position="relative" $radius="16px" $padding="16px 24px" $background="#17181F" $gap="20px" $align="center">
+              <FlexDiv className="guardian-wrapper" $height="100%" $position="relative" $radius="16px" $padding="16px 24px" $background="#17181F" $gap="20px" $align="center" onClick={() => setChoosenBox(box)}>
                 <Div $background="#111113" $radius="10.29px" $position="relative" className="image-wrapper">
                   <Image src={box.icon} alt="Box" width={104} height={83} />
                   <Div $width="50px" $height="30px" $radius="999px" $position="absolute" $boxShadow="0px 0px 30px 0px #79F8FF1F"></Div>
@@ -44,7 +55,7 @@ export default function Boxes() {
               </FlexDiv>
             </GradientWrapper>
           ) : (
-            <FlexDiv key={box.title} $radius="16px" $padding="16px" $border="1px solid #535254" $background="#17181F" $direction="column" $gap="8px" $align="center">
+            <FlexDiv key={box.title} $radius="16px" $padding="16px" $border="1px solid #535254" $background="#17181F" $direction="column" $gap="8px" $align="center" onClick={() => setChoosenBox(box)}>
               <Div $background="#111113" $radius="10.29px" $position="relative" className="image-wrapper">
                 <Image src={box.icon} alt="Box" width={80} height={63} />
                 <Div $width="50px" $height="30px" $radius="999px" $position="absolute" $boxShadow="0px 0px 30px 0px #79F8FF1F"></Div>

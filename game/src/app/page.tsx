@@ -8,13 +8,13 @@ import Menu from "@/components/menu";
 import { ReactNode, useEffect } from "react";
 import Leaderboard from "@/pages/leaderboard";
 import Wallet from "@/pages/wallet";
-import About from '@/pages/about';
-import Settings from '@/pages/settings';
+import About from "@/pages/about";
+import Settings from "@/pages/settings";
 import Profile from "@/pages/profile";
-import Shopping from '@/pages/shopping';
-import Roulette from '@/pages/roulette';
-import Earn from '@/pages/earn';
-import { Toaster } from 'react-hot-toast';
+import Shopping from "@/pages/shopping";
+import Roulette from "@/pages/roulette";
+import Earn from "@/pages/earn";
+import { Toaster } from "react-hot-toast";
 
 const S = {
   Main: styled.div`
@@ -109,9 +109,9 @@ function CurrentPage() {
     "/shopping": <Shopping />,
     "/earn": <Earn />,
     "/roulette": <Roulette />,
+    "/profile": <Profile />,
     "/playground": <Playground />,
-    "/profile": <Profile />
-  }
+  };
 
   return pages[router];
 }
@@ -158,7 +158,7 @@ export default function App() {
       <S.Main>
         <CurrentPage />
       </S.Main>
-      {!router.includes("/playground") && <Menu />}
+      {router !== "/playground" && <Menu />}
     </>
   );
 }

@@ -35,7 +35,7 @@ export const Button = styled.button<{
   cursor: pointer;
 `;
 
-const GradientImage = styled(FlexDiv)`
+export const GradientImage = styled(FlexDiv)`
   background-image: linear-gradient(
     45deg,
     #026d74 0%,
@@ -44,7 +44,7 @@ const GradientImage = styled(FlexDiv)`
     #04dae8 75%
   );
   padding: 1px;
-  border-radius:  ${(props) => props.$radius};
+  border-radius: 32px;
   flex: ${(props) => props.$flex};
 `;
 
@@ -64,11 +64,11 @@ export const GradientButton: React.FC<GradientButtonProps> = ({
   onClick,
 }) => {
   return (
-    <GradientImage $radius={radius || "32px"} $flex={flex}>
+    <GradientImage $flex={flex}>
       <Button
         $background="#252527"
         $padding="16px 24px"
-        $radius={radius || "32px"}
+        $radius="32px"
         $fontSize="14px"
         $width={width}
         onClick={onClick}
@@ -86,34 +86,37 @@ export const FilledButton: React.FC<{
   height?: string;
   backgroundColor?: string;
   onClick?: () => void;
-}> = ({
-  children,
-  width,
-  height,
-  backgroundColor,
-  onClick,
-}) => {
-    return (
-      <Button $color="#FFFFFF" $background={backgroundColor} $radius="8px" $width={width} $height={height} onClick={onClick}>
-        {children}
-      </Button>
-    )
-  }
+}> = ({ children, width, height, backgroundColor, onClick }) => {
+  return (
+    <Button
+      $color="#FFFFFF"
+      $background={backgroundColor}
+      $radius="8px"
+      $width={width}
+      $height={height}
+      onClick={onClick}
+    >
+      {children}
+    </Button>
+  );
+};
 
 export const OutlinedButton: React.FC<{
   children: ReactNode;
   width?: string;
   height?: string;
   onClick?: () => void;
-}> = ({
-  children,
-  width,
-  height,
-  onClick,
-}) => {
-    return (
-      <Button $color="#FFFFFF" $background="transparent" $radius="8px" $width={width} $height={height} onClick={onClick}>
-        {children}
-      </Button>
-    )
-  }
+}> = ({ children, width, height, onClick }) => {
+  return (
+    <Button
+      $color="#FFFFFF"
+      $background="transparent"
+      $radius="8px"
+      $width={width}
+      $height={height}
+      onClick={onClick}
+    >
+      {children}
+    </Button>
+  );
+};

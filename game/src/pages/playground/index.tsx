@@ -1,31 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { Div, FlexDiv } from "@/components/div";
+import Game from "../game";
+import { P } from "@/components/p";
+import Image from "next/image";
+import { useGameContext } from "@/utilitiy/providers/GameProvider";
+import { Img } from "@/utilitiy/images";
+import { Button } from "@/components/button";
+import { useEffect, useState } from "react";
+import GamePause from "./gamePause";
+import GameRestart from "./gameRestart";
 
-import Game from '../game';
-import GameOver from '../over';
-import { useGameContext } from '../../utilitiy/providers/GameProvider';
-import { FlexDiv } from '@/components/div';
-import Image from 'next/image';
-import { P } from '@/components/p';
-import { Img } from '@/utilitiy/images';
-import { formatNumberWithLeadingZeros } from '@/shared/functions';
-// import { loading, rouletteImg } from '../../shared/assets';
-// import Lottery from '../lottery';
-
-const Playground: React.FC = () => {
+const Playground = () => {
+  const { profile, miningRate, onlineMiners, mining, highScore, setHighScore } = useGameContext();
+  const [pause, setPause] = useState<Boolean>(false);
+  const [restart, setRestart] = useState<Boolean>(false);
   const [score, setScore] = useState<number>(0);
-  const { profile, mining, onlineMiners, miningRate, gameStatus, setGameStatus, miningError, highScore, setHighScore } = useGameContext();
-  const [roulette, setRoulette] = useState<boolean>(false);
-  const [stateRoulette, setStateRoulette] = useState<boolean>(false);
-
-  const rouletteBtnTimeout = useRef<NodeJS.Timeout>();
-
-  const gameStatusHandle = (event: number) => {
-    setGameStatus(event);
-  }
 
   useEffect(() => {
-    if (gameStatus === 1) {
-      setRoulette(false);
+    if (restart) {
       const hScore = localStorage.getItem('hScore');
       if (hScore) {
         if (parseInt(hScore) < score)
@@ -36,64 +27,106 @@ const Playground: React.FC = () => {
       const temp = localStorage.getItem('hScore');
       if (temp)
         setHighScore(parseInt(temp));
+    } else {
+      setScore(0);
     }
-  }, [gameStatus])
+  }, [restart]);
 
   return (
-    <>
-      {
-        gameStatus === 1 ?
-          <GameOver setRestart={() => gameStatusHandle(0)} score={score} hScore={highScore} /> :
-          <>
-            <Game
-              setGameStatus={(event: number) => gameStatusHandle(event)} gameStatus={gameStatus}
-              setScores={(score: number) => setScore(score)}
-              setRoulette={(event: boolean) => setRoulette(true)}
-            />
-
-            <div style={{ "display": "flex", "flexDirection": "row", alignItems: 'center', justifyContent: 'center', width: '100%', height: '10%', position: 'absolute', top: 0, }}>
-              <div style={{ display: 'flex' }}>
-                <p style={{ color: "white", fontSize: "3rem" }}>{score}</p>
-              </div>
-            </div>
-
-            <div style={{ "display": "flex", "flexDirection": "row", alignItems: 'center', justifyContent: 'flex-end', width: '100%', height: '10%', position: 'absolute', top: 0, right: 20 }}>
-              <FlexDiv $direction='column' $align='center'>
-                <Image src={Img.Tickets} alt="Tickets" width={42.15} height={32} />
+    <Div $position="relative">
+      {!restart && (
+        <>
+          <Game
+            restart={restart}
+            setRestart={(e) => setRestart(true)}
+            setScore={(score) => setScore(score)}
+          />
+          <FlexDiv
+            $position="absolute"
+            $top="0"
+            $left="0"
+            $direction="column"
+            $justify="space-between"
+            $height="100%"
+            $width="100%"
+          >
+            <FlexDiv $justify="space-between" $margin="20px 0">
+              <FlexDiv
+                $direction="column"
+                $align="center"
+                $gap="8px"
+                $background="#26252766"
+                $padding="8px"
+                $radius="8px"
+                style={{ opacity: 0 }}
+              >
+                <Image
+                  src={Img.Tickets}
+                  alt="Tickets"
+                  width={42.15}
+                  height={32}
+                />
                 <P>x {profile?.tickets?.balance}</P>
               </FlexDiv>
-            </div>
+              <P $fontSize="48px">{score}</P>
+              <FlexDiv
+                $direction="column"
+                $align="center"
+                $gap="8px"
+                $background="#26252766"
+                $padding="8px"
+                $radius="8px"
+              >
+                <Image
+                  src={Img.Tickets}
+                  alt="Tickets"
+                  width={42.15}
+                  height={32}
+                />
+                <P>x {profile?.tickets?.balance}</P>
+              </FlexDiv>
+            </FlexDiv>
+            <FlexDiv
+              $justify="space-between"
+              $margin="0 0 20px 0"
+              $padding="0 20px 0 20px"
+              $align="center"
+            >
+              <FlexDiv $gap="10px">
+                <Image
+                  src={Img.VolumnSquareImg}
+                  width={40}
+                  height={40}
+                  alt=""
+                />
+                <Button id="game-pause" onClick={() => setPause(true)}>
+                  <Image
+                    src={Img.PauseSquareImg}
+                    width={40}
+                    height={40}
+                    alt=""
+                  />
+                </Button>
+              </FlexDiv>
+              <FlexDiv $direction="column" $align="flex-end" $gap="10px">
+                <P>Mining Rate: {mining && miningRate.toFixed(10)}</P>
+                <P>Online Miners: {mining && onlineMiners}</P>
+              </FlexDiv>
+            </FlexDiv>
+          </FlexDiv>
+          <GamePause zindex={pause} resume={() => setPause(false)} />
+        </>
+      )}
 
-            {
-              !profile || profile?.keyID === '' ?
-                <div style={{ position: "fixed", width: "100vw", height: "100vh", top: 0, color: "white" }} className='flex flex-col justify-end'>
-                  <div style={{ position: "absolute", bottom: 20, right: 20, color: "white", display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end' }} >
-                    {/* <img src={loading} style={{ width: "30px" }} /> */}
-                    <p style={{ fontSize: "1rem" }}>Fetching Wallet Data</p>
-                  </div>
-                </div> :
-                mining ? (
-                  <div style={{ position: "absolute", bottom: 20, right: 20, color: "white", display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end' }} >
-                    <p style={{ fontSize: "1rem", margin: 0 }}>Mining Rate: {miningRate.toFixed(7)}</p>
-                    <p style={{ fontSize: "1rem", margin: 0, marginBottom: "10px" }}>Online Miners: {onlineMiners}</p>
-                  </div>
-                )
-                  : (
-                    miningError ? (
-                      <div style={{ position: "absolute", bottom: 20, right: 20, color: "white", display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end' }} >
-                        <p style={{ fontSize: "1rem" }}>Failed to start mining</p>
-                      </div>
-                    ) : (
-                      <div style={{ position: "absolute", bottom: 20, right: 20, color: "white", display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end' }} >
-                        <p style={{ fontSize: "1rem" }}>Initiating Mining...</p>
-                      </div>
-                    )
-                  )
-            }
-          </>
-      }
-    </>
-  )
-}
+      {restart && (
+        <GameRestart
+          score={score}
+          highScore={highScore}
+          restart={() => setRestart(false)}
+        />
+      )}
+    </Div>
+  );
+};
 
 export default Playground;

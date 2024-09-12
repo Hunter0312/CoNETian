@@ -9,7 +9,6 @@ import Skeleton from "react-loading-skeleton";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import { formatToken } from "@/utilitiy/functions";
 import PageWrapper from '@/components/pageWrapper';
-import { motion } from "framer-motion";
 
 const S = {
   PlayButton: styled(Div)`
@@ -121,7 +120,6 @@ export default function Home() {
           </GradientP>
         </FlexDiv>
       </FlexDiv>
-
       <FlexDiv $justify="center">
         <Button $radius="50%">
           <S.PlayButton onClick={() => setRouter('/playground')}>
@@ -134,7 +132,6 @@ export default function Home() {
           </S.PlayButton>
         </Button>
       </FlexDiv>
-
       <FlexDiv $justify="center" $gap="24px" $align="center">
         <FlexDiv $direction="column" $align="center" $gap="4px">
           <P $fontSize="12px">CNTP earned</P>

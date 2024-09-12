@@ -12,9 +12,9 @@ interface Props {
 export default function Modal({ align = "center", close, children }: Props) {
   return (
     <FlexDiv className="modal-overlay" $position="fixed" $background="#000000AA" $width="100vw" $height="100vh" $align={align} $justify="center" onClick={close}>
-     <Div $width="100%" onClick={(e) => e.stopPropagation()} className="modal-content-wrapper">
+      <Div $width="100%" onClick={(e) => e.stopPropagation()} className="modal-content-wrapper">
         {children}
-     </Div>
+      </Div>
     </FlexDiv>
   )
 }

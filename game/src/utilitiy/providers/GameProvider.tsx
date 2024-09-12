@@ -19,6 +19,10 @@ type GameContext = {
   setRouter: (props: string) => void;
   difficulty: Difficulty;
   setDifficulty: (val: Difficulty) => void;
+  effects: number;
+  setEffects: (val: number) => void;
+  music: number;
+  setMusic: (val: number) => void;
   highScore: number;
   setHighScore: (e: number) => void;
   profile: any;
@@ -80,6 +84,8 @@ type GameProps = {
 export function GameProvider({ children }: GameProps) {
   const [router, setRouter] = useState<string>("/");
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
+  const [music, setMusic] = useState<number>(70);
+  const [effects, setEffects] = useState<number>(70);
   const [highScore, setHighScore] = useState<number>(0);
   const [profile, setProfile] = useState<any>(null);
   const [leaderboard, setLeaderboard] = useState<Leaderboard>({
@@ -167,6 +173,10 @@ export function GameProvider({ children }: GameProps) {
         setRouter,
         difficulty,
         setDifficulty,
+        effects,
+        setEffects,
+        music,
+        setMusic,
         highScore,
         setHighScore,
         profile,

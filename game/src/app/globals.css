@@ -103,10 +103,6 @@ a {
   }
 }
 
-.pointer {
-  cursor: pointer;
-}
-
 .range-input {
   -webkit-appearance: none;
   appearance: none;
@@ -177,8 +173,4 @@ a {
 
 .small-text-max-width {
   max-width: 240px;
-}
-
-.sc-gsTCUz {
-  transform: rotateZ(45deg);
 }

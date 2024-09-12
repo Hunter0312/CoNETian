@@ -18,10 +18,6 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
       const Phaser = await import("phaser");
       PhaserInstance = Phaser;
 
-      if (game) {
-        game.destroy(true);
-      }
-
       if (!game) {
         console.log(123);
         startGame(PhaserInstance);

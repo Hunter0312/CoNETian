@@ -1,5 +1,5 @@
 import { Div, FlexDiv } from "@/components/div";
-import Game from "../game";
+//import Game from "../game";
 import { P } from "@/components/p";
 import Image from "next/image";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
@@ -8,6 +8,12 @@ import { Button } from "@/components/button";
 import { useEffect, useState } from "react";
 import GamePause from "./gamePause";
 import GameRestart from "./gameRestart";
+import dynamic from "next/dynamic";
+
+const Game = dynamic<any>(() =>
+  import("../game").then((mod) => mod.default),
+  { ssr: false }
+);
 
 const Playground = () => {
   const { profile, miningRate, onlineMiners, mining, highScore, setHighScore } = useGameContext();
@@ -38,8 +44,8 @@ const Playground = () => {
         <>
           <Game
             restart={restart}
-            setRestart={(e) => setRestart(true)}
-            setScore={(score) => setScore(score)}
+            setRestart={(e: any) => setRestart(true)}
+            setScore={(score: any) => setScore(score)}
           />
           <FlexDiv
             $position="absolute"

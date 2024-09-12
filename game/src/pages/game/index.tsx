@@ -1,8 +1,8 @@
 // components/FlappyBirdGame.tsx
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import Phaser from "phaser";
+//import Phaser from "phaser";
 import { Img } from "@/utilitiy/images";
-
+import dynamic from "next/dynamic";
 type Props = {
   restart: boolean;
   setRestart: (e: boolean) => void;
@@ -15,21 +15,30 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
   let score = 0;
 
   useLayoutEffect(() => {
-    if (game) {
-      game.destroy(true);
-    }
+    let PhaserInstance: any;
 
-    if (!game) {
-      console.log(123);
-      startGame();
-      return;
-    }
+    const loadPhaser = async () => {
+      const Phaser = await import("phaser");
+      PhaserInstance = Phaser;
 
-    return () => {
       if (game) {
         game.destroy(true);
       }
+
+      if (!game) {
+        console.log(123);
+        startGame(PhaserInstance);
+        return;
+      }
+
+      return () => {
+        if (game) {
+          game.destroy(true);
+        }
+      };
     };
+
+    loadPhaser();
   }, [game]);
 
   function preload(this: any) {
@@ -186,7 +195,7 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
     }
   }
 
-  const startGame = () => {
+  const startGame = (PhaserInstance: any) => {
     if (gameContainer.current) {
       const config: Phaser.Types.Core.GameConfig = {
         type: Phaser.AUTO,

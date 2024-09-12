@@ -9,7 +9,7 @@ const S = {
 };
 
 type Props = {
-  number: Number;
+  number: number;
 };
 
 const Delay: React.FC<Props> = ({ number }) => {

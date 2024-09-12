@@ -19,7 +19,7 @@ export default function Profile() {
     const [error, setError] = useState<string>('')
     const { profile } = useGameContext();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: any) => {
         const newBio = e.target.value;
 
         if (newBio.length > 140) {

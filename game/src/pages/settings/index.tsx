@@ -50,7 +50,7 @@ export default function Settings() {
                 $padding="12px"
                 $radius="16px"
                 $border={currDifficulty === difficulty ? "1px solid #04DAE8" : "1px solid #787679"}
-                $flex="1"
+                $flex={1}
                 $fontSize="18px"
                 onClick={() => setDifficulty(currDifficulty)}
               >

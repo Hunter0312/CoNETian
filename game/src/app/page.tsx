@@ -44,7 +44,7 @@ const listeningManager = (key: string, fun: (e: MessageEvent<any>) => void) => {
   profileVerChannel.addEventListener("message", fun);
 };
 
-export const listeningProfileHook = (
+const listeningProfileHook = (
   profileHook: React.Dispatch<React.SetStateAction<any[]>>
 ) => {
   const fun = (e: MessageEvent<any>) =>
@@ -89,7 +89,7 @@ const profileVerChannelListening = (
   }
 };
 
-export const listeningMiningHook = (
+const listeningMiningHook = (
   miningHook: React.Dispatch<React.SetStateAction<any[]>>
 ) => {
   const fun = (e: MessageEvent<any>) =>

@@ -44,6 +44,7 @@ export interface Task {
   quiz?: boolean;
   claim?: boolean;
   active: boolean;
+  reward?: number;
 }
 
 export const dailyQuiz: Quiz = {

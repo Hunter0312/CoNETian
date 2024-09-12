@@ -11,7 +11,7 @@ import GameRestart from "./gameRestart";
 
 const Playground = () => {
   const { profile, miningRate, onlineMiners, mining, highScore, setHighScore } = useGameContext();
-  const [pause, setPause] = useState<Boolean>(false);
+  const [pause, setPause] = useState<boolean>(false);
   const [restart, setRestart] = useState<Boolean>(false);
   const [score, setScore] = useState<number>(0);
 

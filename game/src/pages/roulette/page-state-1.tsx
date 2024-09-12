@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic';
 import { Wheel } from 'react-custom-roulette';
 import { rouletteDesign } from '@/shared/assets';
 import React from 'react';
+import { PointerProps } from 'react-custom-roulette/dist/components/Wheel/types';
 
 interface Props {
   pageState: 1 | 2 | 3 | 4 | 5;
@@ -19,7 +20,7 @@ interface Props {
   prizeNumber: number;
 }
 
-const pointerProperties = {
+const pointerProperties: PointerProps = {
   style: { visibility: "hidden" }
 }
 
@@ -35,7 +36,7 @@ export default function PageState1({ pageState, isSpinning, handleSpin, mustSpin
           :
           <>
             <P className="white-text-shadow" $fontSize="24px" $align="center">You lose!</P>
-            <P className="white-text-shadow" $fontSize="24px" $align="center">Sorry, you didn't get any extra CNTP</P>
+            <P className="white-text-shadow" $fontSize="24px" $align="center">Sorry, you didn&apos; t get any extra CNTP</P>
           </>
         }
       </div>
@@ -80,7 +81,7 @@ export default function PageState1({ pageState, isSpinning, handleSpin, mustSpin
 
         <FlexDiv $align="center" $justify="center" $gap="8px">
           {profile?.tickets?.balance === '0' && !mustSpin ? (
-            <P $fontSize="12px" $color='#FFDAD6' $align='center' $width='70%'>You don't have enough tickets to spin the roulette</P>
+            <P $fontSize="12px" $color='#FFDAD6' $align='center' $width='70%'>You don&apos;t have enough tickets to spin the roulette</P>
           ) : (
             <>
               <Image src={Img.Tickets} alt="Ticket" width={20} height={20} />

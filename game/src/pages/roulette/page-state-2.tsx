@@ -49,7 +49,7 @@ export default function PageState2({ pageState, doubleImageState, prizeNumber, h
           {
             doubleFinished ? (
               pageState === 4 ? (
-                <P $fontSize="24px" $align="center">Sorry, you didn't get any extra CNTP</P>
+                <P $fontSize="24px" $align="center">Sorry, you didn&apos;t get any extra CNTP</P>
               ) : (
                 <>
                   <P $fontSize="24px" className="white-text-shadow">You won!</P>

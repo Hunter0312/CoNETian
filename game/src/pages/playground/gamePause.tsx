@@ -20,7 +20,7 @@ type Props = {
 
 const GamePause: React.FC<Props> = ({ resume, zindex }) => {
   const [delay, setDelay] = useState<Boolean>(false);
-  const [number, setNumber] = useState<Number>(3);
+  const [number, setNumber] = useState<number>(3);
   useEffect(() => {
     if (number === 0) {
       setDelay(false);

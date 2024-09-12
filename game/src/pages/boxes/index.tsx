@@ -12,10 +12,20 @@ import { Button } from '@/components/button';
 import { Img } from '@/utilitiy/images';
 import GradientWrapper from '@/components/gradientWrapper';
 import Box from './page-components/box';
+import Keys from './page-components/key';
 
 export default function Boxes() {
   const [choosenBox, setChoosenBox] = useState<BoxType>();
   const [boxList, setBoxList] = useState<BoxType[]>(boxes);
+  const [isBuyKeyOpen, setIsBuyKeyOpen] = useState<boolean>(false);
+
+  if (isBuyKeyOpen) {
+    return (
+      <PageWrapper margin="32px 16px 140px 16px">
+        <Keys closeKeys={() => setIsBuyKeyOpen(false)} />
+      </PageWrapper>
+    )
+  }
 
   if (choosenBox) {
     return (
@@ -30,7 +40,7 @@ export default function Boxes() {
     <PageWrapper margin="32px 16px 140px 16px">
       <BackButton text="Open the Box" />
       <Supplies />
-      <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" $padding="18px">
+      <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" $padding="18px" onClick={() => setIsBuyKeyOpen(true)}>
         Buy Key
       </Button>
       <div className="split"></div>

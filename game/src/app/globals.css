@@ -199,3 +199,8 @@ a {
   background: linear-gradient(to right, transparent, #79F8FF, #D775FF, transparent);
   height: 1px;
 }
+
+.vertical-split {
+  background: linear-gradient(to bottom, transparent, #79F8FF, #D775FF, transparent);
+  width: 1px;
+}

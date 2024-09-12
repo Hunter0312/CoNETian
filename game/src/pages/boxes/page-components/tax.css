@@ -1,0 +1,4 @@
+.tax div:not(.heading) p {
+  color: #989899;
+  font-size: 14px;
+}

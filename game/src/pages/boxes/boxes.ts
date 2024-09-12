@@ -8,6 +8,15 @@ export interface BoxType {
   requiredKey: "normal" | "special" | "conet";
 }
 
+export interface KeyType {
+  name: "normal" | "special" | "conet";
+  icon: string;
+  cost: {
+    cntp: number;
+    tickets: number;
+  };
+}
+
 export const boxes: BoxType[] = [
   {
     icon: Img.GuardianBox,
@@ -59,3 +68,28 @@ export const boxes: BoxType[] = [
     requiredKey: "conet",
   },
 ];
+
+export const keys: KeyType[] = [
+  {
+    name: "normal",
+    icon: Img.NormalKey,
+    cost: {
+      cntp: 1,
+      tickets: 5,
+    }
+  }, {
+    name: "special",
+    icon: Img.SpecialKey,
+    cost: {
+      cntp: 5,
+      tickets: 10,
+    }
+  }, {
+    name: "conet",
+    icon: Img.ConetKey,
+    cost: {
+      cntp: 10,
+      tickets: 50,
+    }
+  },
+]

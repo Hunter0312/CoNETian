@@ -23,3 +23,7 @@
 .box-grid > div {
   cursor: pointer;
 }
+
+.confirm-payment {
+  opacity: 0.67;
+}

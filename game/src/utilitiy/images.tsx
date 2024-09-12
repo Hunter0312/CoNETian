@@ -80,4 +80,5 @@ export const Img = {
   OsmiumBox: "/osmiumBox.svg",
   ConetiumBox: "/conetiumBox.svg",
   GuardianBox: "/guardianBox.svg",
+  Progress: "/progress.svg",
 };

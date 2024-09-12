@@ -8,6 +8,7 @@ import ConfirmOrder from './confirm-order';
 import Supplies from '@/components/supplies';
 import BackButton from '@/components/backButton';
 import { Img } from '@/utilitiy/images';
+import OrderProcess from './order-process';
 
 interface Props {
   closeKeys: () => void;
@@ -56,12 +57,49 @@ export default function Keys({ closeKeys }: Props) {
 
       case "progress":
         return (
-          <></>
+          <>
+            <OrderProcess inProgress={true} finish={() => setTransactionState("success")} choosenKey={choosenKey} />
+            <FlexDiv $direction="column" $align="center" $gap="8px">
+              <Button
+                $width="80%" $radius="999px"
+                $background="#363E59"
+                $padding="18px" onClick={() => setTransactionState("progress")}
+              >
+                <FlexDiv $align="center" $justify="center" $gap="10px">
+                  <Image src={Img.Progress} alt="Processing" width={20} height={20} className="animate-rotate" />
+                  <P>Processing</P>
+                </FlexDiv>
+              </Button>
+              <FlexDiv className="confirm-payment" $gap="4px" $align="center">
+                <Image src={Img.Lock} alt="Secure" width={16} height={16} />
+                <P $fontSize="12px" >Secure payment</P>
+              </FlexDiv>
+            </FlexDiv>
+          </>
         )
 
       case "success":
         return (
-          <></>
+          <>
+            <OrderProcess inProgress={false} choosenKey={choosenKey} fee="0.12345" networkCost="100" />
+            <FlexDiv $direction="column" $align="center" $gap="8px">
+              <Button
+                $width="80%" $radius="999px"
+                $background="#17181F"
+                $border="1px solid #79F8FF"
+                $padding="18px" onClick={() => {
+                  setTransactionState(undefined);
+                  setChoosenKey(undefined);
+                }}
+              >
+                Back to Shop
+              </Button>
+              <FlexDiv className="confirm-payment" $gap="4px" $align="center">
+                <Image src={Img.Lock} alt="Secure" width={16} height={16} />
+                <P $fontSize="12px" >Secure payment</P>
+              </FlexDiv>
+            </FlexDiv>
+          </>
         )
     }
   }

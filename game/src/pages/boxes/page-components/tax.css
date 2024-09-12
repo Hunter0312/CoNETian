@@ -2,3 +2,11 @@
   color: #989899;
   font-size: 14px;
 }
+
+.summary div p {
+  font-size: 14px;
+}
+
+.summary div p:last-of-type {
+  color: #E4E4E5;
+}

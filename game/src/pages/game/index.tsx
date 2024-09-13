@@ -1,5 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Img } from "@/utilitiy/images";
+import { useGameContext } from "@/utilitiy/providers/GameProvider";
+
 type Props = {
   restart: boolean;
   setRestart: (e: boolean) => void;
@@ -8,8 +10,11 @@ type Props = {
 
 const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
   const gameContainer = useRef<HTMLDivElement>(null);
+  const { difficulty } = useGameContext();
   const [game, setGame] = useState<any>(null);
   let score = 0;
+
+  const gameDifficulty = difficulty === "easy" ? 1 : difficulty === "normal" ? 2 : 3;
 
   useLayoutEffect(() => {
     let PhaserInstance: any;
@@ -19,7 +24,6 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
       PhaserInstance = Phaser;
 
       if (!game) {
-        console.log(123);
         startGame(PhaserInstance);
         return;
       }
@@ -102,7 +106,7 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
       delay: 0,
       callback: () => {
         this.time.addEvent({
-          delay: 1000,
+          delay: gameDifficulty === 1 ? 1000 : 700,
           callback: createAsteroid,
           callbackScope: this,
           loop: true,
@@ -122,7 +126,7 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
 
   function createAsteroid(this: any) {
     const x = 430;
-    const y = Phaser.Math.Between(0, window.innerHeight - 50);
+    const y = gameDifficulty === 1 ? Phaser.Math.Between(0, window.innerHeight - 50) : Phaser.Math.Between(this.bird.y - 300, this.bird.y + 300);
 
     // generate random number between 1 and 6
     const asteroidNumber = Math.floor(Math.random() * 6) + 1;
@@ -135,7 +139,7 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
     if (asteroid) {
       asteroid.setActive(true).setVisible(true);
       asteroid.setGravityY(-300);
-      asteroid.setVelocityX(-200);
+      gameDifficulty === 3 ? asteroid.setVelocityX(-400) : asteroid.setVelocityX(-200);
       asteroid.setRotation(Phaser.Math.FloatBetween(0, 2 * Math.PI));
       asteroid.setAngularVelocity(-400);
       asteroid.setCircle(200);
@@ -170,7 +174,11 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
 
   function update(this: any) {
     if (!this.gameOver) {
-      this.background.tilePositionX += 2;
+      this.background.tilePositionX = gameDifficulty === 3 ? this.background.tilePositionX + 5 : this.background.tilePositionX + 2;
+
+      if (this.bird.y >= window.innerHeight - 70 || this.bird.y <= 0) {
+        handleGameOver.call(this);
+      }
 
       this.asteroids.children.each(
         (asteroid: any) => {
@@ -199,7 +207,7 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
           default: "arcade",
           arcade: {
             gravity: { y: 300, x: 0 },
-            debug: false,
+            debug: true,
           },
         },
         scene: {

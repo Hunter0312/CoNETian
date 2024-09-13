@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Img } from "@/utilitiy/images";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
+import { fetchTicketResult } from "@/API/getData";
 
 type Props = {
   restart: boolean;
@@ -10,7 +11,7 @@ type Props = {
 
 const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
   const gameContainer = useRef<HTMLDivElement>(null);
-  const { difficulty } = useGameContext();
+  const { profile, difficulty } = useGameContext();
   const [game, setGame] = useState<any>(null);
   let score = 0;
 
@@ -185,6 +186,11 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
           if (!asteroid.temp) {
             if (asteroid.x < this.bird.x) {
               setScore(++score);
+
+              if (score % 5 === 0 && score >= 1 && profile?.keyID) {
+                fetchTicketResult(profile?.keyID);
+              }
+
               asteroid.temp = true;
             }
           }

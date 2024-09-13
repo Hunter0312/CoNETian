@@ -213,7 +213,7 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
           default: "arcade",
           arcade: {
             gravity: { y: 300, x: 0 },
-            debug: true,
+            debug: false,
           },
         },
         scene: {

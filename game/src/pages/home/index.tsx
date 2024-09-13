@@ -32,8 +32,8 @@ export default function Home() {
   }
 
   return (
-    <PageWrapper>
-      <FlexDiv $justify="space-between" $padding="0 15px">
+    <PageWrapper margin="32px 16px 140px 16px">
+      <FlexDiv $justify="space-between">
         <FlexDiv $gap="16px">
           <UserData />
           <Button
@@ -65,7 +65,8 @@ export default function Home() {
           />
         </Button>
       </FlexDiv>
-      <FlexDiv $justify="space-between" $padding="0 15px" $gap="16px">
+
+      <FlexDiv $justify="space-between" $gap="16px">
         <GradientButton
           flex={2}
           onClick={() => {
@@ -100,7 +101,8 @@ export default function Home() {
           </FlexDiv>
         </GradientButton>
       </FlexDiv>
-      <FlexDiv $justify="space-between" $padding="0 15px" $align="center">
+
+      <FlexDiv $justify="space-between" $align="center">
         <P $fontSize="32px" $color="#F6F1F2">
           The CoNETian
         </P>
@@ -145,7 +147,7 @@ export default function Home() {
         </FlexDiv>
         <GradientButton onClick={handleOpenPlatform}>Open Platform</GradientButton>
       </FlexDiv>
-      <FlexDiv $justify="center" $gap="8px" $margin="0 0 150px 0">
+      <FlexDiv $justify="center" $gap="8px">
         <Image width={16} height={16} src={Img.ArbitrumLogo} alt="logo" />
         <P $fontSize="14px">built on Arbitrum</P>
       </FlexDiv>

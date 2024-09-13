@@ -32,7 +32,7 @@ export default function Home() {
   }
 
   return (
-    <PageWrapper margin="32px 16px 140px 16px">
+    <PageWrapper margin="8px 16px 88px 16px">
       <FlexDiv $justify="space-between">
         <FlexDiv $gap="16px">
           <UserData />
@@ -51,6 +51,7 @@ export default function Home() {
             />
           </Button>
         </FlexDiv>
+
         <Button
           $width="32px"
           $height="32px"

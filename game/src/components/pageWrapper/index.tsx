@@ -5,11 +5,12 @@ import MiningStatus from '../miningStatus';
 interface Props {
   children: ReactNode;
   margin?: string;
+  gap?: string;
 }
 
-export default function PageWrapper({ children, margin }: Props) {
+export default function PageWrapper({ children, margin, gap }: Props) {
   return (
-    <FlexDiv $direction="column" $gap="32px" $margin={margin || "32px 0 0 0"}>
+    <FlexDiv $justify="space-evenly" $direction="column" $gap={gap || "32px"} $margin={margin || "32px 0 0 0"}>
       <MiningStatus />
       {children}
     </FlexDiv>

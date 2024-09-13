@@ -50,8 +50,12 @@ const GameRestart: React.FC<Props> = ({ restart, score, highScore }) => {
         <P $fontSize="32px">{score}</P>
         <P $fontSize="32px">Hightest Score</P>
         <P $fontSize="32px">{highScore}</P>
-        <P $fontSize="32px">CNTP Balance</P>
-        <P $fontSize="32px">{formatToken(profile?.tokens?.cCNTP?.balance)}</P>
+        {profile?.tokens?.cCNTP?.balance &&
+          <>
+            <P $fontSize="32px">CNTP Balance</P>
+            <P $fontSize="32px">{formatToken(profile?.tokens?.cCNTP?.balance)}</P>
+          </>
+        }
       </FlexDiv>
       <FlexDiv $direction="column" $margin="0 0 30px 0" $gap="20px">
         <S.GradientImage>

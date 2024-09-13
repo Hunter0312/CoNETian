@@ -56,25 +56,17 @@ const Playground = () => {
             $height="100%"
             $width="100%"
           >
-            <FlexDiv $justify="space-between" $margin="20px 0">
+            <FlexDiv $justify="space-between" $padding="20px 10px">
+              {/* this first empty FlexDiv exists only to allow us to align the score to the center and the tickets balance to the right */}
               <FlexDiv
-                $direction="column"
-                $align="center"
-                $gap="8px"
-                $background="#26252766"
                 $padding="8px"
-                $radius="8px"
+                $width="42.15px"
+                $boxSizing="content-box"
                 style={{ opacity: 0 }}
-              >
-                <Image
-                  src={Img.Tickets}
-                  alt="Tickets"
-                  width={42.15}
-                  height={32}
-                />
-                <P>x {profile?.tickets?.balance}</P>
-              </FlexDiv>
+              ></FlexDiv>
+
               <P $fontSize="48px">{score}</P>
+
               <FlexDiv
                 $direction="column"
                 $align="center"
@@ -82,6 +74,7 @@ const Playground = () => {
                 $background="#26252766"
                 $padding="8px"
                 $radius="8px"
+                style={profile?.tickets?.balance ? { opacity: 100 } : { opacity: 0 }}
               >
                 <Image
                   src={Img.Tickets}

@@ -9,6 +9,7 @@ import Skeleton from "react-loading-skeleton";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import { formatToken } from "@/utilitiy/functions";
 import PageWrapper from '@/components/pageWrapper';
+import { capitalizeFirstLetter } from "@/shared/functions";
 
 const S = {
   PlayButton: styled(Div)`
@@ -25,7 +26,7 @@ const S = {
 };
 
 export default function Home() {
-  const { profile, setRouter, highScore } = useGameContext();
+  const { profile, setRouter, highScore, difficulty } = useGameContext();
 
   function handleOpenPlatform() {
     window.open("https://platform.conet.network", "_blank");
@@ -104,9 +105,12 @@ export default function Home() {
       </FlexDiv>
 
       <FlexDiv $justify="space-between" $align="center">
-        <P $fontSize="32px" $color="#F6F1F2">
-          The CoNETian
-        </P>
+        <FlexDiv $direction="column" $gap="4px">
+          <P $fontSize="32px" $color="#F6F1F2">
+            The CoNETian
+          </P>
+          <P style={{ "margin": '0 0 0 6px' }}>{capitalizeFirstLetter(difficulty || "")} Mode</P>
+        </FlexDiv>
         <FlexDiv
           $padding="8px 0"
           $border="1px solid #CFCFCF1A"

@@ -205,7 +205,7 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
   const startGame = (PhaserInstance: any) => {
     if (gameContainer.current) {
       const config: Phaser.Types.Core.GameConfig = {
-        type: Phaser.AUTO,
+        type: Phaser.CANVAS,
         width: 430,
         height: window.innerHeight,
         parent: gameContainer.current,

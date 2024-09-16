@@ -10,7 +10,7 @@ import {
   useEffect,
 } from "react";
 import Leaderboard from "../types/leaderboard";
-import { fetchStartMining } from "@/API/getData";
+import { fetchRegisterReferrer, fetchStartMining } from "@/API/getData";
 
 export type Difficulty = 'easy' | 'normal' | 'hard';
 
@@ -131,11 +131,6 @@ export function GameProvider({ children }: GameProps) {
           setMining(true);
           setMiningError(false);
         } else {
-          // if (path !== "/start") {
-          //   toast.clearWaitingQueue({ containerId: "miningError" });
-          //   toast.error(result?.message, { toastId: "miningError" });
-          // }
-
           setMiningError(true);
 
           if (miningErrorTimeout.current)
@@ -151,6 +146,18 @@ export function GameProvider({ children }: GameProps) {
 
     if (profile?.keyID && profile?.keyID !== walletAddress.current) {
       walletAddress.current = profile?.keyID;
+      walletAddress.current = profile?.keyID
+
+      const url = window.location.search
+
+      const splitUrl = url.split('referrer=')
+
+      if (splitUrl.length > 1) {
+        const referrer = splitUrl[1]
+        if (referrer)
+          fetchRegisterReferrer(referrer);
+      }
+
       init(profile?.keyID);
     }
   }, [profile]);

@@ -15,6 +15,7 @@ export const Button = styled.button<{
   $flex?: number;
   $direction?: string;
   $gap?: string;
+  $index?: number;
 }>`
   margin: ${(props) => props.$margin || 0};
   padding: ${(props) => props.$padding || 0};
@@ -33,6 +34,7 @@ export const Button = styled.button<{
   gap: ${(props) => props.$gap || "0"};
   overflow: hidden;
   cursor: pointer;
+  z-index: ${(props) => props.$index || 0};
 `;
 
 export const GradientImage = styled(FlexDiv)`

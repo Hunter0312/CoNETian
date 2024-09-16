@@ -69,16 +69,16 @@ export default function PageState1({ pageState, isSpinning, handleSpin, mustSpin
       <FlexDiv $direction="column" $gap="16px" $align='center' $justify='center'>
         {profile?.tickets?.balance !== '0' ? (
           isSpinning ? (
-            <Button $width="196px" $height="45px" $radius="8px" $border="1px solid #04DAE8" disabled $background={"gray"}>
+            <Button $width="196px" $height="45px" $index={30} $radius="8px" $border="1px solid #04DAE8" disabled $background={"gray"}>
               Spinning...
             </Button>
           ) : (
-            <Button $width="196px" $height="45px" $radius="8px" $border="1px solid #04DAE8" onClick={handleSpin}>
+            <Button $width="196px" $height="45px" $index={30} $radius="8px" $border="1px solid #04DAE8" onClick={handleSpin}>
               {pageState === 1 ? "Spin" : "Spin Again"}
             </Button>
           )
         ) : (
-          <Button $width="196px" $height="45px" $radius="8px" $border="1px solid #04DAE8" disabled $background={"gray"}>
+          <Button $width="196px" $height="45px" $index={30} $radius="8px" $border="1px solid #04DAE8" disabled $background={"gray"}>
             {pageState === 1 ? "Spin" : "Spin Again"}
           </Button>
         )}

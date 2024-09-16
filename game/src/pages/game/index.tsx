@@ -74,14 +74,14 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
 
     window.addEventListener("mousedown", () => {
       if (!this.gameOver) {
-        this.bird.setVelocityY(-300);
+        this.bird.setVelocityY(-200);
       }
     });
 
     window.addEventListener("keydown", event => {
       if (event.code === 'Space') {
         if (!this.gameOver) {
-          this.bird.setVelocityY(-300);
+          this.bird.setVelocityY(-200);
         }
       }
     });

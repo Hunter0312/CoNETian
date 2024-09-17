@@ -16,7 +16,7 @@ const Game = dynamic<any>(() =>
 );
 
 const Playground = () => {
-  const { profile, miningRate, onlineMiners, mining, highScore, setHighScore } = useGameContext();
+  const { profile, miningRate, onlineMiners, mining, highScore, setHighScore, audio, setAudio } = useGameContext();
   const [pause, setPause] = useState<boolean>(false);
   const [restart, setRestart] = useState<Boolean>(false);
   const [score, setScore] = useState<number>(0);
@@ -92,12 +92,14 @@ const Playground = () => {
               $align="center"
             >
               <FlexDiv $gap="10px">
-                <Image
-                  src={Img.VolumnSquareImg}
-                  width={40}
-                  height={40}
-                  alt=""
-                />
+                <Button onClick={() => setAudio?.((prev: any) => !prev)}>
+                  <Image
+                    src={audio ? Img.VolumeSquareImg : Img.VolumeMuteSquareImg}
+                    width={40}
+                    height={40}
+                    alt=""
+                  />
+                </Button>
                 <Button id="game-pause" onClick={() => setPause(true)}>
                   <Image
                     src={Img.PauseSquareImg}

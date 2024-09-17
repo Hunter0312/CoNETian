@@ -5,7 +5,7 @@ import { initializeWorkerService } from "@/services/workerService";
 import Home from "@/pages/home";
 import Playground from "@/pages/playground";
 import Menu from "@/components/menu";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useCallback, useEffect, useRef } from "react";
 import Leaderboard from "@/pages/leaderboard";
 import Wallet from "@/pages/wallet";
 import About from "@/pages/about";
@@ -15,6 +15,9 @@ import Shopping from "@/pages/shopping";
 import Roulette from "@/pages/roulette";
 import Earn from "@/pages/earn";
 import { Toaster } from "react-hot-toast";
+import { BackgroundAudio, ButtonClick } from '../shared/assets';
+import { playAudio, stopAudio } from "@/shared/functions";
+import { useAudioPlayer } from "react-use-audio-player";
 
 const S = {
   Main: styled.div`
@@ -124,7 +127,18 @@ export default function App() {
     setMiningRate,
     setOnlineMiners,
     leaderboard,
+    audio,
   } = useGameContext();
+
+  const backAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  const { load } = useAudioPlayer();
+
+  useEffect(() => {
+    if (audio)
+      playAudio(backAudioRef);
+    else stopAudio(backAudioRef);
+  }, [audio])
 
   listeningMiningHook((response: any) => {
     try {
@@ -148,9 +162,33 @@ export default function App() {
     }
   });
 
+
   useEffect(() => {
     initializeWorkerService();
   }, []);
+
+  useEffect(() => {
+    const playClickAudio = () => {
+      if (audio) {
+        load(ButtonClick, {
+          autoplay: true,
+        })
+      }
+    }
+
+    const buttons = Array.from(document.getElementsByTagName("button"));
+
+    buttons.map((button) => {
+      button.removeEventListener("click", playClickAudio);
+      button.addEventListener("click", playClickAudio);
+    });
+
+    return () => {
+      buttons.forEach((button) => {
+        button.removeEventListener("click", playClickAudio);
+      });
+    };
+  }, [audio, router]);
 
   return (
     <>
@@ -159,6 +197,7 @@ export default function App() {
         <CurrentPage />
       </S.Main>
       {router !== "/playground" && <Menu />}
+      {router !== "/playground" && <audio src={BackgroundAudio} ref={backAudioRef} loop />}
     </>
   );
 }

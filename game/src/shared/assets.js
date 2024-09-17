@@ -11,7 +11,6 @@ import groundImage from "../assets/bgconetian.png";
 import loading from "../assets/logo_conet_rotation.gif";
 import pointer from "../assets/Polygon 4.png";
 import audioImage from "../assets/audio.png";
-// import rouletteImg from "../assets/sticker.webm";
 import StarImg from "../assets/star.png";
 
 import AstronautSkins from "../assets/astronaut_skins.png";
@@ -42,13 +41,13 @@ import HardConetianLowFire from "../assets/hard-conetian-low-fire.png";
 import HardConetianMediumFire from "../assets/hard-conetian-medium-fire.png";
 import HardConetianHighFire from "../assets/hard-conetian-high-fire.png";
 
-// import BackgroundAudio from "../assets/GameSounds/BackgroundSound/16-Bit Action.wav";
-// import Tap from "../assets/GameSounds/Tap/Pressured Pneumatics Hit.mp3";
-// import RouletteSpin from "../assets/GameSounds/RouletteSpin/GAME_FX_Wobble_05.wav";
-// import RouletteWin from "../assets/GameSounds/RouletteWin/Winning.mp3";
-// import RouletteLose from "../assets/GameSounds/RouletteLoss/Pickup Loss.wav";
-// import ConetianDeath from "../assets/GameSounds/ConetianDeath/Death Female.wav";
-// import ButtonClick from "../assets/GameSounds/ButtonTouch/Authorize Button.wav";
+import BackgroundAudio from "../assets/GameSounds/BackgroundSound/16-Bit Action.wav";
+import Tap from "../assets/GameSounds/Tap/Pressured Pneumatics Hit.mp3";
+import RouletteSpin from "../assets/GameSounds/RouletteSpin/GAME_FX_Wobble_05.wav";
+import RouletteWin from "../assets/GameSounds/RouletteWin/Winning.mp3";
+import RouletteLose from "../assets/GameSounds/RouletteLoss/Pickup Loss.wav";
+import ConetianDeath from "../assets/GameSounds/ConetianDeath/Death Female.wav";
+import ButtonClick from "../assets/GameSounds/ButtonTouch/Authorize Button.wav";
 
 import arbitrumLogo from "../assets/arbitrum-logo.png";
 
@@ -69,14 +68,13 @@ export {
   pointer,
   audioImage,
   StarImg,
-  // BackgroundAudio,
-  // Tap,
-  // RouletteSpin,
-  // RouletteWin,
-  // RouletteLose,
-  // ConetianDeath,
-  // ButtonClick,
-  // rouletteImg,
+  BackgroundAudio,
+  Tap,
+  RouletteSpin,
+  RouletteWin,
+  RouletteLose,
+  ConetianDeath,
+  ButtonClick,
   doubleLose,
   doubleWin,
   doubleNeutral,

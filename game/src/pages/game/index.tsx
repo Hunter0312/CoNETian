@@ -1,7 +1,10 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Img } from "@/utilitiy/images";
+import { Tap, BackgroundAudio, ConetianDeath } from '../../shared/assets';
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import { fetchTicketResult } from "@/API/getData";
+import { playAudio } from "@/shared/functions";
+import { useAudioPlayer } from "react-use-audio-player";
 
 type Props = {
   restart: boolean;
@@ -11,11 +14,19 @@ type Props = {
 
 const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
   const gameContainer = useRef<HTMLDivElement>(null);
-  const { profile, difficulty } = useGameContext();
+  const { profile, difficulty, audio } = useGameContext();
   const [game, setGame] = useState<any>(null);
+  const backAudioRef = useRef<HTMLAudioElement | null>(null);
+  const eventListeners = useRef<(() => void)[]>([]); // Store event removal callbacks
   let score = 0;
 
+  const { load } = useAudioPlayer();
+
   const gameDifficulty = difficulty === "easy" ? 1 : difficulty === "normal" ? 2 : 3;
+
+  useEffect(() => {
+    if (audio) playAudio(backAudioRef);
+  }, [audio]);
 
   useLayoutEffect(() => {
     let PhaserInstance: any;
@@ -32,12 +43,32 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
       return () => {
         if (game) {
           game.destroy(true);
+          // Remove event listeners when game is destroyed
+          removeEventListeners();
         }
       };
     };
 
     loadPhaser();
   }, [game]);
+
+  // Remove all event listeners
+  const removeEventListeners = () => {
+    eventListeners.current.forEach((removeListener) => removeListener());
+    eventListeners.current = [];
+  };
+
+  function makeConetianJump(thisContext: any) {
+    if (audio) {
+      load(Tap, {
+        autoplay: true,
+      });
+    }
+
+    if (!thisContext.gameOver) {
+      thisContext.bird.setVelocityY(-200);
+    }
+  }
 
   function preload(this: any) {
     this.load.image("bird", Img.NormalLowFireImg);
@@ -51,13 +82,9 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
   }
 
   function create(this: any) {
-    this.background = this.add.tileSprite(
-      0,
-      0,
-      window.innerWidth,
-      window.innerHeight,
-      "background"
-    );
+    const thisContext = this;
+
+    this.background = this.add.tileSprite(0, 0, window.innerWidth, window.innerHeight, "background");
     this.background.setOrigin(0, 0);
     this.background.setScrollFactor(0);
 
@@ -72,19 +99,20 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
 
     this.bird.body.setCircle(50);
 
-    window.addEventListener("mousedown", () => {
-      if (!this.gameOver) {
-        this.bird.setVelocityY(-200);
+    // Handle mouse down and key press events
+    const handleMouseDown = () => makeConetianJump(thisContext);
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.code === "Space") {
+        makeConetianJump(thisContext);
       }
-    });
+    };
 
-    window.addEventListener("keydown", event => {
-      if (event.code === 'Space') {
-        if (!this.gameOver) {
-          this.bird.setVelocityY(-200);
-        }
-      }
-    });
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("keydown", handleKeyDown);
+
+    // Store the removal of these event listeners in eventListeners
+    eventListeners.current.push(() => window.removeEventListener("mousedown", handleMouseDown));
+    eventListeners.current.push(() => window.removeEventListener("keydown", handleKeyDown));
 
     const pauseBtn = document.getElementById("game-pause");
     const resumeBtn = document.getElementById("game-resume");
@@ -129,14 +157,9 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
     const x = 430;
     const y = gameDifficulty === 1 ? Phaser.Math.Between(0, window.innerHeight - 50) : Phaser.Math.Between(this.bird.y - 300, this.bird.y + 300);
 
-    // generate random number between 1 and 6
     const asteroidNumber = Math.floor(Math.random() * 6) + 1;
 
-    const asteroid = this.asteroids.create(
-      x,
-      y,
-      `asteroid${asteroidNumber}`
-    );
+    const asteroid = this.asteroids.create(x, y, `asteroid${asteroidNumber}`);
     if (asteroid) {
       asteroid.setActive(true).setVisible(true);
       asteroid.setGravityY(-300);
@@ -151,26 +174,31 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
   function handleGameOver(this: any) {
     this.gameOver = true;
 
+    if (audio) {
+      load(ConetianDeath, {
+        autoplay: true,
+      });
+    }
+
     this.asteroids.setVelocityX(0);
 
-    this.asteroids.children.each(
-      (asteroid: Phaser.Physics.Arcade.Sprite) => {
-        asteroid.setAngularVelocity(0);
-        asteroid.setRotation(0);
-      }
-    );
+    this.asteroids.children.each((asteroid: Phaser.Physics.Arcade.Sprite) => {
+      asteroid.setAngularVelocity(0);
+      asteroid.setRotation(0);
+    });
 
     this.bird.setVelocityY(0);
     this.bird.destroy();
 
-    this.asteroids.children.each(
-      (asteroid: Phaser.Physics.Arcade.Sprite) => {
-        asteroid.destroy();
-      }
-    );
+    this.asteroids.children.each((asteroid: Phaser.Physics.Arcade.Sprite) => {
+      asteroid.destroy();
+    });
     score = 0;
     game?.destroy(true);
     setRestart(true);
+
+    // Remove event listeners when game is over
+    removeEventListeners();
   }
 
   function update(this: any) {
@@ -181,24 +209,22 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
         handleGameOver.call(this);
       }
 
-      this.asteroids.children.each(
-        (asteroid: any) => {
-          if (!asteroid.temp) {
-            if (asteroid.x < this.bird.x) {
-              setScore(++score);
+      this.asteroids.children.each((asteroid: any) => {
+        if (!asteroid.temp) {
+          if (asteroid.x < this.bird.x) {
+            setScore(++score);
 
-              if (score % 5 === 0 && score >= 1 && profile?.keyID) {
-                fetchTicketResult(profile?.keyID);
-              }
-
-              asteroid.temp = true;
+            if (score % 5 === 0 && score >= 1 && profile?.keyID) {
+              fetchTicketResult(profile?.keyID);
             }
-          }
-          if (asteroid.x < -asteroid.width) {
-            asteroid.destroy();
+
+            asteroid.temp = true;
           }
         }
-      );
+        if (asteroid.x < -asteroid.width) {
+          asteroid.destroy();
+        }
+      });
     }
   }
 
@@ -228,12 +254,15 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
 
       return () => {
         game.destroy(true);
+        removeEventListeners();
       };
     }
   };
 
   return (
-    <div ref={gameContainer} style={{ width: "100%", height: "100%" }}></div>
+    <div ref={gameContainer} style={{ width: "100%", height: "100%" }}>
+      {audio && <audio src={BackgroundAudio} ref={backAudioRef} loop />}
+    </div>
   );
 };
 

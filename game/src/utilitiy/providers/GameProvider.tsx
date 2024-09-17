@@ -56,7 +56,7 @@ type GameContext = {
   lotteryBalance?: number,
   setLotteryBalance?: (e: number) => void,
   audio?: boolean,
-  setAudio?: (e: boolean) => void;
+  setAudio?: (e: any) => any;
   musicVolume?: number,
   setMusicVolume?: (e: number) => void;
   effectsVolume?: number,

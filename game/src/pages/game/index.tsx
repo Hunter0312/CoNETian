@@ -239,12 +239,7 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
 
   function update(this: any) {
     if (!this.gameOver) {
-      this.background.tilePositionX = gameDifficulty === 3 ? this.background.tilePositionX + 5 : this.background.tilePositionX + 2;
-
-      if (this.bird.y >= window.innerHeight - 70 || this.bird.y <= 0) {
-        handleGameOver.call(this);
-      }
-      this.background.tilePositionX = gameDifficulty === 3 ? this.background.tilePositionX + 5 : this.background.tilePositionX + 2;
+      this.background.tilePositionX += gameDifficulty === 3 ? 5 : 2;
 
       if (this.bird.y >= window.innerHeight - 70 || this.bird.y <= 0) {
         handleGameOver.call(this);
@@ -273,6 +268,9 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
     if (gameContainer.current) {
       const config: Phaser.Types.Core.GameConfig = {
         type: Phaser.CANVAS,
+        render: {
+          antialias: false,
+        },
         width: 430,
         height: window.innerHeight,
         parent: gameContainer.current,
@@ -294,8 +292,10 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
       setGame(newgame);
 
       return () => {
-        game.destroy(true);
-        removeEventListeners();
+        if (game) {
+          game.destroy(true);
+          removeEventListeners();
+        }
       };
     }
   };

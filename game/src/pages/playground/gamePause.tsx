@@ -29,7 +29,7 @@ const GamePause: React.FC<Props> = ({ resume, zindex }) => {
 
     if (delay) {
       setTimeout(() => {
-        setNumber((e) => e - 1);
+        setNumber(e => e - 1);
       }, 1000);
     }
   }, [delay, number]);

@@ -22,13 +22,13 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
 
   const { load } = useAudioPlayer();
 
-  const gameDifficulty = difficulty === "easy" ? 1 : difficulty === "normal" ? 2 : 3;
-
   useEffect(() => {
     if (audio) playAudio(backAudioRef);
   }, [audio]);
 
-  useLayoutEffect(() => {
+  const gameDifficulty = difficulty === "easy" ? 1 : difficulty === "normal" ? 2 : 3;
+
+  useEffect(() => {
     let PhaserInstance: any;
 
     const loadPhaser = async () => {
@@ -71,7 +71,9 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
   }
 
   function preload(this: any) {
-    this.load.image("bird", Img.NormalLowFireImg);
+    this.load.image("bird1", Img.NormalLowFireImg);
+    this.load.image("bird2", Img.NormalMediumFireImg);
+    this.load.image("bird3", Img.NormalHighFireImg);
     this.load.image("asteroid1", Img.AsteriodImg1);
     this.load.image("asteroid2", Img.AsteriodImg2);
     this.load.image("asteroid3", Img.AsteriodImg3);
@@ -90,14 +92,26 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
 
     // Create bird
     this.bird = this.physics.add
-      .sprite(50, window.innerHeight / 2, "bird")
+      .sprite(50, window.innerHeight / 2, "bird1")
       .setOrigin(0, 0)
       .setOffset(10, 10)
       .setScale(0.5);
+
     this.bird.setCollideWorldBounds(true);
     this.bird.setGravityY(0);
 
     this.bird.body.setCircle(50);
+
+    this.birdTextures = ['bird1', 'bird2', 'bird3'];
+
+    this.currentTextureIndex = 0;
+
+    this.time.addEvent({
+      delay: 100,  // Change image every second
+      callback: switchBirdTexture,
+      callbackScope: this,
+      loop: true
+    });
 
     // Handle mouse down and key press events
     const handleMouseDown = () => makeConetianJump(thisContext);
@@ -153,6 +167,16 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
     this.gameOver = false;
   }
 
+  function switchBirdTexture() {
+    if (!this.bird || !this.bird.active) {
+      // Bird has been destroyed or is not active, stop changing textures
+      return;
+    }
+
+    this.currentTextureIndex = (this.currentTextureIndex + 1) % this.birdTextures.length;
+    this.bird.setTexture(this.birdTextures[this.currentTextureIndex]);
+  }
+
   function createAsteroid(this: any) {
     const x = 430;
     const y = gameDifficulty === 1 ? Phaser.Math.Between(0, window.innerHeight - 50) : Phaser.Math.Between(this.bird.y - 300, this.bird.y + 300);
@@ -163,6 +187,7 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
     if (asteroid) {
       asteroid.setActive(true).setVisible(true);
       asteroid.setGravityY(-300);
+      gameDifficulty === 3 ? asteroid.setVelocityX(-400) : asteroid.setVelocityX(-200);
       gameDifficulty === 3 ? asteroid.setVelocityX(-400) : asteroid.setVelocityX(-200);
       asteroid.setRotation(Phaser.Math.FloatBetween(0, 2 * Math.PI));
       asteroid.setAngularVelocity(-400);
@@ -180,21 +205,32 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
       });
     }
 
-    this.asteroids.setVelocityX(0);
+    // Stop all game timers and events
+    this.time.removeAllEvents(); // Stops all time-based events like texture switching
 
+    // Stop all asteroid movement
+    this.asteroids.setVelocityX(0);
     this.asteroids.children.each((asteroid: Phaser.Physics.Arcade.Sprite) => {
       asteroid.setAngularVelocity(0);
       asteroid.setRotation(0);
     });
 
+    // Stop bird movement and destroy it
     this.bird.setVelocityY(0);
     this.bird.destroy();
 
+    // Destroy all asteroids
     this.asteroids.children.each((asteroid: Phaser.Physics.Arcade.Sprite) => {
       asteroid.destroy();
     });
-    score = 0;
-    game?.destroy(true);
+
+    // Destroy the Phaser game instance
+    if (game) {
+      game.destroy(true);  // true ensures Phaser cleans up everything
+      setGame(null);       // Reset game state to null in React
+    }
+
+    // Set restart state in React
     setRestart(true);
 
     // Remove event listeners when game is over
@@ -203,6 +239,11 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
 
   function update(this: any) {
     if (!this.gameOver) {
+      this.background.tilePositionX = gameDifficulty === 3 ? this.background.tilePositionX + 5 : this.background.tilePositionX + 2;
+
+      if (this.bird.y >= window.innerHeight - 70 || this.bird.y <= 0) {
+        handleGameOver.call(this);
+      }
       this.background.tilePositionX = gameDifficulty === 3 ? this.background.tilePositionX + 5 : this.background.tilePositionX + 2;
 
       if (this.bird.y >= window.innerHeight - 70 || this.bird.y <= 0) {

@@ -38,6 +38,8 @@ export const Img = {
   SoundOn: "/soundOn.svg",
   SoundOff: "/soundOff.svg",
   NormalLowFireImg: "/assets/normal-conetian-low-fire.png",
+  NormalMediumFireImg: "/assets/normal-conetian-medium-fire.png",
+  NormalHighFireImg: "/assets/normal-conetian-high-fire.png",
   AsteriodImg1: "/assets/asteroid1.png",
   AsteriodImg2: "/assets/asteroid2.png",
   AsteriodImg3: "/assets/asteroid3.png",

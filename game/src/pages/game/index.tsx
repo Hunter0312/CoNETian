@@ -167,7 +167,7 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
     this.gameOver = false;
   }
 
-  function switchBirdTexture() {
+  function switchBirdTexture(this: any) {
     if (!this.bird || !this.bird.active) {
       // Bird has been destroyed or is not active, stop changing textures
       return;

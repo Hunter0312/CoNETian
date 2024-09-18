@@ -12,8 +12,8 @@ type Props = {
   setScore: (number: number) => void;
 };
 
-const MIN_ASTEROID_SIZE = 0.2;
-const MAX_ASTEROID_SIZE = 0.4;
+const MIN_ASTEROID_SIZE = 0.1;
+const MAX_ASTEROID_SIZE = 0.3;
 
 const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
   const gameContainer = useRef<HTMLDivElement>(null);
@@ -172,7 +172,7 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
 
   // Create asteroids function
   function createAsteroid(this: any) {
-    const x = 450;
+    const x = 470;
     const y = gameDifficulty === 1 ? Phaser.Math.Between(0, window.innerHeight - 50) : Phaser.Math.Between(this.bird.y - 300, this.bird.y + 300);
 
     const asteroidNumber = Math.floor(Math.random() * 6) + 1;

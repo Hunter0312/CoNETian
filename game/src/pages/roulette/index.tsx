@@ -18,6 +18,8 @@ import Image from 'next/image';
 import { P } from '@/components/p';
 import { Img } from '@/utilitiy/images';
 import Skeleton from 'react-loading-skeleton';
+import { useAudioPlayer } from 'react-use-audio-player';
+import { RouletteSpin } from '@/shared/assets';
 
 export default function Roulette() {
 
@@ -35,25 +37,22 @@ export default function Roulette() {
   const [doubleImageState, setDoubleImageState] = useState<"off" | "win" | "lose">("off");
   const [isSpinning, setIsSpinning] = useState(false);
 
-  const { profile } = useGameContext();
+  const { profile, audio } = useGameContext();
+
+  const { load } = useAudioPlayer();
 
   async function handleSpin() {
     setPageState(1);
     setIsSpinning(true);
 
-    // if (audio)
-    //   load(ButtonClick, {
-    //     autoplay: true,
-    //   });
-
     if (!mustSpin && !isSpinning && profile?.keyID) {
       const rouletteResult = await fetchRouletteResult(profile?.keyID);
 
       if (rouletteResult && !rouletteResult?.error) {
-        // if (audio)
-        //   load(RouletteSpin, {
-        //     autoplay: true
-        //   })
+        if (audio)
+          load(RouletteSpin, {
+            autoplay: true
+          })
 
         setPrizeNumber(rouletteResult.valueWon);
         setMustSpin(true);

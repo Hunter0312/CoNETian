@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Task } from '../../../shared/earnTasks';
 import copy from 'copy-to-clipboard';
 import toast from 'react-hot-toast';
+import { useGameContext } from '@/utilitiy/providers/GameProvider';
 
 interface Props {
   choosenTask: Task;
@@ -13,6 +14,8 @@ interface Props {
 }
 
 export default function CommonTask({ choosenTask, referral }: Props) {
+
+  const { profile } = useGameContext();
 
   function copyReferralLink() {
     if (!referral) return;
@@ -49,7 +52,7 @@ export default function CommonTask({ choosenTask, referral }: Props) {
         </FlexDiv>
       </FlexDiv>
       {
-        referral && choosenTask?.referral && (
+        referral && choosenTask?.referral && profile?.keyID && (
           <FlexDiv $width="100%" $direction="column">
             <P $color="#C8C6C8" $fontSize="18px">Your referral link:</P>
             <FlexDiv $justify="space-between" $padding="8px 16px">

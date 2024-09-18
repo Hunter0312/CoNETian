@@ -15,6 +15,7 @@ import "./styles.css";
 import DailyClaim from './page-components/DailyClaim';
 import CommonTask from './page-components/CommonTask';
 import DailyQuiz from './page-components/DailyQuiz';
+import { useGameContext } from '@/utilitiy/providers/GameProvider';
 
 export default function Earn() {
   const [tasks, setTasks] = useState<TaskCategory[]>(taskCategories);
@@ -24,12 +25,13 @@ export default function Earn() {
 
   const [completedTaskCategory, setCompletedTaskCategory] = useState<TaskCategory>();
 
+  const { profile } = useGameContext();
+
   //! Should change later to proper current user referral link
-  const userReferralLink = "https://t.me/conetianLearn_bot/?start=0xad1fd987e70e4fce4f9e1ba023e57ccbe191424c";
+  const tgBotLink = "https://t.me/conetiantest_bot/?start=";
 
   function chooseTask(task: Task) {
     if (task.completed) return;
-
     setChoosenTask(task);
   }
 
@@ -173,7 +175,7 @@ export default function Earn() {
                   ) : (
                     <CommonTask
                       choosenTask={choosenTask}
-                      referral={choosenTask.referral ? userReferralLink : ""}
+                      referral={choosenTask.referral ? tgBotLink + profile?.keyID : ""}
                     />
                   )
                 }

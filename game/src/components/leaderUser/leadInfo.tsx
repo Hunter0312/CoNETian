@@ -1,6 +1,7 @@
+import Skeleton from "react-loading-skeleton";
 import { FlexDiv } from "../div";
 import { P } from "../p";
-import { slice } from "@/utilitiy/functions";
+import { formatToken, slice } from "@/utilitiy/functions";
 
 type Props = {
   cntp: number;
@@ -23,7 +24,11 @@ const LeadInfo: React.FC<Props> = ({ address, cntp }) => {
           </P>
         </FlexDiv>
         <FlexDiv $justify="space-between" $align="center">
-          <P>{cntp}</P>
+          <P>{cntp ? (
+            formatToken(cntp)
+          ) : (
+            <Skeleton width={200} />
+          )}</P>
           <P $fontSize="10px">CNTP EARNED</P>
         </FlexDiv>
       </FlexDiv>

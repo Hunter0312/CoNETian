@@ -11,6 +11,7 @@ import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import BackButton from "@/components/backButton";
 import { formatToken } from "@/utilitiy/functions";
 import PageWrapper from "@/components/pageWrapper";
+import Skeleton from "react-loading-skeleton";
 
 export default function Profile() {
     const { highScore } = useGameContext();
@@ -90,8 +91,20 @@ export default function Profile() {
                 </FlexDiv>
 
                 <FlexDiv $direction="column" $gap="16px">
-                    <P $fontSize="24px" style={{ lineHeight: '32px', letterSpacing: '0.1px' }}>My Achievements</P>
-                    <P $fontSize="20px" style={{ lineHeight: '16px' }}>{formatToken(profile?.tokens?.cCNTP?.balance)} CNTP EARNED</P>
+                    <P $fontSize="24px" style={{ lineHeight: '32px', letterSpacing: '0.1px' }}>
+                        My Achievements
+                    </P>
+
+                    {profile ? (
+                        <FlexDiv $direction="row" $gap="8px">
+                            <P $fontSize="20px" style={{ lineHeight: '16px' }}>
+                                {formatToken(profile?.tokens?.cCNTP?.balance)}
+                            </P>
+                            <P $fontSize="12px" style={{ lineHeight: '16px' }}>
+                                CNTP EARNED
+                            </P>
+                        </FlexDiv>
+                    ) : (<Skeleton width={200} />)}
                 </FlexDiv>
             </FlexDiv>
         </PageWrapper>

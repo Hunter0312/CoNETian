@@ -60,8 +60,16 @@ export default function Shopping() {
         </FlexDiv>
       </FlexDiv>
       <FlexDiv $gap="8px" $align="center">
-        <P $fontSize="20px">{formatToken(profile?.tokens.cCNTP.balance)}</P>
-        <P $fontSize="12px">CNTP EARNED</P>
+        {profile ? (
+          <>
+            <P $fontSize="20px" style={{ lineHeight: '16px' }}>
+              {formatToken(profile?.tokens?.cCNTP?.balance)}
+            </P>
+            <P $fontSize="12px" style={{ lineHeight: '16px' }}>
+              CNTP EARNED
+            </P>
+          </>
+        ) : (<Skeleton width={200} />)}
       </FlexDiv>
       <div className="split"></div>
       <FlexDiv $direction="column" $gap="12px">

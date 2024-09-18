@@ -178,7 +178,7 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
   }
 
   function createAsteroid(this: any) {
-    const x = 430;
+    const x = 450;
     const y = gameDifficulty === 1 ? Phaser.Math.Between(0, window.innerHeight - 50) : Phaser.Math.Between(this.bird.y - 300, this.bird.y + 300);
 
     const asteroidNumber = Math.floor(Math.random() * 6) + 1;

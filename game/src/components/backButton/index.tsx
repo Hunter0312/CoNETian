@@ -14,7 +14,7 @@ export default function BackButton({ text, to = "/" }: Props) {
   const { setRouter } = useGameContext();
 
   return (
-    <FlexDiv $direction="column" $align="flex-start" $width='100%'>
+    <FlexDiv $flex={1} $direction="column" $align="flex-start" $width='100%'>
       <Button onClick={() => setRouter?.(to)}>
         <FlexDiv $align="center" >
           <Image width={32} height={32} alt="Arrow" src={Img.ArrowImg} />

@@ -49,7 +49,7 @@ export default function Shopping() {
         </FlexDiv>
         <FlexDiv $align="center" $gap="8px" $background="#262527" $padding="8px" $radius="8px">
           <Image src={Img.Tickets} alt="Tickets" width={42.15} height={32} />
-          <P>x {profile?.tickets?.balance ?? 0}</P>
+          <P $fontSize='20px'>x {profile?.tickets?.balance ?? 0}</P>
         </FlexDiv>
       </FlexDiv>
       <FlexDiv $gap="8px" $align="center">

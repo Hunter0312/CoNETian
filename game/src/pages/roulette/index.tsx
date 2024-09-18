@@ -13,6 +13,10 @@ import { fetchRouletteResult } from '@/API/getData';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import { doubleData, rouletteResultMapping, wheelData } from '@/shared/wheelVars';
 import { toast } from 'react-toastify';
+import { FlexDiv } from '@/components/div';
+import Image from 'next/image';
+import { P } from '@/components/p';
+import { Img } from '@/utilitiy/images';
 
 export default function Roulette() {
 
@@ -182,7 +186,17 @@ export default function Roulette() {
 
   return (
     <PageWrapper margin="32px 16px 140px 16px">
-      <BackButton text="Roulette" to="/shopping" />
+      <FlexDiv $align="center" $justify="space-between">
+        <BackButton text="Roulette" to="/shopping" />
+
+        {pageState <= 2 &&
+          <FlexDiv $align="center" $gap="8px" $background="#262527" $padding="8px" $radius="8px">
+            <Image src={Img.Tickets} alt="Tickets" width={42.15} height={32} />
+            <P $fontSize='20px'>x {profile?.tickets?.balance ?? 0}</P>
+          </FlexDiv>
+        }
+      </FlexDiv>
+
       {
         pageState <= 2
           ? <PageState1 pageState={pageState} isSpinning={isSpinning} handleSpin={handleSpin} mustSpin={mustSpin} setMustSpin={setMustSpin} prizeNumber={prizeNumber} />

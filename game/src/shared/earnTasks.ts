@@ -108,7 +108,6 @@ export const taskCategories: TaskCategory[] = [
   {
     title: "Send Invitation",
     icon: Img.TaskInvitation,
-    reward: 1,
     completed: false,
     tasks: [
       {

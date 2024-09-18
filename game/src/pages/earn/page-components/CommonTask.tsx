@@ -40,10 +40,12 @@ export default function CommonTask({ choosenTask, referral }: Props) {
         }
         <FlexDiv $flex={1} $direction="column" $gap="12px">
           <P $fontSize="14px">{choosenTask?.caption}</P>
-          <FlexDiv $gap="5px" $align="center">
-            <Image src={Img.Tickets} alt="CNTP" width={32} height={32} />
-            <P $fontSize="14px">+{choosenTask?.reward} Tickets</P>
-          </FlexDiv>
+          {choosenTask?.reward ?
+            <FlexDiv $gap="5px" $align="center">
+              <Image src={Img.Tickets} alt="Tickets" width={32} height={32} />
+              <P $fontSize="14px">+{choosenTask?.reward} Tickets</P>
+            </FlexDiv> : ""
+          }
         </FlexDiv>
       </FlexDiv>
       {

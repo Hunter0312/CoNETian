@@ -1,4 +1,4 @@
-import { Button, GradientButton } from "@/components/button";
+import { Button, GradientButton, GradientImage } from "@/components/button";
 import { Div, FlexDiv } from "@/components/div";
 import { GradientP, P } from "@/components/p";
 import UserData from "@/components/userData";
@@ -141,17 +141,35 @@ export default function Home() {
         </Button>
       </FlexDiv>
       <FlexDiv $justify="center" $gap="24px" $align="center">
-        <FlexDiv $direction="column" $align="center" $gap="4px">
-          <P $fontSize="12px">CNTP earned</P>
-          <P $fontSize="20px">
-            {profile ? (
-              formatToken(profile?.tokens?.cCNTP?.balance)
-            ) : (
-              <Skeleton width={100} />
-            )}
-          </P>
+        <FlexDiv $direction="column" $align="center" $justify="space-between" $gap="16px">
+          <FlexDiv $direction="column" $align="center" $gap="4px">
+            <P $fontSize="10px">CNTP earned</P>
+            <P $fontSize="16px">
+              {profile ? (
+                formatToken(profile?.tokens?.cCNTP?.balance)
+              ) : (
+                <Skeleton width={100} />
+              )}
+            </P>
+          </FlexDiv>
+
+          <GradientImage $width="140px"></GradientImage>
+
+          <FlexDiv $align="center" $gap="8px">
+            {profile?.tickets?.balance ? (<>
+              <Image src={Img.Tickets} alt="Tickets" width={42.15} height={32} />
+              <P $fontSize='16px'>x {profile?.tickets?.balance}</P>
+            </>
+            )
+              :
+              <Skeleton width={50} />
+            }
+          </FlexDiv>
         </FlexDiv>
-        <GradientButton onClick={handleOpenPlatform}>Open Platform</GradientButton>
+
+        <FlexDiv $justify="center">
+          <GradientButton onClick={handleOpenPlatform}>Open Platform</GradientButton>
+        </FlexDiv>
       </FlexDiv>
       <FlexDiv $justify="center" $gap="8px">
         <Image width={16} height={16} src={Img.ArbitrumLogo} alt="logo" />

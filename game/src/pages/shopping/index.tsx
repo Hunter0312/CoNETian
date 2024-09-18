@@ -10,6 +10,7 @@ import Tooltip from '@/components/tooltip';
 import { Button } from '@/components/button';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import { formatToken } from '@/utilitiy/functions';
+import Skeleton from 'react-loading-skeleton';
 
 const shoppingOptions = [
   {
@@ -48,8 +49,14 @@ export default function Shopping() {
           <Tooltip message="Each ticket is a valuable asset. Keep playing The CoNETian to earn more tickets!" />
         </FlexDiv>
         <FlexDiv $align="center" $gap="8px" $background="#262527" $padding="8px" $radius="8px">
-          <Image src={Img.Tickets} alt="Tickets" width={42.15} height={32} />
-          <P $fontSize='20px'>x {profile?.tickets?.balance ?? 0}</P>
+          {profile?.tickets?.balance ? (<>
+            <Image src={Img.Tickets} alt="Tickets" width={42.15} height={32} />
+            <P $fontSize='16px'>x {profile?.tickets?.balance}</P>
+          </>
+          )
+            :
+            <Skeleton width={50} />
+          }
         </FlexDiv>
       </FlexDiv>
       <FlexDiv $gap="8px" $align="center">

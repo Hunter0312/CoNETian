@@ -17,6 +17,7 @@ import { FlexDiv } from '@/components/div';
 import Image from 'next/image';
 import { P } from '@/components/p';
 import { Img } from '@/utilitiy/images';
+import Skeleton from 'react-loading-skeleton';
 
 export default function Roulette() {
 
@@ -191,8 +192,14 @@ export default function Roulette() {
 
         {pageState <= 2 &&
           <FlexDiv $align="center" $gap="8px" $background="#262527" $padding="8px" $radius="8px">
-            <Image src={Img.Tickets} alt="Tickets" width={42.15} height={32} />
-            <P $fontSize='20px'>x {profile?.tickets?.balance ?? 0}</P>
+            {profile?.tickets?.balance ? (<>
+              <Image src={Img.Tickets} alt="Tickets" width={42.15} height={32} />
+              <P $fontSize='16px'>x {profile?.tickets?.balance}</P>
+            </>
+            )
+              :
+              <Skeleton width={50} />
+            }
           </FlexDiv>
         }
       </FlexDiv>

@@ -47,16 +47,6 @@ export const wheelData = [
     optionSize: 2,
   },
   {
-    option: "Diamond",
-    style: { backgroundColor: "#D775FF", textColor: "white" },
-    optionSize: 1,
-  },
-  {
-    option: "Lose",
-    style: { backgroundColor: "#1d1d1e", textColor: "white" },
-    optionSize: 2,
-  },
-  {
     option: "Bronze",
     style: { backgroundColor: "#A4C9FE", textColor: "black" },
     optionSize: 1,

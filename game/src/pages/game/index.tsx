@@ -12,6 +12,9 @@ type Props = {
   setScore: (number: number) => void;
 };
 
+const MIN_ASTEROID_SIZE = 0.2;
+const MAX_ASTEROID_SIZE = 0.4;
+
 const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
   const gameContainer = useRef<HTMLDivElement>(null);
   const { profile, difficulty, audio } = useGameContext();
@@ -175,6 +178,9 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
     const asteroidNumber = Math.floor(Math.random() * 6) + 1;
     const asteroid = this.asteroids.create(x, y, `asteroid${asteroidNumber}`);
 
+    //generate random number between 0.1 and 0.3
+    const asteroidSize = Math.random() * (MAX_ASTEROID_SIZE - MIN_ASTEROID_SIZE) + MIN_ASTEROID_SIZE;
+
     if (asteroid) {
       asteroid.setActive(true).setVisible(true);
       asteroid.setGravityY(-300);
@@ -182,7 +188,7 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
       asteroid.setRotation(Phaser.Math.FloatBetween(0, 2 * Math.PI));
       asteroid.setAngularVelocity(-400);
       asteroid.setCircle(200);
-      asteroid.setScale(0.2);
+      asteroid.setScale(asteroidSize);
     }
   }
 

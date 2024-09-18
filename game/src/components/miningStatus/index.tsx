@@ -34,13 +34,13 @@ const MiningStatus = () => {
         {mining ? (
           <>
             <S.SuccessStatusBadge />
-            <P $fontSize="10px">Mining UP</P>
+            <P $fontSize="8px">Mining UP</P>
           </>
         )
           : (
             <>
               <S.FailedStatusBadge />
-              <P $fontSize="10px">Mining DOWN</P>
+              <P $fontSize="8px">Mining DOWN</P>
             </>
           )}
 
@@ -52,7 +52,7 @@ const MiningStatus = () => {
         $radius="16px"
         $gap="8px"
       >
-        <P $fontSize="10px">Mining Rate: {mining && miningRate?.toFixed(10)}</P>
+        <P $fontSize="8px">Mining Rate: {mining && miningRate?.toFixed(10)}</P>
         {!mining && <Skeleton width={40} />}
       </FlexDiv>
       <FlexDiv
@@ -62,7 +62,7 @@ const MiningStatus = () => {
         $radius="16px"
         $gap="8px"
       >
-        <P $fontSize="10px">Online Miners: {mining && onlineMiners}</P>
+        <P $fontSize="8px">Online Miners: {mining && onlineMiners}</P>
         {!mining && <Skeleton width={40} />}
       </FlexDiv>
     </FlexDiv>

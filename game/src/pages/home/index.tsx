@@ -107,10 +107,10 @@ export default function Home() {
 
       <FlexDiv $justify="space-between" $align="center">
         <FlexDiv $direction="column" $gap="4px">
-          <P $fontSize="32px" $color="#F6F1F2">
+          <P $fontSize="28px" $color="#F6F1F2">
             The CoNETian
           </P>
-          <P style={{ "margin": '0 0 0 6px' }}>{capitalizeFirstLetter(difficulty || "")} Mode</P>
+          <P $fontSize="12px" style={{ "margin": '0 0 0 6px' }}>{capitalizeFirstLetter(difficulty || "")} Mode</P>
         </FlexDiv>
         <FlexDiv
           $padding="8px 0"

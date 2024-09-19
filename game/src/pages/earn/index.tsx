@@ -18,6 +18,7 @@ import DailyQuiz from './page-components/DailyQuiz';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import { checkSocialMedias, checkTwitter } from '@/API';
 import { fetchCheckTelegram, fetchCheckTwitter } from '@/API/getData';
+import copy from 'copy-to-clipboard';
 
 export default function Earn() {
   const [tasks, setTasks] = useState<TaskCategory[]>(taskCategories);
@@ -52,6 +53,18 @@ export default function Earn() {
     }
     fetchSocialMedias()
   }, [profile])
+
+  function copyReferralLink(text: string) {
+    if (!text) return;
+
+    //Copy and Toast
+    copy(text);
+
+    toast.success("Referral Link copied to the clipbboard!", {
+      position: "bottom-center",
+      duration: 2000,
+    });
+  }
 
   async function checkTwitterAccount() {
     setIsLoading(true)
@@ -121,8 +134,7 @@ export default function Earn() {
     }
 
     if (choosenTask.referral) {
-      // Open Telegram Contact List
-      setStep(1)
+      copyReferralLink(choosenTask.referral ? tgBotLink + profile?.keyID : "")
       return;
     }
 
@@ -283,10 +295,10 @@ export default function Earn() {
                           <FlexDiv $align="center" $gap="8px">
                             {
                               !choosenTask.claim && (
-                                <Image src={choosenTask.referral ? Img.Share : Img.OpenExternal} alt="Open External" width={24} height={24} />
+                                <Image src={choosenTask.referral ? Img.CopyImg : Img.OpenExternal} alt="Open External" width={24} height={24} />
                               )
                             }
-                            <P>{choosenTask.referral ? "Share referral link" : choosenTask.cta}</P>
+                            <P>{choosenTask.referral ? "Copy referral link" : choosenTask.cta}</P>
                           </FlexDiv>
                         </Button>)
                   )

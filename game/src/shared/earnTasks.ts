@@ -40,6 +40,7 @@ export interface Task {
   resource?: string;
   caption?: string;
   referral?: boolean;
+  extraInstruction?: string;
   cta?: string;
   quiz?: boolean;
   claim?: boolean;
@@ -114,7 +115,7 @@ export const taskCategories: TaskCategory[] = [
         title: "Invite Friends",
         completed: false,
         caption:
-          "Share your referral link and earn Tickets when your friends join us! It might take a time to process it.",
+          "Share your referral link and earn CNTP when your friends are mining!",
         referral: true,
         active: true,
       },
@@ -151,6 +152,8 @@ export const taskCategories: TaskCategory[] = [
           color: "#000000",
         },
         caption: "Follow Us on X and earn Tickets just for staying connected!",
+        extraInstruction:
+          "*You have 2 minutes to do it so we can confirm that the task has been completed",
         cta: "Open X",
         resource: "x.com/conet_network?lang=en",
         active: true,
@@ -179,7 +182,7 @@ export const taskCategories: TaskCategory[] = [
           "Join our Server on Discord and earn Tickets just for staying connected!",
         cta: "Open Discord",
         resource: "https://discord.gg/JrpMBFkewd",
-        active: true,
+        active: false,
       },
     ],
   },

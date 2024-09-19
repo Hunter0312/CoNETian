@@ -197,3 +197,16 @@ export const clearStorage: () => Promise<any> = () =>
     };
     return _postMessage(cmd, true, resolve);
   });
+
+export const saveGameProfileInfo: (
+  walletAddress: string,
+  gameProfileData: any
+) => Promise<any> = (walletAddress: string, gameProfileData: any) =>
+  new Promise((resolve) => {
+    const cmd: WorkerCommand = {
+      cmd: "saveGameProfileInfo",
+      uuid: v4(),
+      data: [walletAddress, gameProfileData],
+    };
+    return _postMessage(cmd, true, resolve);
+  });

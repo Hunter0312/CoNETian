@@ -1,4 +1,4 @@
-import { importWallet, startMining, stopMining, getRouletteResult, registerReferrer, clearStorage, getTicketResult, checkTwitter, checkTelegram } from ".";
+import { importWallet, startMining, stopMining, getRouletteResult, registerReferrer, clearStorage, getTicketResult, checkTwitter, checkTelegram, saveGameProfileInfo } from ".";
 
 export const fetchImportWallet = async (walletPrivateKey: string): Promise<any> => {
     try {
@@ -160,6 +160,25 @@ export const fetchRegisterReferrer = async (referrerAddress: string): Promise<an
 export const fetchClearStorage = async (): Promise<any> => {
     try {
         const response = await clearStorage();
+
+        if (Array.isArray(response) && response.length >= 2) {
+            const [status, data] = response;
+            if (status === "SUCCESS") {
+                return true
+            } else {
+                console.error("Failed to add referrer");
+            }
+        }
+    } catch (error) {
+        console.error("Failed to add referrer", error);
+    }
+
+    return { error: true, message: "Failed to add referrer" };
+}
+
+export const fetchSaveGameProfileInfo = async (walletAddress: string, gameProfileData: any): Promise<any> => {
+    try {
+        const response = await saveGameProfileInfo(walletAddress, gameProfileData);
 
         if (Array.isArray(response) && response.length >= 2) {
             const [status, data] = response;

@@ -6,21 +6,32 @@ import { P } from "@/components/p";
 import Image from "next/image";
 
 import conetAnonymousIcon from '@/assets/conet-anonymous-icon.svg'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import BackButton from "@/components/backButton";
 import { formatToken } from "@/utilitiy/functions";
 import PageWrapper from "@/components/pageWrapper";
 import Skeleton from "react-loading-skeleton";
+import { Img } from "@/utilitiy/images";
+import { Button } from "@/components/button";
+import { saveGameProfileInfo } from "@/API";
 
 export default function Profile() {
     const { highScore } = useGameContext();
-    const [name, setName] = useState<string>('')
+    const [username, setUsername] = useState<string>('')
     const [bio, setBio] = useState<string>('')
     const [error, setError] = useState<string>('')
+    const [isEditing, setIsEditing] = useState<boolean>(false)
     const { profile } = useGameContext();
 
-    const handleChange = (e: any) => {
+    useEffect(() => {
+        if (profile && !isEditing) {
+            setUsername(profile?.game?.username);
+            setBio(profile?.game?.bio);
+        }
+    }, [profile]);
+
+    const handleBioChange = (e: any) => {
         const newBio = e.target.value;
 
         if (newBio.length > 140) {
@@ -32,16 +43,61 @@ export default function Profile() {
         setBio(newBio.slice(0, 140));
     };
 
+    const handleUsernameChange = (e: any) => {
+        setUsername(e.target.value);
+    };
+
+    const handleSaveChanges = () => {
+        setIsEditing(false)
+
+        saveGameProfileInfo(profile?.keyID, {
+            nickname: username,
+            bio: bio,
+        })
+
+        setUsername(username);
+        setBio(bio);
+    }
+
     return (
         <PageWrapper margin="32px 16px 140px 16px">
             <FlexDiv $direction="column" $gap="32px">
-                <BackButton text="My Profile" />
+                <FlexDiv $align="center" $justify="space-between">
+                    <BackButton text="My Profile" to="/" />
+
+                    {isEditing ? (
+                        <Button
+                            $radius="8px"
+                            $background="#363E59"
+                            $padding="8px 32px"
+                            $fontSize="16px"
+                            onClick={handleSaveChanges}>
+                            Save Changes
+                        </Button>
+                    ) : (
+                        <Button
+                            $width="32px"
+                            $height="32px"
+                            $background="#474648"
+                            $radius="50%"
+                            onClick={() => setIsEditing(true)}
+                        >
+                            <Image
+                                width={16}
+                                height={16}
+                                src={Img.EditIcon}
+                                alt="edit image"
+                            />
+                        </Button>
+                    )
+                    }
+                </FlexDiv>
 
                 <FlexDiv $justify="space-between" $align="flex-start" $width="100%">
                     <Image src={conetAnonymousIcon} height={120} width={120} alt="profile-logo" />
 
                     <FlexDiv $direction="column" $justify="space-between">
-                        <input placeholder="Anonymous User" disabled value={name} onChange={(e) => setName(e.target.value)} style={{ backgroundColor: 'transparent', border: '1px solid #FFFFFF1A', borderRadius: '16px', height: '56px', padding: '12px 14px', marginBottom: '28px' }} />
+                        <input placeholder="Anonymous User" disabled={!isEditing} value={username} onChange={handleUsernameChange} style={{ backgroundColor: isEditing ? '#63636366' : 'transparent', border: '1px solid #FFFFFF1A', borderRadius: '16px', height: '56px', padding: '12px 14px', marginBottom: '28px' }} />
 
                         <FlexDiv>
                             <FlexDiv $direction="column"
@@ -70,12 +126,12 @@ export default function Profile() {
                     <P $fontSize="24px" style={{ marginBottom: '16px', lineHeight: '32px', letterSpacing: '0.1px' }}>My Bio</P>
 
                     <textarea
-                        disabled
+                        disabled={!isEditing}
                         placeholder="Add a bio to share a little bit about yourself."
                         value={bio}
-                        onChange={handleChange}
+                        onChange={handleBioChange}
                         style={{
-                            backgroundColor: 'transparent',
+                            backgroundColor: isEditing ? '#63636366' : 'transparent',
                             border: '1px solid #FFFFFF1A',
                             borderRadius: '16px',
                             height: '160px',

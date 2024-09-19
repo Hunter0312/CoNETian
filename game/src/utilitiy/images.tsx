@@ -89,5 +89,6 @@ export const Img = {
   ResumeImg: "/resume.png",
   ItemsBlurImg: "/items-blur.png",
   SkinsBlurImg: "/skins-blur.png",
-  BoxBlurImg: "/box-blur.png"
+  BoxBlurImg: "/box-blur.png",
+  EditIcon: "/edit.png",
 };

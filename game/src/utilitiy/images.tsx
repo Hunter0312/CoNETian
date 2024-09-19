@@ -92,4 +92,10 @@ export const Img = {
   BoxBlurImg: "/box-blur.png",
   EditIcon: "/edit.png",
   CoNETPartner: "/conet-partner.png",
+  SkinStoreImg: "/skin store.png",
+  SplashBackImg: "/bg-splashscreen.png",
+  SplashTeleImg: "/splash/Telegram.png",
+  SplashDisImg: "/splash/discord.png",
+  SplashXImg: "/splash/twitter.png",
+  SplashConetImg: "/splash/conet.png",
 };

@@ -5,7 +5,7 @@ import { initializeWorkerService } from "@/services/workerService";
 import Home from "@/pages/home";
 import Playground from "@/pages/playground";
 import Menu from "@/components/menu";
-import { ReactNode, useCallback, useEffect, useRef } from "react";
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import Leaderboard from "@/pages/leaderboard";
 import Wallet from "@/pages/wallet";
 import About from "@/pages/about";
@@ -13,11 +13,14 @@ import Settings from "@/pages/settings";
 import Profile from "@/pages/profile";
 import Shopping from "@/pages/shopping";
 import Roulette from "@/pages/roulette";
+// import SkinStore from "@/pages/skinstore";
 import Earn from "@/pages/earn";
 import { Toaster } from "react-hot-toast";
 import { BackgroundAudio, ButtonClick } from '../shared/assets';
 import { playAudio, stopAudio } from "@/shared/functions";
 import { useAudioPlayer } from "react-use-audio-player";
+import { useRouter } from "next/router";
+import Loading from "./loading";
 
 const S = {
   Main: styled.div`
@@ -113,6 +116,7 @@ function CurrentPage() {
     "/earn": <Earn />,
     "/roulette": <Roulette />,
     "/profile": <Profile />,
+    // "/skinstore": <SkinStore />,
     "/playground": <Playground />,
   };
 
@@ -135,6 +139,16 @@ export default function App() {
   const backAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const { load, setVolume, play } = useAudioPlayer();
+  const [loading, setLoading] = useState<Boolean>(true);
+
+  useEffect(() => {
+    // Simulate a loading process (like fetching data)
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust this duration as needed
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (audio) {
@@ -199,6 +213,10 @@ export default function App() {
       });
     };
   }, [audio, router]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>

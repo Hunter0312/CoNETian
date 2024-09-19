@@ -114,6 +114,44 @@ export const stopMining: (walletAddress: string) => Promise<string> = (
     return _postMessage(cmd, true, resolve);
   });
 
+export const checkTwitter: (
+  walletAddress: string,
+  twitterAccount: string
+) => Promise<any> = (walletAddress: string, twitterAccount: string) =>
+  new Promise((resolve) => {
+    const cmd: WorkerCommand = {
+      cmd: "checkTwitter",
+      uuid: v4(),
+      data: [walletAddress, twitterAccount],
+    };
+    return _postMessage(cmd, true, resolve);
+  });
+
+export const checkTelegram: (
+  walletAddress: string,
+  twitterAccount: string
+) => Promise<any> = (walletAddress: string, telegramId: string) =>
+  new Promise((resolve) => {
+    const cmd: WorkerCommand = {
+      cmd: "checkTelegram",
+      uuid: v4(),
+      data: [walletAddress, telegramId],
+    };
+    return _postMessage(cmd, true, resolve);
+  });
+
+export const checkSocialMedias: (walletAddress: string) => Promise<any> = (
+  walletAddress: string
+) =>
+  new Promise((resolve) => {
+    const cmd: WorkerCommand = {
+      cmd: "checkSocialMedias",
+      uuid: v4(),
+      data: [walletAddress],
+    };
+    return _postMessage(cmd, true, resolve);
+  });
+
 export const getRouletteResult: (walletAddress: string) => Promise<string> = (
   walletAddress: string
 ) =>

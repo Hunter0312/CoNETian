@@ -145,7 +145,7 @@ export const taskCategories: TaskCategory[] = [
     tasks: [
       {
         title: "Follow Us on X",
-        completed: true,
+        completed: false,
         logo: {
           uri: Img.TwitterX,
           color: "#000000",

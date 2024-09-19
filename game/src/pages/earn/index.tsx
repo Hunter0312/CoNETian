@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import BackButton from '@/components/backButton';
 import CurrentBalance from '@/components/currentBalance';
 import GuardianCard from '@/components/guardianCard';
@@ -10,25 +11,95 @@ import Image from 'next/image';
 import { Img } from '@/utilitiy/images';
 import Modal from '@/components/modal';
 import { Button } from '@/components/button';
-
 import "./styles.css";
 import DailyClaim from './page-components/DailyClaim';
 import CommonTask from './page-components/CommonTask';
 import DailyQuiz from './page-components/DailyQuiz';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
+import { checkSocialMedias, checkTwitter } from '@/API';
+import { fetchCheckTelegram, fetchCheckTwitter } from '@/API/getData';
 
 export default function Earn() {
   const [tasks, setTasks] = useState<TaskCategory[]>(taskCategories);
   const [choosenTask, setChoosenTask] = useState<Task>();
-
+  const [userName, setUserName] = useState<string>('')
+  const [telegramId, setTelegramId] = useState<string>('')
   const [claimStreak, setClaimStreak] = useState<number>(3);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [step, setStep] = useState<number>(0)
   const [completedTaskCategory, setCompletedTaskCategory] = useState<TaskCategory>();
 
   const { profile } = useGameContext();
-
-  //! Should change later to proper current user referral link
   const tgBotLink = "https://t.me/conetiantest_bot/?start=";
+
+  useEffect(() => {
+    async function fetchSocialMedias() {
+      const res = await checkSocialMedias(profile.keyID)
+      if (res[1][0][0].length === 0) return
+      const tasksCopy = [...tasks]
+      if (res[1][0][0].includes('2')) {
+        tasksCopy[2].tasks[0].completed = true
+      }
+      if (res[1][0][0].includes('3')) {
+        const tasksCopy = [...tasks]
+        tasksCopy[2].tasks[1].completed = true
+
+      }
+      if (res[1][0][0].includes('4')) {
+        tasksCopy[2].tasks[2].completed = true
+      }
+      setTasks(tasksCopy)
+    }
+    fetchSocialMedias()
+  }, [profile])
+
+  async function checkTwitterAccount() {
+    setIsLoading(true)
+    const res = await fetchCheckTwitter(profile.keyID, userName)
+    if (res.response.isFollow === true && res.response.isRetweet === true) {
+      const tasksCopy = [...tasks]
+      tasksCopy[2].tasks[0].completed = true
+      setTasks(tasksCopy)
+      toast.success("Task completed! Check your rewards in the Earn Page", {
+        position: "bottom-center",
+        duration: 2000,
+      });
+    } else {
+      toast.error("Unable to confirm. Check if you have completed the tasks", {
+        position: "bottom-center",
+        duration: 2000,
+      });
+    }
+    setIsLoading(false)
+  }
+
+  async function checkTelegramAccount() {
+    setIsLoading(true)
+    const res = await fetchCheckTelegram(profile.keyID, telegramId)
+    if (res.response.isInTGGroup === true) {
+      const tasksCopy = [...tasks]
+      tasksCopy[2].tasks[1].completed = true
+      setTasks(tasksCopy)
+      toast.success("Task completed! Check your rewards in the Earn Page", {
+        position: "bottom-center",
+        duration: 2000,
+      });
+      return
+    } if (res.response.isusedByOtherWallet === true) {
+      toast.error("Account already used by other wallet.", {
+        position: "bottom-center",
+        duration: 2000,
+      });
+    }
+    else {
+      toast.error("Unable to confirm. Check if you have completed the tasks", {
+        position: "bottom-center",
+        duration: 2000,
+      });
+
+    }
+    setIsLoading(false)
+  }
 
   function chooseTask(task: Task) {
     if (task.completed) return;
@@ -37,6 +108,7 @@ export default function Earn() {
 
   function closeTask() {
     setChoosenTask(undefined);
+    setStep(0)
   }
 
   function buttonAction() {
@@ -44,18 +116,20 @@ export default function Earn() {
 
     if (choosenTask.claim) {
       handleClaim();
+      setStep(1)
       return;
     }
 
     if (choosenTask.referral) {
       // Open Telegram Contact List
-
+      setStep(1)
       return;
     }
 
     if (!choosenTask.resource) return;
 
     window.open(choosenTask.resource, "_blank");
+    setStep(1)
   }
 
   function handleClaim() {
@@ -173,7 +247,7 @@ export default function Earn() {
                   ) : choosenTask.quiz ? (
                     <DailyQuiz />
                   ) : (
-                    <CommonTask
+                    step === 0 && <CommonTask
                       choosenTask={choosenTask}
                       referral={choosenTask.referral ? tgBotLink + profile?.keyID : ""}
                     />
@@ -189,16 +263,32 @@ export default function Earn() {
                       </FlexDiv>
                     </FlexDiv>
                   ) : (choosenTask.referral || choosenTask.cta) && (
-                    <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={buttonAction} $padding="18px">
-                      <FlexDiv $align="center" $gap="8px">
-                        {
-                          !choosenTask.claim && (
-                            <Image src={choosenTask.referral ? Img.Share : Img.OpenExternal} alt="Open External" width={24} height={24} />
-                          )
-                        }
-                        <P>{choosenTask.referral ? "Share referral link" : choosenTask.cta}</P>
-                      </FlexDiv>
-                    </Button>
+                    (choosenTask.cta === 'Open X' && step === 1) ? (
+                      <div>
+                        <label>Enter your X username to confirm interaction tasks</label>
+                        <input style={{ borderRadius: '16px', display: 'block', width: '100%', padding: '14px 16px', height: '56px', marginTop: '40px', backgroundColor: isLoading ? '#1B1B1D' : '#63636366', border: 'none', fontSize: '16px' }} disabled={isLoading} className='import-input' value={userName} onChange={(e) => setUserName(e.target.value)} />
+
+                        <button style={{ padding: '16px 24px', borderRadius: '32px', width: '100%', marginTop: '40px', border: isLoading ? '1px solid #fff' : 'none', backgroundColor: isLoading ? '#363E59' : '#17181F' }} disabled={isLoading} onClick={() => checkTwitterAccount()}>{isLoading ? 'Checking...' : 'Confirm'}</button>
+                      </div>
+                    ) :
+                      (choosenTask.cta === 'Open Telegram' && step === 1) ? (
+                        <div>
+                          <label>Enter your telegram ID to confirm interaction tasks</label>
+                          <input style={{ borderRadius: '16px', display: 'block', width: '100%', padding: '14px 16px', height: '56px', marginTop: '40px', backgroundColor: isLoading ? '#1B1B1D' : '#63636366', border: 'none', fontSize: '16px' }} disabled={isLoading} className='import-input' value={telegramId} onChange={(e) => setTelegramId(e.target.value)} />
+
+                          <button style={{ padding: '16px 24px', borderRadius: '32px', width: '100%', marginTop: '40px', border: isLoading ? '1px solid #fff' : 'none', backgroundColor: isLoading ? '#363E59' : '#17181F' }} disabled={isLoading} onClick={() => checkTelegramAccount()}>{isLoading ? 'Checking...' : 'Confirm'}</button>
+                        </div>
+                      ) :
+                        (<Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={buttonAction} $padding="18px">
+                          <FlexDiv $align="center" $gap="8px">
+                            {
+                              !choosenTask.claim && (
+                                <Image src={choosenTask.referral ? Img.Share : Img.OpenExternal} alt="Open External" width={24} height={24} />
+                              )
+                            }
+                            <P>{choosenTask.referral ? "Share referral link" : choosenTask.cta}</P>
+                          </FlexDiv>
+                        </Button>)
                   )
                 }
               </FlexDiv>

@@ -1,4 +1,4 @@
-import { importWallet, startMining, stopMining, getRouletteResult, registerReferrer, clearStorage, getTicketResult } from ".";
+import { importWallet, startMining, stopMining, getRouletteResult, registerReferrer, clearStorage, getTicketResult, checkTwitter, checkTelegram } from ".";
 
 export const fetchImportWallet = async (walletPrivateKey: string): Promise<any> => {
     try {
@@ -79,6 +79,42 @@ export const fetchRouletteResult = async (walletAddress: string): Promise<any> =
     }
 
     return { error: true, message: "Failed to fetch roulette result. Please try again later." };
+}
+
+export const fetchCheckTwitter = async (walletAddress: string, userName: string): Promise<any> => {
+    if (walletAddress && userName) {
+        try {
+            const response = await checkTwitter(walletAddress, userName);
+            if (Array.isArray(response) && response.length >= 2) {
+                const [status, data] = response;
+                if (status === "SUCCESS") {
+                    return { response: data[0] || {} };
+                } else {
+                    console.error("Failed to fetch ticket result. Please try again later.");
+                }
+            }
+        } catch (error) {
+            console.error("Failed to fetch twitter result. Please try again later.", error);
+        }
+    }
+}
+
+export const fetchCheckTelegram = async (walletAddress: string, telegramId: string): Promise<any> => {
+    if (walletAddress && telegramId) {
+        try {
+            const response = await checkTelegram(walletAddress, telegramId);
+            if (Array.isArray(response) && response.length >= 2) {
+                const [status, data] = response;
+                if (status === "SUCCESS") {
+                    return { response: data[0] || {} };
+                } else {
+                    console.error("Failed to fetch ticket result. Please try again later.");
+                }
+            }
+        } catch (error) {
+            console.error("Failed to fetch twitter result. Please try again later.", error);
+        }
+    }
 }
 
 export const fetchTicketResult = async (walletAddress: string): Promise<any> => {

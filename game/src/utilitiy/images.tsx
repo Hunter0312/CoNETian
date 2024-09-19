@@ -91,4 +91,5 @@ export const Img = {
   SkinsBlurImg: "/skins-blur.png",
   BoxBlurImg: "/box-blur.png",
   EditIcon: "/edit.png",
+  CoNETPartner: "/conet-partner.png",
 };

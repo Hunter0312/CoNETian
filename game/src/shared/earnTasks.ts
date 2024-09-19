@@ -45,6 +45,7 @@ export interface Task {
   quiz?: boolean;
   claim?: boolean;
   active: boolean;
+  comingSoon?: boolean;
   reward?: number;
 }
 
@@ -134,7 +135,8 @@ export const taskCategories: TaskCategory[] = [
         caption:
           "Claim daily rewards and earn Tickets by logging in each day without skipping!",
         cta: "Claim today’s reward",
-        active: false,
+        active: true,
+        comingSoon: true,
       },
     ],
   },
@@ -182,7 +184,8 @@ export const taskCategories: TaskCategory[] = [
           "Join our Server on Discord and earn Tickets just for staying connected!",
         cta: "Open Discord",
         resource: "https://discord.gg/JrpMBFkewd",
-        active: false,
+        active: true,
+        comingSoon: true,
       },
     ],
   },
@@ -199,7 +202,8 @@ export const taskCategories: TaskCategory[] = [
           uri: Img.TaskQuiz,
         },
         quiz: true,
-        active: false,
+        active: true,
+        comingSoon: true,
       },
       {
         title: "Interact with Us on X",
@@ -209,6 +213,7 @@ export const taskCategories: TaskCategory[] = [
           color: "#000000",
         },
         active: false,
+        comingSoon: true,
       },
     ],
   },
@@ -219,12 +224,14 @@ export const taskCategories: TaskCategory[] = [
     completed: false,
     tasks: [
       {
-        title: "Follow Collaborator",
+        title: "Follow CoNET Partner",
         completed: true,
         logo: {
+          uri: Img.CoNETPartner,
           color: "#CC00D0",
         },
-        active: false,
+        active: true,
+        comingSoon: true,
       },
       {
         title: "Join Collab Community",
@@ -233,6 +240,7 @@ export const taskCategories: TaskCategory[] = [
           color: "#CC00D0",
         },
         active: false,
+        comingSoon: true,
       },
       {
         title: "Try Collab Mini App",
@@ -241,6 +249,7 @@ export const taskCategories: TaskCategory[] = [
           color: "#CC00D0",
         },
         active: false,
+        comingSoon: true,
       },
     ],
   },
@@ -254,7 +263,8 @@ export const taskCategories: TaskCategory[] = [
         logo: {
           uri: Img.CommonTask,
         },
-        active: false,
+        active: true,
+        comingSoon: true,
       },
       {
         title: "Watch Video",
@@ -263,6 +273,7 @@ export const taskCategories: TaskCategory[] = [
           uri: Img.WatchVideo,
         },
         active: false,
+        comingSoon: true,
       },
     ],
   },

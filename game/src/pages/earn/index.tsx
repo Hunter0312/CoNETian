@@ -193,29 +193,44 @@ export default function Earn() {
                 </FlexDiv>
                 {(category.reward && !category.completed) && (<P $fontSize="14px">Complete all tasks and receive the reward</P>)}
               </FlexDiv>
+
               {
                 category.tasks.filter((task) => task.active).map((task) => (
-                  <FlexDiv key={task.title} $gap="16px" $padding="16px" $border="1px solid #FFFFFF1A" $radius="16px" $align="center" $height="95px" className={`task ${task.completed ? 'completed' : ''}`} onClick={() => chooseTask(task)}>
-                    {
-                      task.logo && (
-                        <FlexDiv $width="60px" $height="60px" $background={task.logo?.color || "transparent"} $radius="8px" $justify="center" $align="center">
-                          {task.logo.uri && (
-                            <Image src={task.logo.uri} alt="Task" width={task.logo.color ? 28 : 48} height={task.logo.color ? 28 : 48} />
-                          )}
+                  task.comingSoon ? (
+                    <div key={task.title} style={{ position: 'relative', width: '100%', height: '104px', cursor: 'not-allowed', display: 'flex', border: '1px solid #535254', alignItems: 'center', borderRadius: '16px', backgroundColor: '#262527', justifyContent: 'space-between', padding: '16px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '14px' }}>
+                        <Image src={task?.logo?.uri || ''} alt="Coming Soon" width={50} height={50} />
+                        <div>
+                          <p style={{ color: '#ADAAAD', fontSize: '24px', lineHeight: '28px' }}>{task.title}</p>
+                          <p style={{ color: '#ADAAAD', fontSize: '12px', lineHeight: '20px' }}>Coming soon</p>
+                        </div>
+                      </div>
+                      <Image src={Img.Lock} alt='lock' width={30} height={30} />
+                    </div>
+                  ) :
+                    (
+                      <FlexDiv key={task.title} $gap="16px" $padding="16px" $border="1px solid #FFFFFF1A" $radius="16px" $align="center" $height="95px" className={`task ${task.completed ? 'completed' : ''}`} onClick={() => chooseTask(task)}>
+                        {
+                          task.logo && (
+                            <FlexDiv $width="60px" $height="60px" $background={task.logo?.color || "transparent"} $radius="8px" $justify="center" $align="center">
+                              {task.logo.uri && (
+                                <Image src={task.logo.uri} alt="Task" width={task.logo.color ? 28 : 48} height={task.logo.color ? 28 : 48} />
+                              )}
+                            </FlexDiv>
+                          )
+                        }
+                        <FlexDiv className="text-content" $direction="column" $gap="4px">
+                          <P $fontSize="24px">{task.title}</P>
                         </FlexDiv>
-                      )
-                    }
-                    <FlexDiv className="text-content" $direction="column" $gap="4px">
-                      <P $fontSize="24px">{task.title}</P>
-                    </FlexDiv>
-                    {
-                      task.completed ? (
-                        <Image src={Img.TaskCheck} alt="Proceed" width={24} height={24} />
-                      ) : (
-                        <Image src={Img.RightArrowImg} alt="Proceed" width={28} height={28} />
-                      )
-                    }
-                  </FlexDiv>
+                        {
+                          task.completed ? (
+                            <Image src={Img.TaskCheck} alt="Proceed" width={24} height={24} />
+                          ) : (
+                            <Image src={Img.RightArrowImg} alt="Proceed" width={28} height={28} />
+                          )
+                        }
+                      </FlexDiv>
+                    )
                 ))
               }
             </FlexDiv>

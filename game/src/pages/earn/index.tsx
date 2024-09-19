@@ -35,7 +35,7 @@ export default function Earn() {
 
   useEffect(() => {
     async function fetchSocialMedias() {
-      const res = await checkSocialMedias(profile.keyID)
+      const res = await checkSocialMedias(profile?.keyID)
       if (res[1][0][0].length === 0) return
       const tasksCopy = [...tasks]
       if (res[1][0][0].includes('2')) {

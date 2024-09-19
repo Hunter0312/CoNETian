@@ -87,4 +87,7 @@ export const Img = {
   PauseSquareImg: "/pause-sqaure.png",
   ConetBackImg: "/bgconetian 1.png",
   ResumeImg: "/resume.png",
+  ItemsBlurImg: "/items-blur.png",
+  SkinsBlurImg: "/skins-blur.png",
+  BoxBlurImg: "/box-blur.png"
 };

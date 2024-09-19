@@ -25,15 +25,18 @@ const shoppingOptions = [
 const comingSoonOptions = [
   {
     key: 1,
-    image: Img.ComingSoon1,
+    image: Img.BoxBlurImg,
+    title: 'Open the Box'
   },
   {
     key: 2,
-    image: Img.ComingSoon2,
+    image: Img.SkinsBlurImg,
+    title: 'Skin Store'
   },
   {
     key: 3,
-    image: Img.ComingSoon3,
+    image: Img.ItemsBlurImg,
+    title: 'On game items'
   },
 ]
 
@@ -97,8 +100,15 @@ export default function Shopping() {
         }
         {
           comingSoonOptions.map((option) => (
-            <div key={option.key} className="coming-soon-wrapper">
-              <Image src={option.image} alt="Coming Soon" fill />
+            <div key={option.key} style={{ position: 'relative', width: '100%', height: '104px', cursor: 'not-allowed', display: 'flex', border: '1px solid #535254', alignItems: 'center', borderRadius: '16px', backgroundColor: '#262527', justifyContent: 'space-between', padding: '16px' }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '14px' }}>
+                <Image src={option.image} alt="Coming Soon" width={50} height={50} />
+                <div>
+                  <p style={{ color: '#ADAAAD', fontSize: '24px', lineHeight: '28px' }}>{option.title}</p>
+                  <p style={{ color: '#ADAAAD', fontSize: '12px', lineHeight: '20px' }}>Coming soon</p>
+                </div>
+              </div>
+              <Image src={Img.Lock} alt='lock' width={30} height={30} />
             </div>
           ))
         }

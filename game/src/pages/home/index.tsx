@@ -26,7 +26,7 @@ const S = {
 };
 
 export default function Home() {
-  const { profile, setRouter, highScore, difficulty, setAudio, audio } = useGameContext();
+  const { profile, setRouter, highScore, difficulty, setAudio, setMusicVolume, setEffectsVolume, audio } = useGameContext();
 
   function handleOpenPlatform() {
     window.open("https://platform.conet.network", "_blank");
@@ -58,7 +58,18 @@ export default function Home() {
           $height="32px"
           $background="#474648"
           $radius="50%"
-          onClick={() => setAudio?.((prev: any) => !prev)}
+          onClick={() => {
+            if (audio) {
+              setEffectsVolume?.(0)
+              setMusicVolume?.(0)
+            }
+            else {
+              setEffectsVolume?.(70)
+              setMusicVolume?.(70)
+            }
+
+            setAudio?.((prev: any) => !prev)
+          }}
         >
           <Image
             width={16}

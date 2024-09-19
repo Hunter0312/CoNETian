@@ -81,8 +81,8 @@ type GameProps = {
 export function GameProvider({ children }: GameProps) {
   const [router, setRouter] = useState<string>("/");
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
-  const [music, setMusic] = useState<number>(70);
-  const [effects, setEffects] = useState<number>(70);
+  const [music, setMusic] = useState<number>(0);
+  const [effects, setEffects] = useState<number>(0);
   const [highScore, setHighScore] = useState<number>(0);
   const [profile, setProfile] = useState<any>(null);
   const [leaderboard, setLeaderboard] = useState<Leaderboard>({
@@ -104,8 +104,8 @@ export function GameProvider({ children }: GameProps) {
   const [lotteryBalance, setLotteryBalance] = useState<number>(0);
   const [isLeaderboardLoading, setIsLeaderboardLoading] = useState<boolean>(true);
   const [audio, setAudio] = useState<boolean>(false);
-  const [musicVolume, setMusicVolume] = useState<number>(70);
-  const [effectsVolume, setEffectsVolume] = useState<number>(70);
+  const [musicVolume, setMusicVolume] = useState<number>(0);
+  const [effectsVolume, setEffectsVolume] = useState<number>(0);
   const [referrerAddress, setReferrerAddress] = useState<string>('');
   const [games, setGames] = useState<object>({
     gameSpeed: 0,

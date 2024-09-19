@@ -128,17 +128,30 @@ export default function App() {
     setOnlineMiners,
     leaderboard,
     audio,
+    musicVolume,
+    effectsVolume
   } = useGameContext();
 
   const backAudioRef = useRef<HTMLAudioElement | null>(null);
 
-  const { load } = useAudioPlayer();
+  const { load, setVolume, play } = useAudioPlayer();
 
   useEffect(() => {
-    if (audio)
+    if (audio) {
       playAudio(backAudioRef);
+
+      if (backAudioRef.current) {
+        backAudioRef.current.volume = musicVolume || musicVolume === 0 ? musicVolume / 100 : 1;
+      }
+
+    }
     else stopAudio(backAudioRef);
-  }, [audio])
+  }, [audio, musicVolume])
+
+  useEffect(() => {
+    load(ButtonClick)
+    setVolume(effectsVolume || effectsVolume === 0 ? effectsVolume / 100 : 1);
+  }, [effectsVolume])
 
   listeningMiningHook((response: any) => {
     try {
@@ -169,11 +182,8 @@ export default function App() {
 
   useEffect(() => {
     const playClickAudio = () => {
-      if (audio) {
-        load(ButtonClick, {
-          autoplay: true,
-        })
-      }
+      if (audio)
+        play()
     }
 
     const buttons = Array.from(document.getElementsByTagName("button"));

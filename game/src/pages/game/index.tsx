@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Img } from "@/utilitiy/images";
-import { Tap, BackgroundAudio, ConetianDeath } from "../../shared/assets";
+import { Tap, BackgroundAudio, ConetianDeath, ButtonClick } from "../../shared/assets";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import { fetchTicketResult } from "@/API/getData";
-import { playAudio } from "@/shared/functions";
+import { playAudio, stopAudio } from "@/shared/functions";
 import { useAudioPlayer } from "react-use-audio-player";
 
 type Props = {
@@ -17,19 +17,32 @@ const MAX_ASTEROID_SIZE = 0.3;
 
 const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
   const gameContainer = useRef<HTMLDivElement>(null);
-  const { profile, difficulty, audio } = useGameContext();
+  const { profile, difficulty, audio, effectsVolume, musicVolume } = useGameContext();
   const [game, setGame] = useState<any>(null);
   const backAudioRef = useRef<HTMLAudioElement | null>(null);
   const eventListeners = useRef<(() => void)[]>([]);
   let score = 0;
 
-  const { load } = useAudioPlayer();
+  const { load, setVolume, play } = useAudioPlayer();
   const gameDifficulty = difficulty === "easy" ? 1 : difficulty === "normal" ? 2 : 3;
 
   // Audio player effect
   useEffect(() => {
-    if (audio) playAudio(backAudioRef);
-  }, [audio]);
+    if (audio) {
+      playAudio(backAudioRef);
+
+      if (backAudioRef.current) {
+        backAudioRef.current.volume = musicVolume || musicVolume === 0 ? musicVolume / 100 : 1;
+      }
+
+    }
+    else stopAudio(backAudioRef);
+  }, [audio, musicVolume])
+
+  useEffect(() => {
+    load(Tap)
+    setVolume(effectsVolume || effectsVolume === 0 ? effectsVolume / 100 : 1);
+  }, [effectsVolume])
 
   // Clean up Phaser instance and event listeners on unmount or game restart
   useEffect(() => {
@@ -66,7 +79,7 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
   // Make bird jump function
   function makeConetianJump(thisContext: any) {
     if (audio) {
-      load(Tap, { autoplay: true });
+      play();
     }
 
     if (!thisContext.gameOver) {
@@ -197,7 +210,9 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
     this.gameOver = true;
 
     if (audio) {
-      load(ConetianDeath, { autoplay: true });
+      load(ConetianDeath);
+      setVolume(effectsVolume || effectsVolume === 0 ? effectsVolume / 100 : 1);
+      play();
     }
 
     this.time.removeAllEvents();

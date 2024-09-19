@@ -3,10 +3,12 @@ import { Button } from '@/components/button';
 import { FlexDiv } from '@/components/div';
 import { P } from '@/components/p';
 import PageWrapper from '@/components/pageWrapper';
+import { ButtonClick } from '@/shared/assets';
 import { Img } from '@/utilitiy/images';
 import { Difficulty, useGameContext } from '@/utilitiy/providers/GameProvider';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
+import { useAudioPlayer } from 'react-use-audio-player';
 
 const difficulties: Difficulty[] = ["easy", "normal", "hard"];
 
@@ -24,6 +26,8 @@ export default function Settings() {
   const musicRef = useRef<any>();
   const effectsRef = useRef<any>();
 
+  const { load, setVolume } = useAudioPlayer();
+
   function updateTrackColor(element: HTMLInputElement | undefined, value: string) {
     if (!element) return;
 
@@ -34,6 +38,10 @@ export default function Settings() {
     updateTrackColor(musicRef.current, String(musicVolume));
     updateTrackColor(effectsRef.current, String(effectsVolume));
   }, [effectsVolume, musicVolume]);
+
+  useEffect(() => {
+    setVolume(effectsVolume || effectsVolume === 0 ? effectsVolume / 100 : 1);
+  }, [effectsVolume])
 
   return (
     <PageWrapper margin="32px 16px 140px 16px">

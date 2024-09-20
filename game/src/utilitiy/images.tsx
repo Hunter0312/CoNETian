@@ -108,4 +108,6 @@ export const Img = {
   ConetiumBox: "/conetiumBox.svg",
   GuardianBox: "/guardianBox.svg",
   Progress: "/progress.svg",
+  SkinLockImg: "/skin store/Lock.png",
+  SkinUseImg: "/skin store/use.png",
 };

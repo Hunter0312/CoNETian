@@ -48,6 +48,7 @@ export const FlexDiv = styled(Div).attrs<{
   $gap?: string;
   $grow?: string;
   $flex?: number;
+  $wrap?: string;
 }>((props) => ({
   $direction: props.$direction || "unset",
   $justify: props.$justify || "unset",
@@ -63,4 +64,5 @@ export const FlexDiv = styled(Div).attrs<{
   gap: ${(props) => props.$gap};
   flex-grow: ${(props) => props.$grow};
   flex: ${(props) => props.$flex};
+  flex-wrap: wrap;
 `;

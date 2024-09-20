@@ -27,7 +27,6 @@ export default function Earn() {
   const [telegramId, setTelegramId] = useState<string>('')
   const [claimStreak, setClaimStreak] = useState<number>(3);
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [step, setStep] = useState<number>(0)
   const [completedTaskCategory, setCompletedTaskCategory] = useState<TaskCategory>();
 
   const { profile } = useGameContext();
@@ -282,7 +281,7 @@ export default function Earn() {
                   ) : choosenTask.quiz ? (
                     <DailyQuiz />
                   ) : (
-                    step === 0 && <CommonTask
+                    <CommonTask
                       choosenTask={choosenTask}
                       referral={choosenTask.referral ? tgBotLink + profile?.keyID : ""}
                     />
@@ -298,20 +297,40 @@ export default function Earn() {
                       </FlexDiv>
                     </FlexDiv>
                   ) : (choosenTask.referral || choosenTask.cta) && (
-                    (choosenTask.cta === 'Open X' && step === 1) ? (
+                    choosenTask.cta === 'Open X' ? (
                       <div>
+                        <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={buttonAction} $padding="18px" style={{ marginBottom: '16px' }}>
+                          <FlexDiv $align="center" $gap="8px">
+                            {
+                              !choosenTask.claim && (
+                                <Image src={choosenTask.referral ? Img.CopyImg : Img.OpenExternal} alt="Open External" width={24} height={24} />
+                              )
+                            }
+                            <P>{choosenTask.referral ? "Copy referral link" : choosenTask.cta}</P>
+                          </FlexDiv>
+                        </Button>
                         <label>Enter your X username to confirm interaction tasks</label>
-                        <input style={{ borderRadius: '16px', display: 'block', width: '100%', padding: '14px 16px', height: '56px', marginTop: '40px', backgroundColor: isLoading ? '#1B1B1D' : '#63636366', border: 'none', fontSize: '16px' }} disabled={isLoading} className='import-input' value={userName} onChange={(e) => setUserName(e.target.value)} />
+                        <input style={{ borderRadius: '16px', display: 'block', width: '100%', padding: '14px 16px', height: '56px', marginTop: '16px', backgroundColor: isLoading ? '#1B1B1D' : '#63636366', border: 'none', fontSize: '16px' }} disabled={isLoading} className='import-input' value={userName} onChange={(e) => setUserName(e.target.value)} />
 
-                        <button style={{ padding: '16px 24px', borderRadius: '32px', width: '100%', marginTop: '40px', border: isLoading ? '1px solid #fff' : 'none', backgroundColor: isLoading ? '#363E59' : '#17181F' }} disabled={isLoading} onClick={() => checkTwitterAccount()}>{isLoading ? 'Checking...' : 'Confirm'}</button>
+                        <button style={{ padding: '16px 24px', borderRadius: '32px', width: '100%', marginTop: '16px', marginBottom: '16px', border: isLoading ? '1px solid #fff' : 'none', backgroundColor: isLoading ? '#363E59' : '#17181F' }} disabled={isLoading} onClick={() => checkTwitterAccount()}>{isLoading ? 'Confirming...' : 'Confirm username'}</button>
                       </div>
                     ) :
-                      (choosenTask.cta === 'Open Telegram' && step === 1) ? (
+                      choosenTask.cta === 'Open Telegram' ? (
                         <div>
+                          <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={buttonAction} $padding="18px" style={{ marginBottom: '16px' }}>
+                            <FlexDiv $align="center" $gap="8px">
+                              {
+                                !choosenTask.claim && (
+                                  <Image src={choosenTask.referral ? Img.CopyImg : Img.OpenExternal} alt="Open External" width={24} height={24} />
+                                )
+                              }
+                              <P>{choosenTask.referral ? "Copy referral link" : choosenTask.cta}</P>
+                            </FlexDiv>
+                          </Button>
                           <label>Send /id to conetGameUserBot, to get your telegram id, then input it in the field.</label>
                           <input style={{ borderRadius: '16px', display: 'block', width: '100%', padding: '14px 16px', height: '56px', marginTop: '40px', backgroundColor: isLoading ? '#1B1B1D' : '#63636366', border: 'none', fontSize: '16px' }} disabled={isLoading} className='import-input' value={telegramId} onChange={(e) => setTelegramId(e.target.value)} />
 
-                          <button style={{ padding: '16px 24px', borderRadius: '32px', width: '100%', marginTop: '40px', border: isLoading ? '1px solid #fff' : 'none', backgroundColor: isLoading ? '#363E59' : '#17181F' }} disabled={isLoading} onClick={() => checkTelegramAccount()}>{isLoading ? 'Checking...' : 'Confirm'}</button>
+                          <button style={{ padding: '16px 24px', borderRadius: '32px', width: '100%', marginTop: '32px', border: isLoading ? '1px solid #fff' : 'none', backgroundColor: isLoading ? '#363E59' : '#17181F' }} disabled={isLoading} onClick={() => checkTelegramAccount()}>{isLoading ? 'Confirming...' : 'Confirm ID'}</button>
                         </div>
                       ) :
                         (<Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={buttonAction} $padding="18px">

@@ -31,7 +31,7 @@ export default function Earn() {
   const [completedTaskCategory, setCompletedTaskCategory] = useState<TaskCategory>();
 
   const { profile } = useGameContext();
-  const tgBotLink = "https://t.me/conetiantest_bot/?start=";
+  const tgBotLink = "https://t.me/conetianLearn_bot/?start=";
 
   useEffect(() => {
     async function fetchSocialMedias() {

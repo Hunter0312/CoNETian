@@ -158,7 +158,7 @@ export const taskCategories: TaskCategory[] = [
         extraInstruction:
           "*You have 2 minutes to do it so we can confirm that the task has been completed",
         cta: "Open X",
-        resource: "x.com/conet_network?lang=en",
+        resource: "https://x.com/conet_network?lang=en",
         active: true,
       },
       {

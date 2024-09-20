@@ -30,8 +30,13 @@ export default function Earn() {
   const [completedTaskCategory, setCompletedTaskCategory] = useState<TaskCategory>();
 
   const { profile } = useGameContext();
+
+  let gameLink: string = "";
+
+  if (typeof window !== 'undefined')
+    gameLink = window?.location?.origin + "/?referrer=";
+
   const tgBotLink = "https://t.me/conetianLearn_bot/?start=";
-  const gameLink = window.location.origin + "/?referrer=";
 
   useEffect(() => {
     async function fetchSocialMedias() {
@@ -128,7 +133,6 @@ export default function Earn() {
 
   function closeTask() {
     setChoosenTask(undefined);
-    setStep(0)
   }
 
   function buttonAction() {
@@ -136,7 +140,6 @@ export default function Earn() {
 
     if (choosenTask.claim) {
       handleClaim();
-      setStep(1)
       return;
     }
 
@@ -148,8 +151,6 @@ export default function Earn() {
     if (!choosenTask.resource) return;
 
     window.open(choosenTask.resource, "_blank");
-
-    setStep(1)
   }
 
   function handleClaim() {

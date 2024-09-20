@@ -9,7 +9,7 @@ const S = {
   BioContent: styled(FlexDiv)`
     border-top: 2px solid #e5e5e580;
     border-radius: 16px 16px 0 0;
-    height: 45vh;
+    height: 55vh;
     width: 100%;
     background-color: #111113e5;
   `,

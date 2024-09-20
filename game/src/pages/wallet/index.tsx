@@ -111,7 +111,6 @@ export default function Wallet() {
           <FlexDiv
             $direction="column"
             $gap="16px"
-            $height="200px"
             $width="100%"
             $padding="14px 24px"
             $border="1px solid rgba(255, 255, 255, .1)"

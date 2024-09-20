@@ -145,7 +145,7 @@ export default function App() {
     // Simulate a loading process (like fetching data)
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000); // Adjust this duration as needed
+    }, 4000); // Adjust this duration as needed
 
     return () => clearTimeout(timer);
   }, []);

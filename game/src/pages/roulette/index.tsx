@@ -1,6 +1,6 @@
 import BackButton from '@/components/backButton';
 import PageWrapper from '@/components/pageWrapper';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import dynamic from "next/dynamic";
 
 const PageState1 = dynamic<any>(() =>
@@ -36,8 +36,11 @@ export default function Roulette() {
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [doubleImageState, setDoubleImageState] = useState<"off" | "win" | "lose">("off");
   const [isSpinning, setIsSpinning] = useState(false);
+  const [isTicketAmountUpdated, setIsTicketAmountUpdated] = useState(true);
 
   const { profile, audio, effectsVolume } = useGameContext();
+
+  const currentTicketAmount = useRef(0)
 
   const { load, play, setVolume } = useAudioPlayer();
 
@@ -46,14 +49,25 @@ export default function Roulette() {
     setVolume(effectsVolume || effectsVolume === 0 ? effectsVolume / 100 : 1);
   }, [effectsVolume])
 
+  useEffect(() => {
+    if (profile?.tickets?.balance !== currentTicketAmount.current) {
+      currentTicketAmount.current = profile?.tickets?.balance
+      setIsTicketAmountUpdated(true)
+    }
+  }, [profile])
+
   async function handleSpin() {
     setPageState(1);
     setIsSpinning(true);
 
-    if (!mustSpin && !isSpinning && profile?.keyID) {
+    if (!mustSpin && !isSpinning && isTicketAmountUpdated && profile?.keyID) {
+      currentTicketAmount.current = profile?.tickets?.balance
+
       const rouletteResult = await fetchRouletteResult(profile?.keyID);
 
       if (rouletteResult && !rouletteResult?.error) {
+        setIsTicketAmountUpdated(false)
+
         if (audio)
           play()
 
@@ -208,7 +222,7 @@ export default function Roulette() {
 
       {
         pageState <= 2
-          ? <PageState1 pageState={pageState} isSpinning={isSpinning} handleSpin={handleSpin} mustSpin={mustSpin} setMustSpin={setMustSpin} prizeNumber={prizeNumber} />
+          ? <PageState1 pageState={pageState} isSpinning={isSpinning} isTicketAmountUpdated={isTicketAmountUpdated} handleSpin={handleSpin} mustSpin={mustSpin} setMustSpin={setMustSpin} prizeNumber={prizeNumber} />
           : <PageState2
             pageState={pageState}
             doubleImageState={doubleImageState}

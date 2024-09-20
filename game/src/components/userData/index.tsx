@@ -18,7 +18,7 @@ const UserData = () => {
         alt="user default image"
       />
       <FlexDiv $direction="column" $gap="2px">
-        <P $fontSize="14px">Anonymous User</P>
+        <P $fontSize="14px">{profile?.game?.username || "Anonymous User"}</P>
         <P $fontSize="12px" $color="#B1B1B2">
           {slice(profile?.keyID)}
           {!profile?.keyID && <Skeleton />}

@@ -148,6 +148,7 @@ export default function Earn() {
     if (!choosenTask.resource) return;
 
     window.open(choosenTask.resource, "_blank");
+
     setStep(1)
   }
 
@@ -307,7 +308,7 @@ export default function Earn() {
                     ) :
                       (choosenTask.cta === 'Open Telegram' && step === 1) ? (
                         <div>
-                          <label>Send /id to conetGameUserBott, to get your telegram id, then input it in the field.</label>
+                          <label>Send /id to conetGameUserBot, to get your telegram id, then input it in the field.</label>
                           <input style={{ borderRadius: '16px', display: 'block', width: '100%', padding: '14px 16px', height: '56px', marginTop: '40px', backgroundColor: isLoading ? '#1B1B1D' : '#63636366', border: 'none', fontSize: '16px' }} disabled={isLoading} className='import-input' value={telegramId} onChange={(e) => setTelegramId(e.target.value)} />
 
                           <button style={{ padding: '16px 24px', borderRadius: '32px', width: '100%', marginTop: '40px', border: isLoading ? '1px solid #fff' : 'none', backgroundColor: isLoading ? '#363E59' : '#17181F' }} disabled={isLoading} onClick={() => checkTelegramAccount()}>{isLoading ? 'Checking...' : 'Confirm'}</button>

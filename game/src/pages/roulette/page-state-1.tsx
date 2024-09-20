@@ -18,6 +18,7 @@ const Wheel = dynamic<any>(() =>
 interface Props {
   pageState: 1 | 2 | 3 | 4 | 5;
   isSpinning: boolean;
+  isTicketAmountUpdated: boolean;
   handleSpin: () => void;
   mustSpin: boolean;
   setMustSpin: (e: boolean) => void;
@@ -28,7 +29,7 @@ const pointerProperties: PointerProps = {
   style: { visibility: "hidden" }
 }
 
-export default function PageState1({ pageState, isSpinning, handleSpin, mustSpin, setMustSpin, prizeNumber }: Props) {
+export default function PageState1({ pageState, isSpinning, isTicketAmountUpdated, handleSpin, mustSpin, setMustSpin, prizeNumber }: Props) {
 
   const { profile } = useGameContext();
 
@@ -67,7 +68,7 @@ export default function PageState1({ pageState, isSpinning, handleSpin, mustSpin
       </div>
 
       <FlexDiv $direction="column" $gap="16px" $align='center' $justify='center'>
-        {profile?.tickets?.balance !== '0' ? (
+        {profile?.tickets?.balance !== '0' && isTicketAmountUpdated ? (
           isSpinning ? (
             <Button $width="196px" $height="45px" $radius="8px" $border="1px solid #04DAE8" disabled $background={"gray"}>
               Spinning...
@@ -79,7 +80,7 @@ export default function PageState1({ pageState, isSpinning, handleSpin, mustSpin
           )
         ) : (
           <Button $width="196px" $height="45px" $radius="8px" $border="1px solid #04DAE8" disabled $background={"gray"}>
-            {pageState === 1 ? "Spin" : "Spin Again"}
+            {!isTicketAmountUpdated ? "Refreshing Tickets" : pageState === 1 ? "Spin" : "Spin Again"}
           </Button>
         )}
 

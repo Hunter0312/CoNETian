@@ -32,6 +32,7 @@ export default function Earn() {
 
   const { profile } = useGameContext();
   const tgBotLink = "https://t.me/conetianLearn_bot/?start=";
+  const gameLink = window.location.origin + "/?referrer=";
 
   useEffect(() => {
     async function fetchSocialMedias() {
@@ -314,16 +315,29 @@ export default function Earn() {
                           <button style={{ padding: '16px 24px', borderRadius: '32px', width: '100%', marginTop: '40px', border: isLoading ? '1px solid #fff' : 'none', backgroundColor: isLoading ? '#363E59' : '#17181F' }} disabled={isLoading} onClick={() => checkTelegramAccount()}>{isLoading ? 'Checking...' : 'Confirm'}</button>
                         </div>
                       ) :
-                        (<Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={buttonAction} $padding="18px">
-                          <FlexDiv $align="center" $gap="8px">
-                            {
-                              !choosenTask.claim && (
-                                <Image src={choosenTask.referral ? Img.CopyImg : Img.OpenExternal} alt="Open External" width={24} height={24} />
-                              )
+                        (
+                          <>
+                            <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={buttonAction} $padding="18px">
+                              <FlexDiv $align="center" $gap="8px">
+                                {
+                                  !choosenTask.claim && (
+                                    <Image src={choosenTask.referral ? Img.CopyImg : Img.OpenExternal} alt="Open External" width={24} height={24} />
+                                  )
+                                }
+                                <P>{choosenTask.referral ? "Copy Telegram Referral Link" : choosenTask.cta}</P>
+                              </FlexDiv>
+                            </Button>
+
+                            {choosenTask.referral &&
+                              <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={() => copyReferralLink(choosenTask.referral ? gameLink + profile?.keyID : "")} $padding="18px">
+                                <FlexDiv $align="center" $gap="8px">
+                                  <Image src={Img.CopyImg} alt="Open External" width={24} height={24} />
+                                  <P>Copy Game Referral Link</P>
+                                </FlexDiv>
+                              </Button>
                             }
-                            <P>{choosenTask.referral ? "Copy referral link" : choosenTask.cta}</P>
-                          </FlexDiv>
-                        </Button>)
+                          </>
+                        )
                   )
                 }
               </FlexDiv>

@@ -182,3 +182,16 @@ a {
 .small-text-max-width {
   max-width: 240px;
 }
+
+.rotateRight {
+  animation: rotateRight 2s linear infinite;
+}
+
+@keyframes rotateRight {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}

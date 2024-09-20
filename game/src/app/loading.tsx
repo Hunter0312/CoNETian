@@ -27,7 +27,7 @@ export default function Loading() {
           gap: "5px",
         }}
       >
-        <Image src={Img.SplashConetImg} height={35} width={35} alt="conet" />
+        <Image className="rotateRight" src={Img.SplashConetImg} height={35} width={35} alt="conet" />
         <p style={{ fontSize: "18px", color: "white" }}>Loading...</p>
       </div>
       <div>

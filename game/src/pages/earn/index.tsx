@@ -69,6 +69,7 @@ export default function Earn() {
   async function checkTwitterAccount() {
     setIsLoading(true)
     const res = await fetchCheckTwitter(profile.keyID, userName)
+
     if (res.response.isFollow === true && res.response.isRetweet === true) {
       const tasksCopy = [...tasks]
       tasksCopy[2].tasks[0].completed = true
@@ -77,7 +78,13 @@ export default function Earn() {
         position: "bottom-center",
         duration: 2000,
       });
-    } else {
+    } else if (res.response.protected === true) {
+      toast.error("Your account is private. Please make it public to claim your reward.", {
+        position: "bottom-center",
+        duration: 2000,
+      });
+    }
+    else {
       toast.error("Unable to confirm. Check if you have completed the tasks", {
         position: "bottom-center",
         duration: 2000,

@@ -153,7 +153,8 @@ export const taskCategories: TaskCategory[] = [
           uri: Img.TwitterX,
           color: "#000000",
         },
-        caption: "Follow Us on X and earn Tickets just for staying connected!",
+        caption:
+          "Follow Us on X, like and share our pinned post, earn Tickets just for staying connected!",
         extraInstruction:
           "*You have 2 minutes to do it so we can confirm that the task has been completed",
         cta: "Open X",

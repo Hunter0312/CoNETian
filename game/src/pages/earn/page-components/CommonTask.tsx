@@ -40,16 +40,6 @@ export default function CommonTask({ choosenTask, referral }: Props) {
           }
         </FlexDiv>
       </FlexDiv>
-      {
-        referral && choosenTask?.referral && profile?.keyID && (
-          <FlexDiv $width="100%" $direction="column">
-            <P $color="#C8C6C8" $fontSize="18px">Your referral link:</P>
-            <FlexDiv $justify="space-between" $padding="8px 16px">
-              <P className="text-overflow">{referral}</P>
-            </FlexDiv>
-          </FlexDiv>
-        )
-      }
     </>
   )
 }

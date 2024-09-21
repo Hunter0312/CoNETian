@@ -36,7 +36,7 @@ export default function Earn() {
   if (typeof window !== 'undefined')
     gameLink = window?.location?.origin + "/?referrer=";
 
-  const tgBotLink = "https://t.me/conetianLearn_bot/?start=";
+  const tgBotLink = "https://t.me/conetian_bot/?start=";
 
   useEffect(() => {
     async function fetchSocialMedias() {
@@ -311,10 +311,10 @@ export default function Earn() {
                             <P>{choosenTask.referral ? "Copy referral link" : choosenTask.cta}</P>
                           </FlexDiv>
                         </Button>
-                        <label>Enter your X username to confirm interaction tasks</label>
-                        <input style={{ borderRadius: '16px', display: 'block', width: '100%', padding: '14px 16px', height: '56px', marginTop: '16px', backgroundColor: isLoading ? '#1B1B1D' : '#63636366', border: 'none', fontSize: '16px' }} disabled={isLoading} className='import-input' value={userName} onChange={(e) => setUserName(e.target.value)} />
+                        <label style={{ color: '#FFFFFF' }}>Enter your X username to confirm interaction tasks</label>
+                        <input style={{ color: '#FFFFFF', borderRadius: '16px', display: 'block', width: '100%', padding: '14px 16px', height: '56px', marginTop: '16px', backgroundColor: isLoading ? '#1B1B1D' : '#63636366', border: 'none', fontSize: '16px' }} disabled={isLoading} className='import-input' value={userName} placeholder='Username without @' onChange={(e) => setUserName(e.target.value)} />
 
-                        <button style={{ padding: '16px 24px', borderRadius: '32px', width: '100%', marginTop: '16px', marginBottom: '16px', border: isLoading ? '1px solid #fff' : 'none', backgroundColor: isLoading ? '#363E59' : '#17181F' }} disabled={isLoading} onClick={() => checkTwitterAccount()}>{isLoading ? 'Confirming...' : 'Confirm username'}</button>
+                        <button style={{ color: '#FFFFFF', padding: '16px 24px', borderRadius: '32px', width: '100%', marginTop: '16px', marginBottom: '16px', border: isLoading ? '1px solid #fff' : 'none', backgroundColor: isLoading ? '#363E59' : '#17181F' }} disabled={isLoading} onClick={() => checkTwitterAccount()}>{isLoading ? 'Confirming...' : 'Confirm username'}</button>
                       </div>
                     ) :
                       choosenTask.cta === 'Open Telegram' ? (
@@ -329,10 +329,10 @@ export default function Earn() {
                               <P>{choosenTask.referral ? "Copy referral link" : choosenTask.cta}</P>
                             </FlexDiv>
                           </Button>
-                          <label>Send /id to conetGameUserBot, to get your telegram id, then input it in the field.</label>
-                          <input style={{ borderRadius: '16px', display: 'block', width: '100%', padding: '14px 16px', height: '56px', marginTop: '40px', backgroundColor: isLoading ? '#1B1B1D' : '#63636366', border: 'none', fontSize: '16px' }} disabled={isLoading} className='import-input' value={telegramId} onChange={(e) => setTelegramId(e.target.value)} />
+                          <label style={{ color: '#FFFFFF' }}>Send a private message with /id to <a href='https://t.me/conetGameUserBot' target='_blank' rel='noreferrer' style={{ color: '#8DA8FF', textDecoration: 'underline' }}>conetGameUserBot</a>, to get your telegram id, then input it in the field.</label>
+                          <input style={{ color: '#FFFFFF', borderRadius: '16px', display: 'block', width: '100%', padding: '14px 16px', height: '56px', marginTop: '40px', backgroundColor: isLoading ? '#1B1B1D' : '#63636366', border: 'none', fontSize: '16px' }} disabled={isLoading} className='import-input' value={telegramId} onChange={(e) => setTelegramId(e.target.value)} />
 
-                          <button style={{ padding: '16px 24px', borderRadius: '32px', width: '100%', marginTop: '32px', border: isLoading ? '1px solid #fff' : 'none', backgroundColor: isLoading ? '#363E59' : '#17181F' }} disabled={isLoading} onClick={() => checkTelegramAccount()}>{isLoading ? 'Confirming...' : 'Confirm ID'}</button>
+                          <button style={{ color: '#FFFFFF', padding: '16px 24px', borderRadius: '32px', width: '100%', marginTop: '32px', border: isLoading ? '1px solid #fff' : 'none', backgroundColor: isLoading ? '#363E59' : '#17181F' }} disabled={isLoading} onClick={() => checkTelegramAccount()}>{isLoading ? 'Confirming...' : 'Confirm ID'}</button>
                         </div>
                       ) :
                         (

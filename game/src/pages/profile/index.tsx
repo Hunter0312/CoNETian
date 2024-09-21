@@ -97,7 +97,7 @@ export default function Profile() {
                     <Image src={conetAnonymousIcon} height={120} width={120} alt="profile-logo" />
 
                     <FlexDiv $direction="column" $justify="space-between">
-                        <input placeholder="Anonymous User" disabled={!isEditing} value={username} onChange={handleUsernameChange} style={{ backgroundColor: isEditing ? '#63636366' : 'transparent', border: '1px solid #FFFFFF1A', borderRadius: '16px', height: '56px', padding: '12px 14px', marginBottom: '28px' }} />
+                        <input placeholder="Anonymous User" disabled={!isEditing} value={username} onChange={handleUsernameChange} style={{ color: '#FFFFFF', backgroundColor: isEditing ? '#63636366' : 'transparent', border: '1px solid #FFFFFF1A', borderRadius: '16px', height: '56px', padding: '12px 14px', marginBottom: '28px' }} />
 
                         <FlexDiv>
                             <FlexDiv $direction="column"
@@ -131,6 +131,7 @@ export default function Profile() {
                         value={bio}
                         onChange={handleBioChange}
                         style={{
+                            color: '#FFFFFF',
                             backgroundColor: isEditing ? '#63636366' : 'transparent',
                             border: '1px solid #FFFFFF1A',
                             borderRadius: '16px',

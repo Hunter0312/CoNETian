@@ -41,7 +41,7 @@ export default function PageState1({ pageState, isSpinning, isTicketAmountUpdate
           :
           <>
             <P className="white-text-shadow" $fontSize="24px" $align="center">You lose!</P>
-            <P className="white-text-shadow" $fontSize="24px" $align="center">Sorry, you didn&apos; t get any extra CNTP</P>
+            <P className="white-text-shadow" $fontSize="24px" $align="center">Sorry, you didn&apos;t get any extra CNTP</P>
           </>
         }
       </div>

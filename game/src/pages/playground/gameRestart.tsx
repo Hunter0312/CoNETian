@@ -48,7 +48,7 @@ const GameRestart: React.FC<Props> = ({ restart, score, highScore }) => {
       <FlexDiv $direction="column" $align="center" $gap="5px">
         <P $fontSize="32px">Current Score</P>
         <P $fontSize="32px">{score}</P>
-        <P $fontSize="32px">Hightest Score</P>
+        <P $fontSize="32px">Highest Score</P>
         <P $fontSize="32px">{highScore}</P>
         {profile?.tokens?.cCNTP?.balance &&
           <>

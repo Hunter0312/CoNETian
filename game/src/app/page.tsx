@@ -21,6 +21,7 @@ import { playAudio, stopAudio } from "@/shared/functions";
 import { useAudioPlayer } from "react-use-audio-player";
 import { useRouter } from "next/router";
 import Loading from "./loading";
+import Boxes from '@/pages/boxes';
 
 const S = {
   Main: styled.div`
@@ -118,7 +119,8 @@ function CurrentPage() {
     "/profile": <Profile />,
     // "/skinstore": <SkinStore />,
     "/playground": <Playground />,
-  };
+    "/box": <Boxes />
+  }
 
   return pages[router as keyof typeof pages] ?? null;
 }

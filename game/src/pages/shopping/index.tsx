@@ -6,11 +6,10 @@ import { FlexDiv } from '@/components/div';
 import { P } from '@/components/p';
 import Image from 'next/image';
 import { Img } from '@/utilitiy/images';
-import Tooltip from '@/components/tooltip';
 import { Button } from '@/components/button';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import { formatToken } from '@/utilitiy/functions';
-import Skeleton from 'react-loading-skeleton';
+import Supplies from '@/components/supplies';
 
 const shoppingOptions = [
   {
@@ -26,7 +25,8 @@ const comingSoonOptions = [
   {
     key: 1,
     image: Img.BoxBlurImg,
-    title: 'Open the Box'
+    title: 'Open the Box',
+    caption: "Try your luck and receive special perks",
   },
   {
     key: 2,
@@ -41,39 +41,12 @@ const comingSoonOptions = [
 ]
 
 export default function Shopping() {
-  const { setRouter, profile } = useGameContext();
+  const { setRouter } = useGameContext();
 
   return (
     <PageWrapper margin="32px 16px 140px 16px">
       <BackButton text="Shop" />
-      <FlexDiv $align="center" $justify="space-between">
-        <FlexDiv $gap="12px" $align="center">
-          <P $fontSize="24px">Supplies</P>
-          <Tooltip message="Each ticket is a valuable asset. Keep playing The CoNETian to earn more tickets!" />
-        </FlexDiv>
-        <FlexDiv $align="center" $gap="8px" $background="#262527" $padding="8px" $radius="8px">
-          {profile?.tickets?.balance ? (<>
-            <Image src={Img.Tickets} alt="Tickets" width={42.15} height={32} />
-            <P $fontSize='16px'>x {profile?.tickets?.balance}</P>
-          </>
-          )
-            :
-            <Skeleton width={50} />
-          }
-        </FlexDiv>
-      </FlexDiv>
-      <FlexDiv $gap="8px" $align="center">
-        {profile ? (
-          <>
-            <P $fontSize="20px" style={{ lineHeight: '16px' }}>
-              {formatToken(profile?.tokens?.cCNTP?.balance)}
-            </P>
-            <P $fontSize="12px" style={{ lineHeight: '16px' }}>
-              CNTP EARNED
-            </P>
-          </>
-        ) : (<Skeleton width={200} />)}
-      </FlexDiv>
+      <Supplies />
       <div className="split"></div>
       <FlexDiv $direction="column" $gap="12px">
         <P $fontSize="24px">Storage and lounge</P>

@@ -195,3 +195,52 @@ a {
     transform: rotate(359deg);
   }
 }
+
+.guardian-wrapper {
+  overflow: hidden;
+}
+
+.guardian-wrapper .conet-img {
+  position: absolute;
+  right: -10%;
+  top: -25%;
+
+  opacity: .1;
+}
+
+.split {
+  background: linear-gradient(to right, transparent, #79F8FF, #D775FF, transparent);
+  height: 1px;
+}
+
+.vertical-split {
+  background: linear-gradient(to bottom, transparent, #79F8FF, #D775FF, transparent);
+  width: 1px;
+}
+
+/* Global animations */
+
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+  }
+}
+
+.animate-rotate {
+  -webkit-animation:spin 3s linear infinite;
+  -moz-animation:spin 3s linear infinite;
+  animation:spin 3s linear infinite;
+}

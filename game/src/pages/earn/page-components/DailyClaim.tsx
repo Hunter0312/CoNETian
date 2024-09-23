@@ -20,8 +20,8 @@ const dailyClaimTypeImage: Record<string, any> = {
     size: 26
   },
   "KEY": {
-    uri: Img.Key,
-    size: 52
+    uri: Img.NormalKey,
+    size: 32
   },
 }
 

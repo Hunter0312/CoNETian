@@ -3,7 +3,7 @@ import { P } from '@/components/p';
 import { Img } from '@/utilitiy/images';
 import Image from 'next/image';
 import { useEffect } from 'react';
-import { KeyType } from '../boxes';
+import { KeyType } from '../../../shared/boxes';
 
 interface Props {
   inProgress: boolean;
@@ -52,7 +52,7 @@ export default function OrderProcess({ inProgress, finish, networkCost, fee, cho
         <FlexDiv $background="#262626" $padding="16px" $radius="16px" $gap="16px" $direction="column" $width="100%">
           <FlexDiv $justify="space-between">
             <P>Sent</P>
-            <P $color="#E4E4E5">{choosenKey.cost.cntp} CNTP + {choosenKey.cost.tickets} Tickets</P>
+            <P $color="#E4E4E5">{choosenKey?.cost?.cntp} CNTP + {choosenKey?.cost?.tickets} Tickets</P>
           </FlexDiv>
           <FlexDiv $justify="space-between">
             <P>GAS fee</P>

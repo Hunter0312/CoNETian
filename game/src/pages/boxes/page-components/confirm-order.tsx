@@ -1,5 +1,5 @@
 import { Div, FlexDiv } from '@/components/div'
-import { KeyType } from '../boxes'
+import { KeyType } from '../../../shared/boxes'
 import { useGameContext } from '@/utilitiy/providers/GameProvider'
 import { P } from '@/components/p';
 import UserData from '@/components/userData';
@@ -30,7 +30,7 @@ export default function ConfirmOrder({ currentKey }: Props) {
               </Div>
               <P>CNTP</P>
             </FlexDiv>
-            <P>{currentKey.cost.cntp}</P>
+            <P>{currentKey?.cost?.cntp}</P>
           </FlexDiv>
           <FlexDiv $background="#262626" $padding="12px 16px" $radius="16px" $align="center" $justify="space-between" $gap="20px">
             <FlexDiv $gap="8px" $align="center">
@@ -39,7 +39,7 @@ export default function ConfirmOrder({ currentKey }: Props) {
               </Div>
               <P>Tickets</P>
             </FlexDiv>
-            <P>{currentKey.cost.tickets}</P>
+            <P>{currentKey?.cost?.tickets}</P>
           </FlexDiv>
         </FlexDiv>
         <FlexDiv $direction="column" $gap="8px">
@@ -47,9 +47,9 @@ export default function ConfirmOrder({ currentKey }: Props) {
           <FlexDiv $background="#262626" $padding="12px 16px" $radius="16px" $align="center" $justify="space-between" $gap="20px">
             <FlexDiv $gap="8px" $align="center">
               <Div $position="relative" $width="30px" $height="30px">
-                <Image src={currentKey.icon} alt="Key" fill />
+                <Image src={currentKey?.icon} alt="Key" fill />
               </Div>
-              <P>{currentKey.name.charAt(0).toUpperCase() + currentKey.name.slice(1)} Key</P>
+              <P>{currentKey?.name.charAt(0).toUpperCase() + currentKey?.name.slice(1)} Key</P>
             </FlexDiv>
             <P>1</P>
           </FlexDiv>

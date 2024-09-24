@@ -4,7 +4,7 @@ import { P } from '@/components/p';
 import PageWrapper from '@/components/pageWrapper';
 import Supplies from '@/components/supplies';
 import { useState } from 'react';
-import { BoxType, boxes } from './boxes';
+import { BoxType, boxes } from '../../shared/boxes';
 import Image from 'next/image';
 
 import "./styles.css";

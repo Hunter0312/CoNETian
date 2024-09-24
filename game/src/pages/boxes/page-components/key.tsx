@@ -1,6 +1,6 @@
 import { Div, FlexDiv } from '@/components/div';
 import { P } from '@/components/p';
-import { keys, KeyType } from '../boxes';
+import { keys, KeyType } from '../../../shared/boxes';
 import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/button';
@@ -32,7 +32,7 @@ export default function Keys({ closeKeys }: Props) {
   }
 
   if (transactionState && choosenKey) {
-    switch(transactionState) {
+    switch (transactionState) {
       case "confirm":
         return (
           <>

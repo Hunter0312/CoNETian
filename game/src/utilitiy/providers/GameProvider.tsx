@@ -12,7 +12,7 @@ import {
 import Leaderboard from "../types/leaderboard";
 import { fetchRegisterReferrer, fetchStartMining } from "@/API/getData";
 
-export type Difficulty = 'easy' | 'normal' | 'hard';
+export type Difficulty = "easy" | "normal" | "hard";
 
 type GameContext = {
   router?: string;
@@ -45,26 +45,28 @@ type GameContext = {
   setOnlineMiners?: (num: number) => void;
   miningRate?: number;
   setMiningRate?: (num: number) => void;
-  games?: any,
-  setGames?: (o: any) => void,
-  lottery?: number,
-  setLottery?: (e: number) => void,
-  isLeaderboardLoading?: boolean,
-  setIsLeaderboardLoading?: (e: boolean) => void,
-  gameStatus?: number,
-  setGameStatus?: (e: number) => void,
-  lotteryBalance?: number,
-  setLotteryBalance?: (e: number) => void,
-  audio?: boolean,
+  games?: any;
+  setGames?: (o: any) => void;
+  lottery?: number;
+  setLottery?: (e: number) => void;
+  isLeaderboardLoading?: boolean;
+  setIsLeaderboardLoading?: (e: boolean) => void;
+  gameStatus?: number;
+  setGameStatus?: (e: number) => void;
+  lotteryBalance?: number;
+  setLotteryBalance?: (e: number) => void;
+  audio?: boolean;
   setAudio?: (e: any) => any;
-  musicVolume?: number,
+  musicVolume?: number;
   setMusicVolume?: (e: number) => void;
-  effectsVolume?: number,
+  effectsVolume?: number;
   setEffectsVolume?: (e: number) => void;
-  setGameDifficulty?: (num: number) => void,
-  gameDifficulty?: number,
-  setReferrerAddress?: (e: string) => void,
-  referrerAddress?: string
+  setGameDifficulty?: (num: number) => void;
+  gameDifficulty?: number;
+  setReferrerAddress?: (e: string) => void;
+  referrerAddress?: string;
+  skinBuy?: object;
+  setSkinBuy?: (skin: object) => void;
 };
 
 const Game = createContext<GameContext>({});
@@ -95,18 +97,19 @@ export function GameProvider({ children }: GameProps) {
   const [onlineMiners, setOnlineMiners] = useState<number>(0);
   const [miningRate, setMiningRate] = useState<number>(0);
   const [miningError, setMiningError] = useState<boolean>(false);
-  const [path, setPath] = useState<string>('/');
-  const [privateKey, setPrivateKey] = useState<string>('');
+  const [path, setPath] = useState<string>("/");
+  const [privateKey, setPrivateKey] = useState<string>("");
   const [balance, setBalance] = useState<number>(0);
   const [lottery, setLottery] = useState<number>(0);
   const [gameStatus, setGameStatus] = useState<number>(0);
-  const [gameDifficulty, setGameDifficulty] = useState<number>(1)
+  const [gameDifficulty, setGameDifficulty] = useState<number>(1);
   const [lotteryBalance, setLotteryBalance] = useState<number>(0);
-  const [isLeaderboardLoading, setIsLeaderboardLoading] = useState<boolean>(true);
+  const [isLeaderboardLoading, setIsLeaderboardLoading] =
+    useState<boolean>(true);
   const [audio, setAudio] = useState<boolean>(false);
   const [musicVolume, setMusicVolume] = useState<number>(0);
   const [effectsVolume, setEffectsVolume] = useState<number>(0);
-  const [referrerAddress, setReferrerAddress] = useState<string>('');
+  const [referrerAddress, setReferrerAddress] = useState<string>("");
   const [games, setGames] = useState<object>({
     gameSpeed: 0,
     gameFrame: 100,
@@ -115,10 +118,11 @@ export function GameProvider({ children }: GameProps) {
     asteroids: [],
     frame: 0,
     score: 0,
-  })
+  });
+  const [skinBuy, setSkinBuy] = useState<object>({});
 
   const miningErrorTimeout = useRef<NodeJS.Timeout | null>(null);
-  const walletAddress = useRef<string>('');
+  const walletAddress = useRef<string>("");
 
   useEffect(() => {
     const init = async (walletAddress: string) => {
@@ -146,16 +150,15 @@ export function GameProvider({ children }: GameProps) {
 
     if (profile?.keyID && profile?.keyID !== walletAddress.current) {
       walletAddress.current = profile?.keyID;
-      walletAddress.current = profile?.keyID
+      walletAddress.current = profile?.keyID;
 
-      const url = window.location.search
+      const url = window.location.search;
 
-      const splitUrl = url.split('referrer=')
+      const splitUrl = url.split("referrer=");
 
       if (splitUrl.length > 1) {
-        const referrer = splitUrl[1]
-        if (referrer)
-          fetchRegisterReferrer(referrer);
+        const referrer = splitUrl[1];
+        if (referrer) fetchRegisterReferrer(referrer);
       }
 
       init(profile?.keyID);
@@ -163,12 +166,12 @@ export function GameProvider({ children }: GameProps) {
   }, [profile]);
 
   useEffect(() => {
-    const hScore = localStorage?.getItem('hScore');
+    const hScore = localStorage?.getItem("hScore");
 
     if (hScore) {
       setHighScore(parseInt(hScore));
     }
-  }, [])
+  }, []);
 
   return (
     <Game.Provider
@@ -223,6 +226,8 @@ export function GameProvider({ children }: GameProps) {
         gameDifficulty,
         setReferrerAddress,
         referrerAddress,
+        skinBuy,
+        setSkinBuy,
       }}
     >
       {children}

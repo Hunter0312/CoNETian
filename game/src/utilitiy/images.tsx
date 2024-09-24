@@ -110,4 +110,12 @@ export const Img = {
   Progress: "/progress.svg",
   SkinLockImg: "/skin store/Lock.png",
   SkinUseImg: "/skin store/use.png",
+  AlarmImg: "/Alarm, Clock, Time.png",
+  CarServiceImg: "/car service.png",
+  SecureImg: "/secure.png",
+  ConfirmSpinImg1: "/confirmspin1.png",
+  ConfirmSpinImg2: "/confirmspin2.png",
+  ConfirmSpinImg3: "/confirmspin3.png",
+  ProgressImg: "/progress_activity.png",
+  TransactionCheckImg: "/transactioncheck.png",
 };

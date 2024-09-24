@@ -13,8 +13,9 @@ import Settings from "@/pages/settings";
 import Profile from "@/pages/profile";
 import Shopping from "@/pages/shopping";
 import Roulette from "@/pages/roulette";
-// import SkinStore from "@/pages/skinstore";
 import Earn from "@/pages/earn";
+import ConfirmProgress from "@/pages/progress";
+import SkinConfirm from "@/pages/skinConfirm";
 import { Toaster } from "react-hot-toast";
 import { BackgroundAudio, ButtonClick } from '../shared/assets';
 import { playAudio, stopAudio } from "@/shared/functions";
@@ -22,6 +23,8 @@ import { useAudioPlayer } from "react-use-audio-player";
 import { useRouter } from "next/router";
 import Loading from "./loading";
 import Boxes from '@/pages/boxes';
+import TransactionSuccess from "@/pages/transactionSuccess";
+import SkinStore from "@/pages/skinstore";
 
 const S = {
   Main: styled.div`
@@ -117,9 +120,12 @@ function CurrentPage() {
     "/earn": <Earn />,
     "/roulette": <Roulette />,
     "/profile": <Profile />,
-    // "/skinstore": <SkinStore />,
+    "/skinstore": <SkinStore />,
     "/playground": <Playground />,
-    "/box": <Boxes />
+    "/box": <Boxes />,
+    "/skinconfirm": <SkinConfirm />,
+    "/confirmprogress": <ConfirmProgress />,
+    "/transactionsuccess": <TransactionSuccess />,
   }
 
   return pages[router as keyof typeof pages] ?? null;

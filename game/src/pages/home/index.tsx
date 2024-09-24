@@ -8,7 +8,7 @@ import styled from "styled-components";
 import Skeleton from "react-loading-skeleton";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import { formatToken } from "@/utilitiy/functions";
-import PageWrapper from '@/components/pageWrapper';
+import PageWrapper from "@/components/pageWrapper";
 import { capitalizeFirstLetter } from "@/shared/functions";
 import { DEFAULT_EFFECTS_VOLUME, DEFAULT_MUSIC_VOLUME } from "@/shared/constants";
 
@@ -27,7 +27,16 @@ const S = {
 };
 
 export default function Home() {
-  const { profile, setRouter, highScore, difficulty, setAudio, setMusicVolume, setEffectsVolume, audio } = useGameContext();
+  const {
+    profile,
+    setRouter,
+    highScore,
+    difficulty,
+    setAudio,
+    setMusicVolume,
+    setEffectsVolume,
+    audio,
+  } = useGameContext();
 
   function handleOpenPlatform() {
     window.open("https://platform.conet.network", "_blank");
@@ -43,7 +52,7 @@ export default function Home() {
             $height="32px"
             $background="#474648"
             $radius="50%"
-            onClick={() => setRouter?.('/profile')}
+            onClick={() => setRouter?.("/profile")}
           >
             <Image
               width={16}
@@ -69,7 +78,7 @@ export default function Home() {
               setMusicVolume?.(DEFAULT_MUSIC_VOLUME)
             }
 
-            setAudio?.((prev: any) => !prev)
+            setAudio?.((prev: any) => !prev);
           }}
         >
           <Image
@@ -106,12 +115,7 @@ export default function Home() {
           }}
         >
           <FlexDiv $align="center" $gap="8px">
-            <Image
-              width={24}
-              height={24}
-              src={Img.Shop}
-              alt="shop page"
-            />
+            <Image width={24} height={24} src={Img.Shop} alt="shop page" />
             Shop
           </FlexDiv>
         </GradientButton>
@@ -122,7 +126,9 @@ export default function Home() {
           <P $fontSize="28px" $color="#F6F1F2">
             The CoNETian
           </P>
-          <P $fontSize="12px" style={{ "margin": '0 0 0 6px' }}>{capitalizeFirstLetter(difficulty || "")} Mode</P>
+          <P $fontSize="12px" style={{ margin: "0 0 0 6px" }}>
+            {capitalizeFirstLetter(difficulty || "")} Mode
+          </P>
         </FlexDiv>
         <FlexDiv
           $padding="8px 0"
@@ -142,7 +148,7 @@ export default function Home() {
       </FlexDiv>
       <FlexDiv $justify="center">
         <Button $radius="50%">
-          <S.PlayButton onClick={() => setRouter?.('/playground')}>
+          <S.PlayButton onClick={() => setRouter?.("/playground")}>
             <Image
               width={289}
               height={289}
@@ -153,7 +159,12 @@ export default function Home() {
         </Button>
       </FlexDiv>
       <FlexDiv $justify="center" $gap="24px" $align="center">
-        <FlexDiv $direction="column" $align="center" $justify="space-between" $gap="16px">
+        <FlexDiv
+          $direction="column"
+          $align="center"
+          $justify="space-between"
+          $gap="16px"
+        >
           <FlexDiv $direction="column" $align="center" $gap="4px">
             <P $fontSize="10px">CNTP earned</P>
             <P $fontSize="16px">
@@ -168,19 +179,26 @@ export default function Home() {
           <GradientImage $width="140px"></GradientImage>
 
           <FlexDiv $align="center" $gap="8px">
-            {profile?.tickets?.balance ? (<>
-              <Image src={Img.Tickets} alt="Tickets" width={42.15} height={32} />
-              <P $fontSize='16px'>x {profile?.tickets?.balance}</P>
-            </>
-            )
-              :
+            {profile?.tickets?.balance ? (
+              <>
+                <Image
+                  src={Img.Tickets}
+                  alt="Tickets"
+                  width={42.15}
+                  height={32}
+                />
+                <P $fontSize="16px">x {profile?.tickets?.balance}</P>
+              </>
+            ) : (
               <Skeleton width={50} />
-            }
+            )}
           </FlexDiv>
         </FlexDiv>
 
         <FlexDiv $justify="center">
-          <GradientButton onClick={handleOpenPlatform}>Open Platform</GradientButton>
+          <GradientButton onClick={handleOpenPlatform}>
+            Open Platform
+          </GradientButton>
         </FlexDiv>
       </FlexDiv>
       <FlexDiv $justify="center" $gap="8px">

@@ -45,7 +45,7 @@ interface Skin {
 }
 
 export default function SkinStore() {
-  const { setRouter, profile } = useGameContext();
+  const { setRouter, profile, setSkinBuy } = useGameContext();
   const [skins, setSkins] = useState<Skin[]>([
     {
       key: 1,
@@ -242,6 +242,11 @@ export default function SkinStore() {
     setSkins(skinsCopy);
   };
 
+  const buy = () => {
+    setSkinBuy(selected);
+    setRouter("/skinconfirm");
+  };
+
   return (
     <PageWrapper margin="32px 16px 140px 16px">
       <BackButton text="Skins Store" />
@@ -286,9 +291,8 @@ export default function SkinStore() {
                 {selected.desc}
               </P>
             </Div>
-
             {selected.price === 0 ? (
-              <P $color="#79F8FF" $fontSize="14px">
+              <P $color="#79f8ff" $fontSize="14px">
                 Purchased
               </P>
             ) : (
@@ -315,6 +319,7 @@ export default function SkinStore() {
                     $width="100%"
                     $radius="16px"
                     $padding="5px 0"
+                    onClick={buy}
                   >
                     Buy Skin
                   </Button>

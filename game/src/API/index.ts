@@ -164,6 +164,18 @@ export const getRouletteResult: (walletAddress: string) => Promise<string> = (
     return _postMessage(cmd, true, resolve);
   });
 
+export const unlockTicket: (walletAddress: string) => Promise<string> = (
+  walletAddress: string
+) =>
+  new Promise((resolve) => {
+    const cmd: WorkerCommand = {
+      cmd: "unlockTicket",
+      uuid: v4(),
+      data: [walletAddress],
+    };
+    return _postMessage(cmd, true, resolve);
+  });
+
 export const getTicketResult: (walletAddress: string) => Promise<string> = (
   walletAddress: string
 ) =>

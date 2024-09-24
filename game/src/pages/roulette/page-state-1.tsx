@@ -7,8 +7,11 @@ import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { rouletteDesign } from '@/shared/assets';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PointerProps } from 'react-custom-roulette/dist/components/Wheel/types';
+import SpinButton from './page-components/spinButton';
+import { fetchUnlockTicket } from '@/API/getData';
+import { toast } from 'react-hot-toast';
 
 const Wheel = dynamic<any>(() =>
   import("react-custom-roulette").then((mod) => mod.Wheel),
@@ -32,6 +35,29 @@ const pointerProperties: PointerProps = {
 export default function PageState1({ pageState, isSpinning, isTicketAmountUpdated, handleSpin, mustSpin, setMustSpin, prizeNumber }: Props) {
 
   const { profile } = useGameContext();
+  const [isUnlockingTicket, setIsUnlockingTicket] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (profile?.isTicketUnlocked) {
+      setIsUnlockingTicket(false);
+    }
+  }, [profile])
+
+  const handleTicketUnlock = async () => {
+    setIsUnlockingTicket(true);
+
+    const result = await fetchUnlockTicket(profile?.keyID);
+
+    // if result is true, unlockTicket is started, disable button until unlockTicket is finished
+    // if result is false, unlockTicket is not started, enable button and show error message
+    if (result?.error) {
+      console.log(result?.message);
+
+      setTimeout(() => {
+        setIsUnlockingTicket(false);
+      }, 2000);
+    }
+  }
 
   return (
     <FlexDiv $direction="column" $align="center" $margin="40px 0 0 0" $gap="40px">
@@ -68,21 +94,8 @@ export default function PageState1({ pageState, isSpinning, isTicketAmountUpdate
       </div>
 
       <FlexDiv $direction="column" $gap="16px" $align='center' $justify='center'>
-        {profile?.tickets?.balance !== '0' && isTicketAmountUpdated ? (
-          isSpinning ? (
-            <Button $width="196px" $height="45px" $radius="8px" $border="1px solid #04DAE8" disabled $background={"gray"}>
-              Spinning...
-            </Button>
-          ) : (
-            <Button $width="196px" $height="45px" $index={30} $radius="8px" $border="1px solid #04DAE8" onClick={handleSpin}>
-              {pageState === 1 ? "Spin" : "Spin Again"}
-            </Button>
-          )
-        ) : (
-          <Button $width="196px" $height="45px" $radius="8px" $border="1px solid #04DAE8" disabled $background={"gray"}>
-            {!isTicketAmountUpdated ? "Refreshing Tickets" : pageState === 1 ? "Spin" : "Spin Again"}
-          </Button>
-        )}
+
+        <SpinButton ticketBalance={profile?.tickets?.balance} pageState={pageState} isTicketUnlocked={profile?.isTicketUnlocked} isSpinning={isSpinning} isTicketAmountUpdated={isTicketAmountUpdated} handleSpin={handleSpin} handleTicketUnlock={handleTicketUnlock} isUnlockingTicket={isUnlockingTicket} />
 
         <FlexDiv $align="center" $justify="center" $gap="8px">
           {profile?.tickets?.balance === '0' && !mustSpin ? (

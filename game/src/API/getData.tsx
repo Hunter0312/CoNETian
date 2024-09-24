@@ -1,4 +1,4 @@
-import { importWallet, startMining, stopMining, getRouletteResult, registerReferrer, clearStorage, getTicketResult, checkTwitter, checkTelegram, saveGameProfileInfo } from ".";
+import { importWallet, startMining, stopMining, getRouletteResult, registerReferrer, clearStorage, getTicketResult, checkTwitter, checkTelegram, saveGameProfileInfo, unlockTicket } from ".";
 
 export const fetchImportWallet = async (walletPrivateKey: string): Promise<any> => {
     try {
@@ -81,6 +81,30 @@ export const fetchRouletteResult = async (walletAddress: string): Promise<any> =
     return { error: true, message: "Failed to fetch roulette result. Please try again later." };
 }
 
+export const fetchUnlockTicket = async (walletAddress: string): Promise<any> => {
+    if (walletAddress) {
+        try {
+            const response = await unlockTicket(walletAddress);
+
+            if (Array.isArray(response) && response.length >= 2) {
+                const [status, data] = response;
+                if (status === "SUCCESS") {
+                    const isUnlockProcessStarted = data[0];
+                    return isUnlockProcessStarted;
+                } else {
+                    console.error("Failed to unlock ticket. Please try again later.");
+                    return { error: true, message: "Failed to unlock ticket. Please try again later." };
+                }
+            }
+        } catch (error) {
+            console.error("Failed to unlock ticket. Please try again later.", error);
+            return { error: true, message: "Failed to unlock ticket. Please try again later." };
+        }
+    }
+
+    return { error: true, message: "Failed to unlock ticket. Please try again later." };
+}
+
 export const fetchCheckTwitter = async (walletAddress: string, userName: string): Promise<any> => {
     if (walletAddress && userName) {
         try {
@@ -90,11 +114,11 @@ export const fetchCheckTwitter = async (walletAddress: string, userName: string)
                 if (status === "SUCCESS") {
                     return { response: data[0] || {} };
                 } else {
-                    console.error("Failed to fetch ticket result. Please try again later.");
+                    console.error("Failed to check twitter. Please try again later.");
                 }
             }
         } catch (error) {
-            console.error("Failed to fetch twitter result. Please try again later.", error);
+            console.error("Failed to check twitter. Please try again later.", error);
         }
     }
 }
@@ -108,11 +132,11 @@ export const fetchCheckTelegram = async (walletAddress: string, telegramId: stri
                 if (status === "SUCCESS") {
                     return { response: data[0] || {} };
                 } else {
-                    console.error("Failed to fetch ticket result. Please try again later.");
+                    console.error("Failed to check telegram. Please try again later.");
                 }
             }
         } catch (error) {
-            console.error("Failed to fetch twitter result. Please try again later.", error);
+            console.error("Failed to check telegram. Please try again later.", error);
         }
     }
 }
@@ -166,14 +190,14 @@ export const fetchClearStorage = async (): Promise<any> => {
             if (status === "SUCCESS") {
                 return true
             } else {
-                console.error("Failed to add referrer");
+                console.error("Failed to clear storage");
             }
         }
     } catch (error) {
-        console.error("Failed to add referrer", error);
+        console.error("Failed to clear storage", error);
     }
 
-    return { error: true, message: "Failed to add referrer" };
+    return { error: true, message: "Failed to clear storage" };
 }
 
 export const fetchSaveGameProfileInfo = async (walletAddress: string, gameProfileData: any): Promise<any> => {
@@ -185,12 +209,12 @@ export const fetchSaveGameProfileInfo = async (walletAddress: string, gameProfil
             if (status === "SUCCESS") {
                 return true
             } else {
-                console.error("Failed to add referrer");
+                console.error("Failed to save game profile info");
             }
         }
     } catch (error) {
-        console.error("Failed to add referrer", error);
+        console.error("Failed to save game profile info", error);
     }
 
-    return { error: true, message: "Failed to add referrer" };
+    return { error: true, message: "Failed to save game profile info" };
 }

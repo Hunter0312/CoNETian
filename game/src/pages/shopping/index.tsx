@@ -18,7 +18,7 @@ const shoppingOptions = [
     caption: "Spin the Roulette and try to earn CNTP",
     image: Img.RouletteIcon,
     link: "/roulette",
-  }
+  },
 ]
 
 const comingSoonOptions = [

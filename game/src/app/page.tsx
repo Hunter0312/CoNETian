@@ -59,6 +59,14 @@ const listeningProfileHook = (
   return listeningManager("listeningProfileHook", fun);
 };
 
+const listeningMiningHook = (
+  miningHook: React.Dispatch<React.SetStateAction<any[]>>
+) => {
+  const fun = (e: MessageEvent<any>) =>
+    profileVerChannelListening(e, miningHook);
+  return listeningManager("listeningMiningHook", fun);
+};
+
 const profileVerChannelListening = (
   e: MessageEvent<any>,
   miningHook: React.Dispatch<React.SetStateAction<any[]>> | null = null,
@@ -94,14 +102,6 @@ const profileVerChannelListening = (
       );
     }
   }
-};
-
-const listeningMiningHook = (
-  miningHook: React.Dispatch<React.SetStateAction<any[]>>
-) => {
-  const fun = (e: MessageEvent<any>) =>
-    profileVerChannelListening(e, miningHook);
-  return listeningManager("listeningMiningHook", fun);
 };
 
 function CurrentPage() {

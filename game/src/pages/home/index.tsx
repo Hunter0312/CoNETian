@@ -92,7 +92,6 @@ export default function Home() {
 
       <FlexDiv $justify="space-between" $gap="16px">
         <GradientButton
-          flex={2}
           onClick={() => {
             setRouter?.("/leaderboard");
           }}
@@ -109,7 +108,6 @@ export default function Home() {
         </GradientButton>
 
         <GradientButton
-          flex={1}
           onClick={() => {
             setRouter?.("/shopping");
           }}

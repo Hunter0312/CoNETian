@@ -33,6 +33,9 @@ const S = {
     border-radius: 32px;
     padding: 1px;
   `,
+  Skins: styled(FlexDiv)`
+    overflow-y: scroll;
+  `,
 };
 
 interface Skin {
@@ -328,8 +331,15 @@ export default function SkinStore() {
             </FlexDiv>
           </FlexDiv>
         </FlexDiv>
-        <FlexDiv $width="50%" $padding="0 10px">
-          <FlexDiv $justify="space-between" $wrap="wrap" $gap="10px">
+        <FlexDiv $width="50%">
+          <S.Skins
+            $justify="flex-end"
+            $wrap="wrap"
+            $gap="10px"
+            $height="80vh"
+            className="scroll"
+            $padding="0 5px 0 0 "
+          >
             {skins.map((e) => {
               return (
                 <div key={e.key}>
@@ -341,7 +351,7 @@ export default function SkinStore() {
                 </div>
               );
             })}
-          </FlexDiv>
+          </S.Skins>
         </FlexDiv>
       </FlexDiv>
     </PageWrapper>

@@ -103,16 +103,11 @@ export function FlappyBirdProvider({ children }: FlappyBirdProps) {
           setMining(true);
           setMiningError(false);
         } else {
-          if (path !== '/start') {
-            toast.clearWaitingQueue({ containerId: 'miningError' });
-            toast.error(result?.message, { toastId: 'miningError' });
-          }
-
           setMiningError(true);
 
           if (miningErrorTimeout.current)
             clearTimeout(miningErrorTimeout.current);
-        
+
           miningErrorTimeout.current = setTimeout(() => init(walletAddress), 15000);
         }
       }

@@ -10,6 +10,7 @@ import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import { formatToken } from "@/utilitiy/functions";
 import PageWrapper from '@/components/pageWrapper';
 import { capitalizeFirstLetter } from "@/shared/functions";
+import { DEFAULT_EFFECTS_VOLUME, DEFAULT_MUSIC_VOLUME } from "@/shared/constants";
 
 const S = {
   PlayButton: styled(Div)`
@@ -64,8 +65,8 @@ export default function Home() {
               setMusicVolume?.(0)
             }
             else {
-              setEffectsVolume?.(70)
-              setMusicVolume?.(70)
+              setEffectsVolume?.(DEFAULT_EFFECTS_VOLUME)
+              setMusicVolume?.(DEFAULT_MUSIC_VOLUME)
             }
 
             setAudio?.((prev: any) => !prev)

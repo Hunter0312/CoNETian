@@ -85,10 +85,10 @@ export default function Settings() {
               setEffectsVolume?.(Number(e.target.value));
               updateTrackColor(effectsRef.current, e.target.value);
             }}
-            style={{ marginLeft: "8px", flex: 1 }}
+            style={{ flex: 1 }}
           />
         </FlexDiv>
-        <FlexDiv $padding="12px 0" $align="center" $gap="12px">
+        <FlexDiv $padding="12px 0" $align="center" $gap="8px">
           <FlexDiv $gap="8px" $align="center" $width="100px">
             <Image width={32} height={32} alt="Arrow" src={musicVolume && musicVolume > 0 ? Img.SoundOn : Img.SoundOff} />
             <P $fontSize="13px">MUSIC</P>

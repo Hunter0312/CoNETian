@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import GamePause from "./gamePause";
 import GameRestart from "./gameRestart";
 import dynamic from "next/dynamic";
+import { DEFAULT_EFFECTS_VOLUME, DEFAULT_MUSIC_VOLUME } from "@/shared/constants";
 
 const Game = dynamic<any>(() =>
   import("../game").then((mod) => mod.default),
@@ -94,12 +95,12 @@ const Playground = () => {
               <FlexDiv $gap="10px">
                 <Button onClick={() => {
                   if (audio) {
-                    setMusicVolume?.(0)
                     setEffectsVolume?.(0)
+                    setMusicVolume?.(0)
                   }
                   else {
-                    setMusicVolume?.(70)
-                    setEffectsVolume?.(70)
+                    setEffectsVolume?.(DEFAULT_EFFECTS_VOLUME)
+                    setMusicVolume?.(DEFAULT_MUSIC_VOLUME)
                   }
 
                   setAudio?.((prev: any) => !prev)

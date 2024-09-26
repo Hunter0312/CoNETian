@@ -27,6 +27,7 @@ const comingSoonOptions = [
     image: Img.BoxBlurImg,
     title: 'Open the Box',
     caption: "Try your luck and receive special perks",
+    link: '/box'
   },
   {
     key: 2,

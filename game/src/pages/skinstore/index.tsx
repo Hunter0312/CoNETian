@@ -252,7 +252,7 @@ export default function SkinStore() {
 
   return (
     <PageWrapper margin="32px 16px 140px 16px">
-      <BackButton text="Skins Store" />
+      <BackButton text="Skins Store" to="/shopping" />
       <FlexDiv $gap="8px" $align="center">
         {profile ? (
           <>

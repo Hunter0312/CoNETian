@@ -30,8 +30,10 @@ const comingSoonOptions = [
   },
   {
     key: 2,
-    image: Img.SkinsBlurImg,
-    title: 'Skin Store'
+    image: Img.SkinStoreBlurImg,
+    title: 'Skin Store',
+    caption: 'Fly through the CoNETian galaxy in style',
+    link: '/skinstore'
   },
   {
     key: 3,

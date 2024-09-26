@@ -64,5 +64,5 @@ export const FlexDiv = styled(Div).attrs<{
   gap: ${(props) => props.$gap};
   flex-grow: ${(props) => props.$grow};
   flex: ${(props) => props.$flex};
-  flex-wrap: wrap;
+  flex-wrap: ${(props) => props.$wrap};
 `;

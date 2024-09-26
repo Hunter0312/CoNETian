@@ -29,7 +29,9 @@ export default function Supplies() {
           }
         </FlexDiv>
       </FlexDiv>
-      <Rank />
+      {/* disable rank until real rank implementation is ready*/}
+      {/* <Rank /> */}
+
       <FlexDiv $gap="8px" $align="center">
         {profile ? (
           <>

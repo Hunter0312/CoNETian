@@ -39,7 +39,7 @@ const S = {
 };
 
 interface Skin {
-  key: Number;
+  key: any;
   Img: any;
   status: String;
   title: String;
@@ -220,7 +220,7 @@ export default function SkinStore() {
     },
   ]);
 
-  const [selected, setSelected] = useState(() => {
+  const [selected, setSelected] = useState<any>(() => {
     let temp = {};
     skins.forEach((skin) => {
       if (skin.status === "used") {
@@ -230,7 +230,7 @@ export default function SkinStore() {
     return temp;
   });
 
-  const select = (index: Number) => {
+  const select = (index: any) => {
     setSelected(skins[index - 1]);
   };
 
@@ -241,13 +241,13 @@ export default function SkinStore() {
       }
       return skin;
     });
-    skinsCopy[selected.key - 1].status = "used";
+    skinsCopy[selected?.key - 1].status = "used";
     setSkins(skinsCopy);
   };
 
   const buy = () => {
-    setSkinBuy(selected);
-    setRouter("/skinconfirm");
+    setSkinBuy?.(selected);
+    setRouter?.("/skinconfirm");
   };
 
   return (
@@ -342,10 +342,10 @@ export default function SkinStore() {
           >
             {skins.map((e) => {
               return (
-                <div key={e.key}>
+                <div key={e?.key}>
                   <Skin
                     data={e}
-                    index={selected.key}
+                    index={selected?.key}
                     selected={(index) => select(index)}
                   />
                 </div>

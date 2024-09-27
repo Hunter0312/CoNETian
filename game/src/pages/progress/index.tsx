@@ -12,7 +12,7 @@ const ConfirmProgress = () => {
   const { setRouter } = useGameContext();
   useEffect(() => {
     setTimeout(() => {
-      setRouter("/transactionsuccess");
+      setRouter?.("/transactionsuccess");
     }, 5000);
   }, []);
 

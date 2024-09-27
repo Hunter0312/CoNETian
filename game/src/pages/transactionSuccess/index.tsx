@@ -51,7 +51,7 @@ const TransactionSuccess = () => {
         $margin="50px 0 100px 0"
         $gap="5px"
       >
-        <GradientButton onClick={() => setRouter("/skinstore")}>
+        <GradientButton onClick={() => setRouter?.("/skinstore")}>
           Back to Skins Store
         </GradientButton>
         <FlexDiv $justify="center" $align="center" $gap="5px">

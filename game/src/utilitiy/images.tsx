@@ -33,6 +33,7 @@ export const Img = {
   ArrowImg: "/arrow.svg",
   LogoImg: "/conet.svg",
   CheckImg: "/check.svg",
+  NotCheckPinkImg: "/notCheckPink.svg",
   CopyImg: "/copy.svg",
   SettingsConetian: "/settingsConetian.png",
   SoundOn: "/soundOn.svg",

@@ -29,6 +29,8 @@ type GameContext = {
   setProfile?: (o: any) => void;
   leaderboard?: Leaderboard;
   setLeaderboard?: (e: Leaderboard) => void;
+  dailyClaimInfo?: DailyClaimInfo;
+  setDailyClaimInfo?: (e: DailyClaimInfo) => void;
   miningErrorTimeout?: React.MutableRefObject<NodeJS.Timeout | null>;
   walletAddress?: React.MutableRefObject<string>;
   path?: string;
@@ -80,6 +82,17 @@ type GameProps = {
   children: ReactNode;
 };
 
+type DailyClaimInfo = {
+  todayAsset: TodayAssetInfo;
+  todayDayOfWeek: number;
+}
+
+type TodayAssetInfo = {
+  asset: string;
+  quantity: string;
+  nft_number: number;
+}
+
 export function GameProvider({ children }: GameProps) {
   const [router, setRouter] = useState<string>("/");
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
@@ -92,6 +105,10 @@ export function GameProvider({ children }: GameProps) {
     weekly: [],
     daily: [],
     monthly: [],
+  });
+  const [dailyClaimInfo, setDailyClaimInfo] = useState<DailyClaimInfo>({
+    todayAsset: { asset: "", quantity: "", nft_number: 0 },
+    todayDayOfWeek: 0,
   });
   const [mining, setMining] = useState<boolean>(false);
   const [onlineMiners, setOnlineMiners] = useState<number>(0);
@@ -190,6 +207,8 @@ export function GameProvider({ children }: GameProps) {
         setProfile,
         leaderboard,
         setLeaderboard,
+        dailyClaimInfo,
+        setDailyClaimInfo,
         walletAddress,
         mining,
         setMining,

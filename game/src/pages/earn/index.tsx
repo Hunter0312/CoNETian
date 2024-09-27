@@ -344,7 +344,7 @@ export default function Earn() {
                                     <Image src={choosenTask.referral ? Img.CopyImg : Img.OpenExternal} alt="Open External" width={24} height={24} />
                                   )
                                 }
-                                <P>{choosenTask.referral ? "Copy Telegram Referral Link" : choosenTask.cta}</P>
+                                <P>{choosenTask.referral ? "Copy Telegram Minigame Referral Link" : choosenTask.cta}</P>
                               </FlexDiv>
                             </Button>
 

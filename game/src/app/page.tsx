@@ -136,12 +136,13 @@ export default function App() {
     router,
     setProfile,
     setLeaderboard,
+    setDailyClaimInfo,
     setMiningRate,
     setOnlineMiners,
     leaderboard,
     audio,
     musicVolume,
-    effectsVolume
+    effectsVolume,
   } = useGameContext();
 
   const backAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -189,9 +190,10 @@ export default function App() {
 
   listeningProfileHook((response: any) => {
     try {
-      const [profile, leader] = response;
-      setProfile?.(profile);
-      if (leaderboard?.allTime.length === 0) setLeaderboard?.(leader);
+      const [_profile, _leaderboard, _dailyClaimInfo] = response;
+      setProfile?.(_profile);
+      if (leaderboard?.allTime.length === 0) setLeaderboard?.(_leaderboard);
+      setDailyClaimInfo?.(_dailyClaimInfo);
     } catch (error) {
       console.error("Error parsing balance data", error);
     }

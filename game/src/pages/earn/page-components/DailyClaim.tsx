@@ -1,9 +1,8 @@
 import { FlexDiv } from '@/components/div';
 import { P } from '../../../components/p';
-import { useState } from 'react';
-import { dailyClaims } from '../../../shared/earnTasks';
 import Image from 'next/image';
 import { Img } from '@/utilitiy/images';
+import { useGameContext } from '@/utilitiy/providers/GameProvider';
 
 interface Props {
   claimStreak: number;
@@ -26,7 +25,48 @@ const dailyClaimTypeImage: Record<string, any> = {
 }
 
 export default function DailyClaim({ claimStreak, handleClaim }: Props) {
-  const [dailyClaimOptions, setDailyClaimOptions] = useState(dailyClaims);
+  const { profile, dailyClaimInfo } = useGameContext()
+
+  const getTodayAssetImage = () => {
+    if (dailyClaimInfo?.todayAsset) {
+      return dailyClaimTypeImage[dailyClaimInfo?.todayAsset.asset.toUpperCase()].uri
+    }
+    return Img.Coin
+  }
+
+  const getTodayQuantity = () => {
+    if (dailyClaimInfo?.todayAsset) {
+      return parseInt(dailyClaimInfo?.todayAsset.quantity)
+    }
+    return 0
+  }
+
+  const getTodayAsset = () => {
+    if (dailyClaimInfo?.todayAsset) {
+      return dailyClaimInfo?.todayAsset.asset
+    }
+    return ""
+  }
+
+  const getTaskImage = (day: number, isTaken: boolean) => {
+    if (dailyClaimInfo?.todayDayOfWeek) {
+      if (isTaken)
+        return <Image src={Img.CheckImg} alt="Reward Taken" width={24} height={24} className="reward-taken" />
+
+      if (day === dailyClaimInfo?.todayDayOfWeek)
+        return <Image src={getTodayAssetImage()} alt="Reward" width={24} height={20} />
+
+      if (day < dailyClaimInfo?.todayDayOfWeek)
+        <Image src={Img.NotCheckPinkImg} alt="Reward" width={24} height={20} />
+    }
+
+    return <Image src={Img.NotCheckPinkImg} alt="Reward" width={24} height={20} />
+  }
+
+  const convertNumberToDayOfWeek = (number: number) => {
+    const days = ['Mon.', 'Tues.', 'Wed.', 'Thurs.', 'Fri.', 'Sat.', 'Sun.']
+    return days[number]
+  }
 
   return (
     <FlexDiv $direction="column" $gap="24px">
@@ -34,29 +74,26 @@ export default function DailyClaim({ claimStreak, handleClaim }: Props) {
 
       <div className="daily-claim-grid">
         {
-          dailyClaimOptions.map((option) => (
+          profile.dailyClaimWeek.map((isTaken: boolean, index: number) => (
             <FlexDiv
-              className={option.day === claimStreak + 1 ? "current" : ""}
-              onClick={() => option.day === claimStreak + 1 && handleClaim()}
-              $position="relative" key={option.day}
+              className={index === dailyClaimInfo?.todayDayOfWeek ? "current" : ""}
+              onClick={() => index === dailyClaimInfo?.todayDayOfWeek && handleClaim()}
+              $position="relative" key={index}
               $padding="12px"
-              $border={`1px solid ${claimStreak >= option.day ? "#79F8FF26" : "#61C6CC"}`}
-              $background={claimStreak >= option.day ? "#79F8FF26" : "#17181F"}
-              $direction="column" $align="center" $justify="space-between" $radius="16px"
+              $border={`1px solid ${dailyClaimInfo?.todayDayOfWeek && dailyClaimInfo?.todayDayOfWeek !== index ? "#79F8FF26" : "#61C6CC"}`}
+              $background={dailyClaimInfo?.todayDayOfWeek && dailyClaimInfo?.todayDayOfWeek > index ? "#79F8FF26" : "#17181F"}
+              $direction="column" $align="center" $justify={dailyClaimInfo?.todayDayOfWeek && dailyClaimInfo?.todayDayOfWeek > index ? "center" : "flex-start"} $radius="16px" $gap="8px"
             >
-              <P className="label">Day {option.day}</P>
-              {
-                claimStreak >= option.day
-                  ? (
-                    <Image src={Img.CheckImg} alt="Reward Taken" width={24} height={24} className="reward-taken" />
-                  )
-                  : (
-                    <Image src={dailyClaimTypeImage[option.type].uri} alt="Reward" width={dailyClaimTypeImage[option.type].size} height={dailyClaimTypeImage[option.type].size} />
-                  )
+              <P className="label">{convertNumberToDayOfWeek(index)}</P>
+
+              {getTaskImage(index, isTaken)}
+
+              {index === dailyClaimInfo?.todayDayOfWeek &&
+                <P>{getTodayQuantity()} {dailyClaimInfo?.todayAsset?.asset.toUpperCase()}</P>
               }
-              <P>{option.reward} {option.type}</P>
+
               {
-                option.day > claimStreak + 1 && (
+                dailyClaimInfo?.todayDayOfWeek && dailyClaimInfo?.todayDayOfWeek < index && (
                   <FlexDiv className="blocked" $justify="center" $align="center" $background="#1B1B1D1A" $radius="17px">
                     <Image src={Img.Lock} alt="Blocked" width={36} height={36} />
                   </FlexDiv>

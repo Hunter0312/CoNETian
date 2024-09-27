@@ -24,12 +24,6 @@ export interface TaskCategory {
   completed?: boolean;
 }
 
-export interface Day {
-  day: number;
-  reward: number;
-  type: RewardType;
-}
-
 export interface Task {
   title: string;
   completed?: boolean;
@@ -68,44 +62,6 @@ export const dailyQuiz: Quiz = {
   ],
 };
 
-export const dailyClaims: Day[] = [
-  {
-    day: 1,
-    reward: 1,
-    type: "TICKET",
-  },
-  {
-    day: 2,
-    reward: 1,
-    type: "TICKET",
-  },
-  {
-    day: 3,
-    reward: 1,
-    type: "TICKET",
-  },
-  {
-    day: 4,
-    reward: 1,
-    type: "TICKET",
-  },
-  {
-    day: 5,
-    reward: 1,
-    type: "TICKET",
-  },
-  {
-    day: 6,
-    reward: 1,
-    type: "TICKET",
-  },
-  {
-    day: 7,
-    reward: 1,
-    type: "KEY",
-  },
-];
-
 export const taskCategories: TaskCategory[] = [
   {
     title: "Send Invitation",
@@ -136,7 +92,7 @@ export const taskCategories: TaskCategory[] = [
           "Claim daily rewards and earn Tickets by logging in each day without skipping!",
         cta: "Claim today’s reward",
         active: true,
-        comingSoon: true,
+        comingSoon: false,
       },
     ],
   },

@@ -1,4 +1,4 @@
-import { importWallet, startMining, stopMining, getRouletteResult, registerReferrer, clearStorage, getTicketResult, checkTwitter, checkTelegram, saveGameProfileInfo, unlockTicket } from ".";
+import { importWallet, startMining, stopMining, getRouletteResult, registerReferrer, clearStorage, getTicketResult, checkTwitter, checkTelegram, saveGameProfileInfo, unlockTicket, claimDailyReward } from ".";
 
 export const fetchImportWallet = async (walletPrivateKey: string): Promise<any> => {
     try {
@@ -139,6 +139,27 @@ export const fetchCheckTelegram = async (walletAddress: string, telegramId: stri
             console.error("Failed to check telegram. Please try again later.", error);
         }
     }
+}
+
+export const fetchClaimDailyReward = async (walletAddress: string): Promise<any> => {
+    if (walletAddress) {
+        try {
+            const response = await claimDailyReward(walletAddress);
+
+            if (Array.isArray(response) && response.length >= 2) {
+                const [status, data] = response;
+                if (status === "SUCCESS") {
+                    return { response: data[0] || false };
+                } else {
+                    return { error: true, message: "Failed to fetch daily claim result. Please try again later." };
+                }
+            }
+        } catch (error) {
+            return { error: true, message: "Failed to fetch daily claim result. Please try again later." };
+        }
+    }
+
+    return { error: true, message: "Failed to fetch daily claim result. Please try again later." };
 }
 
 export const fetchTicketResult = async (walletAddress: string): Promise<any> => {

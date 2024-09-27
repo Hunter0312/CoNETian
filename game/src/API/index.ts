@@ -140,6 +140,18 @@ export const checkTelegram: (
     return _postMessage(cmd, true, resolve);
   });
 
+export const claimDailyReward: (walletAddress: string) => Promise<any> = (
+  walletAddress: string
+) =>
+  new Promise((resolve) => {
+    const cmd: WorkerCommand = {
+      cmd: "claimDailyReward",
+      uuid: v4(),
+      data: [walletAddress],
+    };
+    return _postMessage(cmd, true, resolve);
+  });
+
 export const checkSocialMedias: (walletAddress: string) => Promise<any> = (
   walletAddress: string
 ) =>

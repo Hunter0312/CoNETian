@@ -17,7 +17,7 @@ import CommonTask from './page-components/CommonTask';
 import DailyQuiz from './page-components/DailyQuiz';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import { checkSocialMedias, checkTwitter } from '@/API';
-import { fetchCheckTelegram, fetchCheckTwitter } from '@/API/getData';
+import { fetchCheckTelegram, fetchCheckTwitter, fetchClaimDailyReward } from '@/API/getData';
 import copy from 'copy-to-clipboard';
 
 export default function Earn() {
@@ -25,11 +25,11 @@ export default function Earn() {
   const [choosenTask, setChoosenTask] = useState<Task>();
   const [userName, setUserName] = useState<string>('')
   const [telegramId, setTelegramId] = useState<string>('')
-  const [claimStreak, setClaimStreak] = useState<number>(3);
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [completedTaskCategory, setCompletedTaskCategory] = useState<TaskCategory>();
+  const [isTodayRewardTaken, setIsTodayRewardTaken] = useState<boolean>(false)
 
-  const { profile } = useGameContext();
+  const { profile, dailyClaimInfo } = useGameContext();
 
   let gameLink: string = "";
 
@@ -39,23 +39,38 @@ export default function Earn() {
   const tgBotLink = "https://t.me/conetian_bot/?start=";
 
   useEffect(() => {
+    const isTaken = profile?.dailyClaimWeek?.find((el: any, i: any) => i === dailyClaimInfo?.todayDayOfWeek)
+
+    setIsTodayRewardTaken(isTaken)
+
+    if (isTaken) {
+      const tasksCopy = [...tasks]
+      tasksCopy[1].tasks[0].completed = true
+      setTasks(tasksCopy)
+    }
+  }, [dailyClaimInfo])
+
+  useEffect(() => {
     async function fetchSocialMedias() {
       const res = await checkSocialMedias(profile?.keyID)
       if (res[1][0][0].length === 0) return
       const tasksCopy = [...tasks]
+
       if (res[1][0][0].includes('2')) {
         tasksCopy[2].tasks[0].completed = true
       }
+
       if (res[1][0][0].includes('3')) {
         const tasksCopy = [...tasks]
         tasksCopy[2].tasks[1].completed = true
-
       }
+
       if (res[1][0][0].includes('4')) {
         tasksCopy[2].tasks[2].completed = true
       }
       setTasks(tasksCopy)
     }
+
     fetchSocialMedias()
   }, [profile])
 
@@ -100,7 +115,9 @@ export default function Earn() {
 
   async function checkTelegramAccount() {
     setIsLoading(true)
+
     const res = await fetchCheckTelegram(profile.keyID, telegramId)
+
     if (res.response.isInTGGroup === true) {
       const tasksCopy = [...tasks]
       tasksCopy[2].tasks[1].completed = true
@@ -110,7 +127,9 @@ export default function Earn() {
         duration: 2000,
       });
       return
-    } if (res.response.isusedByOtherWallet === true) {
+    }
+
+    if (res.response.isusedByOtherWallet === true) {
       toast.error("Account already used by other wallet.", {
         position: "bottom-center",
         duration: 2000,
@@ -123,11 +142,36 @@ export default function Earn() {
       });
 
     }
+
     setIsLoading(false)
   }
 
+  const handleClaim = async () => {
+    const res = await fetchClaimDailyReward(profile.keyID)
+
+    if (res.response.result === true) {
+      const tasksCopy = [...tasks]
+      tasksCopy[1].tasks[0].completed = true
+      setTasks(tasksCopy)
+
+      toast.success("Task completed! Check your rewards in the Earn Page", {
+        position: "bottom-center",
+        duration: 2000,
+      });
+
+      return
+    }
+
+    else {
+      toast.error("You can only claim once per day. Please try again tomorrow", {
+        position: "bottom-center",
+        duration: 2000,
+      });
+    }
+  }
+
   function chooseTask(task: Task) {
-    if (task.completed) return;
+    if (task.completed && !task.claim) return;
     setChoosenTask(task);
   }
 
@@ -151,12 +195,6 @@ export default function Earn() {
     if (!choosenTask.resource) return;
 
     window.open(choosenTask.resource, "_blank");
-  }
-
-  function handleClaim() {
-    // process the claim;
-
-    setClaimStreak((prev) => prev === 7 ? 0 : prev + 1);
   }
 
   function handleCompleteTaskCategory() {
@@ -218,7 +256,7 @@ export default function Earn() {
                     </div>
                   ) :
                     (
-                      <FlexDiv key={task.title} $gap="16px" $padding="16px" $border="1px solid #FFFFFF1A" $radius="16px" $align="center" $height="95px" className={`task ${task.completed ? 'completed' : ''}`} onClick={() => chooseTask(task)}>
+                      <FlexDiv key={task.title} $gap="16px" $padding="16px" $border="1px solid #FFFFFF1A" $radius="16px" $align="center" $height="95px" className={`task ${task.completed && !task.claim ? 'completed' : ''}`} onClick={() => chooseTask(task)}>
                         {
                           task.logo && (
                             <FlexDiv $width="60px" $height="60px" $background={task.logo?.color || "transparent"} $radius="8px" $justify="center" $align="center">
@@ -245,6 +283,7 @@ export default function Earn() {
             </FlexDiv>
           ))
         }
+
         {
           completedTaskCategory && (
             <Modal align="flex-end" close={() => setCompletedTaskCategory(undefined)}>
@@ -269,6 +308,7 @@ export default function Earn() {
             </Modal>
           )
         }
+
         {
           choosenTask && (
             <Modal align="flex-end" close={closeTask}>
@@ -278,7 +318,7 @@ export default function Earn() {
                 {
                   choosenTask.claim ? (
                     <DailyClaim
-                      claimStreak={claimStreak} handleClaim={handleClaim}
+                      handleClaim={handleClaim}
                     />
                   ) : choosenTask.quiz ? (
                     <DailyQuiz />
@@ -311,6 +351,7 @@ export default function Earn() {
                             <P>{choosenTask.referral ? "Copy referral link" : choosenTask.cta}</P>
                           </FlexDiv>
                         </Button>
+
                         <label style={{ color: '#FFFFFF' }}>Enter your X username to confirm interaction tasks</label>
                         <input style={{ color: '#FFFFFF', borderRadius: '16px', display: 'block', width: '100%', padding: '14px 16px', height: '56px', marginTop: '16px', backgroundColor: isLoading ? '#1B1B1D' : '#63636366', border: 'none', fontSize: '16px' }} disabled={isLoading} className='import-input' value={userName.toLowerCase()} placeholder='Username without @' onChange={(e) => setUserName(e.target.value.toLowerCase())} />
 
@@ -329,6 +370,7 @@ export default function Earn() {
                               <P>{choosenTask.referral ? "Copy referral link" : choosenTask.cta}</P>
                             </FlexDiv>
                           </Button>
+
                           <label style={{ color: '#FFFFFF' }}>Send a private message with /id to <a href='https://t.me/conetGameUserBot' target='_blank' rel='noreferrer' style={{ color: '#8DA8FF', textDecoration: 'underline' }}>conetGameUserBot</a>, to get your telegram id, then input it in the field.</label>
                           <input style={{ color: '#FFFFFF', borderRadius: '16px', display: 'block', width: '100%', padding: '14px 16px', height: '56px', marginTop: '40px', backgroundColor: isLoading ? '#1B1B1D' : '#63636366', border: 'none', fontSize: '16px' }} disabled={isLoading} className='import-input' value={telegramId} onChange={(e) => setTelegramId(e.target.value)} />
 
@@ -337,7 +379,7 @@ export default function Earn() {
                       ) :
                         (
                           <>
-                            <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={buttonAction} $padding="18px">
+                            <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" disabled={choosenTask.claim && isTodayRewardTaken} onClick={buttonAction} $padding="18px">
                               <FlexDiv $align="center" $gap="8px">
                                 {
                                   !choosenTask.claim && (

@@ -5,7 +5,6 @@ import { Img } from '@/utilitiy/images';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
 
 interface Props {
-  claimStreak: number;
   handleClaim: () => void;
 }
 
@@ -24,7 +23,7 @@ const dailyClaimTypeImage: Record<string, any> = {
   },
 }
 
-export default function DailyClaim({ claimStreak, handleClaim }: Props) {
+export default function DailyClaim({ handleClaim }: Props) {
   const { profile, dailyClaimInfo } = useGameContext()
 
   const getTodayAssetImage = () => {
@@ -74,15 +73,21 @@ export default function DailyClaim({ claimStreak, handleClaim }: Props) {
 
       <div className="daily-claim-grid">
         {
-          profile.dailyClaimWeek.map((isTaken: boolean, index: number) => (
+          profile?.dailyClaimWeek?.map((isTaken: boolean, index: number) => (
             <FlexDiv
               className={index === dailyClaimInfo?.todayDayOfWeek ? "current" : ""}
-              onClick={() => index === dailyClaimInfo?.todayDayOfWeek && handleClaim()}
+              onClick={() => index === dailyClaimInfo?.todayDayOfWeek && !isTaken && handleClaim()}
               $position="relative" key={index}
               $padding="12px"
               $border={`1px solid ${dailyClaimInfo?.todayDayOfWeek && dailyClaimInfo?.todayDayOfWeek !== index ? "#79F8FF26" : "#61C6CC"}`}
-              $background={dailyClaimInfo?.todayDayOfWeek && dailyClaimInfo?.todayDayOfWeek > index ? "#79F8FF26" : "#17181F"}
-              $direction="column" $align="center" $justify={dailyClaimInfo?.todayDayOfWeek && dailyClaimInfo?.todayDayOfWeek > index ? "center" : "flex-start"} $radius="16px" $gap="8px"
+              $background={isTaken || (dailyClaimInfo?.todayDayOfWeek && dailyClaimInfo?.todayDayOfWeek > index) ? "#79F8FF26" : "#17181F"}
+              $direction="column"
+              $align="center"
+              $justify={dailyClaimInfo?.todayDayOfWeek && dailyClaimInfo?.todayDayOfWeek >= index ? "center" : "flex-start"}
+              $radius="16px"
+              $gap="8px"
+
+              style={{ cursor: index === dailyClaimInfo?.todayDayOfWeek && !isTaken ? "pointer" : "not-allowed" }}
             >
               <P className="label">{convertNumberToDayOfWeek(index)}</P>
 

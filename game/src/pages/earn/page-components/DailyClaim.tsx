@@ -3,6 +3,7 @@ import { P } from '../../../components/p';
 import Image from 'next/image';
 import { Img } from '@/utilitiy/images';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
+import { formatToken } from '@/utilitiy/functions';
 
 interface Props {
   handleClaim: () => void;
@@ -34,17 +35,14 @@ export default function DailyClaim({ handleClaim }: Props) {
   }
 
   const getTodayQuantity = () => {
-    if (dailyClaimInfo?.todayAsset) {
+    if (!dailyClaimInfo?.todayAsset) return 0
+
+    if (dailyClaimInfo?.todayAsset.asset.toLowerCase() === "cntp") {
+      return parseInt(formatToken(parseInt(dailyClaimInfo?.todayAsset.quantity)))
+    }
+    else {
       return parseInt(dailyClaimInfo?.todayAsset.quantity)
     }
-    return 0
-  }
-
-  const getTodayAsset = () => {
-    if (dailyClaimInfo?.todayAsset) {
-      return dailyClaimInfo?.todayAsset.asset
-    }
-    return ""
   }
 
   const getTaskImage = (day: number, isTaken: boolean) => {

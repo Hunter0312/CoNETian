@@ -34,6 +34,11 @@ export default function Settings() {
     element.style.setProperty('--track-width', `${value}%`);
   }
 
+  function handleClickOff() {
+    localStorage.setItem('conet_effects_volume', `${effectsVolume}`);
+    localStorage.setItem('conet_music_volume', `${musicVolume}`);
+  }
+
   useEffect(() => {
     updateTrackColor(musicRef.current, String(musicVolume));
     updateTrackColor(effectsRef.current, String(effectsVolume));
@@ -41,7 +46,7 @@ export default function Settings() {
 
   useEffect(() => {
     setVolume(effectsVolume || effectsVolume === 0 ? effectsVolume / 100 : 1);
-  }, [effectsVolume])
+  }, [effectsVolume, setVolume])
 
   return (
     <PageWrapper margin="32px 16px 140px 16px">
@@ -85,6 +90,7 @@ export default function Settings() {
               setEffectsVolume?.(Number(e.target.value));
               updateTrackColor(effectsRef.current, e.target.value);
             }}
+            onMouseUp={handleClickOff}
             style={{ flex: 1 }}
           />
         </FlexDiv>
@@ -102,6 +108,7 @@ export default function Settings() {
               setMusicVolume?.(Number(e.target.value));
               updateTrackColor(musicRef.current, e.target.value);
             }}
+            onMouseUp={handleClickOff}
             style={{ flex: 1 }}
           />
         </FlexDiv>

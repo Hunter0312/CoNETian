@@ -142,6 +142,12 @@ export function GameProvider({ children }: GameProps) {
   const walletAddress = useRef<string>("");
 
   useEffect(() => {
+    const musicVolume = localStorage.getItem('conet_music_volume');
+    const effectsVolume = localStorage.getItem('conet_effects_volume');
+
+    musicVolume && setMusicVolume(Number(musicVolume));
+    effectsVolume && setEffectsVolume(Number(effectsVolume));
+
     const init = async (walletAddress: string) => {
       if (walletAddress && !mining) {
         const result = await fetchStartMining(walletAddress);

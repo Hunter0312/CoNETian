@@ -238,7 +238,7 @@ export default function Earn() {
                   {category.icon && <Image alt={category.title} width={24} height={24} src={category.icon} />}
                   <P $fontSize="24px">{category.title}</P>
                 </FlexDiv>
-                {(category.reward && !category.completed) && (<P $fontSize="14px">Complete all tasks and receive the reward</P>)}
+                {(category.reward && !category.completed) && (<P $fontSize="14px">Complete all tasks and receive {category.reward} {category.rewardAsset}</P>)}
               </FlexDiv>
 
               {
@@ -261,7 +261,7 @@ export default function Earn() {
                           task.logo && (
                             <FlexDiv $width="60px" $height="60px" $background={task.logo?.color || "transparent"} $radius="8px" $justify="center" $align="center">
                               {task.logo.uri && (
-                                <Image src={task.logo.uri} alt="Task" width={task.logo.color ? 28 : 48} height={task.logo.color ? 28 : 48} />
+                                <Image src={task.logo.uri} alt="Task" width={task.logo.color ? 28 : 48} height={task.logo.color ? 28 : 48} style={{ "borderRadius": "8px" }} />
                               )}
                             </FlexDiv>
                           )
@@ -338,17 +338,17 @@ export default function Earn() {
                         <P>Check your rewards in the Earn Page</P>
                       </FlexDiv>
                     </FlexDiv>
-                  ) : (choosenTask.referral || choosenTask.cta) && (
-                    choosenTask.cta === 'Open X' ? (
+                  ) : (choosenTask?.referral || choosenTask?.type === 'social') && (
+                    choosenTask?.cta === 'Open X' ? (
                       <div>
                         <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={buttonAction} $padding="18px" style={{ marginBottom: '16px' }}>
                           <FlexDiv $align="center" $gap="8px">
                             {
-                              !choosenTask.claim && (
-                                <Image src={choosenTask.referral ? Img.CopyImg : Img.OpenExternal} alt="Open External" width={24} height={24} />
+                              !choosenTask?.claim && (
+                                <Image src={choosenTask?.referral ? Img.CopyImg : Img.OpenExternal} alt="Open External" width={24} height={24} />
                               )
                             }
-                            <P>{choosenTask.referral ? "Copy referral link" : choosenTask.cta}</P>
+                            <P>{choosenTask?.referral ? "Copy referral link" : choosenTask?.cta}</P>
                           </FlexDiv>
                         </Button>
 
@@ -358,7 +358,7 @@ export default function Earn() {
                         <button style={{ color: '#FFFFFF', padding: '16px 24px', borderRadius: '32px', width: '100%', marginTop: '16px', marginBottom: '16px', border: isLoading ? '1px solid #fff' : 'none', backgroundColor: isLoading ? '#363E59' : '#17181F' }} disabled={isLoading} onClick={() => checkTwitterAccount()}>{isLoading ? 'Confirming...' : 'Confirm username'}</button>
                       </div>
                     ) :
-                      choosenTask.cta === 'Open Telegram' ? (
+                      choosenTask.cta === 'Open Telegram' && choosenTask?.type === 'social' ? (
                         <div>
                           <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={buttonAction} $padding="18px" style={{ marginBottom: '16px' }}>
                             <FlexDiv $align="center" $gap="8px">
@@ -386,7 +386,7 @@ export default function Earn() {
                                     <Image src={choosenTask.referral ? Img.CopyImg : Img.OpenExternal} alt="Open External" width={24} height={24} />
                                   )
                                 }
-                                <P>{choosenTask.referral ? "Copy Telegram Minigame Referral Link" : choosenTask.cta}</P>
+                                <P>{choosenTask.referral ? "Copy Telegram Game Referral Link" : choosenTask.cta}</P>
                               </FlexDiv>
                             </Button>
 

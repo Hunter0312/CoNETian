@@ -1,12 +1,15 @@
 import { Img } from "@/utilitiy/images";
+import { PartnerLogos } from "@/utilitiy/partnerLogos";
 
-type RewardType = "CNTP" | "KEY" | "TICKET";
+type RewardType = "CNTP" | "Key" | "Ticket";
+type TaskType = "social" | "partner";
 
 export interface Quiz {
   title: string;
   caption: string;
   questions: QuizQuestion[];
   reward: number;
+  rewardAsset?: RewardType;
 }
 
 export interface QuizQuestion {
@@ -21,15 +24,18 @@ export interface TaskCategory {
   icon?: string;
   tasks: Task[];
   reward?: number;
+  rewardAsset?: RewardType;
   completed?: boolean;
 }
 
 export interface Task {
   title: string;
+  type?: TaskType;
   completed?: boolean;
   logo?: {
     uri?: string;
     color?: string;
+    size?: number;
   };
   resource?: string;
   caption?: string;
@@ -41,10 +47,12 @@ export interface Task {
   active: boolean;
   comingSoon?: boolean;
   reward?: number;
+  rewardAsset?: RewardType;
 }
 
 export const dailyQuiz: Quiz = {
   reward: 1,
+  rewardAsset: "Ticket",
   title: "What is a Wallet?",
   caption:
     "A digital wallet is a software application that allows you to store, send, and receive cryptocurrencies. It interacts with blockchain networks and manages your private and public keys, which are crucial for conducting transactions.",
@@ -100,10 +108,12 @@ export const taskCategories: TaskCategory[] = [
     title: "Join Us",
     icon: Img.TaskJoin,
     reward: 1,
+    rewardAsset: "Ticket",
     completed: false,
     tasks: [
       {
         title: "Follow Us on X",
+        type: "social",
         completed: false,
         logo: {
           uri: Img.TwitterX,
@@ -119,6 +129,7 @@ export const taskCategories: TaskCategory[] = [
       },
       {
         title: "Join our Community",
+        type: "social",
         completed: false,
         logo: {
           uri: Img.Telegram,
@@ -132,6 +143,7 @@ export const taskCategories: TaskCategory[] = [
       },
       {
         title: "Join our Server",
+        type: "social",
         completed: false,
         logo: {
           uri: Img.Discord,
@@ -149,7 +161,6 @@ export const taskCategories: TaskCategory[] = [
   {
     title: "Daily Tasks",
     icon: Img.TaskDaily,
-    reward: 1,
     completed: false,
     tasks: [
       {
@@ -175,38 +186,91 @@ export const taskCategories: TaskCategory[] = [
     ],
   },
   {
-    title: "Extras",
+    title: "Partners",
     icon: Img.TaskExtras,
     reward: 1,
+    rewardAsset: "Ticket",
     completed: false,
     tasks: [
       {
-        title: "Follow CoNET Partner",
-        completed: true,
+        title: "TITLE HERE",
+        completed: false,
+        caption: "CAPTION HERE",
+        extraInstruction: "EXTRA INSTRUCTION HERE",
         logo: {
           uri: Img.CoNETPartner,
-          color: "#CC00D0",
+          size: 100,
+        },
+        active: false,
+        comingSoon: false,
+      },
+    ],
+  },
+  {
+    title: "Mhaya",
+    icon: Img.TaskExtras,
+    reward: 1,
+    rewardAsset: "Ticket",
+    completed: false,
+    tasks: [
+      {
+        title: "Join Mhaya Bot",
+        type: "partner",
+        completed: false,
+        caption: "Monopoly Airdrop USDT",
+        extraInstruction: "Ends on 10/03/2022 11:59 PM",
+        reward: 1,
+        rewardAsset: "Ticket",
+        resource: "https://t.me/mhaya_bot?start=28ABuxL1YEC",
+        logo: {
+          uri: PartnerLogos.MhayaLogo,
+          size: 100,
         },
         active: true,
-        comingSoon: true,
+        comingSoon: false,
+        cta: "Open Telegram",
+      },
+    ],
+  },
+  {
+    title: "Stability World AI",
+    icon: Img.TaskExtras,
+    reward: 1,
+    rewardAsset: "Ticket",
+    completed: false,
+    tasks: [
+      {
+        title: "Follow Stability World AI",
+        type: "partner",
+        completed: false,
+        caption:
+          "🎨 Stability World AI: Your One-Stop Generative AI Platform for Web3 Users",
+        extraInstruction: "Ends on 10/03/2022 11:59 PM",
+        resource: "https://x.com/StabilityW_AI",
+        logo: {
+          uri: PartnerLogos.StabilityAiLogo,
+          size: 100,
+        },
+        active: true,
+        comingSoon: false,
+        cta: "Open X",
       },
       {
-        title: "Join Collab Community",
+        title: "Join Stability World AI Bot",
+        type: "partner",
         completed: false,
+        caption:
+          "🎨 Stability World AI: Your One-Stop Generative AI Platform for Web3 Users",
+        extraInstruction: "Ends on 10/03/2022 11:59 PM",
+        resource:
+          "https://t.me/stabilityworld_ai_bot/start?startapp=4AED88A3FDFCA3B3",
         logo: {
-          color: "#CC00D0",
+          uri: PartnerLogos.StabilityAiLogo,
+          size: 100,
         },
-        active: false,
-        comingSoon: true,
-      },
-      {
-        title: "Try Collab Mini App",
-        completed: false,
-        logo: {
-          color: "#CC00D0",
-        },
-        active: false,
-        comingSoon: true,
+        active: true,
+        comingSoon: false,
+        cta: "Open Telegram",
       },
     ],
   },

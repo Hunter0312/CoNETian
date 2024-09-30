@@ -67,8 +67,8 @@ type GameContext = {
   gameDifficulty?: number;
   setReferrerAddress?: (e: string) => void;
   referrerAddress?: string;
-  skinBuy?: any;
-  setSkinBuy?: (skin: object) => void;
+  buyItem?: any;
+  setBuyItem?: (skin: any) => void;
 };
 
 const Game = createContext<GameContext>({});
@@ -136,7 +136,7 @@ export function GameProvider({ children }: GameProps) {
     frame: 0,
     score: 0,
   });
-  const [skinBuy, setSkinBuy] = useState<any>({});
+  const [buyItem, setBuyItem] = useState<any>({});
 
   const miningErrorTimeout = useRef<NodeJS.Timeout | null>(null);
   const walletAddress = useRef<string>("");
@@ -245,8 +245,8 @@ export function GameProvider({ children }: GameProps) {
         gameDifficulty,
         setReferrerAddress,
         referrerAddress,
-        skinBuy,
-        setSkinBuy,
+        buyItem,
+        setBuyItem,
       }}
     >
       {children}

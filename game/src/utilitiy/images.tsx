@@ -119,4 +119,11 @@ export const Img = {
   ConfirmSpinImg3: "/confirmspin3.png",
   ProgressImg: "/progress_activity.png",
   TransactionCheckImg: "/transactioncheck.png",
+  RandomItemImg: "/items/random.png",
+  ExtraItemImg: "/items/extra.png",
+  InvincibilityItemImg: "/items/invincibility.png",
+  MiniItemImg: "/items/mini.png",
+  SlowItemImg: "/items/slow.png",
+  SpeedItemImg: "/items/speed.png",
+  StarBgImg: "/stars-bg.png",
 };

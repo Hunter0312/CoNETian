@@ -16,11 +16,11 @@ const S = {
   `,
 };
 
-const SkinConfirm = () => {
+const ItemConfirm = () => {
   const { buyItem, setRouter } = useGameContext();
   return (
     <PageWrapper margin="32px 16px 140px 16px">
-      <BackButton text="Confirm your order" />
+      <BackButton text="Confirm your order" to="/buyitem" />
       <FlexDiv $direction="column" $gap="10px">
         <P $fontSize="16px">Wallet</P>
         <FlexDiv
@@ -30,7 +30,7 @@ const SkinConfirm = () => {
           $padding="5px 20px"
           $gap="10px"
         >
-          <Image src={Img?.BioDefaultImg} width={24} height={24} alt="" />
+          <Image src={Img.BioDefaultImg} width={24} height={24} alt="" />
           <FlexDiv $direction="column">
             <P $fontSize="14px">Anonymous User</P>
             <P $fontSize="12px" $color="#989899">
@@ -50,10 +50,10 @@ const SkinConfirm = () => {
           $gap="10px"
         >
           <FlexDiv $gap="10px" $align="center">
-            <Image src={SkinImg?.Rewards} width={20} height={20} alt="" />
+            <Image src={SkinImg.Rewards} width={20} height={20} alt="" />
             <P $fontSize="16px">CNTP</P>
           </FlexDiv>
-          <P>{buyItem?.price}</P>
+          <P>{buyItem.price}</P>
         </FlexDiv>
       </FlexDiv>
       <FlexDiv $direction="column" $gap="10px">
@@ -67,8 +67,8 @@ const SkinConfirm = () => {
           $gap="10px"
         >
           <FlexDiv $gap="10px" $align="center">
-            <Image src={buyItem?.Img} width={22} height={24} alt="" />
-            <P $fontSize="16px">Skin {buyItem?.title}</P>
+            <Image src={buyItem.img} width={24} height={24} alt="" />
+            <P $fontSize="16px">{buyItem.title} item</P>
           </FlexDiv>
           <P>1</P>
         </FlexDiv>
@@ -77,7 +77,7 @@ const SkinConfirm = () => {
         <FlexDiv $justify="space-between">
           <P>Tax</P>
           <FlexDiv $align="center" $gap="5px">
-            <Image src={Img?.AlarmImg} width={16} height={16} alt="" />
+            <Image src={Img.AlarmImg} width={16} height={16} alt="" />
             <P $fontSize="12px" $color="#CACACC">
               Quote updates in 60s
             </P>
@@ -97,7 +97,7 @@ const SkinConfirm = () => {
             Network cost
           </P>
           <FlexDiv $align="center">
-            <Image src={Img?.CarServiceImg} width={16} height={16} alt="" />
+            <Image src={Img.CarServiceImg} width={16} height={16} alt="" />
             <P $fontSize="14px" $color="#989899">
               $100
             </P>
@@ -120,7 +120,7 @@ const SkinConfirm = () => {
           Confirm payment
         </GradientButton>
         <FlexDiv $justify="center" $align="center" $gap="5px">
-          <Image src={Img?.SecureImg} width={11} height={14} alt="" />
+          <Image src={Img.SecureImg} width={11} height={14} alt="" />
           <P $fontSize="11px" $color="#FFFFFF">
             Secure payment
           </P>
@@ -130,4 +130,4 @@ const SkinConfirm = () => {
   );
 };
 
-export default SkinConfirm;
+export default ItemConfirm;

@@ -7,7 +7,7 @@ import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import Image from "next/image";
 
 const TransactionSuccess = () => {
-  const { setRouter } = useGameContext();
+  const { setRouter, buyItem } = useGameContext();
 
   return (
     <PageWrapper>
@@ -51,9 +51,16 @@ const TransactionSuccess = () => {
         $margin="50px 0 100px 0"
         $gap="5px"
       >
-        <GradientButton onClick={() => setRouter?.("/skinstore")}>
-          Back to Skins Store
-        </GradientButton>
+        {buyItem.buyTitle ? (
+          <GradientButton onClick={() => setRouter?.("/gameitem")}>
+            Back to Items
+          </GradientButton>
+        ) : (
+          <GradientButton onClick={() => setRouter?.("/skinstore")}>
+            Back to Skins Store
+          </GradientButton>
+        )}
+
         <FlexDiv $justify="center" $align="center" $gap="5px">
           <Image src={Img.SecureImg} width={11} height={14} alt="" />
           <P $fontSize="11px" $color="#FFFFFF">

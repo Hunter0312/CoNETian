@@ -48,7 +48,7 @@ interface Skin {
 }
 
 export default function SkinStore() {
-  const { setRouter, profile, setSkinBuy } = useGameContext();
+  const { setRouter, profile, setBuyItem } = useGameContext();
   const [skins, setSkins] = useState<Skin[]>([
     {
       key: 1,
@@ -231,7 +231,7 @@ export default function SkinStore() {
   });
 
   const select = (index: any) => {
-    setSelected(skins[index - 1]);
+    setSelected?.(skins[index - 1]);
   };
 
   const choose = () => {
@@ -246,7 +246,7 @@ export default function SkinStore() {
   };
 
   const buy = () => {
-    setSkinBuy?.(selected);
+    setBuyItem?.(selected);
     setRouter?.("/skinconfirm");
   };
 

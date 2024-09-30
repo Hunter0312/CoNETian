@@ -17,14 +17,17 @@ import Earn from "@/pages/earn";
 import ConfirmProgress from "@/pages/progress";
 import SkinConfirm from "@/pages/skinConfirm";
 import { Toaster } from "react-hot-toast";
-import { BackgroundAudio, ButtonClick } from '../shared/assets';
+import { BackgroundAudio, ButtonClick } from "../shared/assets";
 import { playAudio, stopAudio } from "@/shared/functions";
 import { useAudioPlayer } from "react-use-audio-player";
 import { useRouter } from "next/router";
 import Loading from "./loading";
-import Boxes from '@/pages/boxes';
+import Boxes from "@/pages/boxes";
 import TransactionSuccess from "@/pages/transactionSuccess";
 import SkinStore from "@/pages/skinstore";
+import GameItems from "@/pages/items";
+import BuyItem from "@/pages/items/buyItem";
+import ItemConfirm from "@/pages/itemConfirm";
 
 const S = {
   Main: styled.div`
@@ -124,9 +127,12 @@ function CurrentPage() {
     "/playground": <Playground />,
     "/box": <Boxes />,
     "/skinconfirm": <SkinConfirm />,
+    "/itemconfirm": <ItemConfirm />,
     "/confirmprogress": <ConfirmProgress />,
     "/transactionsuccess": <TransactionSuccess />,
-  }
+    "/gameitem": <GameItems />,
+    "/buyitem": <BuyItem />,
+  };
 
   return pages[router as keyof typeof pages] ?? null;
 }
@@ -164,17 +170,16 @@ export default function App() {
       playAudio(backAudioRef);
 
       if (backAudioRef.current) {
-        backAudioRef.current.volume = musicVolume || musicVolume === 0 ? musicVolume / 100 : 1;
+        backAudioRef.current.volume =
+          musicVolume || musicVolume === 0 ? musicVolume / 100 : 1;
       }
-
-    }
-    else stopAudio(backAudioRef);
-  }, [audio, musicVolume])
+    } else stopAudio(backAudioRef);
+  }, [audio, musicVolume]);
 
   useEffect(() => {
-    load(ButtonClick)
+    load(ButtonClick);
     setVolume(effectsVolume || effectsVolume === 0 ? effectsVolume / 100 : 1);
-  }, [effectsVolume])
+  }, [effectsVolume]);
 
   listeningMiningHook((response: any) => {
     try {
@@ -199,16 +204,14 @@ export default function App() {
     }
   });
 
-
   useEffect(() => {
     initializeWorkerService();
   }, []);
 
   useEffect(() => {
     const playClickAudio = () => {
-      if (audio)
-        play()
-    }
+      if (audio) play();
+    };
 
     const buttons = Array.from(document.getElementsByTagName("button"));
 
@@ -235,7 +238,9 @@ export default function App() {
         <CurrentPage />
       </S.Main>
       {router !== "/playground" && <Menu />}
-      {router !== "/playground" && <audio src={BackgroundAudio} ref={backAudioRef} loop />}
+      {router !== "/playground" && (
+        <audio src={BackgroundAudio} ref={backAudioRef} loop />
+      )}
     </>
   );
 }

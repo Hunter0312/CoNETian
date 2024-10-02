@@ -48,10 +48,6 @@ button:disabled {
   gap: 16px;
 }
 
-.daily-claim-grid > div.current {
-  cursor: pointer;
-}
-
 .daily-claim-grid > div:last-of-type {
   grid-column: 1 / 4;
 }

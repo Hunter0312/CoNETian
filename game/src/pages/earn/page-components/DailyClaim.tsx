@@ -5,9 +5,10 @@ import { Img } from '@/utilitiy/images';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import { formatToken } from '@/utilitiy/functions';
 import Loading from '@/components/loading';
+import { Task } from '@/shared/earnTasks';
 
 interface Props {
-  handleClaim: () => void;
+  chosenTask: Task;
 }
 
 const dailyClaimTypeImage: Record<string, any> = {
@@ -25,7 +26,7 @@ const dailyClaimTypeImage: Record<string, any> = {
   },
 }
 
-export default function DailyClaim({ handleClaim }: Props) {
+export default function DailyClaim({ chosenTask }: Props) {
   const { profile, dailyClaimInfo } = useGameContext()
 
   const getTodayAssetImage = () => {
@@ -47,7 +48,7 @@ export default function DailyClaim({ handleClaim }: Props) {
   }
 
   const getTaskImage = (day: number, isTaken: boolean) => {
-    if (dailyClaimInfo?.todayDayOfWeek) {
+    if (dailyClaimInfo?.todayDayOfWeek.toString()) {
       if (isTaken)
         return <Image src={Img.CheckImg} alt="Reward Taken" width={24} height={24} className="reward-taken" />
 
@@ -65,25 +66,24 @@ export default function DailyClaim({ handleClaim }: Props) {
 
   return (
     <FlexDiv $direction="column" $gap="24px">
-      <P $align="center">Claim daily rewards and earn CNTPs by logging in each day without skipping!</P>
+      <P>{chosenTask?.caption}</P>
 
-      {dailyClaimInfo?.todayDayOfWeek ? (
+      {chosenTask?.extraInstruction && <P $fontSize="10px" $color="#ADAAAD">{chosenTask?.extraInstruction}</P>}
+
+      {dailyClaimInfo?.todayDayOfWeek.toString() ? (
         <div className="daily-claim-grid">
           {profile?.dailyClaimWeek?.map((isTaken: boolean, index: number) => (
             <FlexDiv
               className={index === dailyClaimInfo?.todayDayOfWeek ? "current" : ""}
-              onClick={() => index === dailyClaimInfo?.todayDayOfWeek && !isTaken && handleClaim()}
               $position="relative" key={index}
               $padding="12px"
-              $border={`1px solid ${dailyClaimInfo?.todayDayOfWeek && dailyClaimInfo?.todayDayOfWeek !== index ? "#79F8FF26" : "#61C6CC"}`}
-              $background={isTaken || (dailyClaimInfo?.todayDayOfWeek && dailyClaimInfo?.todayDayOfWeek > index) ? "#79F8FF26" : "#17181F"}
+              $border={`1px solid ${dailyClaimInfo?.todayDayOfWeek.toString() && dailyClaimInfo?.todayDayOfWeek !== index ? "#79F8FF26" : "#61C6CC"}`}
+              $background={isTaken || (dailyClaimInfo?.todayDayOfWeek.toString() && dailyClaimInfo?.todayDayOfWeek > index) ? "#79F8FF26" : "#17181F"}
               $direction="column"
               $align="center"
-              $justify={dailyClaimInfo?.todayDayOfWeek && dailyClaimInfo?.todayDayOfWeek >= index ? "center" : "flex-start"}
+              $justify={dailyClaimInfo?.todayDayOfWeek.toString() && dailyClaimInfo?.todayDayOfWeek >= index ? "center" : "flex-start"}
               $radius="16px"
               $gap="8px"
-
-              style={{ cursor: index === dailyClaimInfo?.todayDayOfWeek && !isTaken ? "pointer" : "not-allowed" }}
             >
               <P className="label">{convertNumberToDayOfWeek(index)}</P>
 
@@ -94,7 +94,7 @@ export default function DailyClaim({ handleClaim }: Props) {
               }
 
               {
-                dailyClaimInfo?.todayDayOfWeek && dailyClaimInfo?.todayDayOfWeek < index && (
+                dailyClaimInfo?.todayDayOfWeek.toString() && dailyClaimInfo?.todayDayOfWeek < index && (
                   <FlexDiv className="blocked" $justify="center" $align="center" $background="#1B1B1D1A" $radius="17px">
                     <Image src={Img.Lock} alt="Blocked" width={36} height={36} />
                   </FlexDiv>

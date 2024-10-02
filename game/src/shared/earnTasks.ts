@@ -104,11 +104,12 @@ export const taskCategories: TaskCategory[] = [
         taskId: "daily-rewards_task-1",
         title: "Daily Claim",
         claim: true,
+        caption:
+          "Claim daily rewards and earn Tickets by logging in each day without skipping!",
+        extraInstruction: "*Complete all social tasks to be able to claim.",
         logo: {
           uri: Img.DailyClaim,
         },
-        caption:
-          "Claim daily rewards and earn Tickets by logging in each day without skipping!",
         cta: "Claim today’s reward",
         active: true,
         comingSoon: true,

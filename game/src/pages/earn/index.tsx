@@ -23,7 +23,7 @@ import { selectPartner } from '@/shared/functions';
 
 export default function Earn() {
   const [tasks, setTasks] = useState<TaskCategory[]>(taskCategories);
-  const [choosenTask, setChoosenTask] = useState<Task>();
+  const [chosenTask, setChosenTask] = useState<Task>();
   const [chosenTaskCategory, setChosenTaskCategory] = useState<TaskCategory>()
   const [userName, setUserName] = useState<string>('')
   const [telegramId, setTelegramId] = useState<string>('')
@@ -209,11 +209,11 @@ export default function Earn() {
   }
 
   const handlePartnerCheckButton = async () => {
-    window.open(choosenTask?.resource, "_blank");
+    window.open(chosenTask?.resource, "_blank");
 
     setTimeout(async () => {
-      if (choosenTask?.completed) return;
-      if (!choosenTask?.resource) return;
+      if (chosenTask?.completed) return;
+      if (!chosenTask?.resource) return;
 
       const tasksCopy = tasks ? [...tasks] : []
 
@@ -226,7 +226,7 @@ export default function Earn() {
           auxArr.push(true)
           setCompletedStabilityAi(auxArr)
 
-          if (choosenTask?.taskId === 'stability-world-ai_task-1') {
+          if (chosenTask?.taskId === 'stability-world-ai_task-1') {
             tasksCopy[6].tasks[0].completed = true
           } else {
             tasksCopy[6].tasks[1].completed = true
@@ -295,30 +295,30 @@ export default function Earn() {
   }
 
   function chooseTask(task: Task, category: TaskCategory) {
-    setChoosenTask(task);
+    setChosenTask(task);
     setChosenTaskCategory(category)
   }
 
   function closeTask() {
-    setChoosenTask(undefined);
+    setChosenTask(undefined);
   }
 
   function buttonAction() {
-    if (!choosenTask) return;
+    if (!chosenTask) return;
 
-    if (choosenTask.claim) {
+    if (chosenTask.claim) {
       handleClaim();
       return;
     }
 
-    if (choosenTask.referral) {
-      copyReferralLink(choosenTask.referral ? tgBotLink + profile?.keyID : "")
+    if (chosenTask.referral) {
+      copyReferralLink(chosenTask.referral ? tgBotLink + profile?.keyID : "")
       return;
     }
 
-    if (!choosenTask.resource) return;
+    if (!chosenTask.resource) return;
 
-    window.open(choosenTask.resource, "_blank");
+    window.open(chosenTask.resource, "_blank");
   }
 
   return (
@@ -381,21 +381,19 @@ export default function Earn() {
           ))
         }
         {
-          choosenTask && (
+          chosenTask && (
             <Modal align="flex-end" close={closeTask}>
               <FlexDiv $background="#111113E5" $width="100%" $padding="24px" className="modal-content" $direction="column" $align="center" $position="relative" $gap="24px">
                 <Button className="close" onClick={closeTask}>X</Button>
-                <P $fontSize="20px">{choosenTask.title}</P>
+                <P $fontSize="20px">{chosenTask.title}</P>
                 {
-                  choosenTask.claim ? (
-                    <DailyClaim
-                      handleClaim={handleClaim}
-                    />
-                  ) : choosenTask.quiz ? (
+                  chosenTask.claim ? (
+                    <DailyClaim chosenTask={chosenTask} />
+                  ) : chosenTask.quiz ? (
                     <DailyQuiz />
                   ) : (
                     <CommonTask
-                      choosenTask={choosenTask}
+                      chosenTask={chosenTask}
                       categoryId={chosenTaskCategory?.categoryId}
                       handlePartnerCheckButton={handlePartnerCheckButton}
                     />
@@ -403,7 +401,7 @@ export default function Earn() {
                 }
 
                 {
-                  choosenTask.completed ? (
+                  chosenTask.completed ? (
                     <FlexDiv $padding="10px 16px" $background="#79F8FF26" className="check" $width="100%" $radius="999px" $align="center" $gap="12px">
                       <Image src={Img.TaskCheck} alt="Proceed" width={24} height={24} />
                       <FlexDiv $direction="column" $gap="2px">
@@ -411,17 +409,17 @@ export default function Earn() {
                         <P>Check your rewards in the Earn Page</P>
                       </FlexDiv>
                     </FlexDiv>
-                  ) : (choosenTask?.referral || choosenTask?.type === 'social') && (
-                    choosenTask?.cta === 'Open X' ? (
+                  ) : (chosenTask?.referral || chosenTask?.type === 'social') && (
+                    chosenTask?.cta === 'Open X' ? (
                       <div>
                         <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={buttonAction} $padding="18px" style={{ marginBottom: '16px' }}>
                           <FlexDiv $align="center" $gap="8px">
                             {
-                              !choosenTask?.claim && (
-                                <Image src={choosenTask?.referral ? Img.CopyImg : Img.OpenExternal} alt="Open External" width={24} height={24} />
+                              !chosenTask?.claim && (
+                                <Image src={chosenTask?.referral ? Img.CopyImg : Img.OpenExternal} alt="Open External" width={24} height={24} />
                               )
                             }
-                            <P>{choosenTask?.referral ? "Copy referral link" : choosenTask?.cta}</P>
+                            <P>{chosenTask?.referral ? "Copy referral link" : chosenTask?.cta}</P>
                           </FlexDiv>
                         </Button>
 
@@ -431,16 +429,16 @@ export default function Earn() {
                         <button style={{ color: '#FFFFFF', padding: '16px 24px', borderRadius: '32px', width: '100%', marginTop: '16px', marginBottom: '16px', border: isLoading ? '1px solid #fff' : 'none', backgroundColor: isLoading ? '#363E59' : '#17181F' }} disabled={isLoading} onClick={() => checkTwitterAccount()}>{isLoading ? 'Confirming...' : 'Confirm username'}</button>
                       </div>
                     ) :
-                      choosenTask.cta === 'Open Telegram' && choosenTask?.type === 'social' ? (
+                      chosenTask.cta === 'Open Telegram' && chosenTask?.type === 'social' ? (
                         <div>
                           <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={buttonAction} $padding="18px" style={{ marginBottom: '16px' }}>
                             <FlexDiv $align="center" $gap="8px">
                               {
-                                !choosenTask.claim && (
-                                  <Image src={choosenTask.referral ? Img.CopyImg : Img.OpenExternal} alt="Open External" width={24} height={24} />
+                                !chosenTask.claim && (
+                                  <Image src={chosenTask.referral ? Img.CopyImg : Img.OpenExternal} alt="Open External" width={24} height={24} />
                                 )
                               }
-                              <P>{choosenTask.referral ? "Copy referral link" : choosenTask.cta}</P>
+                              <P>{chosenTask.referral ? "Copy referral link" : chosenTask.cta}</P>
                             </FlexDiv>
                           </Button>
 
@@ -452,19 +450,19 @@ export default function Earn() {
                       ) :
                         (
                           <>
-                            <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" disabled={choosenTask.claim && isTodayRewardTaken} onClick={buttonAction} $padding="18px">
+                            <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" disabled={chosenTask.claim && isTodayRewardTaken} onClick={buttonAction} $padding="18px">
                               <FlexDiv $align="center" $gap="8px">
                                 {
-                                  !choosenTask.claim && (
-                                    <Image src={choosenTask.referral ? Img.CopyImg : Img.OpenExternal} alt="Open External" width={24} height={24} />
+                                  !chosenTask.claim && (
+                                    <Image src={chosenTask.referral ? Img.CopyImg : Img.OpenExternal} alt="Open External" width={24} height={24} />
                                   )
                                 }
-                                <P>{choosenTask.referral ? "Copy Telegram Game Referral Link" : choosenTask.cta}</P>
+                                <P>{chosenTask.referral ? "Copy Telegram Game Referral Link" : chosenTask.cta}</P>
                               </FlexDiv>
                             </Button>
 
-                            {choosenTask.referral &&
-                              <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={() => copyReferralLink(choosenTask.referral ? gameLink + profile?.keyID : "")} $padding="18px">
+                            {chosenTask.referral &&
+                              <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={() => copyReferralLink(chosenTask.referral ? gameLink + profile?.keyID : "")} $padding="18px">
                                 <FlexDiv $align="center" $gap="8px">
                                   <Image src={Img.CopyImg} alt="Open External" width={24} height={24} />
                                   <P>Copy Game Referral Link</P>
@@ -475,6 +473,20 @@ export default function Earn() {
                         )
                   )
                 }
+
+                {chosenTask.claim && !chosenTask.completed && dailyClaimInfo?.todayDayOfWeek.toString() && (
+                  isTodayRewardTaken || !tasks[2].tasks[0].completed || !tasks[2].tasks[1].completed ?
+                    <Button $cursor='not-allowed !important' $width="100%" $radius="999px" $background={"gray"} disabled $padding="18px">
+                      <FlexDiv $align="center" $gap="8px">
+                        <P>{chosenTask.cta}</P>
+                      </FlexDiv>
+                    </Button> : (<Button $cursor='pointer' $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={buttonAction} $padding="18px">
+                      <FlexDiv $align="center" $gap="8px">
+                        <P>{chosenTask.cta}</P>
+                      </FlexDiv>
+                    </Button>
+                    )
+                )}
               </FlexDiv>
             </Modal>
           )

@@ -53,7 +53,7 @@ const ItemConfirm = () => {
             <Image src={SkinImg.Rewards} width={20} height={20} alt="" />
             <P $fontSize="16px">CNTP</P>
           </FlexDiv>
-          <P>{buyItem.price}</P>
+          <P>{buyItem?.price}</P>
         </FlexDiv>
       </FlexDiv>
       <FlexDiv $direction="column" $gap="10px">
@@ -67,8 +67,8 @@ const ItemConfirm = () => {
           $gap="10px"
         >
           <FlexDiv $gap="10px" $align="center">
-            <Image src={buyItem.img} width={24} height={24} alt="" />
-            <P $fontSize="16px">{buyItem.title} item</P>
+            <Image src={buyItem?.img} width={24} height={24} alt="" />
+            <P $fontSize="16px">{buyItem?.title} item</P>
           </FlexDiv>
           <P>1</P>
         </FlexDiv>

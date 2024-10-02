@@ -6,7 +6,7 @@ import Image from "next/image";
 import styled from "styled-components";
 
 type Props = {
-  data: object;
+  data: any;
 };
 
 const S = {
@@ -42,14 +42,14 @@ const GameItem: React.FC<Props> = ({ data }) => {
         $justify="center"
         $align="center"
       >
-        <S.Img src={data.img} height={52} width={52} alt="" />
+        <S.Img src={data?.img} height={52} width={52} alt="" />
       </FlexDiv>
       <FlexDiv $direction="column" $gap="5px">
         <P $fontSize="18px" $align="center">
-          {data.title}
+          {data?.title}
         </P>
         <P $fontSize="10px" $align="center">
-          {data.desc}
+          {data?.desc}
         </P>
       </FlexDiv>
       <FlexDiv $position="absolute" $top="15px" $right="15px" $gap="5px">
@@ -57,7 +57,7 @@ const GameItem: React.FC<Props> = ({ data }) => {
           x
         </P>
         <P $color="#79F8FF" $fontSize="14px">
-          {data.count < 10 ? `0${data.count}` : data.count}
+          {data?.count < 10 ? `0${data?.count}` : data?.count}
         </P>
       </FlexDiv>
     </Button>

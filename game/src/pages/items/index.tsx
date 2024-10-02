@@ -98,8 +98,8 @@ const GameItems = () => {
         </P>
       </Div>
       <FlexDiv $justify="center" $wrap="wrap" $align="center" $gap="10px">
-        {items.map((item) => {
-          return <GameItem data={item} />;
+        {items.map((item, index) => {
+          return <GameItem key={index} data={item} />;
         })}
       </FlexDiv>
     </PageWrapper>

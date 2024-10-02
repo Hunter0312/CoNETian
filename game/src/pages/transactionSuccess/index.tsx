@@ -51,7 +51,7 @@ const TransactionSuccess = () => {
         $margin="50px 0 100px 0"
         $gap="5px"
       >
-        {buyItem.buyTitle ? (
+        {buyItem?.buyTitle ? (
           <GradientButton onClick={() => setRouter?.("/gameitem")}>
             Back to Items
           </GradientButton>

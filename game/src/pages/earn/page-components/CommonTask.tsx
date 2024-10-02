@@ -7,15 +7,11 @@ import { Task } from '../../../shared/earnTasks';
 
 interface Props {
   choosenTask: Task;
-  referral?: string;
+  categoryId?: string;
+  handlePartnerCheckButton: () => Promise<void>;
 }
 
-export default function CommonTask({ choosenTask, referral }: Props) {
-  const handleButtonAction = () => {
-    if (!choosenTask?.resource) return;
-    window.open(choosenTask?.resource, "_blank");
-  }
-
+export default function CommonTask({ choosenTask, categoryId, handlePartnerCheckButton }: Props) {
   return (
     <>
       <FlexDiv $gap="12px" $align="center">
@@ -43,9 +39,9 @@ export default function CommonTask({ choosenTask, referral }: Props) {
         </FlexDiv>
       </FlexDiv>
 
-      {choosenTask.type === 'partner' && (
+      {choosenTask?.type === 'partner' && (
         <FlexDiv $width='100%' $justify="center" $align="center" $gap="12px">
-          <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={handleButtonAction} $padding="18px">
+          <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={handlePartnerCheckButton} $padding="18px">
             <FlexDiv $align="center" $gap="8px">
               <Image src={Img.OpenExternal} alt="Open External" width={24} height={24} />
               <P>{choosenTask.cta}</P>

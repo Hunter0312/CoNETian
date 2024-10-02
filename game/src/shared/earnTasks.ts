@@ -4,6 +4,11 @@ import { PartnerLogos } from "@/utilitiy/partnerLogos";
 type RewardType = "CNTP" | "Key" | "Ticket";
 type TaskType = "social" | "partner";
 
+export enum Partners {
+  mhaya = "4",
+  stabilityAi = "5",
+}
+
 export interface Quiz {
   title: string;
   caption: string;
@@ -20,6 +25,7 @@ export interface QuizQuestion {
 }
 
 export interface TaskCategory {
+  categoryId: string;
   title: string;
   icon?: string;
   tasks: Task[];
@@ -29,6 +35,7 @@ export interface TaskCategory {
 }
 
 export interface Task {
+  taskId: string;
   title: string;
   type?: TaskType;
   completed?: boolean;
@@ -72,11 +79,13 @@ export const dailyQuiz: Quiz = {
 
 export const taskCategories: TaskCategory[] = [
   {
+    categoryId: "referral",
     title: "Send Invitation",
     icon: Img.TaskInvitation,
     completed: false,
     tasks: [
       {
+        taskId: "referral_task-1",
         title: "Invite Friends",
         completed: false,
         caption:
@@ -87,10 +96,12 @@ export const taskCategories: TaskCategory[] = [
     ],
   },
   {
+    categoryId: "daily-rewards",
     title: "Daily Rewards",
     icon: Img.TaskDaily,
     tasks: [
       {
+        taskId: "daily-rewards_task-1",
         title: "Daily Claim",
         claim: true,
         logo: {
@@ -105,6 +116,7 @@ export const taskCategories: TaskCategory[] = [
     ],
   },
   {
+    categoryId: "social",
     title: "Join Us",
     icon: Img.TaskJoin,
     reward: 1,
@@ -112,6 +124,7 @@ export const taskCategories: TaskCategory[] = [
     completed: false,
     tasks: [
       {
+        taskId: "social_task-1",
         title: "Follow Us on X",
         type: "social",
         completed: false,
@@ -128,6 +141,7 @@ export const taskCategories: TaskCategory[] = [
         active: true,
       },
       {
+        taskId: "social_task-2",
         title: "Join our Community",
         type: "social",
         completed: false,
@@ -142,6 +156,7 @@ export const taskCategories: TaskCategory[] = [
         active: true,
       },
       {
+        taskId: "social_task-3",
         title: "Join our Server",
         type: "social",
         completed: false,
@@ -159,11 +174,13 @@ export const taskCategories: TaskCategory[] = [
     ],
   },
   {
+    categoryId: "daily-tasks",
     title: "Daily Tasks",
     icon: Img.TaskDaily,
     completed: false,
     tasks: [
       {
+        taskId: "daily-tasks_task-1",
         title: "Quiz",
         completed: false,
         logo: {
@@ -174,6 +191,7 @@ export const taskCategories: TaskCategory[] = [
         comingSoon: true,
       },
       {
+        taskId: "daily-tasks_task-2",
         title: "Interact with Us on X",
         completed: false,
         logo: {
@@ -186,6 +204,7 @@ export const taskCategories: TaskCategory[] = [
     ],
   },
   {
+    categoryId: "partners",
     title: "Partners",
     icon: Img.TaskExtras,
     reward: 1,
@@ -193,6 +212,7 @@ export const taskCategories: TaskCategory[] = [
     completed: false,
     tasks: [
       {
+        taskId: "partners_task-1",
         title: "TITLE HERE",
         completed: false,
         caption: "CAPTION HERE",
@@ -207,6 +227,7 @@ export const taskCategories: TaskCategory[] = [
     ],
   },
   {
+    categoryId: "mhaya",
     title: "Mhaya",
     icon: Img.TaskExtras,
     reward: 1,
@@ -214,6 +235,7 @@ export const taskCategories: TaskCategory[] = [
     completed: false,
     tasks: [
       {
+        taskId: "mhaya_task-1",
         title: "Join Mhaya Bot",
         type: "partner",
         completed: false,
@@ -233,6 +255,7 @@ export const taskCategories: TaskCategory[] = [
     ],
   },
   {
+    categoryId: "stability-world-ai",
     title: "Stability World AI",
     icon: Img.TaskExtras,
     reward: 1,
@@ -240,6 +263,7 @@ export const taskCategories: TaskCategory[] = [
     completed: false,
     tasks: [
       {
+        taskId: "stability-world-ai_task-1",
         title: "Follow Stability World AI",
         type: "partner",
         completed: false,
@@ -256,6 +280,7 @@ export const taskCategories: TaskCategory[] = [
         cta: "Open X",
       },
       {
+        taskId: "stability-world-ai_task-2",
         title: "Join Stability World AI Bot",
         type: "partner",
         completed: false,
@@ -275,10 +300,12 @@ export const taskCategories: TaskCategory[] = [
     ],
   },
   {
+    categoryId: "finished-tasks",
     title: "Finished Tasks",
     icon: Img.TaskFinished,
     tasks: [
       {
+        taskId: "finished-tasks_task-1",
         title: "Daily Task",
         completed: true,
         logo: {
@@ -288,6 +315,7 @@ export const taskCategories: TaskCategory[] = [
         comingSoon: true,
       },
       {
+        taskId: "finished-tasks_task-2",
         title: "Watch Video",
         completed: true,
         logo: {

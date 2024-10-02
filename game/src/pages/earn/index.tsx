@@ -3,7 +3,7 @@ import BackButton from '@/components/backButton';
 import CurrentBalance from '@/components/currentBalance';
 import GuardianCard from '@/components/guardianCard';
 import PageWrapper from '@/components/pageWrapper';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Div, FlexDiv } from '@/components/div';
 import { P } from '@/components/p';
 import { Task, taskCategories, TaskCategory } from '../../shared/earnTasks';
@@ -17,17 +17,20 @@ import CommonTask from './page-components/CommonTask';
 import DailyQuiz from './page-components/DailyQuiz';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import { checkSocialMedias, checkTwitter } from '@/API';
-import { fetchCheckTelegram, fetchCheckTwitter, fetchClaimDailyReward } from '@/API/getData';
+import { fetchCheckPartner, fetchCheckTelegram, fetchCheckTwitter, fetchClaimDailyReward } from '@/API/getData';
 import copy from 'copy-to-clipboard';
+import { selectPartner } from '@/shared/functions';
 
 export default function Earn() {
   const [tasks, setTasks] = useState<TaskCategory[]>(taskCategories);
   const [choosenTask, setChoosenTask] = useState<Task>();
+  const [chosenTaskCategory, setChosenTaskCategory] = useState<TaskCategory>()
   const [userName, setUserName] = useState<string>('')
   const [telegramId, setTelegramId] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [completedTaskCategory, setCompletedTaskCategory] = useState<TaskCategory>();
   const [isTodayRewardTaken, setIsTodayRewardTaken] = useState<boolean>(false)
+  const [completedStabilityAi, setCompletedStabilityAi] = useState<boolean[]>([])
 
   const { profile, dailyClaimInfo } = useGameContext();
 
@@ -53,26 +56,68 @@ export default function Earn() {
   useEffect(() => {
     async function fetchSocialMedias() {
       const res = await checkSocialMedias(profile?.keyID)
-      if (res[1][0][0].length === 0) return
+
       const tasksCopy = [...tasks]
+
+      if (res[1][0][0].length === 0) {
+        tasksCopy[2].tasks[0].completed = false
+        tasksCopy[2].tasks[1].completed = false
+        tasksCopy[2].tasks[2].completed = false
+        tasksCopy[5].tasks[0].completed = false
+
+        return
+      }
 
       if (res[1][0][0].includes('2')) {
         tasksCopy[2].tasks[0].completed = true
+      } else {
+        tasksCopy[2].tasks[0].completed = false
       }
 
       if (res[1][0][0].includes('3')) {
-        const tasksCopy = [...tasks]
         tasksCopy[2].tasks[1].completed = true
+      } else {
+        tasksCopy[2].tasks[1].completed = false
       }
 
       if (res[1][0][0].includes('4')) {
-        tasksCopy[2].tasks[2].completed = true
+        tasksCopy[5].tasks[0].completed = true
+      } else {
+        tasksCopy[5].tasks[0].completed = false
       }
-      setTasks(tasksCopy)
+
+      setTasks?.(tasksCopy)
     }
 
     fetchSocialMedias()
   }, [profile])
+
+  useEffect(() => {
+    async function fetchSocialMedias() {
+      const res = await checkSocialMedias(profile?.keyID)
+
+      const tasksCopy = [...tasks]
+
+      if (res[1][0][0].length === 0) {
+        tasksCopy[6].tasks[0].completed = false
+        tasksCopy[6].tasks[1].completed = false
+
+        return
+      }
+
+      if (res[1][0][0].includes('5')) {
+        tasksCopy[6].tasks[0].completed = true
+        tasksCopy[6].tasks[1].completed = true
+      } else {
+        tasksCopy[6].tasks[0].completed = false
+        tasksCopy[6].tasks[1].completed = false
+      }
+
+      setTasks?.(tasksCopy)
+    }
+
+    fetchSocialMedias()
+  }, [])
 
   function copyReferralLink(text: string) {
     if (!text) return;
@@ -88,6 +133,7 @@ export default function Earn() {
 
   async function checkTwitterAccount() {
     setIsLoading(true)
+
     const res = await fetchCheckTwitter(profile.keyID, userName)
 
     if (res.response.isFollow === true && res.response.isRetweet === true) {
@@ -110,6 +156,7 @@ export default function Earn() {
         duration: 2000,
       });
     }
+
     setIsLoading(false)
   }
 
@@ -146,6 +193,68 @@ export default function Earn() {
     setIsLoading(false)
   }
 
+  const handlePartnerCheckButton = async () => {
+    window.open(choosenTask?.resource, "_blank");
+
+    setTimeout(async () => {
+      if (choosenTask?.completed) return;
+      if (!choosenTask?.resource) return;
+
+      const tasksCopy = tasks ? [...tasks] : []
+
+      if (chosenTaskCategory?.categoryId) {
+        const selectedPartnerId = selectPartner(chosenTaskCategory?.categoryId)
+
+        let auxArr = [...completedStabilityAi]
+
+        if (selectedPartnerId.toString().includes('5')) {
+          auxArr.push(true)
+          setCompletedStabilityAi(auxArr)
+
+          if (choosenTask?.taskId === 'stability-world-ai_task-1') {
+            tasksCopy[6].tasks[0].completed = true
+          } else {
+            tasksCopy[6].tasks[1].completed = true
+          }
+
+          if (auxArr.length < 2) return
+        }
+
+        const res = await fetchCheckPartner(profile?.keyID, selectedPartnerId.toString())
+
+        if (res) {
+
+          if (selectedPartnerId.toString().includes('4')) {
+            tasksCopy[5].tasks[0].completed = true
+          }
+
+          if (selectedPartnerId.toString().includes('5')) {
+            tasksCopy[6].tasks[0].completed = true
+            tasksCopy[6].tasks[1].completed = true
+          }
+
+          setTasks?.(tasksCopy)
+
+          toast.success("Task completed! Check your rewards in the Earn Page", {
+            position: "bottom-center",
+            duration: 2000,
+          });
+        } else if (res.response.protected === true) {
+          toast.error("Your account is private. Please make it public to claim your reward.", {
+            position: "bottom-center",
+            duration: 2000,
+          });
+        }
+        else {
+          toast.error("Unable to confirm. Check if you have completed the tasks", {
+            position: "bottom-center",
+            duration: 2000,
+          });
+        }
+      }
+    }, 10000);
+  }
+
   const handleClaim = async () => {
     const res = await fetchClaimDailyReward(profile.keyID)
 
@@ -170,9 +279,9 @@ export default function Earn() {
     }
   }
 
-  function chooseTask(task: Task) {
-    if (task.completed && !task.claim) return;
+  function chooseTask(task: Task, category: TaskCategory) {
     setChoosenTask(task);
+    setChosenTaskCategory(category)
   }
 
   function closeTask() {
@@ -195,18 +304,6 @@ export default function Earn() {
     if (!choosenTask.resource) return;
 
     window.open(choosenTask.resource, "_blank");
-  }
-
-  function handleCompleteTaskCategory() {
-    // complete task category
-    if (!completedTaskCategory) return;
-
-    setTasks((prev) => prev.map((category) => category.title === completedTaskCategory.title ? ({
-      ...category,
-      completed: true,
-    }) : category))
-
-    setCompletedTaskCategory(undefined);
   }
 
   useEffect(() => {
@@ -256,7 +353,7 @@ export default function Earn() {
                     </div>
                   ) :
                     (
-                      <FlexDiv key={task.title} $gap="16px" $padding="16px" $border="1px solid #FFFFFF1A" $radius="16px" $align="center" $height="95px" className={`task ${task.completed && !task.claim ? 'completed' : ''}`} onClick={() => chooseTask(task)}>
+                      <FlexDiv key={task.title} $gap="16px" $padding="16px" $border="1px solid #FFFFFF1A" $radius="16px" $align="center" $height="95px" className={`task ${task.completed && !task.claim ? 'completed' : ''}`} onClick={() => chooseTask(task, category)}>
                         {
                           task.logo && (
                             <FlexDiv $width="60px" $height="60px" $background={task.logo?.color || "transparent"} $radius="8px" $justify="center" $align="center">
@@ -283,32 +380,6 @@ export default function Earn() {
             </FlexDiv>
           ))
         }
-
-        {
-          completedTaskCategory && (
-            <Modal align="flex-end" close={() => setCompletedTaskCategory(undefined)}>
-              <FlexDiv $background="#111113E5" $width="100%" $padding="24px" className="modal-content" $direction="column" $align="center" $position="relative" $gap="24px">
-                <Button className="close" onClick={() => setCompletedTaskCategory(undefined)}>X</Button>
-                <P $fontSize="20px">Tasks Completed</P>
-                <FlexDiv $align="center" $gap="24px" >
-                  <FlexDiv $justify="center" $align="center" $radius="18px" $border="1px solid #999999" $background="#1B1B1D" $width="108px" $height="108px" $position="relative">
-                    <Div $width="40px" $height="30px" $radius="999px" $position="absolute" className="quiz-backdrop" $boxShadow="0px 0px 40px 0px #04DAE8"></Div>
-                    <Image src={Img.Tickets} alt="Tickets" width={60} height={60} />
-                  </FlexDiv>
-                  <FlexDiv $flex={1}>
-                    <P>You have completed all the tasks, claim your reward!</P>
-                  </FlexDiv>
-                </FlexDiv>
-                <Button $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={handleCompleteTaskCategory} $padding="18px">
-                  <FlexDiv $align="center" $gap="8px">
-                    <P>Claim Reward</P>
-                  </FlexDiv>
-                </Button>
-              </FlexDiv>
-            </Modal>
-          )
-        }
-
         {
           choosenTask && (
             <Modal align="flex-end" close={closeTask}>
@@ -325,10 +396,12 @@ export default function Earn() {
                   ) : (
                     <CommonTask
                       choosenTask={choosenTask}
-                      referral={choosenTask.referral ? tgBotLink + profile?.keyID : ""}
+                      categoryId={chosenTaskCategory?.categoryId}
+                      handlePartnerCheckButton={handlePartnerCheckButton}
                     />
                   )
                 }
+
                 {
                   choosenTask.completed ? (
                     <FlexDiv $padding="10px 16px" $background="#79F8FF26" className="check" $width="100%" $radius="999px" $align="center" $gap="12px">

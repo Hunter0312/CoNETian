@@ -234,3 +234,16 @@ export const saveGameProfileInfo: (
     };
     return _postMessage(cmd, true, resolve);
   });
+
+export const checkPartner: (
+  walletAddress: string,
+  partnerId: string
+) => Promise<any> = (walletAddress: string, partnerId: string) =>
+  new Promise((resolve) => {
+    const cmd: WorkerCommand = {
+      cmd: "checkPartner",
+      uuid: v4(),
+      data: [walletAddress, partnerId],
+    };
+    return _postMessage(cmd, true, resolve);
+  });

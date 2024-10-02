@@ -1,4 +1,4 @@
-import { importWallet, startMining, stopMining, getRouletteResult, registerReferrer, clearStorage, getTicketResult, checkTwitter, checkTelegram, saveGameProfileInfo, unlockTicket, claimDailyReward } from ".";
+import { importWallet, startMining, stopMining, getRouletteResult, registerReferrer, clearStorage, getTicketResult, checkTwitter, checkTelegram, saveGameProfileInfo, unlockTicket, claimDailyReward, checkPartner } from ".";
 
 export const fetchImportWallet = async (walletPrivateKey: string): Promise<any> => {
     try {
@@ -238,4 +238,23 @@ export const fetchSaveGameProfileInfo = async (walletAddress: string, gameProfil
     }
 
     return { error: true, message: "Failed to save game profile info" };
+}
+
+export const fetchCheckPartner = async (walletAddress: string, partnerId: string): Promise<any> => {
+    try {
+        const response = await checkPartner(walletAddress, partnerId);
+
+        if (Array.isArray(response) && response.length >= 2) {
+            const [status, data] = response;
+            if (status === "SUCCESS") {
+                return true
+            } else {
+                console.error("Failed to check partner task");
+            }
+        }
+    } catch (error) {
+        console.error("Failed to check partner task", error);
+    }
+
+    return { error: true, message: "Failed to check partner task" };
 }

@@ -249,7 +249,7 @@ const FlappyBirdGame: React.FC<Props> = ({ restart, setRestart, setScore }) => {
         if (!asteroid.temp) {
           if (asteroid.x < this.bird.x) {
             setScore(++score);
-            if (score % 5 === 0 && score >= 1 && profile?.keyID) {
+            if (score % 15 === 0 && score >= 1 && profile?.keyID) {
               fetchTicketResult(profile?.keyID);
             }
             asteroid.temp = true;

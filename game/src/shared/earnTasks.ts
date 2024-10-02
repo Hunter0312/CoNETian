@@ -111,7 +111,7 @@ export const taskCategories: TaskCategory[] = [
           "Claim daily rewards and earn Tickets by logging in each day without skipping!",
         cta: "Claim today’s reward",
         active: true,
-        comingSoon: false,
+        comingSoon: true,
       },
     ],
   },

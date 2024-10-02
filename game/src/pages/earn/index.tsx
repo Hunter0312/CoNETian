@@ -54,6 +54,21 @@ export default function Earn() {
   }, [dailyClaimInfo])
 
   useEffect(() => {
+    let completedCategory: TaskCategory | undefined = undefined;
+
+    tasks.filter((task) => task.reward && !task.completed).forEach((category) => {
+      const anyUncompletedTask = category.tasks.find((task) => !task.completed);
+
+      if (!anyUncompletedTask) {
+        completedCategory = category;
+      }
+    })
+
+    completedCategory &&
+      setCompletedTaskCategory(completedCategory);
+  }, [tasks]);
+
+  useEffect(() => {
     async function fetchSocialMedias() {
       const res = await checkSocialMedias(profile?.keyID)
 
@@ -305,21 +320,6 @@ export default function Earn() {
 
     window.open(choosenTask.resource, "_blank");
   }
-
-  useEffect(() => {
-    let completedCategory: TaskCategory | undefined = undefined;
-
-    tasks.filter((task) => task.reward && !task.completed).forEach((category) => {
-      const anyUncompletedTask = category.tasks.find((task) => !task.completed);
-
-      if (!anyUncompletedTask) {
-        completedCategory = category;
-      }
-    })
-
-    completedCategory &&
-      setCompletedTaskCategory(completedCategory);
-  }, [tasks]);
 
   return (
     <>

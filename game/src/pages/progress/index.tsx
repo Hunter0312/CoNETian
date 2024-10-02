@@ -7,6 +7,7 @@ import "./index.css";
 import { Button } from "@/components/button";
 import { useEffect } from "react";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
+import Loading from "@/components/loading";
 
 const ConfirmProgress = () => {
   const { setRouter } = useGameContext();
@@ -23,31 +24,9 @@ const ConfirmProgress = () => {
         Your order completion time may vary, please wait and we’ll let you know
         when it’s completed.
       </P>
-      <FlexDiv $justify="center">
-        <FlexDiv $position="relative" $width="140px" $height="140px">
-          <Image
-            src={Img.ConfirmSpinImg1}
-            height={90}
-            width={90}
-            alt=""
-            className="spin spin1"
-          />
-          <Image
-            src={Img.ConfirmSpinImg2}
-            height={120}
-            width={120}
-            alt=""
-            className="spin spin2"
-          />
-          <Image
-            src={Img.ConfirmSpinImg3}
-            height={96}
-            width={96}
-            alt=""
-            className="spin spin3"
-          />
-        </FlexDiv>
-      </FlexDiv>
+
+      <Loading />
+
       <FlexDiv $justify="center">
         <P $fontSize="14px" $align="center" $width="178px">
           Please wait, this may take a few seconds.

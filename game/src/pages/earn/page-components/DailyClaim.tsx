@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Img } from '@/utilitiy/images';
 import { useGameContext } from '@/utilitiy/providers/GameProvider';
 import { formatToken } from '@/utilitiy/functions';
+import Loading from '@/components/loading';
 
 interface Props {
   handleClaim: () => void;
@@ -52,9 +53,6 @@ export default function DailyClaim({ handleClaim }: Props) {
 
       if (day === dailyClaimInfo?.todayDayOfWeek)
         return <Image src={getTodayAssetImage()} alt="Reward" width={24} height={20} />
-
-      if (day < dailyClaimInfo?.todayDayOfWeek)
-        <Image src={Img.NotCheckPinkImg} alt="Reward" width={24} height={20} />
     }
 
     return <Image src={Img.NotCheckPinkImg} alt="Reward" width={24} height={20} />
@@ -67,11 +65,11 @@ export default function DailyClaim({ handleClaim }: Props) {
 
   return (
     <FlexDiv $direction="column" $gap="24px">
-      <P>Claim daily rewards and earn CNTPs by logging in each day without skipping!</P>
+      <P $align="center">Claim daily rewards and earn CNTPs by logging in each day without skipping!</P>
 
-      <div className="daily-claim-grid">
-        {
-          profile?.dailyClaimWeek?.map((isTaken: boolean, index: number) => (
+      {dailyClaimInfo?.todayDayOfWeek ? (
+        <div className="daily-claim-grid">
+          {profile?.dailyClaimWeek?.map((isTaken: boolean, index: number) => (
             <FlexDiv
               className={index === dailyClaimInfo?.todayDayOfWeek ? "current" : ""}
               onClick={() => index === dailyClaimInfo?.todayDayOfWeek && !isTaken && handleClaim()}
@@ -103,9 +101,11 @@ export default function DailyClaim({ handleClaim }: Props) {
                 )
               }
             </FlexDiv>
-          ))
-        }
-      </div>
+          ))}
+        </div>
+      ) : (
+        <Loading />
+      )}
     </FlexDiv>
   )
 }

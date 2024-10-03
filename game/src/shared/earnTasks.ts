@@ -7,6 +7,7 @@ type TaskType = "social" | "partner";
 export enum Partners {
   mhaya = "4",
   stabilityAi = "5",
+  bearfi = "6",
 }
 
 export interface Quiz {
@@ -292,6 +293,64 @@ export const taskCategories: TaskCategory[] = [
           "https://t.me/stabilityworld_ai_bot/start?startapp=4AED88A3FDFCA3B3",
         logo: {
           uri: PartnerLogos.StabilityAiLogo,
+          size: 100,
+        },
+        active: true,
+        comingSoon: false,
+        cta: "Open Telegram",
+      },
+    ],
+  },
+  {
+    categoryId: "bearfi",
+    title: "BearFi",
+    icon: Img.TaskExtras,
+    reward: 1,
+    rewardAsset: "Ticket",
+    completed: false,
+    tasks: [
+      {
+        taskId: "bearfi_task-1",
+        title: "Follow BearFi on X",
+        type: "partner",
+        completed: false,
+        caption:
+          "BearFi an innovative Web3 Gaming and Social Marketing platform on Telegram, known for its easy-to-use earn mechanism and potential for multichain on Telegram and Web3 expansion.",
+        resource: "https://x.com/StabilityW_AI",
+        logo: {
+          uri: PartnerLogos.BearfiLogo,
+          size: 100,
+        },
+        active: true,
+        comingSoon: false,
+        cta: "Open X",
+      },
+      {
+        taskId: "bearfi_task-2",
+        title: "Join BearFi Channel",
+        type: "partner",
+        completed: false,
+        caption:
+          "BearFi an innovative Web3 Gaming and Social Marketing platform on Telegram, known for its easy-to-use earn mechanism and potential for multichain on Telegram and Web3 expansion.",
+        resource: "https://t.me/bearfi_news",
+        logo: {
+          uri: PartnerLogos.BearfiLogo,
+          size: 100,
+        },
+        active: true,
+        comingSoon: false,
+        cta: "Open Telegram",
+      },
+      {
+        taskId: "bearfi_task-3",
+        title: "Play BearFi",
+        type: "partner",
+        completed: false,
+        caption:
+          "BearFi an innovative Web3 Gaming and Social Marketing platform on Telegram, known for its easy-to-use earn mechanism and potential for multichain on Telegram and Web3 expansion.",
+        resource: "https://t.me/BearFi_OfficialBot",
+        logo: {
+          uri: PartnerLogos.BearfiLogo,
           size: 100,
         },
         active: true,

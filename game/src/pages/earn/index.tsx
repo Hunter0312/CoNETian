@@ -31,6 +31,7 @@ export default function Earn() {
   const [completedTaskCategory, setCompletedTaskCategory] = useState<TaskCategory>();
   const [isTodayRewardTaken, setIsTodayRewardTaken] = useState<boolean>(false)
   const [completedStabilityAi, setCompletedStabilityAi] = useState<boolean[]>([])
+  const [completedBearfi, setCompletedBearfi] = useState<boolean[]>([])
 
   const { profile, dailyClaimInfo } = useGameContext();
 
@@ -116,6 +117,9 @@ export default function Earn() {
       if (res[1][0][0].length === 0) {
         tasksCopy[6].tasks[0].completed = false
         tasksCopy[6].tasks[1].completed = false
+        tasksCopy[7].tasks[0].completed = false
+        tasksCopy[7].tasks[1].completed = false
+        tasksCopy[7].tasks[2].completed = false
 
         return
       }
@@ -126,6 +130,16 @@ export default function Earn() {
       } else {
         tasksCopy[6].tasks[0].completed = false
         tasksCopy[6].tasks[1].completed = false
+      }
+
+      if (res[1][0][0].includes('6')) {
+        tasksCopy[7].tasks[0].completed = true
+        tasksCopy[7].tasks[1].completed = true
+        tasksCopy[7].tasks[2].completed = true
+      } else {
+        tasksCopy[7].tasks[0].completed = false
+        tasksCopy[7].tasks[1].completed = false
+        tasksCopy[7].tasks[2].completed = false
       }
 
       setTasks?.(tasksCopy)
@@ -220,7 +234,15 @@ export default function Earn() {
       if (chosenTaskCategory?.categoryId) {
         const selectedPartnerId = selectPartner(chosenTaskCategory?.categoryId)
 
-        let auxArr = [...completedStabilityAi]
+        let auxArr: any[] = []
+
+        if (chosenTaskCategory?.categoryId === 'stability-world-ai') {
+          auxArr = [...completedStabilityAi]
+        }
+
+        if (chosenTaskCategory?.categoryId === 'bearfi') {
+          auxArr = [...completedBearfi]
+        }
 
         if (selectedPartnerId.toString().includes('5')) {
           auxArr.push(true)
@@ -235,6 +257,21 @@ export default function Earn() {
           if (auxArr.length < 2) return
         }
 
+        if (selectedPartnerId.toString().includes('6')) {
+          auxArr.push(true)
+          setCompletedBearfi(auxArr)
+
+          if (chosenTask?.taskId === 'bearfi_task-1') {
+            tasksCopy[7].tasks[0].completed = true
+          } else if (chosenTask?.taskId === 'bearfi_task-2') {
+            tasksCopy[7].tasks[1].completed = true
+          } else {
+            tasksCopy[7].tasks[2].completed = true
+          }
+
+          if (auxArr.length < 3) return
+        }
+
         const res = await fetchCheckPartner(profile?.keyID, selectedPartnerId.toString())
 
         if (res) {
@@ -246,6 +283,12 @@ export default function Earn() {
           if (selectedPartnerId.toString().includes('5')) {
             tasksCopy[6].tasks[0].completed = true
             tasksCopy[6].tasks[1].completed = true
+          }
+
+          if (selectedPartnerId.toString().includes('6')) {
+            tasksCopy[7].tasks[0].completed = true
+            tasksCopy[7].tasks[1].completed = true
+            tasksCopy[7].tasks[2].completed = true
           }
 
           setTasks?.(tasksCopy)

@@ -47,6 +47,8 @@ export const selectPartner = (categoryId: string) => {
             return Partners.mhaya;
         case "stability-world-ai":
             return Partners.stabilityAi;
+        case "bearfi":
+            return Partners.bearfi;
         default:
             return 1000;
     }

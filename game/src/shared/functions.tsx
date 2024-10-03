@@ -49,6 +49,8 @@ export const selectPartner = (categoryId: string) => {
             return Partners.stabilityAi;
         case "bearfi":
             return Partners.bearfi;
+        case "tap-gear":
+            return Partners.tapGear;
         default:
             return 1000;
     }

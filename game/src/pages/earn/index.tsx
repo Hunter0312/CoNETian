@@ -32,6 +32,7 @@ export default function Earn() {
   const [isTodayRewardTaken, setIsTodayRewardTaken] = useState<boolean>(false)
   const [completedStabilityAi, setCompletedStabilityAi] = useState<boolean[]>([])
   const [completedBearfi, setCompletedBearfi] = useState<boolean[]>([])
+  const [completedTapGear, setCompletedTapGear] = useState<boolean[]>([])
 
   const { profile, dailyClaimInfo } = useGameContext();
 
@@ -120,6 +121,9 @@ export default function Earn() {
         tasksCopy[7].tasks[0].completed = false
         tasksCopy[7].tasks[1].completed = false
         tasksCopy[7].tasks[2].completed = false
+        tasksCopy[8].tasks[0].completed = false
+        tasksCopy[8].tasks[1].completed = false
+        tasksCopy[8].tasks[2].completed = false
 
         return
       }
@@ -140,6 +144,16 @@ export default function Earn() {
         tasksCopy[7].tasks[0].completed = false
         tasksCopy[7].tasks[1].completed = false
         tasksCopy[7].tasks[2].completed = false
+      }
+
+      if (res[1][0][0].includes('7')) {
+        tasksCopy[8].tasks[0].completed = true
+        tasksCopy[8].tasks[1].completed = true
+        tasksCopy[8].tasks[2].completed = true
+      } else {
+        tasksCopy[8].tasks[0].completed = false
+        tasksCopy[8].tasks[1].completed = false
+        tasksCopy[8].tasks[2].completed = false
       }
 
       setTasks?.(tasksCopy)
@@ -244,6 +258,10 @@ export default function Earn() {
           auxArr = [...completedBearfi]
         }
 
+        if (chosenTaskCategory?.categoryId === 'tap-gear') {
+          auxArr = [...completedTapGear]
+        }
+
         if (selectedPartnerId.toString().includes('5')) {
           auxArr.push(true)
           setCompletedStabilityAi(auxArr)
@@ -272,6 +290,21 @@ export default function Earn() {
           if (auxArr.length < 3) return
         }
 
+        if (selectedPartnerId.toString().includes('7')) {
+          auxArr.push(true)
+          setCompletedTapGear(auxArr)
+
+          if (chosenTask?.taskId === 'tap-gear_task-1') {
+            tasksCopy[8].tasks[0].completed = true
+          } else if (chosenTask?.taskId === 'tap-gear_task-2') {
+            tasksCopy[8].tasks[1].completed = true
+          } else {
+            tasksCopy[8].tasks[2].completed = true
+          }
+
+          if (auxArr.length < 3) return
+        }
+
         const res = await fetchCheckPartner(profile?.keyID, selectedPartnerId.toString())
 
         if (res) {
@@ -289,6 +322,12 @@ export default function Earn() {
             tasksCopy[7].tasks[0].completed = true
             tasksCopy[7].tasks[1].completed = true
             tasksCopy[7].tasks[2].completed = true
+          }
+
+          if (selectedPartnerId.toString().includes('7')) {
+            tasksCopy[8].tasks[0].completed = true
+            tasksCopy[8].tasks[1].completed = true
+            tasksCopy[8].tasks[2].completed = true
           }
 
           setTasks?.(tasksCopy)

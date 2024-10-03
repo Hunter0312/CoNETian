@@ -8,6 +8,7 @@ export enum Partners {
   mhaya = "4",
   stabilityAi = "5",
   bearfi = "6",
+  tapGear = "7",
 }
 
 export interface Quiz {
@@ -351,6 +352,65 @@ export const taskCategories: TaskCategory[] = [
         resource: "https://t.me/BearFi_OfficialBot",
         logo: {
           uri: PartnerLogos.BearfiLogo,
+          size: 100,
+        },
+        active: true,
+        comingSoon: false,
+        cta: "Open Telegram",
+      },
+    ],
+  },
+  {
+    categoryId: "tap-gear",
+    title: "TapGear",
+    icon: Img.TaskExtras,
+    reward: 1,
+    rewardAsset: "Ticket",
+    completed: false,
+    tasks: [
+      {
+        taskId: "tap-gear_task-1",
+        title: "Follow TapGear on X",
+        type: "partner",
+        completed: false,
+        caption:
+          "TapGear is a one of a kind Tap-to-Earn and Play-To-Earn game showcasing its strategic concepts and mechanics.",
+        resource: "https://x.com/tap_gear1",
+        logo: {
+          uri: PartnerLogos.TapGearLogo,
+          size: 100,
+        },
+        active: true,
+        comingSoon: false,
+        cta: "Open X",
+      },
+      {
+        taskId: "tap-gear_task-2",
+        title: "Follow TapGear on Facebook",
+        type: "partner",
+        completed: false,
+        caption:
+          "TapGear is a one of a kind Tap-to-Earn and Play-To-Earn game showcasing its strategic concepts and mechanics.",
+        resource:
+          "https://www.facebook.com/profile.php?id=61563351325496&mibextid=ZbWKwL",
+        logo: {
+          uri: PartnerLogos.TapGearLogo,
+          size: 100,
+        },
+        active: true,
+        comingSoon: false,
+        cta: "Open Facebook",
+      },
+      {
+        taskId: "tap-gear_task-3",
+        title: "Join TapGear Channel",
+        type: "partner",
+        completed: false,
+        caption:
+          "TapGear is a one of a kind Tap-to-Earn and Play-To-Earn game showcasing its strategic concepts and mechanics.",
+        resource: "https://t.me/TapGear01",
+        logo: {
+          uri: PartnerLogos.TapGearLogo,
           size: 100,
         },
         active: true,

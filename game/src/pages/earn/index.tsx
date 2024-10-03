@@ -368,7 +368,12 @@ export default function Earn() {
     <>
       <PageWrapper margin="32px 16px 160px 16px">
         <BackButton text="Earn" />
-        <CurrentBalance small />
+
+        <FlexDiv $direction="column" $gap="8px">
+          <CurrentBalance inline asset="cntp" />
+          <CurrentBalance inline asset="ticket" />
+        </FlexDiv>
+
         <GuardianCard />
         {
           tasks.filter((category) => !!category.tasks.find((task) => task.active)).map((category) => (

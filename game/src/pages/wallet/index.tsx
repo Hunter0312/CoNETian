@@ -105,7 +105,7 @@ export default function Wallet() {
 
         <BackButton text="My Wallet" />
 
-        <CurrentBalance />
+        <CurrentBalance asset='cntp' />
 
         <FlexDiv $direction="column" $gap="8px" $width="100%">
           <FlexDiv

@@ -114,7 +114,7 @@ export const taskCategories: TaskCategory[] = [
         },
         cta: "Claim today's reward",
         active: true,
-        comingSoon: true,
+        comingSoon: false,
       },
     ],
   },

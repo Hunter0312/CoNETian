@@ -80,7 +80,6 @@ export default function Earn() {
         tasksCopy[2].tasks[0].completed = false
         tasksCopy[2].tasks[1].completed = false
         tasksCopy[2].tasks[2].completed = false
-        tasksCopy[5].tasks[0].completed = false
 
         return
       }
@@ -95,12 +94,6 @@ export default function Earn() {
         tasksCopy[2].tasks[1].completed = true
       } else {
         tasksCopy[2].tasks[1].completed = false
-      }
-
-      if (res[1][0][0].includes('4')) {
-        tasksCopy[5].tasks[0].completed = true
-      } else {
-        tasksCopy[5].tasks[0].completed = false
       }
 
       setTasks?.(tasksCopy)
@@ -571,7 +564,7 @@ export default function Earn() {
                 }
 
                 {chosenTask.claim && !chosenTask.completed && dailyClaimInfo?.todayDayOfWeek.toString() && (
-                  isTodayRewardTaken || !tasks[2].tasks[0].completed || !tasks[2].tasks[1].completed ?
+                  isTodayRewardTaken ?
                     <Button $cursor='not-allowed !important' $width="100%" $radius="999px" $background={"gray"} disabled $padding="18px">
                       <FlexDiv $align="center" $gap="8px">
                         <P>{chosenTask.cta}</P>

@@ -112,7 +112,7 @@ export const taskCategories: TaskCategory[] = [
         logo: {
           uri: Img.DailyClaim,
         },
-        cta: "Claim today’s reward",
+        cta: "Claim today's reward",
         active: true,
         comingSoon: true,
       },

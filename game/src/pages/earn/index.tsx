@@ -355,6 +355,15 @@ export default function Earn() {
   const handleClaim = async () => {
     const res = await fetchClaimDailyReward(profile.keyID)
 
+    if (res.error) {
+      toast.error(res.message, {
+        position: "bottom-center",
+        duration: 2000,
+      });
+
+      return
+    }
+
     if (res.response.result === true) {
       const tasksCopy = [...tasks]
       tasksCopy[1].tasks[0].completed = true

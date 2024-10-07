@@ -564,7 +564,7 @@ export default function Earn() {
                 }
 
                 {chosenTask.claim && !chosenTask.completed && dailyClaimInfo?.todayDayOfWeek.toString() && (
-                  isTodayRewardTaken ?
+                  isTodayRewardTaken || !(tasks[2].tasks[0].completed || tasks[2].tasks[1].completed) ?
                     <Button $cursor='not-allowed !important' $width="100%" $radius="999px" $background={"gray"} disabled $padding="18px">
                       <FlexDiv $align="center" $gap="8px">
                         <P>{chosenTask.cta}</P>

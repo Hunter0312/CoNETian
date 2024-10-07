@@ -75,7 +75,7 @@ export default function PageState1({ pageState, isSpinning, isTicketAmountUpdate
 
         <img src={rouletteDesign.src} style={{ width: "85%", maxWidth: '483px', position: 'absolute', zIndex: 2 }} />
 
-        <div style={{ flex: 1, position: "relative", zIndex: 1, transform: "rotate(45deg)" }}>
+        <div style={{ flex: 1, position: "relative", zIndex: 1, transform: "rotate(43deg)" }}>
           <Wheel
             mustStartSpinning={mustSpin}
             prizeNumber={rouletteResultMapping[prizeNumber] ?? 0}

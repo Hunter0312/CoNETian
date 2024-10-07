@@ -317,7 +317,7 @@ export const taskCategories: TaskCategory[] = [
         completed: false,
         caption:
           "BearFi an innovative Web3 Gaming and Social Marketing platform on Telegram, known for its easy-to-use earn mechanism and potential for multichain on Telegram and Web3 expansion.",
-        resource: "https://x.com/StabilityW_AI",
+        resource: "https://x.com/BearFiBot",
         logo: {
           uri: PartnerLogos.BearfiLogo,
           size: 100,

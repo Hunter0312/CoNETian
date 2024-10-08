@@ -119,6 +119,7 @@ export const Img = {
   ConfirmSpinImg3: "/confirmspin3.png",
   ProgressImg: "/progress_activity.png",
   TransactionCheckImg: "/transactioncheck.png",
+  SendImg: "crypto-currency-send-pay-circle-fast.png",
   RandomItemImg: "/items/random.png",
   ExtraItemImg: "/items/extra.png",
   InvincibilityItemImg: "/items/invincibility.png",

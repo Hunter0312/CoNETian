@@ -28,7 +28,7 @@ const TransactionSuccess = () => {
         >
           <FlexDiv $justify="space-between">
             <P $fontSize="14px">Sent</P>
-            <P $fontSize="14px">2 CNTP</P>
+            <P $fontSize="14px">{buyItem.price}</P>
           </FlexDiv>
           <FlexDiv $justify="space-between" $margin="10px 0">
             <P $fontSize="14px">GAS fee</P>
@@ -54,6 +54,10 @@ const TransactionSuccess = () => {
         {buyItem?.buyTitle ? (
           <GradientButton onClick={() => setRouter?.("/gameitem")}>
             Back to Items
+          </GradientButton>
+        ) : buyItem?.sendCNTP ? (
+          <GradientButton onClick={() => setRouter?.("/wallet")}>
+            Back to My Wallet
           </GradientButton>
         ) : (
           <GradientButton onClick={() => setRouter?.("/skinstore")}>

@@ -472,7 +472,7 @@ export default function Earn() {
         {
           chosenTask && (
             <Modal align="flex-end" close={closeTask}>
-              <FlexDiv $background="#111113E5" $width="100%" $padding="24px" className="modal-content" $direction="column" $align="center" $position="relative" $gap="24px">
+              <FlexDiv $background="#111113E5" $width="100%" $maxHeight='100vh' $padding="24px" className="modal-content" $direction="column" $align="center" $position="relative" $overflowY='auto' $gap="16px">
                 <Button className="close" onClick={closeTask}>X</Button>
                 <P $fontSize="20px">{chosenTask.title}</P>
                 {
@@ -565,11 +565,11 @@ export default function Earn() {
 
                 {chosenTask.claim && !chosenTask.completed && dailyClaimInfo?.todayDayOfWeek.toString() && (
                   isTodayRewardTaken || !(tasks[2].tasks[0].completed || tasks[2].tasks[1].completed) ?
-                    <Button $cursor='not-allowed !important' $width="100%" $radius="999px" $background={"gray"} disabled $padding="18px">
+                    <Button $cursor='not-allowed !important' $width="100%" $minHeight='55px' $radius="999px" $background={"gray"} disabled $padding="18px">
                       <FlexDiv $align="center" $gap="8px">
                         <P>{chosenTask.cta}</P>
                       </FlexDiv>
-                    </Button> : (<Button $cursor='pointer' $width="100%" $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={buttonAction} $padding="18px">
+                    </Button> : (<Button $cursor='pointer' $width="100%" $minHeight='55px' $radius="999px" $background="#17181F" $border="1px solid #04DAE8" onClick={buttonAction} $padding="18px">
                       <FlexDiv $align="center" $gap="8px">
                         <P>{chosenTask.cta}</P>
                       </FlexDiv>

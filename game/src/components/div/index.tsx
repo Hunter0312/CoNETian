@@ -7,6 +7,7 @@ export const Div = styled.div.attrs<{
   $radius?: string;
   $width?: string;
   $height?: string;
+  $maxHeight?: string;
   $background?: string;
   $position?: string;
   $top?: string;
@@ -17,6 +18,8 @@ export const Div = styled.div.attrs<{
   $flex?: number;
   $boxShadow?: string;
   $boxSizing?: string;
+  $overflowX?: string;
+  $overflowY?: string;
 }>((props) => ({
   $padding: props.$padding || "0",
   $margin: props.$margin || "0",
@@ -29,6 +32,7 @@ export const Div = styled.div.attrs<{
   border-radius: ${(props) => props.$radius};
   width: ${(props) => props.$width};
   height: ${(props) => props.$height};
+  max-height: ${(props) => props.$maxHeight};
   background: ${(props) => props.$background};
   position: ${(props) => props.$position};
   top: ${(props) => props.$top};
@@ -39,6 +43,8 @@ export const Div = styled.div.attrs<{
   flex: ${(props) => props.$flex};
   box-shadow: ${(props) => props.$boxShadow};
   box-sizing: ${(props) => props.$boxSizing};
+  overflow-x: ${(props) => props.$overflowX};
+  overflow-y: ${(props) => props.$overflowY}; 
 `;
 
 export const FlexDiv = styled(Div).attrs<{

@@ -65,7 +65,7 @@ export default function DailyClaim({ chosenTask }: Props) {
   }
 
   return (
-    <FlexDiv $direction="column" $gap="24px">
+    <FlexDiv $direction="column" $gap="16px">
       <P>{chosenTask?.caption}</P>
 
       {chosenTask?.extraInstruction && <P $fontSize="10px" $color="#ADAAAD">{chosenTask?.extraInstruction}</P>}

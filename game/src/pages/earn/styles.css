@@ -45,7 +45,7 @@ button:disabled {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
 
-  gap: 16px;
+  gap: 5%;
 }
 
 .daily-claim-grid > div:last-of-type {

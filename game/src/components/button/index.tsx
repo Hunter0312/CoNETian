@@ -11,6 +11,7 @@ export const Button = styled.button<{
   $background?: string;
   $width?: string;
   $height?: string;
+  $minHeight?: string;
   $radius?: string;
   $flex?: number;
   $direction?: string;
@@ -26,6 +27,7 @@ export const Button = styled.button<{
   background-color: ${(props) => props.$background || "unset"};
   width: ${(props) => props.$width};
   height: ${(props) => props.$height};
+  min-height: ${(props) => props.$minHeight};
   border-radius: ${(props) => props.$radius};
   flex: ${(props) => props.$flex};
   display: flex;

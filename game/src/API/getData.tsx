@@ -150,7 +150,7 @@ export const fetchClaimDailyReward = async (walletAddress: string): Promise<any>
                 const [status, data] = response;
                 if (status === "SUCCESS") {
                     if (data[0]?.status === 401) {
-                        return { error: true, message: "Please complete all social tasks to be able to claim." };
+                        return { error: true, message: "Please complete at least one social task to be able to claim." };
                     }
 
                     return { response: data[0] || false };

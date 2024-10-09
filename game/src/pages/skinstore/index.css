@@ -1,0 +1,46 @@
+.split {
+  background: linear-gradient(
+    to right,
+    transparent,
+    #79f8ff,
+    #d775ff,
+    transparent
+  );
+  height: 1px;
+}
+
+.coming-soon-wrapper {
+  position: relative;
+  width: 100%;
+  height: 104px;
+  cursor: not-allowed;
+}
+
+.selected {
+  background-image: linear-gradient(
+    130deg,
+    #d775ff45 0%,
+    #1c1c1c 70%
+  ) !important;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Handle */
+.scroll::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.scroll::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

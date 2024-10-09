@@ -1,0 +1,144 @@
+diff --git a/node_modules/@conet.project/seguro-worker-lib/build/workerBridge/SubWorker.js b/node_modules/@conet.project/seguro-worker-lib/build/workerBridge/SubWorker.js
+index 6c19869..1671288 100644
+--- a/node_modules/@conet.project/seguro-worker-lib/build/workerBridge/SubWorker.js
++++ b/node_modules/@conet.project/seguro-worker-lib/build/workerBridge/SubWorker.js
+@@ -4,70 +4,78 @@ var uuid_1 = require("uuid");
+ var buffer_1 = require("buffer");
+ var util_1 = require("./util");
+ var workerCros = function (url) {
+-    var iss = "importScripts('".concat(url, "');");
+-    return URL.createObjectURL(new Blob([iss], { type: 'application/javascript' }));
++  var iss = "importScripts('".concat(url, "');");
++  return URL.createObjectURL(
++    new Blob([iss], { type: "application/javascript" })
++  );
+ };
+ var SubWorker = /** @class */ (function () {
+-    function SubWorker(url, readyBack, workerMessage) {
+-        var _this = this;
+-        this.url = url;
+-        this.readyBack = readyBack;
+-        this.workerMessage = workerMessage;
+-        this.cmdArray = new Map();
+-        var envTest = process.env.NODE_ENV === 'development';
+-        var localhost = window.location.href;
+-        if (envTest) {
+-            localhost = localhost.replace('3000', '3001');
+-        }
+-        var storageUrlBlob = workerCros(localhost + url);
+-        this.worker = new Worker(storageUrlBlob, { name: localhost });
+-        URL.revokeObjectURL(storageUrlBlob);
+-        this.worker.onmessage = function (e) {
+-            return _this.catchReturn(e.data);
+-        };
+-        this.worker.onerror = function (ev) {
+-            (0, util_1.logger)(ev);
+-        };
++  function SubWorker(url, readyBack, workerMessage) {
++    var _this = this;
++    this.url = url;
++    this.readyBack = readyBack;
++    this.workerMessage = workerMessage;
++    this.cmdArray = new Map();
++    var envTest = process.env.NODE_ENV === "development";
++    var localhost = window.location.origin + "/";
++    if (envTest) {
++      localhost = localhost.replace("3000", "3001");
+     }
+-    SubWorker.prototype.catchReturn = function (message) {
+-        var jsonData = buffer_1.Buffer.from(message).toString();
+-        var cmd;
+-        try {
+-            cmd = JSON.parse(jsonData);
+-        }
+-        catch (ex) {
+-            return (0, util_1.logger)('Calss SubWorker catchReturn JSON.parse(jsonData) err!', jsonData);
+-        }
+-        var getCallBack = null;
+-        if (cmd === null || cmd === void 0 ? void 0 : cmd.uuid) {
+-            getCallBack = this.cmdArray.get(cmd.uuid);
+-        }
+-        if (!getCallBack) {
+-            if (cmd.cmd === 'READY') {
+-                return this.readyBack(cmd.data);
+-            }
+-            if (cmd.cmd === 'WORKER_MESSAGE') {
+-                this.workerMessage(cmd.data);
+-                return (0, util_1.logger)('SubWorker got Message from Worker');
+-            }
+-            return (0, util_1.logger)("SubWorker catch unknow UUID sharedMainWorker Return: ".concat(cmd));
+-        }
+-        if (cmd === null || cmd === void 0 ? void 0 : cmd.err) {
+-            return getCallBack(new Error(cmd.err), cmd);
+-        }
+-        return getCallBack(null, cmd);
++    var storageUrlBlob = workerCros(localhost + url);
++    this.worker = new Worker(storageUrlBlob, { name: localhost });
++    URL.revokeObjectURL(storageUrlBlob);
++    this.worker.onmessage = function (e) {
++      return _this.catchReturn(e.data);
+     };
+-    SubWorker.prototype.append = function (message, CallBack) {
+-        var _a;
+-        var message1 = message;
+-        message1.uuid = (0, uuid_1.v4)();
+-        this.cmdArray.set(message1.uuid, CallBack);
+-        var cmdStream = buffer_1.Buffer.from(JSON.stringify(message1));
+-        if ((_a = this.worker) === null || _a === void 0 ? void 0 : _a.postMessage) {
+-            return this.worker.postMessage(cmdStream.buffer, [cmdStream.buffer]);
+-        }
+-        return (0, util_1.logger)('SubWorker Error: this.worker have no Object!');
++    this.worker.onerror = function (ev) {
++      (0, util_1.logger)(ev);
+     };
+-    return SubWorker;
+-}());
++  }
++  SubWorker.prototype.catchReturn = function (message) {
++    var jsonData = buffer_1.Buffer.from(message).toString();
++    var cmd;
++    try {
++      cmd = JSON.parse(jsonData);
++    } catch (ex) {
++      return (0, util_1.logger)(
++        "Calss SubWorker catchReturn JSON.parse(jsonData) err!",
++        jsonData
++      );
++    }
++    var getCallBack = null;
++    if (cmd === null || cmd === void 0 ? void 0 : cmd.uuid) {
++      getCallBack = this.cmdArray.get(cmd.uuid);
++    }
++    if (!getCallBack) {
++      if (cmd.cmd === "READY") {
++        return this.readyBack(cmd.data);
++      }
++      if (cmd.cmd === "WORKER_MESSAGE") {
++        this.workerMessage(cmd.data);
++        return (0, util_1.logger)("SubWorker got Message from Worker");
++      }
++      return (0, util_1.logger)(
++        "SubWorker catch unknow UUID sharedMainWorker Return: ".concat(cmd)
++      );
++    }
++    if (cmd === null || cmd === void 0 ? void 0 : cmd.err) {
++      return getCallBack(new Error(cmd.err), cmd);
++    }
++    return getCallBack(null, cmd);
++  };
++  SubWorker.prototype.append = function (message, CallBack) {
++    var _a;
++    var message1 = message;
++    message1.uuid = (0, uuid_1.v4)();
++    this.cmdArray.set(message1.uuid, CallBack);
++    var cmdStream = buffer_1.Buffer.from(JSON.stringify(message1));
++    if (
++      (_a = this.worker) === null || _a === void 0 ? void 0 : _a.postMessage
++    ) {
++      return this.worker.postMessage(cmdStream.buffer, [cmdStream.buffer]);
++    }
++    return (0, util_1.logger)("SubWorker Error: this.worker have no Object!");
++  };
++  return SubWorker;
++})();
+ exports.default = SubWorker;

@@ -119,7 +119,8 @@ export default function Wallet() {
 
         <CurrentBalance asset="cntp" />
 
-        <div className="split"></div>
+        {/* uncomment this to enable assets exchange */}
+        {/* <div className="split"></div> 
         <FlexDiv $direction="column" $gap="10px">
           <P $fontSize="24px">Assets Exchange</P>
           <P $color="#C8C6C8">
@@ -142,7 +143,7 @@ export default function Wallet() {
               </FlexDiv>
             </Button>
           </S.BuyButton>
-        </FlexDiv>
+        </FlexDiv> */}
 
         <FlexDiv $direction="column" $gap="8px" $width="100%">
           <FlexDiv
@@ -252,7 +253,7 @@ export default function Wallet() {
             $padding="18px"
             $radius="32px"
             $border="1px solid #04DAE8"
-            onClick={isImportingWallet ? () => {} : handleImportWalletButton}
+            onClick={isImportingWallet ? () => { } : handleImportWalletButton}
             disabled={isImportingWallet}
           >
             Import Wallet

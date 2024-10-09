@@ -9,6 +9,7 @@ export enum Partners {
   stabilityAi = "5",
   bearfi = "6",
   tapGear = "7",
+  hybrid = "8",
 }
 
 export interface Quiz {
@@ -417,6 +418,32 @@ export const taskCategories: TaskCategory[] = [
         active: true,
         comingSoon: false,
         cta: "Open Telegram",
+      },
+    ],
+  },
+  {
+    categoryId: "hybrid",
+    title: "Hybrid",
+    icon: Img.TaskExtras,
+    reward: 1,
+    rewardAsset: "Ticket",
+    completed: false,
+    tasks: [
+      {
+        taskId: "hybrid_task-1",
+        title: "Open Hybrid MiniApp on Telegram",
+        type: "partner",
+        completed: false,
+        caption: "Create, connect, grow and farm Hybrid Points.",
+        resource:
+          "https://t.me/HybridMiniAppBot/HybridMiniApp?startapp=6636449772",
+        logo: {
+          uri: PartnerLogos.HybridLogo,
+          size: 100,
+        },
+        active: true,
+        comingSoon: false,
+        cta: "Open Telegram Bot",
       },
     ],
   },

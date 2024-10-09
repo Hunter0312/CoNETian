@@ -51,6 +51,8 @@ export const selectPartner = (categoryId: string) => {
             return Partners.bearfi;
         case "tap-gear":
             return Partners.tapGear;
+        case "hybrid":
+            return Partners.hybrid;
         default:
             return 1000;
     }

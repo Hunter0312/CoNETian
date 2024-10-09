@@ -109,24 +109,15 @@ export default function Earn() {
       const tasksCopy = [...tasks]
 
       if (res[1][0][0].length === 0) {
-        tasksCopy[6].tasks[0].completed = false
-        tasksCopy[6].tasks[1].completed = false
         tasksCopy[7].tasks[0].completed = false
         tasksCopy[7].tasks[1].completed = false
         tasksCopy[7].tasks[2].completed = false
         tasksCopy[8].tasks[0].completed = false
         tasksCopy[8].tasks[1].completed = false
         tasksCopy[8].tasks[2].completed = false
+        tasksCopy[9].tasks[0].completed = false
 
         return
-      }
-
-      if (res[1][0][0].includes('5')) {
-        tasksCopy[6].tasks[0].completed = true
-        tasksCopy[6].tasks[1].completed = true
-      } else {
-        tasksCopy[6].tasks[0].completed = false
-        tasksCopy[6].tasks[1].completed = false
       }
 
       if (res[1][0][0].includes('6')) {
@@ -147,6 +138,12 @@ export default function Earn() {
         tasksCopy[8].tasks[0].completed = false
         tasksCopy[8].tasks[1].completed = false
         tasksCopy[8].tasks[2].completed = false
+      }
+
+      if (res[1][0][0].includes('8')) {
+        tasksCopy[9].tasks[0].completed = true
+      } else {
+        tasksCopy[9].tasks[0].completed = false
       }
 
       setTasks?.(tasksCopy)
@@ -243,29 +240,12 @@ export default function Earn() {
 
         let auxArr: any[] = []
 
-        if (chosenTaskCategory?.categoryId === 'stability-world-ai') {
-          auxArr = [...completedStabilityAi]
-        }
-
         if (chosenTaskCategory?.categoryId === 'bearfi') {
           auxArr = [...completedBearfi]
         }
 
         if (chosenTaskCategory?.categoryId === 'tap-gear') {
           auxArr = [...completedTapGear]
-        }
-
-        if (selectedPartnerId.toString().includes('5')) {
-          auxArr.push(true)
-          setCompletedStabilityAi(auxArr)
-
-          if (chosenTask?.taskId === 'stability-world-ai_task-1') {
-            tasksCopy[6].tasks[0].completed = true
-          } else {
-            tasksCopy[6].tasks[1].completed = true
-          }
-
-          if (auxArr.length < 2) return
         }
 
         if (selectedPartnerId.toString().includes('6')) {
@@ -300,17 +280,7 @@ export default function Earn() {
 
         const res = await fetchCheckPartner(profile?.keyID, selectedPartnerId.toString())
 
-        if (res) {
-
-          if (selectedPartnerId.toString().includes('4')) {
-            tasksCopy[5].tasks[0].completed = true
-          }
-
-          if (selectedPartnerId.toString().includes('5')) {
-            tasksCopy[6].tasks[0].completed = true
-            tasksCopy[6].tasks[1].completed = true
-          }
-
+        if (!res.error) {
           if (selectedPartnerId.toString().includes('6')) {
             tasksCopy[7].tasks[0].completed = true
             tasksCopy[7].tasks[1].completed = true
@@ -323,14 +293,13 @@ export default function Earn() {
             tasksCopy[8].tasks[2].completed = true
           }
 
+          if (selectedPartnerId.toString().includes('8')) {
+            tasksCopy[9].tasks[0].completed = true
+          }
+
           setTasks?.(tasksCopy)
 
           toast.success("Task completed! Check your rewards in the Earn Page", {
-            position: "bottom-center",
-            duration: 2000,
-          });
-        } else if (res.response.protected === true) {
-          toast.error("Your account is private. Please make it public to claim your reward.", {
             position: "bottom-center",
             duration: 2000,
           });

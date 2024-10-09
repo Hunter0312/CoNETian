@@ -251,7 +251,12 @@ export const fetchCheckPartner = async (walletAddress: string, partnerId: string
         if (Array.isArray(response) && response.length >= 2) {
             const [status, data] = response;
             if (status === "SUCCESS") {
-                return true
+
+                if (data[0]?.status !== 200)
+                    return { error: true, message: data[0]?.message };
+
+                return true;
+
             } else {
                 console.error("Failed to check partner task");
             }

@@ -1,6 +1,6 @@
 import BackButton from "@/components/backButton";
 import { Button } from "@/components/button";
-import { FlexDiv } from "@/components/div";
+import { Div, FlexDiv } from "@/components/div";
 import { P } from "@/components/p";
 import PageWrapper from "@/components/pageWrapper";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
@@ -53,10 +53,12 @@ const Send = () => {
   return (
     <PageWrapper>
       <BackButton text="Send" to="/wallet" />
-      <P $color="#C8C6C8">
-        Send CNTP or select an asset to exchange with someone, enter recipient's
-        wallet and make your offer.
-      </P>
+      <Div $padding="0 10px">
+        <P $color="#C8C6C8">
+          Send CNTP or select an asset to exchange with someone, enter
+          recipient's wallet and make your offer.
+        </P>
+      </Div>
       <div className="split"></div>
       <FlexDiv $wrap="wrap" $align="center" $justify="center" $gap="10px">
         {actives.map((active) => {

@@ -1,7 +1,7 @@
 import BackButton from "@/components/backButton";
 import { Button, GradientButton } from "@/components/button";
 import CurrentBalance from "@/components/currentBalance";
-import { FlexDiv } from "@/components/div";
+import { Div, FlexDiv } from "@/components/div";
 import { P } from "@/components/p";
 import PageWrapper from "@/components/pageWrapper";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
@@ -48,62 +48,71 @@ const SendCNTP = () => {
   return (
     <PageWrapper>
       <BackButton text="Send CNTP" to="/send" />
-      <CurrentBalance asset="cntp" />
+      <Div $padding="0 10px">
+        <CurrentBalance asset="cntp" />
+      </Div>
       <div className="split"></div>
-      <Button $background="#262626" $padding="12px 16px" $radius="16px">
-        <FlexDiv $justify="space-between" $width="100%" $align="center">
-          <FlexDiv $direction="column" $grow="1">
-            <P>To</P>
-            <S.ToInput placeholder="Select or paste receiver wallet address" />
-          </FlexDiv>
-          <Image src={SendImg.ArrowDownImg} width={12} height={8} alt="" />
-        </FlexDiv>
-      </Button>
-      <FlexDiv
-        $background="#262626"
-        $padding="12px 16px"
-        $radius="16px"
-        $justify="space-between"
-      >
-        <S.BalanceInput
-          value={balance}
-          onChange={(e) => setBalance(parseInt(e.target.value))}
-          type="number"
-        />
+      <FlexDiv $direction="column" $padding="0 10px" $gap="32px">
         <Button
-          $background="#30333b"
-          $color="#8DA8FF"
-          $padding="10px 16px"
-          $radius="8px"
+          $background="#262626"
+          $padding="12px 16px"
+          $radius="16px"
+          $width="100%"
         >
-          MAX
+          <FlexDiv $justify="space-between" $width="100%" $align="center">
+            <FlexDiv $direction="column" $grow="1">
+              <P>To</P>
+              <S.ToInput placeholder="Select or paste receiver wallet address" />
+            </FlexDiv>
+            <Image src={SendImg.ArrowDownImg} width={12} height={8} alt="" />
+          </FlexDiv>
         </Button>
-      </FlexDiv>
-      <FlexDiv $direction="column" $gap="5px">
-        <P>Tax</P>
-        <S.Split />
-        <FlexDiv $justify="space-between">
-          <P $fontSize="14px" $color="#989899">
-            Gas fee
-          </P>
-          <FlexDiv $align="center" $gap="3px">
-            <Image src={SendImg.GasFeeImg} height={11} width={12} alt="" />
+        <FlexDiv
+          $background="#262626"
+          $padding="12px 16px"
+          $radius="16px"
+          $justify="space-between"
+        >
+          <S.BalanceInput
+            value={balance}
+            onChange={(e) => setBalance(parseInt(e.target.value))}
+            type="number"
+          />
+          <Button
+            $background="#30333b"
+            $color="#8DA8FF"
+            $padding="10px 16px"
+            $radius="8px"
+          >
+            MAX
+          </Button>
+        </FlexDiv>
+        <FlexDiv $direction="column" $gap="5px">
+          <P>Tax</P>
+          <S.Split />
+          <FlexDiv $justify="space-between">
             <P $fontSize="14px" $color="#989899">
-              $CNTP 100
+              Gas fee
             </P>
+            <FlexDiv $align="center" $gap="3px">
+              <Image src={SendImg.GasFeeImg} height={11} width={12} alt="" />
+              <P $fontSize="14px" $color="#989899">
+                $CNTP 100
+              </P>
+            </FlexDiv>
           </FlexDiv>
         </FlexDiv>
-      </FlexDiv>
-      <FlexDiv $margin="0 0 100px 0" $width="100%" $direction="column">
-        <GradientButton
-          width="100%"
-          onClick={() => {
-            setBuyItem?.({ price: balance, sendCNTP: true });
-            setRouter?.("/sendCNTPConfirm");
-          }}
-        >
-          Send
-        </GradientButton>
+        <FlexDiv $margin="0 0 100px 0" $width="100%" $direction="column">
+          <GradientButton
+            width="100%"
+            onClick={() => {
+              setBuyItem?.({ price: balance, sendCNTP: true });
+              setRouter?.("/sendCNTPConfirm");
+            }}
+          >
+            Send
+          </GradientButton>
+        </FlexDiv>
       </FlexDiv>
     </PageWrapper>
   );

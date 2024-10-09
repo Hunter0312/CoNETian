@@ -116,6 +116,7 @@ export default function Earn() {
         tasksCopy[8].tasks[1].completed = false
         tasksCopy[8].tasks[2].completed = false
         tasksCopy[9].tasks[0].completed = false
+        tasksCopy[10].tasks[0].completed = false
 
         return
       }
@@ -144,6 +145,12 @@ export default function Earn() {
         tasksCopy[9].tasks[0].completed = true
       } else {
         tasksCopy[9].tasks[0].completed = false
+      }
+
+      if (res[1][0][0].includes('9')) {
+        tasksCopy[10].tasks[0].completed = true
+      } else {
+        tasksCopy[10].tasks[0].completed = false
       }
 
       setTasks?.(tasksCopy)
@@ -295,6 +302,10 @@ export default function Earn() {
 
           if (selectedPartnerId.toString().includes('8')) {
             tasksCopy[9].tasks[0].completed = true
+          }
+
+          if (selectedPartnerId.toString().includes('9')) {
+            tasksCopy[10].tasks[0].completed = true
           }
 
           setTasks?.(tasksCopy)

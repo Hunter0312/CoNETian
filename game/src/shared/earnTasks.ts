@@ -10,6 +10,7 @@ export enum Partners {
   bearfi = "6",
   tapGear = "7",
   hybrid = "8",
+  habit = "9",
 }
 
 export interface Quiz {
@@ -439,6 +440,31 @@ export const taskCategories: TaskCategory[] = [
           "https://t.me/HybridMiniAppBot/HybridMiniApp?startapp=6636449772",
         logo: {
           uri: PartnerLogos.HybridLogo,
+          size: 100,
+        },
+        active: true,
+        comingSoon: false,
+        cta: "Open Telegram Bot",
+      },
+    ],
+  },
+  {
+    categoryId: "habit",
+    title: "Habit Farming App",
+    icon: Img.TaskExtras,
+    reward: 1,
+    rewardAsset: "Ticket",
+    completed: false,
+    tasks: [
+      {
+        taskId: "habit_task-1",
+        title: "Open Habit Bot on Telegram",
+        type: "partner",
+        completed: false,
+        caption: "Habit (Tap > Trade > Win USDT)",
+        resource: "https://t.me/HabitNetwork_bot/HABIT?startapp=ref_6511194035",
+        logo: {
+          uri: PartnerLogos.HabitLogo,
           size: 100,
         },
         active: true,

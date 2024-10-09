@@ -4,4 +4,5 @@ export const PartnerLogos = {
   BearfiLogo: "/partners/bearfi-logo.jpg",
   TapGearLogo: "/partners/tapgear-logo.jpg",
   HybridLogo: "/partners/hybrid-logo.jpg",
+  HabitLogo: "/partners/habit-logo.jpg",
 }

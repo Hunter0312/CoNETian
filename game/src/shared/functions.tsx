@@ -53,6 +53,8 @@ export const selectPartner = (categoryId: string) => {
             return Partners.tapGear;
         case "hybrid":
             return Partners.hybrid;
+        case "habit":
+            return Partners.habit;
         default:
             return 1000;
     }

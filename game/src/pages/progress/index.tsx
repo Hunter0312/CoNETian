@@ -1,4 +1,4 @@
-import { FlexDiv } from "@/components/div";
+import { Div, FlexDiv } from "@/components/div";
 import { P } from "@/components/p";
 import PageWrapper from "@/components/pageWrapper";
 import { Img } from "@/utilitiy/images";
@@ -19,11 +19,13 @@ const ConfirmProgress = () => {
 
   return (
     <PageWrapper>
-      <P $fontSize="24px">Transaction in progress</P>
-      <P $fontSize="14px" $color="#CACACC" $width="321px" $weight="400">
-        Your order completion time may vary, please wait and we’ll let you know
-        when it’s completed.
-      </P>
+      <Div $padding="0 10px">
+        <P $fontSize="24px">Transaction in progress</P>
+        <P $fontSize="14px" $color="#CACACC" $width="321px" $weight="400">
+          Your order completion time may vary, please wait and we’ll let you
+          know when it’s completed.
+        </P>
+      </Div>
 
       <Loading />
 

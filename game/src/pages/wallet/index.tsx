@@ -1,6 +1,6 @@
-import BackButton from '@/components/backButton';
+import BackButton from "@/components/backButton";
 import { Button } from "@/components/button";
-import CurrentBalance from '@/components/currentBalance';
+import CurrentBalance from "@/components/currentBalance";
 import { FlexDiv } from "@/components/div";
 import MiningStatus from "@/components/miningStatus";
 import { P } from "@/components/p";
@@ -15,17 +15,29 @@ import copy from "copy-to-clipboard";
 import { fetchImportWallet, fetchstopMining } from "@/API/getData";
 import { toast } from "react-toastify";
 import ConfirmModal from "@/components/modal/confirmModal";
+import styled from "styled-components";
+
+const S = {
+  BuyButton: styled(FlexDiv)`
+    width: 100%;
+    background-image: linear-gradient(90deg, #79f8ff 0%, #d775ff 50%);
+    border-radius: 16px;
+    padding: 1px;
+  `,
+};
 
 export default function Wallet() {
-  const [newWalletPrivateKey, setNewWalletPrivateKey] = useState<string>('');
+  const [newWalletPrivateKey, setNewWalletPrivateKey] = useState<string>("");
   const [copiedReferrer, setCopiedReferrer] = useState<boolean>(false);
   const [copiedPrivateKey, setCopiedPrivateKey] = useState<boolean>(false);
-  const [copiedWalletAddress, setCopiedWalletAddress] = useState<boolean>(false);
+  const [copiedWalletAddress, setCopiedWalletAddress] =
+    useState<boolean>(false);
   const [showImportWalletConfirmModal, setShowImportWalletConfirmModal] =
     useState<boolean>(false);
-  const [isImportingWallet, setIsImportingWallet] = useState<boolean>(false)
+  const [isImportingWallet, setIsImportingWallet] = useState<boolean>(false);
 
-  const { profile, setProfile, setMining, miningErrorTimeout } = useGameContext();
+  const { profile, setProfile, setMining, miningErrorTimeout, setRouter } =
+    useGameContext();
 
   useEffect(() => {
     if (copiedWalletAddress) {
@@ -70,7 +82,7 @@ export default function Wallet() {
   };
 
   const handleImportWalletConfirm = async () => {
-    setIsImportingWallet(true)
+    setIsImportingWallet(true);
 
     if (newWalletPrivateKey) {
       const stopMiningResult = await fetchstopMining(profile?.keyID);
@@ -82,7 +94,7 @@ export default function Wallet() {
         const importResult = await fetchImportWallet(newWalletPrivateKey);
         if (importResult && !importResult?.error) {
           setProfile?.(importResult);
-          setNewWalletPrivateKey('')
+          setNewWalletPrivateKey("");
           toast.success("Import Successful!");
         } else {
           toast.error(importResult?.message);
@@ -94,8 +106,8 @@ export default function Wallet() {
       toast.error("Please enter a private key");
     }
 
-    setIsImportingWallet(false)
-    setShowImportWalletConfirmModal(false)
+    setIsImportingWallet(false);
+    setShowImportWalletConfirmModal(false);
   };
 
   return (
@@ -105,7 +117,32 @@ export default function Wallet() {
 
         <BackButton text="My Wallet" />
 
-        <CurrentBalance asset='cntp' />
+        <CurrentBalance asset="cntp" />
+
+        <div className="split"></div>
+        <FlexDiv $direction="column" $gap="10px">
+          <P $fontSize="24px">Assets Exchange</P>
+          <P $color="#C8C6C8">
+            Quickly and securely exchange your CNTP, Skins, Keys, or Tickets
+            with ease.
+          </P>
+          <S.BuyButton>
+            <Button
+              $background="#17181F"
+              $fontSize="16px"
+              $width="100%"
+              $radius="16px"
+              $padding="5px 0"
+              $height="56px"
+              onClick={() => setRouter?.("/send")}
+            >
+              <FlexDiv $align="center" $gap="5px">
+                <Image src={Img.SendImg} width={24} height={22} alt="" />
+                Send
+              </FlexDiv>
+            </Button>
+          </S.BuyButton>
+        </FlexDiv>
 
         <FlexDiv $direction="column" $gap="8px" $width="100%">
           <FlexDiv
@@ -170,12 +207,21 @@ export default function Wallet() {
           </FlexDiv>
           {profile?.referrer && (
             <>
-              <FlexDiv $gap="8px" $align="center" $padding='0 0 0 24px'>
-                <P $fontSize="14px" $color="#C8C6C8">Your inviter:</P>
+              <FlexDiv $gap="8px" $align="center" $padding="0 0 0 24px">
+                <P $fontSize="14px" $color="#C8C6C8">
+                  Your inviter:
+                </P>
                 <FlexDiv $gap="8px" $align="center">
                   <P $fontSize="12px">{slice(profile?.referrer)}</P>
-                  <Button onClick={() => copyText(profile?.referrer, "referrer")}>
-                    <Image height={16} width={16} alt="Copy" src={copiedReferrer ? Img.CheckImg : Img.CopyImg} />
+                  <Button
+                    onClick={() => copyText(profile?.referrer, "referrer")}
+                  >
+                    <Image
+                      height={16}
+                      width={16}
+                      alt="Copy"
+                      src={copiedReferrer ? Img.CheckImg : Img.CopyImg}
+                    />
                   </Button>
                 </FlexDiv>
               </FlexDiv>
@@ -206,7 +252,7 @@ export default function Wallet() {
             $padding="18px"
             $radius="32px"
             $border="1px solid #04DAE8"
-            onClick={isImportingWallet ? () => { } : handleImportWalletButton}
+            onClick={isImportingWallet ? () => {} : handleImportWalletButton}
             disabled={isImportingWallet}
           >
             Import Wallet

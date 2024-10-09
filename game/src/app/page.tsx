@@ -28,6 +28,9 @@ import SkinStore from "@/pages/skinstore";
 import GameItems from "@/pages/items";
 import BuyItem from "@/pages/items/buyItem";
 import ItemConfirm from "@/pages/itemConfirm";
+import Send from "@/pages/send";
+import SendCNTP from "@/pages/sendCntp";
+import SendCNTPConfirm from "@/pages/sendCNTPConfirm";
 
 const S = {
   Main: styled.div`
@@ -132,6 +135,9 @@ function CurrentPage() {
     "/transactionsuccess": <TransactionSuccess />,
     "/gameitem": <GameItems />,
     "/buyitem": <BuyItem />,
+    "/send": <Send />,
+    "/sendCNTP": <SendCNTP />,
+    "/sendCNTPConfirm": <SendCNTPConfirm />,
   };
 
   return pages[router as keyof typeof pages] ?? null;

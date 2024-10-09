@@ -29,7 +29,7 @@ const TransactionSuccess = () => {
           >
             <FlexDiv $justify="space-between">
               <P $fontSize="14px">Sent</P>
-              <P $fontSize="14px">{buyItem.price}</P>
+              <P $fontSize="14px">{buyItem?.price}</P>
             </FlexDiv>
             <FlexDiv $justify="space-between" $margin="10px 0">
               <P $fontSize="14px">GAS fee</P>

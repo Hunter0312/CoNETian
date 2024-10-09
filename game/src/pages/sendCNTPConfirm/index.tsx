@@ -54,7 +54,7 @@ const SendCNTPConfirm = () => {
             <Image src={SkinImg.Rewards} width={20} height={20} alt="" />
             <P $fontSize="16px">CNTP</P>
           </FlexDiv>
-          <P>{buyItem.price}</P>
+          <P>{buyItem?.price}</P>
         </FlexDiv>
       </FlexDiv>
       <FlexDiv $direction="column" $gap="5px" $margin="0 0 50px 0">

@@ -56,14 +56,14 @@ const Send = () => {
       <Div $padding="0 10px">
         <P $color="#C8C6C8">
           Send CNTP or select an asset to exchange with someone, enter
-          recipient's wallet and make your offer.
+          recipient&apos;s wallet and make your offer.
         </P>
       </Div>
       <div className="split"></div>
       <FlexDiv $wrap="wrap" $align="center" $justify="center" $gap="10px">
         {actives.map((active) => {
           return (
-            <S.BuyButton>
+            <S.BuyButton key={active.key}>
               <Button
                 $background="#17181F"
                 $fontSize="16px"
@@ -91,9 +91,10 @@ const Send = () => {
             </S.BuyButton>
           );
         })}
+
         {locks.map((lock) => {
           return (
-            <div style={{ cursor: "not-allowed" }}>
+            <div key={lock.key} style={{ cursor: "not-allowed" }}>
               <Image src={lock.img} width={191} height={120} alt="" />
             </div>
           );

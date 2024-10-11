@@ -1,0 +1,11 @@
+<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M16 2.5V6.5" stroke="#E4E2E4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8 2.5V6.5" stroke="#E4E2E4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3 9.5H21" stroke="#E4E2E4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M19 4.5H5C3.895 4.5 3 5.395 3 6.5V19.5C3 20.605 3.895 21.5 5 21.5H19C20.105 21.5 21 20.605 21 19.5V6.5C21 5.395 20.105 4.5 19 4.5Z" stroke="#E4E2E4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.01316 13.2305C6.87516 13.2305 6.76316 13.3425 6.76416 13.4805C6.76416 13.6185 6.87616 13.7305 7.01416 13.7305C7.15216 13.7305 7.26416 13.6185 7.26416 13.4805C7.26416 13.3425 7.15216 13.2305 7.01316 13.2305" stroke="#E4E2E4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.0132 13.2305C11.8752 13.2305 11.7632 13.3425 11.7642 13.4805C11.7642 13.6185 11.8762 13.7305 12.0142 13.7305C12.1522 13.7305 12.2642 13.6185 12.2642 13.4805C12.2642 13.3425 12.1522 13.2305 12.0132 13.2305" stroke="#E4E2E4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M17.0132 13.2305C16.8752 13.2305 16.7632 13.3425 16.7642 13.4805C16.7642 13.6185 16.8762 13.7305 17.0142 13.7305C17.1522 13.7305 17.2642 13.6185 17.2642 13.4805C17.2642 13.3425 17.1522 13.2305 17.0132 13.2305" stroke="#E4E2E4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.01316 17.2305C6.87516 17.2305 6.76316 17.3425 6.76416 17.4805C6.76416 17.6185 6.87616 17.7305 7.01416 17.7305C7.15216 17.7305 7.26416 17.6185 7.26416 17.4805C7.26416 17.3425 7.15216 17.2305 7.01316 17.2305" stroke="#E4E2E4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.0132 17.2305C11.8752 17.2305 11.7632 17.3425 11.7642 17.4805C11.7642 17.6185 11.8762 17.7305 12.0142 17.7305C12.1522 17.7305 12.2642 17.6185 12.2642 17.4805C12.2642 17.3425 12.1522 17.2305 12.0132 17.2305" stroke="#E4E2E4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

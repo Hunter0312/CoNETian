@@ -15,6 +15,7 @@ import {
   transferToken,
   estimateGas,
   getNativeBalance,
+  isAddress,
 } from ".";
 
 export const fetchImportWallet = async (
@@ -415,6 +416,25 @@ export const fetchGetNativeBalance = async (
 ): Promise<any> => {
   try {
     const response = await getNativeBalance(sourceProfileKeyID);
+
+    if (Array.isArray(response) && response.length >= 2) {
+      const [status, data] = response;
+      if (status === "SUCCESS") {
+        return data;
+      } else {
+        console.error("Failed to get native balance");
+      }
+    }
+  } catch (error) {
+    console.error("Failed to get native balance", error);
+  }
+
+  return { error: true, message: "Failed to get native balance" };
+};
+
+export const fetchIsAddress = async (address: string): Promise<any> => {
+  try {
+    const response = await isAddress(address);
 
     if (Array.isArray(response) && response.length >= 2) {
       const [status, data] = response;

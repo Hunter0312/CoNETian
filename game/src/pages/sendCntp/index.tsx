@@ -10,6 +10,7 @@ import PageWrapper from "@/components/pageWrapper";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import { SendImg } from "@/utilitiy/send";
 import { formatToken } from "@/utilitiy/functions";
+import { fetchIsAddress } from "@/API/getData";
 
 const S = {
   ToInput: styled.input`
@@ -46,18 +47,30 @@ const SendCNTP = () => {
   const assetName = "cCNTP";
 
   const [amount, setAmount] = useState<string>("0");
-  const [toAddress, setToAddress] = useState<string>(
-    "0x5eD5e5A225995CA70D77f750A166ec87C1324Dc9"
-  );
-  const [disableAmountInput, setDisableAmountInput] = useState<boolean>(false);
-  // TODO: validate recipient wallet address!
+  const [isValidAmount, setIsValidAmount] = useState<boolean>(false);
+  const [toAddress, setToAddress] = useState<string>("");
+  const [isValidAddress, setIsValidAddress] = useState<boolean>(false);
+  const [isAddressChecking, setIsAddressChecking] = useState<boolean>(false);
+
   const { setRouter, setTransferTokenDetails, profile } = useGameContext();
 
   const balance = formatToken(profile?.tokens?.cCNTP?.balance);
 
-  const handleToAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleToAddressChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     e.preventDefault();
     setToAddress(e.target.value);
+    try {
+      setIsAddressChecking(true);
+      const isAddress = await fetchIsAddress(e.target.value);
+      if (isAddress[0]) setIsValidAddress(true);
+      else setIsValidAddress(false);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsAddressChecking(false);
+    }
   };
 
   const handleAmountInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,13 +89,13 @@ const SendCNTP = () => {
       setAmount(cutZeroString);
     }
 
-    if (cutZeroString === "0") setDisableAmountInput(true);
-    else setDisableAmountInput(false);
+    if (cutZeroString === "0" || cutZeroString === "") setIsValidAmount(false);
+    else setIsValidAmount(true);
   };
 
   const handleSend = async () => {
     // return if amount is 0
-    if (amount === "0") {
+    if (!isValidAddress || !isValidAmount) {
       return;
     }
 
@@ -119,7 +132,13 @@ const SendCNTP = () => {
                 onChange={handleToAddressChange}
               />
             </FlexDiv>
-            <Image src={SendImg.ArrowDownImg} width={12} height={8} alt="" />
+            {isAddressChecking ? (
+              <Image src={SendImg.LoadingImg} width={20} height={20} alt="" />
+            ) : isValidAddress ? (
+              <Image src={SendImg.CheckedImg} width={20} height={20} alt="" />
+            ) : (
+              <></>
+            )}
           </FlexDiv>
         </Button>
         <FlexDiv
@@ -162,7 +181,7 @@ const SendCNTP = () => {
           <GradientButton
             width="100%"
             onClick={handleSend}
-            disabled={disableAmountInput}
+            disabled={!isValidAddress || !isValidAmount}
           >
             Estimate Gas
           </GradientButton>

@@ -299,3 +299,15 @@ export const getNativeBalance: (
     };
     return _postMessage(cmd, true, resolve);
   });
+
+export const isAddress: (address: string) => Promise<string> = (
+  address: string
+) =>
+  new Promise((resolve) => {
+    const cmd: WorkerCommand = {
+      cmd: "isAddress",
+      uuid: v4(),
+      data: [address],
+    };
+    return _postMessage(cmd, true, resolve);
+  });

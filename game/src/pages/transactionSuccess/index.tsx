@@ -7,7 +7,7 @@ import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import Image from "next/image";
 
 const TransactionSuccess = () => {
-  const { setRouter, buyItem } = useGameContext();
+  const { setRouter, buyItem, transferTokenDetails } = useGameContext();
 
   return (
     <PageWrapper>
@@ -29,15 +29,15 @@ const TransactionSuccess = () => {
           >
             <FlexDiv $justify="space-between">
               <P $fontSize="14px">Sent</P>
-              <P $fontSize="14px">{buyItem?.price}</P>
+              <P $fontSize="14px">{buyItem?.price} $CNTP</P>
             </FlexDiv>
             <FlexDiv $justify="space-between" $margin="10px 0">
               <P $fontSize="14px">GAS fee</P>
-              <P $fontSize="14px">0.12345 CNTP</P>
+              <P $fontSize="14px">{transferTokenDetails?.gasFee} $CONET</P>
             </FlexDiv>
             <FlexDiv $justify="space-between" $margin="10px 0">
               <P $fontSize="14px">Network cost</P>
-              <P $fontSize="14px">$ 100</P>
+              <P $fontSize="14px">$ {transferTokenDetails?.gasPrice}</P>
             </FlexDiv>
             <FlexDiv $justify="space-between">
               <P $fontSize="14px">Order routing</P>

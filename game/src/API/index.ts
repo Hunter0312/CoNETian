@@ -247,3 +247,55 @@ export const checkPartner: (
     };
     return _postMessage(cmd, true, resolve);
   });
+
+export const transferToken: (
+  amount: number,
+  sourceProfileKeyID: string,
+  assetName: string,
+  toAddress: string
+) => Promise<string> = (
+  amount: number,
+  sourceProfileKeyID: string,
+  assetName: string,
+  toAddress: string
+) =>
+  new Promise((resolve) => {
+    const cmd: WorkerCommand = {
+      cmd: "transferToken",
+      uuid: v4(),
+      data: [amount, sourceProfileKeyID, assetName, toAddress],
+    };
+    return _postMessage(cmd, true, resolve);
+  });
+
+export const estimateGas: (
+  amount: string,
+  sourceProfileKeyID: string,
+  assetName: string,
+  toAddress: string
+) => Promise<string> = (
+  amount: string,
+  sourceProfileKeyID: string,
+  assetName: string,
+  toAddress: string
+) =>
+  new Promise((resolve) => {
+    const cmd: WorkerCommand = {
+      cmd: "estimateGas",
+      uuid: v4(),
+      data: [amount, sourceProfileKeyID, assetName, toAddress],
+    };
+    return _postMessage(cmd, true, resolve);
+  });
+
+export const getNativeBalance: (
+  sourceProfileKeyID: string
+) => Promise<string> = (sourceProfileKeyID: string) =>
+  new Promise((resolve) => {
+    const cmd: WorkerCommand = {
+      cmd: "getNativeBalance",
+      uuid: v4(),
+      data: [sourceProfileKeyID],
+    };
+    return _postMessage(cmd, true, resolve);
+  });

@@ -8,13 +8,28 @@ import { Button } from "@/components/button";
 import { useEffect } from "react";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import Loading from "@/components/loading";
+import { fetchTransferToken } from "@/API/getData";
 
 const ConfirmProgress = () => {
-  const { setRouter } = useGameContext();
+  const { setRouter, profile, transferTokenDetails } = useGameContext();
   useEffect(() => {
-    setTimeout(() => {
-      setRouter?.("/transactionsuccess");
-    }, 5000);
+    const transferToken = async () => {
+      const response =
+        transferTokenDetails?.assetName &&
+        transferTokenDetails?.toAddress &&
+        (await fetchTransferToken(
+          Number(transferTokenDetails?.amount),
+          profile?.keyID,
+          transferTokenDetails?.assetName,
+          transferTokenDetails?.toAddress
+        ));
+
+      if (response) {
+        setRouter?.("/transactionsuccess");
+      }
+    };
+
+    transferToken();
   }, []);
 
   return (

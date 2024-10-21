@@ -1,13 +1,17 @@
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import styled from "styled-components";
 import BackButton from "@/components/backButton";
 import { GradientButton } from "@/components/button";
 import { FlexDiv } from "@/components/div";
 import { P } from "@/components/p";
 import PageWrapper from "@/components/pageWrapper";
-import { Img } from "@/utilitiy/images";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
+import { Img } from "@/utilitiy/images";
 import { SkinImg } from "@/utilitiy/skinStoreImage";
-import Image from "next/image";
-import styled from "styled-components";
+import { formatToken, slice } from "@/utilitiy/functions";
+import { fetchEstimateGas, fetchGetNativeBalance } from "@/API/getData";
+import { TransferTokenDetails } from "@/utilitiy/providers/GameProvider";
 
 const S = {
   Split: styled.div`
@@ -17,7 +21,62 @@ const S = {
 };
 
 const SendCNTPConfirm = () => {
-  const { setRouter, buyItem } = useGameContext();
+  const [quoteSecs, setQuoteSecs] = useState<number>(60);
+  const [hasUnsufficientFee, setHasUnsufficientFee] = useState<boolean>(false);
+
+  const {
+    setRouter,
+    transferTokenDetails,
+    profile,
+    setTransferTokenDetails,
+    setBuyItem,
+  } = useGameContext();
+
+  useEffect(() => {
+    const getGasFee = async () => {
+      const gasResponse =
+        transferTokenDetails?.amount &&
+        transferTokenDetails?.assetName &&
+        transferTokenDetails?.toAddress &&
+        (await fetchEstimateGas(
+          transferTokenDetails?.amount,
+          profile?.keyID,
+          transferTokenDetails?.assetName,
+          transferTokenDetails?.toAddress
+        ));
+
+      setQuoteSecs(60);
+      if (gasResponse[0] && gasResponse[1]) {
+        setTransferTokenDetails?.((prevState: TransferTokenDetails) => ({
+          ...prevState,
+          gasPrice: gasResponse[0],
+          gasFee: gasResponse[1],
+        }));
+        const nativeBalanceResponse = await fetchGetNativeBalance(
+          profile?.keyID
+        );
+        const nativeBalance = formatToken(nativeBalanceResponse[0]);
+
+        if (gasResponse[1] > Number(nativeBalance)) setHasUnsufficientFee(true);
+      } else {
+        console.error("Error to fetch gas fee");
+      }
+
+      setBuyItem?.({ price: transferTokenDetails?.amount, sendCNTP: true });
+    };
+
+    getGasFee();
+
+    const interval = setInterval(getGasFee, 60000);
+    const countdown = setInterval(() => {
+      setQuoteSecs((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+      clearInterval(countdown);
+    };
+  }, []);
 
   return (
     <PageWrapper margin="32px 16px 140px 16px">
@@ -35,7 +94,8 @@ const SendCNTPConfirm = () => {
           <FlexDiv $direction="column">
             <P $fontSize="14px">Anonymous User</P>
             <P $fontSize="12px" $color="#989899">
-              0x412BA4...03AB46
+              {transferTokenDetails?.toAddress &&
+                slice(transferTokenDetails?.toAddress)}
             </P>
           </FlexDiv>
         </FlexDiv>
@@ -54,7 +114,7 @@ const SendCNTPConfirm = () => {
             <Image src={SkinImg.Rewards} width={20} height={20} alt="" />
             <P $fontSize="16px">CNTP</P>
           </FlexDiv>
-          <P>{buyItem?.price}</P>
+          <P>{transferTokenDetails?.amount}</P>
         </FlexDiv>
       </FlexDiv>
       <FlexDiv $direction="column" $gap="5px" $margin="0 0 50px 0">
@@ -63,17 +123,17 @@ const SendCNTPConfirm = () => {
           <FlexDiv $align="center" $gap="5px">
             <Image src={Img?.AlarmImg} width={16} height={16} alt="" />
             <P $fontSize="12px" $color="#CACACC">
-              Quote updates in 60s
+              Quote updates in {quoteSecs}s
             </P>
           </FlexDiv>
         </FlexDiv>
         <S.Split />
         <FlexDiv $justify="space-between">
           <P $fontSize="14px" $color="#989899">
-            Fee (3%)
+            Fee
           </P>
           <P $fontSize="14px" $color="#989899">
-            0.12345 $CNTP
+            {transferTokenDetails?.gasFee} $CONET
           </P>
         </FlexDiv>
         <FlexDiv $justify="space-between">
@@ -83,7 +143,7 @@ const SendCNTPConfirm = () => {
           <FlexDiv $align="center">
             <Image src={Img?.CarServiceImg} width={16} height={16} alt="" />
             <P $fontSize="14px" $color="#989899">
-              $100
+              ${Number(transferTokenDetails?.gasPrice).toFixed(5)}
             </P>
           </FlexDiv>
         </FlexDiv>
@@ -95,11 +155,25 @@ const SendCNTPConfirm = () => {
             Arbitrum API
           </P>
         </FlexDiv>
+        <FlexDiv $justify="center" $margin="10px">
+          <p
+            style={{
+              fontSize: "14px",
+              color: "#C70039",
+              display: hasUnsufficientFee ? "block" : "none",
+            }}
+          >
+            Unsufficient Gas Fee
+          </p>
+        </FlexDiv>
       </FlexDiv>
       <FlexDiv $direction="column" $gap="10px">
         <GradientButton
           width="100%"
-          onClick={() => setRouter?.("/confirmprogress")}
+          onClick={() => {
+            if (hasUnsufficientFee) return;
+            setRouter?.("/confirmprogress");
+          }}
         >
           Confirm payment
         </GradientButton>

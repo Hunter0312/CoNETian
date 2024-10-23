@@ -205,7 +205,7 @@ export default function Earn() {
 
     const res = await fetchCheckTelegram(profile.keyID, telegramId)
 
-    if (res.response.isInTGGroup === true) {
+    if (res.response.isInTGGroup === true && !res.response.isusedByOtherWallet) {
       const tasksCopy = [...tasks]
       tasksCopy[2].tasks[1].completed = true
       setTasks(tasksCopy)
@@ -213,7 +213,6 @@ export default function Earn() {
         position: "bottom-center",
         duration: 2000,
       });
-      return
     }
 
     if (res.response.isusedByOtherWallet === true) {
@@ -221,13 +220,11 @@ export default function Earn() {
         position: "bottom-center",
         duration: 2000,
       });
-    }
-    else {
+    } else {
       toast.error("Unable to confirm. Check if you have completed the tasks", {
         position: "bottom-center",
         duration: 2000,
       });
-
     }
 
     setIsLoading(false)

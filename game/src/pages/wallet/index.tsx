@@ -117,10 +117,12 @@ export default function Wallet() {
 
         <BackButton text="My Wallet" />
 
-        <CurrentBalance asset="cntp" />
+        <FlexDiv>
+          <CurrentBalance asset="cntp" secondaryAsset="conet" />
+        </FlexDiv>
 
         {/* uncomment this to enable assets exchange */}
-        {/* <div className="split"></div> 
+        {/* <div className="split"></div>
         <FlexDiv $direction="column" $gap="10px">
           <P $fontSize="24px">Assets Exchange</P>
           <P $color="#C8C6C8">

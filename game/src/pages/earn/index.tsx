@@ -176,7 +176,7 @@ export default function Earn() {
 
     const res = await fetchCheckTwitter(profile.keyID, userName)
 
-    if (res.response.isFollow === true && res.response.isRetweet === true) {
+    if (res?.response?.isFollow === true && res?.response?.isRetweet === true) {
       const tasksCopy = [...tasks]
       tasksCopy[2].tasks[0].completed = true
       setTasks(tasksCopy)
@@ -184,7 +184,7 @@ export default function Earn() {
         position: "bottom-center",
         duration: 2000,
       });
-    } else if (res.response.protected === true) {
+    } else if (res?.response?.protected === true) {
       toast.error("Your account is private. Please make it public to claim your reward.", {
         position: "bottom-center",
         duration: 2000,
@@ -205,7 +205,7 @@ export default function Earn() {
 
     const res = await fetchCheckTelegram(profile.keyID, telegramId)
 
-    if (res.response.isInTGGroup === true && !res.response.isusedByOtherWallet) {
+    if (res?.response?.isInTGGroup === true && !res?.response?.isusedByOtherWallet) {
       const tasksCopy = [...tasks]
       tasksCopy[2].tasks[1].completed = true
       setTasks(tasksCopy)
@@ -215,7 +215,7 @@ export default function Earn() {
       });
     }
 
-    if (res.response.isusedByOtherWallet === true) {
+    if (res?.response?.isusedByOtherWallet === true) {
       toast.error("Account already used by other wallet.", {
         position: "bottom-center",
         duration: 2000,
@@ -334,7 +334,7 @@ export default function Earn() {
       return
     }
 
-    if (res.response.result === true) {
+    if (res?.response?.result === true) {
       const tasksCopy = [...tasks]
       tasksCopy[1].tasks[0].completed = true
       setTasks(tasksCopy)

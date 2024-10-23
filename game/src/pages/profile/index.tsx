@@ -15,6 +15,7 @@ import Skeleton from "react-loading-skeleton";
 import { Img } from "@/utilitiy/images";
 import { Button } from "@/components/button";
 import { saveGameProfileInfo } from "@/API";
+import toast from 'react-hot-toast';
 
 export default function Profile() {
     const { highScore } = useGameContext();
@@ -57,6 +58,11 @@ export default function Profile() {
 
         setUsername(username);
         setBio(bio);
+
+        toast.success("Profile information changed successfully!", {
+            position: "bottom-center",
+            duration: 2000
+        })
     }
 
     return (

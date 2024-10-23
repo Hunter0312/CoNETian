@@ -197,6 +197,7 @@ a {
 }
 
 .guardian-wrapper {
+  cursor: pointer;
   overflow: hidden;
 }
 

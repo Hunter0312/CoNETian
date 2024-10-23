@@ -31,6 +31,7 @@ import ItemConfirm from "@/pages/itemConfirm";
 import Send from "@/pages/send";
 import SendCNTP from "@/pages/sendCntp";
 import SendCNTPConfirm from "@/pages/sendCNTPConfirm";
+import { ToasterWithMax } from '@/components/toasterWithMax';
 
 const S = {
   Main: styled.div`
@@ -239,7 +240,7 @@ export default function App() {
 
   return (
     <>
-      <Toaster />
+      <ToasterWithMax max={2} />
       <S.Main>
         <CurrentPage />
       </S.Main>

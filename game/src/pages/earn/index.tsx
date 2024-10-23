@@ -53,7 +53,7 @@ export default function Earn() {
       tasksCopy[1].tasks[0].completed = true
       setTasks(tasksCopy)
     }
-  }, [dailyClaimInfo])
+  }, [dailyClaimInfo, profile?.dailyClaimWeek])
 
   useEffect(() => {
     let completedCategory: TaskCategory | undefined = undefined;
@@ -346,6 +346,8 @@ export default function Earn() {
         position: "bottom-center",
         duration: 2000,
       });
+
+      setIsTodayRewardTaken(true);
 
       return
     }

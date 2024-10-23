@@ -22,7 +22,7 @@ export default function CurrentBalance({ inline = false, asset = 'cntp', seconda
     if (asset === 'cntp')
       return formatToken(profile?.tokens?.cCNTP?.balance);
     if (asset === 'conet')
-      return formatToken(profile?.tokens?.conet?.balance);
+      return profile?.tokens?.conet?.balance;
     else if (asset === 'ticket')
       return profile.tickets.balance;
   };
@@ -33,7 +33,7 @@ export default function CurrentBalance({ inline = false, asset = 'cntp', seconda
     if (secondaryAsset === 'cntp')
       return formatToken(profile?.tokens?.cCNTP?.balance);
     if (secondaryAsset === 'conet')
-      return formatToken(profile?.tokens?.conet?.balance);
+      return profile?.tokens?.conet?.balance;
     else if (secondaryAsset === 'ticket')
       return profile.tickets.balance;
   }

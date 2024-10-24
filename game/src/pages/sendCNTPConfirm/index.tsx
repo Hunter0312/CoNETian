@@ -147,14 +147,6 @@ const SendCNTPConfirm = () => {
             </P>
           </FlexDiv>
         </FlexDiv>
-        <FlexDiv $justify="space-between">
-          <P $fontSize="14px" $color="#989899">
-            Order routing
-          </P>
-          <P $fontSize="14px" $color="#989899">
-            Arbitrum API
-          </P>
-        </FlexDiv>
         <FlexDiv $justify="center" $margin="10px">
           <p
             style={{

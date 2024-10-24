@@ -39,10 +39,6 @@ const TransactionSuccess = () => {
               <P $fontSize="14px">Network cost</P>
               <P $fontSize="14px">$ {transferTokenDetails?.gasPrice}</P>
             </FlexDiv>
-            <FlexDiv $justify="space-between">
-              <P $fontSize="14px">Order routing</P>
-              <P $fontSize="14px">Arbitrum API</P>
-            </FlexDiv>
           </Div>
         </Div>
         <FlexDiv

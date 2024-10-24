@@ -62,10 +62,6 @@ export default function OrderProcess({ inProgress, finish, networkCost, fee, cho
             <P>Network cost</P>
             <P $color="#E4E4E5">$ {networkCost}</P>
           </FlexDiv>
-          <FlexDiv $justify="space-between">
-            <P>Order routing</P>
-            <P $color="#E4E4E5">Arbitrum API</P>
-          </FlexDiv>
         </FlexDiv>
       </FlexDiv>
     </FlexDiv>

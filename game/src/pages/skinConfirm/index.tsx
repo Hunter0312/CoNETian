@@ -103,14 +103,6 @@ const SkinConfirm = () => {
             </P>
           </FlexDiv>
         </FlexDiv>
-        <FlexDiv $justify="space-between">
-          <P $fontSize="14px" $color="#989899">
-            Order routing
-          </P>
-          <P $fontSize="14px" $color="#989899">
-            Arbitrum API
-          </P>
-        </FlexDiv>
       </FlexDiv>
       <FlexDiv $direction="column" $gap="10px">
         <GradientButton

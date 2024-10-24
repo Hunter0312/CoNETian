@@ -28,10 +28,6 @@ export default function Tax({ fee, networkCost }: Props) {
           <P>$ {networkCost}</P>
         </FlexDiv>
       </FlexDiv>
-      <FlexDiv $justify="space-between">
-        <P>Order routing</P>
-        <P>Arbitrum API</P>
-      </FlexDiv>
     </FlexDiv>
   )
 }

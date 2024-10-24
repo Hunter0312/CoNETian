@@ -22,7 +22,7 @@ const S = {
 
 const SendCNTPConfirm = () => {
   const [quoteSecs, setQuoteSecs] = useState<number>(60);
-  const [hasUnsufficientFee, setHasUnsufficientFee] = useState<boolean>(false);
+  const [hasInsufficientFee, setHasInsufficientFee] = useState<boolean>(false);
 
   const {
     setRouter,
@@ -57,7 +57,7 @@ const SendCNTPConfirm = () => {
         );
         const nativeBalance = formatToken(nativeBalanceResponse[0]);
 
-        if (gasResponse[1] > Number(nativeBalance)) setHasUnsufficientFee(true);
+        if (gasResponse[1] > Number(nativeBalance)) setHasInsufficientFee(true);
       } else {
         console.error("Error to fetch gas fee");
       }
@@ -160,10 +160,10 @@ const SendCNTPConfirm = () => {
             style={{
               fontSize: "14px",
               color: "#C70039",
-              display: hasUnsufficientFee ? "block" : "none",
+              display: hasInsufficientFee ? "block" : "none",
             }}
           >
-            Unsufficient Gas Fee
+            Insufficient Gas Fee
           </p>
         </FlexDiv>
       </FlexDiv>
@@ -171,7 +171,7 @@ const SendCNTPConfirm = () => {
         <GradientButton
           width="100%"
           onClick={() => {
-            if (hasUnsufficientFee) return;
+            if (hasInsufficientFee) return;
             setRouter?.("/confirmprogress");
           }}
         >

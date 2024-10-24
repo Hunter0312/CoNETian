@@ -1,0 +1,2 @@
+export const DEFAULT_MUSIC_VOLUME = 30;
+export const DEFAULT_EFFECTS_VOLUME = 70;

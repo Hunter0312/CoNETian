@@ -76,8 +76,8 @@ type GameContext = {
   referrerAddress?: string;
   buyItem?: any;
   setBuyItem?: (skin: any) => void;
-  transferTokenDetails?: TransferTokenDetails;
-  setTransferTokenDetails?: (details: TransferTokenDetails) => void;
+  transferTokenDetails?: any;
+  setTransferTokenDetails?: (details: any) => void;
 };
 
 const Game = createContext<GameContext>({});

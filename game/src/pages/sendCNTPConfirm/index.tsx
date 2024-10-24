@@ -47,7 +47,7 @@ const SendCNTPConfirm = () => {
 
       setQuoteSecs(60);
       if (gasResponse[0] && gasResponse[1]) {
-        setTransferTokenDetails?.((prevState: TransferTokenDetails) => ({
+        setTransferTokenDetails?.((prevState: any) => ({
           ...prevState,
           gasPrice: gasResponse[0],
           gasFee: gasResponse[1],

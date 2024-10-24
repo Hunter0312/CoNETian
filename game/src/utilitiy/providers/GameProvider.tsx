@@ -1,6 +1,5 @@
 "use client";
 
-import PropTypes from "prop-types";
 import {
   createContext,
   useContext,
@@ -13,6 +12,14 @@ import Leaderboard from "../types/leaderboard";
 import { fetchRegisterReferrer, fetchStartMining } from "@/API/getData";
 
 export type Difficulty = "easy" | "normal" | "hard";
+
+export type TransferTokenDetails = {
+  amount: string;
+  assetName: string;
+  toAddress: string;
+  gasFee: number;
+  gasPrice: number;
+};
 
 type GameContext = {
   router?: string;
@@ -69,6 +76,8 @@ type GameContext = {
   referrerAddress?: string;
   buyItem?: any;
   setBuyItem?: (skin: any) => void;
+  transferTokenDetails?: TransferTokenDetails;
+  setTransferTokenDetails?: (details: TransferTokenDetails) => void;
 };
 
 const Game = createContext<GameContext>({});
@@ -85,13 +94,13 @@ type GameProps = {
 type DailyClaimInfo = {
   todayAsset: TodayAssetInfo;
   todayDayOfWeek: number;
-}
+};
 
 type TodayAssetInfo = {
   asset: string;
   quantity: string;
   nft_number: number;
-}
+};
 
 export function GameProvider({ children }: GameProps) {
   const [router, setRouter] = useState<string>("/");
@@ -137,6 +146,14 @@ export function GameProvider({ children }: GameProps) {
     score: 0,
   });
   const [buyItem, setBuyItem] = useState<any>({});
+  const [transferTokenDetails, setTransferTokenDetails] =
+    useState<TransferTokenDetails>({
+      amount: "0",
+      assetName: "cCNTP",
+      gasFee: 0,
+      gasPrice: 0,
+      toAddress: "",
+    });
 
   const miningErrorTimeout = useRef<NodeJS.Timeout | null>(null);
   const walletAddress = useRef<string>("");
@@ -247,13 +264,11 @@ export function GameProvider({ children }: GameProps) {
         referrerAddress,
         buyItem,
         setBuyItem,
+        transferTokenDetails,
+        setTransferTokenDetails,
       }}
     >
       {children}
     </Game.Provider>
   );
 }
-
-GameProvider.propTypes = {
-  children: PropTypes.element.isRequired,
-};

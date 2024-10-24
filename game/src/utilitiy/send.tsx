@@ -6,4 +6,6 @@ export const SendImg = {
   NftBlurImg: "/send/nftblur.png",
   ArrowDownImg: "/send/arrow-down.png",
   GasFeeImg: "/send/fee.png",
+  LoadingImg: "/send/loading.gif",
+  CheckedImg: "/send/checked.png",
 };

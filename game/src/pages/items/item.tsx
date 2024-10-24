@@ -1,5 +1,5 @@
 import { Button } from "@/components/button";
-import { Div, FlexDiv } from "@/components/div";
+import { FlexDiv } from "@/components/div";
 import { P } from "@/components/p";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import Image from "next/image";

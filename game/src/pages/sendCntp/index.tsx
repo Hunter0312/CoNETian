@@ -1,3 +1,6 @@
+import { useState } from "react";
+import Image from "next/image";
+import styled from "styled-components";
 import BackButton from "@/components/backButton";
 import { Button, GradientButton } from "@/components/button";
 import CurrentBalance from "@/components/currentBalance";
@@ -6,16 +9,15 @@ import { P } from "@/components/p";
 import PageWrapper from "@/components/pageWrapper";
 import { useGameContext } from "@/utilitiy/providers/GameProvider";
 import { SendImg } from "@/utilitiy/send";
-import Image from "next/image";
-import { useState } from "react";
-import styled from "styled-components";
+import { formatToken } from "@/utilitiy/functions";
+import { fetchIsAddress } from "@/API/getData";
 
 const S = {
   ToInput: styled.input`
     background: none;
     border: none;
     outline: none;
-    width: 80%;
+    width: 95%;
     color: #989899;
     padding: 5px;
   `,
@@ -42,8 +44,70 @@ const S = {
 };
 
 const SendCNTP = () => {
-  const [balance, setBalance] = useState<number>(0);
-  const { setRouter, setBuyItem } = useGameContext();
+  const assetName = "cCNTP";
+
+  const [amount, setAmount] = useState<string>("0");
+  const [isValidAmount, setIsValidAmount] = useState<boolean>(false);
+  const [toAddress, setToAddress] = useState<string>("");
+  const [isValidAddress, setIsValidAddress] = useState<boolean>(false);
+  const [isAddressChecking, setIsAddressChecking] = useState<boolean>(false);
+
+  const { setRouter, setTransferTokenDetails, profile } = useGameContext();
+
+  const balance = formatToken(profile?.tokens?.cCNTP?.balance);
+
+  const handleToAddressChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    e.preventDefault();
+    setToAddress(e.target.value);
+    try {
+      setIsAddressChecking(true);
+      const isAddress = await fetchIsAddress(e.target.value);
+      if (isAddress[0]) setIsValidAddress(true);
+      else setIsValidAddress(false);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsAddressChecking(false);
+    }
+  };
+
+  const handleAmountInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    // If the initial value is "0", replace it with the typed value
+    const cutZeroString =
+      e.target.value[0] === "0" &&
+      e.target.value[1] >= "1" &&
+      e.target.value[1] <= "9"
+        ? e.target.value.slice(1)
+        : e.target.value;
+
+    if (Number(cutZeroString) > Number(balance) || Number(cutZeroString) < 0) {
+      return;
+    } else {
+      setAmount(cutZeroString);
+    }
+
+    if (cutZeroString === "0" || cutZeroString === "") setIsValidAmount(false);
+    else setIsValidAmount(true);
+  };
+
+  const handleSend = async () => {
+    // return if amount is 0
+    if (!isValidAddress || !isValidAmount) {
+      return;
+    }
+
+    // set transfer token details for confirmation page
+    setTransferTokenDetails?.({
+      assetName,
+      toAddress,
+      amount,
+    });
+
+    setRouter?.("/sendCNTPConfirm");
+  };
 
   return (
     <PageWrapper>
@@ -62,9 +126,19 @@ const SendCNTP = () => {
           <FlexDiv $justify="space-between" $width="100%" $align="center">
             <FlexDiv $direction="column" $grow="1">
               <P>To</P>
-              <S.ToInput placeholder="Select or paste receiver wallet address" />
+              <S.ToInput
+                placeholder="Select or paste receiver wallet address"
+                value={toAddress}
+                onChange={handleToAddressChange}
+              />
             </FlexDiv>
-            <Image src={SendImg.ArrowDownImg} width={12} height={8} alt="" />
+            {isAddressChecking ? (
+              <Image src={SendImg.LoadingImg} width={20} height={20} alt="" />
+            ) : isValidAddress ? (
+              <Image src={SendImg.CheckedImg} width={20} height={20} alt="" />
+            ) : (
+              <></>
+            )}
           </FlexDiv>
         </Button>
         <FlexDiv
@@ -74,8 +148,8 @@ const SendCNTP = () => {
           $justify="space-between"
         >
           <S.BalanceInput
-            value={balance}
-            onChange={(e) => setBalance(parseInt(e.target.value))}
+            value={amount}
+            onChange={handleAmountInputChange}
             type="number"
           />
           <Button
@@ -83,11 +157,12 @@ const SendCNTP = () => {
             $color="#8DA8FF"
             $padding="10px 16px"
             $radius="8px"
+            onClick={() => setAmount(balance)}
           >
             MAX
           </Button>
         </FlexDiv>
-        <FlexDiv $direction="column" $gap="5px">
+        {/* <FlexDiv $direction="column" $gap="5px">
           <P>Tax</P>
           <S.Split />
           <FlexDiv $justify="space-between">
@@ -101,16 +176,14 @@ const SendCNTP = () => {
               </P>
             </FlexDiv>
           </FlexDiv>
-        </FlexDiv>
+        </FlexDiv> */}
         <FlexDiv $margin="0 0 100px 0" $width="100%" $direction="column">
           <GradientButton
             width="100%"
-            onClick={() => {
-              setBuyItem?.({ price: balance, sendCNTP: true });
-              setRouter?.("/sendCNTPConfirm");
-            }}
+            onClick={handleSend}
+            disabled={!isValidAddress || !isValidAmount}
           >
-            Send
+            Estimate Gas
           </GradientButton>
         </FlexDiv>
       </FlexDiv>

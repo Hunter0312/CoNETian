@@ -100,7 +100,8 @@ const Send = () => {
           );
         })}
       </FlexDiv>
-      <Button
+      {/* Substitute the following lines for the implementation of transaction history */}
+      {/* <Button
         $margin="0 20px 100px 20px"
         $border="1px solid #535254"
         $direction="row"
@@ -111,7 +112,7 @@ const Send = () => {
           <P>Transaction history</P>
           <Image src={SendImg.ArrowDownImg} width={12} height={8} alt="" />
         </FlexDiv>
-      </Button>
+      </Button> */}
     </PageWrapper>
   );
 };
